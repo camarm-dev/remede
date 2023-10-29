@@ -5,13 +5,14 @@ import {
   IonContent, IonTitle, IonToolbar, IonBackButton, IonButtons, IonSegment, IonSegmentButton
 } from "@ionic/vue";
 import {play, shareOutline} from "ionicons/icons";
+import "@/components/WordModal.vue";
 </script>
 
 <template>
   <ion-header :translucent="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text="Retour"></ion-back-button>
+        <ion-back-button defaultHref="/dictionnaire" text="Retour"></ion-back-button>
       </ion-buttons>
       <ion-title>Définition "{{ mot }}"</ion-title>
       <ion-buttons slot="end" @click="shareDefinition()">
@@ -62,10 +63,10 @@ import {play, shareOutline} from "ionicons/icons";
         </header>
         <div class="content">
           <ul>
-            <li v-for="meaning in def.definitions">
-              <span v-html="meaning" v-if="typeof meaning !== typeof Array"></span>
-              <ul v-for="subMeaning in meaning" v-else>
-                <li v-html="subMeaning"></li>
+            <li v-for="meaning in def.explications">
+              <span v-html="meaning.replaceAll('https://fr.wiktionary.org/wiki/', '/definition/')" v-if="typeof meaning === 'string'"></span>
+              <ul v-else class="ion-padding-start">
+                <li v-for="subMeaning in meaning" v-html="subMeaning"></li>
               </ul>
             </li>
           </ul>
@@ -80,10 +81,12 @@ import {play, shareOutline} from "ionicons/icons";
         </header>
       </div>
       <ul>
-        <li v-for="syn in document.synonymes">{{ syn }}</li>
+        <li v-for="syn in document.synonymes">
+          <a href="" @click="goTo(`/dictionnaire/${syn}`)">{{ syn }}</a>
+        </li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
-      <ion-note v-else>Via <a target="_blank" :href="`https://synonymo.fr/synonyme/${word}`">synonymo.fr</a></ion-note>
+      <ion-note v-else>Via <a target="_blank" :href="`http://synonymo.fr/synonyme/${mot}`">synonymo.fr</a></ion-note>
     </div>
     <div v-if="tab == 'ant'" class="tab-content">
       <div class="definition">
@@ -93,10 +96,12 @@ import {play, shareOutline} from "ionicons/icons";
         </header>
       </div>
       <ul>
-        <li v-for="ant in document.antonymes">{{ ant }}</li>
+        <li v-for="ant in document.antonymes">
+          <a href="" @click="goTo(`/dictionnaire/${ant}`)">{{ ant }}</a>
+        </li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
-      <ion-note v-else>Via <a target="_blank" :href="`https://antonymo.fr/antonyme/${word}`">antonymo.fr</a></ion-note>
+      <ion-note v-else>Via <a target="_blank" :href="`http://www.antonyme.org/antonyme/${mot}`">antonyme.org</a></ion-note>
     </div>
     <div v-if="tab == 'conj'" class="tab-content">
 
@@ -114,9 +119,10 @@ import {play, shareOutline} from "ionicons/icons";
 import {getWordDocument} from "@/functions/dictionnary";
 
 export default {
-  props: ['mot'],
+  props: ['motRemede'],
   data() {
     return {
+      mot: '',
       tab: localStorage.getItem('defaultTab') || 'def',
       document: {
         synonymes: [] as string[],
@@ -137,6 +143,10 @@ export default {
     }
   },
   created() {
+    this.mot = this.motRemede
+    if (!this.motRemede) {
+      this.mot = this.$router.params.mot
+    }
     const document = getWordDocument(this.mot)
     if (document) {
       this.document = getWordDocument(this.mot)
@@ -147,6 +157,9 @@ export default {
   methods: {
     shareDefinition() {
 
+    },
+    goTo(path: string) {
+      this.$router.push(path)
     }
   }
 }
@@ -178,6 +191,10 @@ export default {
 
 .definition .content ul ul {
   list-style: disc;
+}
+
+.definition .content li {
+  margin-bottom: .5em;
 }
 
 .credits {

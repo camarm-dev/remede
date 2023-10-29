@@ -21,9 +21,9 @@ Rien ici pour le moment
 Remède créé sa propre base de mots, synonymes, antonymes français à partir de service tiers.
 
 - Les définitions par le [Wictionary français](), vie le wrapper de [Frederic Gainza]() de l'API
-- Les synonymes des [synonymo.fr](https://synonymo.fr)
-- Les antonymes des [antonymo.fr](https://antonymo.fr)
-- Les exemples de ????
+- Les synonymes via [synonymo.fr](https://www.synonymo.fr)
+- Les antonymes via [antonyme.org](https://www.antonyme.org)
+- Les exemples de ???? (pas encore disponible)
 - Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
 
 ### Dataset

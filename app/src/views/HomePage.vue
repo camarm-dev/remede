@@ -11,7 +11,7 @@
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`">
         <ion-list class="search-results">
-          <ion-nav-link v-for="result in results" router-direction="forward" :component="WordModal" :component-props="{ mot: result }">
+          <ion-nav-link v-for="result in results" router-direction="forward" :component="WordModal" :component-props="{ motRemede: result }">
             <ion-item class="ion-no-padding" button>
               <ion-label>
                 {{ result }}
@@ -29,19 +29,15 @@
         </ion-toolbar>
       </ion-header>
 
-      <div class="ion-padding">
-        <ion-note>Rien ici pour le moment</ion-note>
-      </div>
-
       <ion-list inset>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ mot: 'à' }">
+        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: 'à' }">
           <ion-item color="light" button>
             <ion-label slot="start">
               <h2>Mot du jour</h2>
             </ion-label>
           </ion-item>
         </ion-nav-link>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ mot: 'bienvenue' }">
+        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: 'bienvenue' }">
           <ion-item color="light" button>
             <ion-label slot="start">
               <h2>Mot au hasard</h2>

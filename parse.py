@@ -1,9 +1,8 @@
+import datetime
 import json
 import urllib.parse
-
 import requests
-from PyMultiDictionary import MultiDictionary
-from pprint import pprint
+from bs4 import BeautifulSoup
 
 
 def get_words():
@@ -17,11 +16,25 @@ def get_word2ipa():
 
 
 def get_synonyms(word: str):
-    return []
+    if len(word) == 1:
+        return []
+    try:
+        parser = BeautifulSoup(requests.get(f'http://www.synonymo.fr/synonyme/{word}').content, 'html.parser')
+        results_list = parser.find('div', attrs={'class': 'fiche'})
+        return [tag.text for tag in results_list.find_all('a', attrs={'class': 'word'})]
+    except Exception:
+        return []
 
 
 def get_antonyms(word: str):
-    return []
+    if len(word) == 1:
+        return []
+    try:
+        parser = BeautifulSoup(requests.get(f'http://www.antonyme.org/antonyme/{word}').content, 'html.parser')
+        results_list = parser.find('div', attrs={'class': 'fiche'})
+        return [tag.text for tag in results_list.find_all('a', attrs={'class': 'word'})]
+    except Exception:
+        return []
 
 
 def get_ipa(word: str):
@@ -51,7 +64,6 @@ def get_word_document(word: str):
     result, success = get_wictionary_doc(word)
     if not success:
         return False
-    meaning = dictionary.meaning('fr', word)
     return {
         "synonymes": get_synonyms(word),
         "antonymes": get_antonyms(word),
@@ -59,7 +71,7 @@ def get_word_document(word: str):
             {
                 "genre": result['genre'][index],
                 "classe": result['nature'][index],
-                "definitions": result['natureDef'][index][0],
+                "explications": result['natureDef'][index][0],
                 "exemples": [
 
                 ]
@@ -74,7 +86,8 @@ def get_word_document(word: str):
             "url": result["url_img"],
             "credits": result["url_credits"]
         },
-        "ipa": get_ipa(word)
+        "ipa": get_ipa(word),
+        "conjugaisons": {}
     }
 
 
@@ -91,14 +104,26 @@ def remedize(word_list: list):
     return remede_dictionary
 
 
+def getTimeDetails(time):
+    days, seconds = time.days, time.seconds
+    hours = days * 24 + seconds // 3600
+    minutes = (seconds % 3600) // 60
+    seconds = seconds % 60
+    return hours, minutes, seconds
+
+
 if __name__ == '__main__':
     print("Génération de la base Remède...\n")
-    all_words = get_words()[0:1000]
+    all_words = get_words()
     all_ipa = get_word2ipa()
-    dictionary = MultiDictionary()
-    dictionary.set_words_lang('fr')
+    before = datetime.datetime.now()
     try:
         remede = remedize(all_words)
         open('data/REMEDE.json', 'w+').write(json.dumps(remede))
     except KeyboardInterrupt:
         print("Annulation...")
+
+    after = datetime.datetime.now()
+    time = after - before
+    hour, minute, second = getTimeDetails(time)
+    print(f'Fini en {hour} heures {minute} minutes et {second} secondes.')

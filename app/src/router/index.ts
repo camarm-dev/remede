@@ -4,6 +4,18 @@ import Outlet from "@/Outlet.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/dictionnaire/:mot',
+    component: () => import ('../views/WordPage.vue')
+  },
+  {
+    path: '/a-propos',
+    component: () => import ('../views/AboutPage.vue')
+  },
+  {
+    path: '/fiches',
+    component: () => import ('../views/HomePage.vue')
+  },
+  {
     path: '/',
     component: Outlet,
     children: [
@@ -13,10 +25,6 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'dictionnaire',
-        component: () => import ('../views/HomePage.vue')
-      },
-      {
-        path: 'fiches',
         component: () => import ('../views/HomePage.vue')
       }
     ]

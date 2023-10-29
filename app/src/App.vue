@@ -6,7 +6,7 @@
           <ion-list>
             <img class="ion-margin-start" width="50" alt="Remède icon" src="/favicon.png" height="50"/>
             <ion-list-header>Remède</ion-list-header>
-            <ion-note>L'antidote à tout vos mots</ion-note>
+            <ion-note>Retrouvez vos mots en toute simplicité</ion-note>
 
             <ion-menu-toggle :auto-hide="false">
               <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="isPage('/dictionnaire') ? 'selected': ''">

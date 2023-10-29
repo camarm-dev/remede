@@ -1,5 +1,4 @@
 import REMEDE from "../../../data/REMEDE.json"
-import words from "../../../data/mots.txt"
 
 const autocomplete = Object.keys(REMEDE)
 
