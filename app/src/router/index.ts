@@ -7,22 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/dictionnaire/:mot',
     component: () => import ('../views/WordPage.vue')
   },
-  {
-    path: '/a-propos',
-    component: () => import ('../views/AboutPage.vue')
-  },
-  {
-    path: '/fiches',
-    component: () => import ('../views/HomePage.vue')
-  },
-  {
-    path: '/parametres',
-    component: () => import ('../views/SettingsPage.vue')
-  },
-  // {
-  //   path: '/marques-page',
-  //   component: () => import ('../views/FavoritesPage.vue')
-  // },
+
   {
     path: '/',
     component: Outlet,
@@ -34,6 +19,22 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'dictionnaire',
         component: () => import ('../views/HomePage.vue')
+      },
+      {
+        path: 'a-propos',
+        component: () => import ('../views/AboutPage.vue')
+      },
+      {
+        path: 'fiches',
+        component: () => import ('../views/HomePage.vue')
+      },
+      {
+        path: 'parametres',
+        component: () => import ('../views/SettingsPage.vue')
+      },
+      {
+        path: 'marques-page',
+        component: () => import ('../views/FavoritesPage.vue')
       }
     ]
   }

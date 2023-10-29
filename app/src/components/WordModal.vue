@@ -4,7 +4,7 @@ import {
   IonHeader,
   IonContent, IonTitle, IonToolbar, IonBackButton, IonButtons, IonSegment, IonSegmentButton
 } from "@ionic/vue";
-import {play, shareOutline} from "ionicons/icons";
+import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
 import "@/components/WordModal.vue";
 </script>
 
@@ -16,7 +16,12 @@ import "@/components/WordModal.vue";
       </ion-buttons>
       <ion-title>Définition "{{ mot }}"</ion-title>
       <ion-buttons slot="end" @click="shareDefinition()">
-        <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
+        <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
+          <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -118,6 +123,7 @@ import "@/components/WordModal.vue";
 <script lang="ts">
 
 import {getWordDocument} from "@/functions/dictionnary";
+import {isWordStarred, starWord} from "@/functions/favorites";
 
 export default {
   props: ['motRemede'],
@@ -140,7 +146,8 @@ export default {
           url: ''
         }
       },
-      notFound: false
+      notFound: false,
+      stared: false
     }
   },
   created() {
@@ -154,6 +161,8 @@ export default {
     } else {
       this.notFound = true
     }
+
+    this.stared = isWordStarred(this.mot)
   },
   methods: {
     shareDefinition() {
@@ -161,7 +170,8 @@ export default {
     },
     goTo(path: string) {
       this.$router.push(path)
-    }
+    },
+    starWord
   }
 }
 </script>
