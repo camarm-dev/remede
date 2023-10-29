@@ -91,16 +91,34 @@ def get_word_document(word: str):
     }
 
 
+def saveRemede(char: str, remede_dictionary):
+    open(f'data/REMEDE_{char}.json', 'w+').write(json.dumps(remede_dictionary))
+
+
 def remedize(word_list: list):
     remede_dictionary = {}
     total = len(word_list)
     errored = 0
+    segments = 0
+    accepted_char = {
+        "a": ['â', 'à', 'æ'],
+        'c': ['ç'],
+        'i': ['î', 'ï'],
+        'u': ['ù', 'û', 'ü'],
+        "e": ['é', 'ê', 'è', 'ë']
+    }
+    current_char = 'a'
     for word in word_list:
+        if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char[current_char]]):
+            saveRemede(current_char, remede_dictionary)
+            remede_dictionary = {}
+            current_char = word[0].lower()
+            segments += 1
         inserted_word = get_word_document(word)
         if not inserted_word:
             errored += 1
         remede_dictionary[word] = inserted_word
-        print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs")
+        print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs | {segments} segments sauvégardés")
     return remede_dictionary
 
 
@@ -118,8 +136,7 @@ if __name__ == '__main__':
     all_ipa = get_word2ipa()
     before = datetime.datetime.now()
     try:
-        remede = remedize(all_words)
-        open('data/REMEDE.json', 'w+').write(json.dumps(remede))
+        remedize(all_words)
     except KeyboardInterrupt:
         print("Annulation...")
 
