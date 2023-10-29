@@ -57,7 +57,8 @@ import "@/components/WordModal.vue";
       </div>
       <div class="definition" v-for="def in document.definitions">
         <header>
-          <h4 v-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
+          <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
+          <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
           <h4 v-else>{{ def.genre }}</h4>
           <hr>
         </header>
