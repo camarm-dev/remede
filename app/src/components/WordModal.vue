@@ -65,7 +65,7 @@ import "@/components/WordModal.vue";
         <div class="content">
           <ul>
             <li v-for="meaning in def.explications">
-              <span v-html="meaning.replaceAll('https://fr.wiktionary.org/wiki/', '/definition/')" v-if="typeof meaning === 'string'"></span>
+              <span v-html="meaning.replaceAll('https://fr.wiktionary.org/wiki/', '/dictionnaire/')" v-if="typeof meaning === 'string'"></span>
               <ul v-else class="ion-padding-start">
                 <li v-for="subMeaning in meaning" v-html="subMeaning"></li>
               </ul>
