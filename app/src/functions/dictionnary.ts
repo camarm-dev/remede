@@ -1,7 +1,7 @@
 import REMEDE from "../../../data/REMEDE.json"
 import words from "../../../data/mots.txt"
 
-const autocomplete = words.split(',')
+const autocomplete = Object.keys(REMEDE)
 
 function getWordDocument(word: string) {
     return REMEDE[word]
