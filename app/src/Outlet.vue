@@ -1,10 +1,10 @@
 <template>
   <ion-app>
-    <ion-nav :root="HomePage"></ion-nav>
+    <ion-nav :root="Root"></ion-nav>
   </ion-app>
 </template>
 
 <script setup lang="ts">
 import { IonApp, IonNav } from '@ionic/vue';
-import HomePage from "@/views/HomePage.vue";
+import Root from "@/Root.vue";
 </script>
