@@ -1,0 +1,7 @@
+{
+  "name": "remede",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}

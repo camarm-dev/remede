@@ -20,7 +20,7 @@ Rien ici pour le moment
 ### Données Remède
 Remède créé sa propre base de mots, synonymes, antonymes français à partir de service tiers.
 
-- Les définitions par le dictionnaire Educalingo
+- Les définitions par le [Wictionary français](), vie le wrapper de [Frederic Gainza]() de l'API
 - Les synonymes des [synonymo.fr](https://synonymo.fr)
 - Les antonymes des [antonymo.fr](https://antonymo.fr)
 - Les exemples de ????
