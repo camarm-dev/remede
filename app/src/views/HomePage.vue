@@ -37,7 +37,7 @@
             </ion-label>
           </ion-item>
         </ion-nav-link>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: 'bienvenue' }">
+        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: getRandomWord() }">
           <ion-item color="light" button>
             <ion-label slot="start">
               <h2>Mot au hasard</h2>
@@ -53,6 +53,7 @@
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
+import {getRandomWord} from "@/functions/dictionnary";
 </script>
 
 <script lang="ts">
