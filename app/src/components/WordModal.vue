@@ -144,7 +144,7 @@ export default {
   },
   methods: {
     shareDefinition() {
-      console.log(this.tab)
+
     }
   }
 }
