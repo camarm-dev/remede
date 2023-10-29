@@ -83,6 +83,7 @@ import {play, shareOutline} from "ionicons/icons";
         <li v-for="syn in document.synonymes">{{ syn }}</li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
+      <ion-note v-else>Via <a target="_blank" :href="`https://synonymo.fr/synonyme/${word}`">synonymo.fr</a></ion-note>
     </div>
     <div v-if="tab == 'ant'" class="tab-content">
       <div class="definition">
@@ -95,6 +96,7 @@ import {play, shareOutline} from "ionicons/icons";
         <li v-for="ant in document.antonymes">{{ ant }}</li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
+      <ion-note v-else>Via <a target="_blank" :href="`https://antonymo.fr/antonyme/${word}`">antonymo.fr</a></ion-note>
     </div>
     <div v-if="tab == 'conj'" class="tab-content">
 
