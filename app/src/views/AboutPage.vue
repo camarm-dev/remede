@@ -9,6 +9,9 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
+      <img src="/og.png" alt="Remède"/>
+      <br>
+      <br>
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">À propos</ion-title>
@@ -21,9 +24,9 @@
         </p>
         <h2>Licence</h2>
         <p>
-          Remède est un logiciel libre sous licence <a>CeCill V2.1</a>, disponile sur <a>Github</a>
+          Remède est un logiciel libre sous licence <a href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">CeCill V2.1</a>, disponible sur <a href="https://github.com/camarm-dev/remede" target="_blank">Github</a>
         </p>
-        <ion-list inset>
+        <ion-list class="ion-no-padding">
           <ion-item button>
             <ion-icon slot="start" :icon="reloadOutline"/>
             <ion-label>
@@ -37,7 +40,8 @@
             </ion-label>
           </ion-item>
         </ion-list>
-        <img alt="Powered by Labse Softwares" src="" />
+        <br>
+        <img alt="Powered by Labse Softwares" src="/labse_powered_by.png" />
       </ion-content>
 
     </ion-content>
