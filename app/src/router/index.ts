@@ -15,10 +15,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/fiches',
     component: () => import ('../views/HomePage.vue')
   },
-  // {
-  //   path: '/parametres',
-  //   component: () => import ('../views/SettingsPage.vue')
-  // },
+  {
+    path: '/parametres',
+    component: () => import ('../views/SettingsPage.vue')
+  },
   // {
   //   path: '/marques-page',
   //   component: () => import ('../views/FavoritesPage.vue')

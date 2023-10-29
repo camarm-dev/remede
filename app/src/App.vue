@@ -88,6 +88,9 @@ import {
 
 <script lang="ts">
 export default {
+  mounted() {
+    document.body.classList.add(localStorage.getItem('userTheme') || 'light')
+  },
   methods: {
     isPage(path: string) {
       return location.pathname === path
