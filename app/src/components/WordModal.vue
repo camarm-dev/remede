@@ -124,6 +124,7 @@ import "@/components/WordModal.vue";
 
 import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
+import {Share} from "@capacitor/share";
 
 export default {
   props: ['motRemede'],
@@ -165,8 +166,17 @@ export default {
     this.stared = isWordStarred(this.mot)
   },
   methods: {
-    shareDefinition() {
-
+    async shareDefinition() {
+      try {
+        await Share.share({
+          title: `Définition "${this.mot}" sur Remède`,
+          text: `La définition du mot "${this.mot}" est sur Remède !`,
+          url: `https://remede.camam.fr/dictionnaire/${this.mot}`,
+          dialogTitle: 'Partager la définition',
+        })
+      } catch {
+        alert('Fonctionnalité non supportée par votre navigateur')
+      }
     },
     goTo(path: string) {
       this.$router.push(path)
