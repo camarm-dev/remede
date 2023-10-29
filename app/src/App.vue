@@ -19,18 +19,18 @@
                   </router-link>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/fiches">
-                    <ion-item disabled lines="none" :detail="false" class="hydrated" :class="isPage('/fiches') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
-                      <ion-label>Fiches</ion-label>
+                  <router-link to="/marques-page">
+                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/marques-page') ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
+                      <ion-label>Marques Pages</ion-label>
                     </ion-item>
                   </router-link>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/marques-page">
-                    <ion-item disabled lines="none" :detail="false" class="hydrated" :class="isPage('/marques-page') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="starOutline"></ion-icon>
-                      <ion-label>Marques Pages</ion-label>
+                  <router-link to="/fiches">
+                    <ion-item disabled lines="none" :detail="false" class="hydrated" :class="isPage('/fiches') ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
+                      <ion-label>Fiches</ion-label>
                     </ion-item>
                   </router-link>
                 </ion-menu-toggle>
@@ -81,7 +81,7 @@ import {
 import {
   bookOutline,
   informationCircleOutline,
-  cogOutline, documentOutline, starOutline
+  cogOutline, documentOutline, bookmarkOutline
 } from 'ionicons/icons';
 
 </script>
