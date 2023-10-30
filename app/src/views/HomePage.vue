@@ -32,18 +32,29 @@
       <ion-list inset>
         <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: 'à' }">
           <ion-item color="light" button>
-            <ion-label slot="start">
+            <ion-icon slot="start" :icon="calendarOutline"/>
+            <ion-label>
               <h2>Mot du jour</h2>
             </ion-label>
           </ion-item>
         </ion-nav-link>
         <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: getRandomWord() }">
           <ion-item color="light" button>
-            <ion-label slot="start">
+            <ion-icon :icon="shuffle" slot="start"/>
+            <ion-label>
               <h2>Mot au hasard</h2>
             </ion-label>
           </ion-item>
         </ion-nav-link>
+      </ion-list>
+
+      <ion-list inset>
+        <ion-item href="/marques-page" button color="primary">
+          <ion-icon slot="start" :icon="bookmark"/>
+          <ion-label>
+            Mes marques page
+          </ion-label>
+        </ion-item>
       </ion-list>
 
     </ion-content>
@@ -51,9 +62,10 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
 import {getRandomWord} from "@/functions/dictionnary";
+import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 </script>
 
 <script lang="ts">
