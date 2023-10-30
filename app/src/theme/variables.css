@@ -21,12 +21,12 @@ http://ionicframework.com/docs/theming/ */
   font-weight: bold;
 }
 
-body, html {
+ion-header.header-translucent-ios .header-background {
   background-color: var(--ion-background-color) !important;
-  --ion-toolbar-background: var(--ion-background-color, #fff);
 }
 
 :root {
+  --ion-background-color: #fff;
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
