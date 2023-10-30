@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import {
-  IonIcon,
+  IonBackButton,
+  IonButtons,
+  IonContent,
   IonHeader,
-  IonContent, IonTitle, IonToolbar, IonBackButton, IonButtons, IonSegment, IonSegmentButton
+  IonIcon,
+  IonSegment,
+  IonSegmentButton,
+  IonTitle,
+  IonToolbar
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
 </script>
@@ -32,7 +38,7 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
           <p class="ion-padding-start">{{ document.ipa }}</p>
         </ion-label>
         <ion-buttons slot="end">
-          <ion-button :disabled="notFound">
+          <ion-button @click="readWord()" :disabled="notFound">
             <ion-icon slot="icon-only" :icon="play" color="medium"/>
           </ion-button>
         </ion-buttons>
@@ -224,6 +230,21 @@ export default {
     },
     getFormeVerbale(mode: string, temps: string, sujet: string) {
       return this.document.conjugaisons[mode][temps][sujet]
+    },
+    readWord() {
+      const url = 'https://iawll6of90.execute-api.us-east-1.amazonaws.com/production'
+      const data = {
+        text: this.document.ipa.replaceAll('/', ''),
+        voice: 'Mathieu'
+      }
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      }).then(resp => resp.json()).then(audio => {
+        const player = new window.Audio()
+        player.src = `data:audio/mpeg;base64,${audio}`
+        player.play()
+      })
     },
     starWord
   }
