@@ -5,7 +5,6 @@ import {
   IonContent, IonTitle, IonToolbar, IonBackButton, IonButtons, IonSegment, IonSegmentButton
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
-import "@/components/WordModal.vue";
 </script>
 
 <template>
@@ -43,7 +42,7 @@ import "@/components/WordModal.vue";
           <ion-segment-button value="def">Définition</ion-segment-button>
           <ion-segment-button value="syn">Synonymes</ion-segment-button>
           <ion-segment-button value="ant">Antonymes</ion-segment-button>
-          <ion-segment-button v-if="false" value="con">Conjugaison</ion-segment-button>
+          <ion-segment-button v-if="getModes().length > 0" value="conj">Conjugaison</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
     </ion-header>
@@ -110,7 +109,39 @@ import "@/components/WordModal.vue";
       <ion-note v-else>Via <a target="_blank" :href="`http://www.antonyme.org/antonyme/${mot}`">antonyme.org</a></ion-note>
     </div>
     <div v-if="tab == 'conj'" class="tab-content">
-
+      <div class="definition">
+        <header>
+          <h4>Conjugaison</h4>
+          <hr>
+        </header>
+      </div>
+      <br>
+      <div v-for="mode in getModes()">
+        <details>
+          <summary>{{ mode }}</summary>
+          <ion-list class="border-radius ion-margin-top">
+            <ion-accordion-group>
+              <ion-accordion :value="temps" v-for="temps in getTemps(mode)">
+                <ion-item class="header" color="light" slot="header">
+                  <ion-label>{{ temps }}</ion-label>
+                </ion-item>
+                <ion-list class="no-radius" slot="content">
+                  <ion-item v-for="sujet in getSujets(mode, temps)">
+                    <ion-label>
+                      <p>{{ sujet }}</p>
+                    </ion-label>
+                    <ion-label slot="end">
+                      {{ getFormeVerbale(mode, temps, sujet) }}
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-list>
+        </details>
+      </div>
+      <br>
+      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${this.mot}`">conjuguons.fr</a></ion-note>
     </div>
     <br>
     <br>
@@ -145,7 +176,8 @@ export default {
         credits: {
           name: '',
           url: ''
-        }
+        },
+        conjugaisons: {}
       },
       notFound: false,
       stared: false
@@ -180,6 +212,18 @@ export default {
     },
     goTo(path: string) {
       this.$router.push(path)
+    },
+    getModes() {
+      return Object.keys(this.document.conjugaisons)
+    },
+    getTemps(mode: string) {
+      return Object.keys(this.document.conjugaisons[mode])
+    },
+    getSujets(mode: string, temps: string) {
+      return Object.keys(this.document.conjugaisons[mode][temps])
+    },
+    getFormeVerbale(mode: string, temps: string, sujet: string) {
+      return this.document.conjugaisons[mode][temps][sujet]
     },
     starWord
   }
@@ -226,7 +270,50 @@ export default {
   text-decoration: none;
 }
 
+details {
+  margin-bottom: .5em;
+}
+
 summary {
-  font-size: 2em;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+ion-item.header {
+  transition: .2s ease-in-out;
+}
+
+ion-accordion:first-child ion-item.header {
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)))
+}
+
+ion-accordion:last-child ion-item.header, ion-accordion.accordion-expanded:last-child ion-list.no-radius ion-item:last-child {
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
+}
+
+ion-accordion.accordion-expanded:last-child ion-item.header {
+  border-radius: 0;
+  border-bottom: none;
+}
+
+ion-item {
+  border-left: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
+  border-right: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
+}
+
+.border-radius {
+  border-radius: 12px;
+}
+
+ion-item:not(+ ion-item)::part(native) {
+  border-radius: 12px;
+}
+
+ion-list.no-radius ion-item:last-child {
+  --inner-border-width: 0;
 }
 </style>

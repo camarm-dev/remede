@@ -71,16 +71,19 @@ def get_conjugaisons(verb: str):
         for mode in modes_conjugaison:
             nom_mode = ' '.join(mode.attrs.get('class')).replace('modeConjugue ', '')
             temps_conjugaison = mode.find_all('div', attrs={'class': 'temps'})
+            if nom_mode == 'Infinitif':
+                continue
             verb_conjugaisons[nom_mode] = {}
             for temps in temps_conjugaison:
                 nom_temps = ' '.join(temps.attrs.get('class')).replace('temps ', '')
                 formes_verbales = temps.find_all('li')
                 verb_conjugaisons[nom_mode][nom_temps] = {}
                 for forme in formes_verbales:
-                    sujet = forme.find('span', attrs={'class': 'pronom'}).text
+                    element_sujet = forme.find('span', attrs={'class': 'pronom'})
+                    sujet = element_sujet.text if element_sujet else modes_conjugaison_sujets.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
                     forme_verbale = forme.text.replace(sujet + ' ', '')
                     verb_conjugaisons[nom_mode][nom_temps][sujet] = forme_verbale
-            return verb_conjugaisons
+        return verb_conjugaisons
     except Exception:
         return {}
 
@@ -90,7 +93,7 @@ def get_word_document(word: str):
     if not success:
         return False
     conjugaisons = {}
-    if 'Verbe' in result['genre']:
+    if 'Verbe' in result['genre'] or 'Verbe 1' in result['genre']:
         conjugaisons = get_conjugaisons(word)
     return {
         "synonymes": get_synonyms(word),
@@ -163,6 +166,10 @@ if __name__ == '__main__':
     all_words = get_words()
     all_ipa = get_word2ipa()
     before = datetime.datetime.now()
+    modes_conjugaison_sujets = {
+        "Participe_Présent": "(en)",
+        "Participe_Passé": "(a / est)"
+    }
     try:
         remedize(all_words)
     except KeyboardInterrupt:

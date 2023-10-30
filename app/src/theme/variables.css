@@ -21,6 +21,11 @@ http://ionicframework.com/docs/theming/ */
   font-weight: bold;
 }
 
+body, html {
+  background-color: var(--ion-background-color) !important;
+  --ion-toolbar-background: var(--ion-background-color, #fff);
+}
+
 :root {
   /** primary **/
   --ion-color-primary: #3880ff;
