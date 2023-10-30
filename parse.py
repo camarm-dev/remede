@@ -1,6 +1,8 @@
 import datetime
 import json
 import urllib.parse
+
+import bs4
 import requests
 from bs4 import BeautifulSoup
 
@@ -60,10 +62,36 @@ def get_wictionary_doc(word: str):
         return {}, False
 
 
+def get_conjugaisons(verb: str):
+    try:
+        verb_conjugaisons = {}
+        parser = BeautifulSoup(requests.get(f'http://conjuguons.fr/conjugaison/verbe/{verb}').content, 'html.parser')
+        table = parser.find('div', attrs={'id': 'toustemps'})
+        modes_conjugaison = table.find_all('div', attrs={'class': 'modeConjugue'})
+        for mode in modes_conjugaison:
+            nom_mode = ' '.join(mode.attrs.get('class')).replace('modeConjugue ', '')
+            temps_conjugaison = mode.find_all('div', attrs={'class': 'temps'})
+            verb_conjugaisons[nom_mode] = {}
+            for temps in temps_conjugaison:
+                nom_temps = ' '.join(temps.attrs.get('class')).replace('temps ', '')
+                formes_verbales = temps.find_all('li')
+                verb_conjugaisons[nom_mode][nom_temps] = {}
+                for forme in formes_verbales:
+                    sujet = forme.find('span', attrs={'class': 'pronom'}).text
+                    forme_verbale = forme.text.replace(sujet + ' ', '')
+                    verb_conjugaisons[nom_mode][nom_temps][sujet] = forme_verbale
+            return verb_conjugaisons
+    except Exception:
+        return {}
+
+
 def get_word_document(word: str):
     result, success = get_wictionary_doc(word)
     if not success:
         return False
+    conjugaisons = {}
+    if 'Verbe' in result['genre']:
+        conjugaisons = get_conjugaisons(word)
     return {
         "synonymes": get_synonyms(word),
         "antonymes": get_antonyms(word),
@@ -87,7 +115,7 @@ def get_word_document(word: str):
             "credits": result["url_credits"]
         },
         "ipa": get_ipa(word),
-        "conjugaisons": {}
+        "conjugaisons": conjugaisons
     }
 
 

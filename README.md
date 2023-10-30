@@ -19,7 +19,9 @@ Open Source and free alternative to Antidote.
 - [ ] API publique
   - [ ] Mot du jour
   - [ ] Obtenir document d'un mot
-- [ ] Conjugaison
+- [ ] Conjugaisons
+  - [x] Dans un doc Remède
+  - [ ] Afficher
 - [ ] Exemples
 - [ ] Lire un mot
 - [ ] Fiches de français
