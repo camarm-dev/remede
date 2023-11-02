@@ -22,26 +22,32 @@
         <p>
           Remède est un dictionnaire français libre, construit sur plusieurs services tiers.
         </p>
-        <h2>Licence</h2>
-        <p>
-          Remède est un logiciel libre sous licence <a href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">CeCill V2.1</a>, disponible sur <a href="https://github.com/camarm-dev/remede" target="_blank">Github</a>
-        </p>
-        <ion-list class="ion-no-padding">
-          <ion-item button>
+        <h2>Utilitaires</h2>
+        <ion-list class="ion-no-padding" inset>
+          <ion-item button color="light">
             <ion-icon slot="start" :icon="reloadOutline"/>
             <ion-label>
               <h3>Mise à jour</h3>
             </ion-label>
           </ion-item>
-          <ion-item button>
+          <ion-item button color="light">
             <ion-icon slot="start" :icon="logoGooglePlaystore"/>
             <ion-label>
               <h3>Ouvrir le Store</h3>
             </ion-label>
           </ion-item>
         </ion-list>
-        <br>
-        <img alt="Powered by Labse Softwares" src="/labse_powered_by.png" />
+        <h2>Crédits / Source</h2>
+        <a href="https://labse.camarm.fr" target="_blank">
+          <img width="150" alt="Powered by Labse Softwares" src="/labse_powered_by.png" />
+        </a>
+        <p>
+          <a href="https://github.com/camarm-dev/remede#données-remède" target="_blank">Données Remède</a>
+          •
+          <a href="https://github.com/camarm-dev/remede" target="_blank">Github</a>
+          •
+          <a href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">Licence Remède</a>
+        </p>
       </ion-content>
 
     </ion-content>
