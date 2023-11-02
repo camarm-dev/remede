@@ -20,11 +20,11 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
         <ion-back-button defaultHref="/dictionnaire" text="Retour"></ion-back-button>
       </ion-buttons>
       <ion-title>Définition "{{ mot }}"</ion-title>
-      <ion-buttons slot="end" @click="shareDefinition()">
+      <ion-buttons slot="end">
         <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
           <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
         </ion-button>
-        <ion-button>
+        <ion-button @click="shareDefinition()">
           <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
         </ion-button>
       </ion-buttons>
