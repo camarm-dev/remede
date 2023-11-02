@@ -70,7 +70,7 @@
             <ion-button @click="copy(tab == 'correction' ? corrected: getPartiallyCorrectedContent())" color="primary">
               Copier&nbsp;<ion-icon :icon="copyOutline"/>
             </ion-button>
-            <ion-button color="success" @click="content = corrected; locked = false">
+            <ion-button color="success" @click="content = tab == 'correction' ? corrected: getPartiallyCorrectedContent(); locked = false">
               Réutiliser&nbsp;<ion-icon :icon="chevronForwardOutline"/>
             </ion-button>
           </ion-buttons>
