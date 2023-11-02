@@ -6,6 +6,8 @@
 # Remède
 Open Source and free alternative to Antidote.
 
+[Data credits](#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE)
+
 </div>
 
 ## Buts
