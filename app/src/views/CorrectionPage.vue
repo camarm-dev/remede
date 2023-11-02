@@ -43,33 +43,35 @@
             {{ corrected }}
           </div>
           <div v-else class="content ion-padding-bottom">
-            {{ content }}
-            <span v-for="correction in corrections">
-              <ion-text :id="`correction-${corrections.indexOf(correction)}`" :class="`error ${correction.type}`">{{ correction.mistakeText }}</ion-text>
-              <ion-popover :trigger="`correction-${corrections.indexOf(correction)}`" trigger-action="click">
-                <ion-content class="ion-padding">
-                  <ion-label>
-                    <h2>{{ correction.shortDescription }}</h2>
-                    <p v-html="correction.longDescription.replaceAll('#!', `<a href=/dictionnaire/${correction.mistakeText}>`).replaceAll('#$', '</a>')"></p>
-                  </ion-label>
-                  <br>
-                  <ion-label>
-                    <ion-text color="medium">Remplacer par</ion-text>
+            <span v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
+              <span v-if="segment.correction">
+                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.type}`">{{ segment.correction.mistakeText }}</ion-text>
+                <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
+                  <ion-content class="ion-padding">
+                    <ion-label>
+                      <h2>{{ segment.correction.shortDescription }}</h2>
+                      <p v-html="segment.correction.longDescription.replaceAll('#!', `<a href=/dictionnaire/${segment.correction.mistakeText}>`).replaceAll('#$', '</a>')"></p>
+                    </ion-label>
                     <br>
-                    <ion-text color="primary" v-for="suggested in correction.suggestions">{{ suggested.text }}<br></ion-text>
-                  </ion-label>
-                </ion-content>
-              </ion-popover>
+                    <ion-label>
+                      <ion-text color="medium">Remplacer par</ion-text>
+                      <br>
+                      <ion-text color="primary" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
+                    </ion-label>
+                  </ion-content>
+                </ion-popover>
+              </span>
+              {{ segment.text }}
             </span>
           </div>
         </ion-item>
-        <ion-item v-if="tab == 'correction'" class="no-border" color="light">
+        <ion-item v-if="locked" class="no-border" color="light">
           <ion-buttons slot="end">
-            <ion-button @click="copy(corrected)" color="primary">
+            <ion-button @click="copy(tab == 'correction' ? corrected: getPartiallyCorrectedContent())" color="primary">
               Copier&nbsp;<ion-icon :icon="copyOutline"/>
             </ion-button>
             <ion-button color="success" @click="content = corrected; locked = false">
-              Utiliser&nbsp;<ion-icon :icon="chevronForwardOutline"/>
+              Réutiliser&nbsp;<ion-icon :icon="chevronForwardOutline"/>
             </ion-button>
           </ion-buttons>
         </ion-item>
@@ -95,7 +97,7 @@ import {
   IonSegment,
   IonSegmentButton
 } from '@ionic/vue';
-import {chevronForwardOutline, copyOutline, lockOpenOutline, pencilOutline, sparkles} from "ionicons/icons";
+import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons";
 </script>
 
 <script lang="ts">
@@ -107,7 +109,8 @@ export default {
       corrections: [],
       corrected: "",
       locked: false,
-      tab: "explain"
+      tab: "explain",
+      explainSegments: []
     }
   },
   methods: {
@@ -135,19 +138,34 @@ export default {
           'Content-Type': 'application/*+json'
         }
       }).then(resp => resp.json()).then(response => {
-        console.log(response)
         this.corrections = response.corrections
         this.corrected = response.text
-        const originalText = this.content
+        let originalText = this.content
+        let lastIndex = 0
+        let segmentedText = []
         for (const correction of this.corrections) {
-          console.log(correction)
-
+          const startIndex = correction.startIndex
+          const endIndex = correction.endIndex
+          segmentedText.push({
+            correction: false,
+            text: originalText.slice(lastIndex, lastIndex == 0 ? startIndex: startIndex - 1)
+          })
+          segmentedText.push({
+            correction: correction,
+            text: ''
+          })
+          lastIndex = endIndex
         }
+
+        this.explainSegments = segmentedText
         this.locked = true
       })
     },
     copy(text: string) {
 
+    },
+    getPartiallyCorrectedContent() {
+      return ''
     }
   }
 }
@@ -169,6 +187,10 @@ export default {
 
 .error.Punctuation {
   text-decoration: underline wavy var(--ion-color-success-shade);
+}
+
+.correction + .correction {
+  margin-left: .2em;
 }
 </style>
 
