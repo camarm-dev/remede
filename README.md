@@ -112,7 +112,7 @@ Schéma JSON d'un document de mot indexé par Remède
   - `url` (`string`): Url de l'image
   - `credits` (`string`): Url redirigeant vers les droits d'auteur de l'image
 - `ipa` (`string`): Prononciation du mot selon l'International Phonetic Alphabet
-- `conjugaisons` (`{}`): Objet contenant les conjugaisons du mot si c'est un verbe (NON IMPLÉMENTÉ)
+- `conjugaisons` (`{}`): Objet contenant les conjugaisons du mot si c'est un verbe
   - `[nom du mode]` (`{}`): Objet contenant les temps du mode
     - `[nom du temps]` (`{}`): Objet contenant les formes verbales du temps
       - `[sujet]` (`string`): Forme verbale du verbe (de `mode, temps, sujet`)
