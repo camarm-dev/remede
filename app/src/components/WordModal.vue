@@ -8,7 +8,8 @@ import {
   IonSegment,
   IonSegmentButton,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonButton
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
 </script>

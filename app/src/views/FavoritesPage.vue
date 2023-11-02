@@ -59,7 +59,7 @@ export default {
       starredWords: []
     }
   },
-  created() {
+  mounted() {
     this.refresh()
   },
   methods: {

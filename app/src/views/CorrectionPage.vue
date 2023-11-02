@@ -95,7 +95,8 @@ import {
   IonTextarea,
   IonText,
   IonSegment,
-  IonSegmentButton
+  IonSegmentButton,
+  IonButton
 } from '@ionic/vue';
 import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons";
 </script>
