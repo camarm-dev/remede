@@ -27,6 +27,14 @@
                   </router-link>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
+                  <router-link to="/correction">
+                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/correction') ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="medicalOutline"></ion-icon>
+                      <ion-label>Correction</ion-label>
+                    </ion-item>
+                  </router-link>
+                </ion-menu-toggle>
+                <ion-menu-toggle :auto-hide="false">
                   <router-link to="/fiches">
                     <ion-item disabled lines="none" :detail="false" class="hydrated" :class="isPage('/fiches') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
@@ -81,7 +89,7 @@ import {
 import {
   bookOutline,
   informationCircleOutline,
-  cogOutline, documentOutline, bookmarkOutline
+  cogOutline, documentOutline, bookmarkOutline, medicalOutline
 } from 'ionicons/icons';
 
 </script>
