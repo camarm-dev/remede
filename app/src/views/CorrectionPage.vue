@@ -56,7 +56,7 @@
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
                       <br>
-                      <ion-text color="primary" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
+                      <ion-text @click="explainSegments[explainSegments.indexOf(segment)] = { correction: false, text: suggested.text }" color="primary" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
                     </ion-label>
                   </ion-content>
                 </ion-popover>
@@ -101,6 +101,7 @@ import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionic
 </script>
 
 <script lang="ts">
+import { Clipboard } from '@capacitor/clipboard';
 
 export default {
   data() {
@@ -162,10 +163,14 @@ export default {
       })
     },
     copy(text: string) {
-
+      Clipboard.write({
+        string: text
+      });
     },
     getPartiallyCorrectedContent() {
-      return ''
+      return this.explainSegments.map(obj => {
+        return obj.correction ? obj.correction.mistakeText: obj.text
+      }).join('')
     }
   }
 }

@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@capacitor/app": "5.0.6",
+    "@capacitor/clipboard": "^5.0.6",
     "@capacitor/core": "5.5.1",
     "@capacitor/haptics": "5.0.6",
     "@capacitor/keyboard": "5.0.6",
