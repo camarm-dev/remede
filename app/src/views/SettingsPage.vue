@@ -27,17 +27,51 @@
         </ion-item>
       </ion-list>
 
+      <br>
+
+      <ion-list inset v-if="downloaded">
+        <ion-item>
+          Dictionnaire <pre>01ffea</pre> téléchargé: 240 562 entrées.
+        </ion-item>
+      </ion-list>
+
+      <ion-list inset v-else>
+        <ion-item :disabled="loading" color="light" @click="loading = true">
+          <ion-label>
+            <h3>Télécharger le dictionnaire</h3>
+          </ion-label>
+          <ion-icon slot="end" :icon="cloudDownloadOutline"/>
+        </ion-item>
+        <ion-item color="light" v-if="loading">
+          <ion-label slot="start">
+            <p>Téléchargement en cour...</p>
+          </ion-label>
+          <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
+        </ion-item>
+      </ion-list>
+
+      <ion-note class="ion-padding" v-if="loading">
+        Veuillez ne pas quitter cette page pendant le téléchargement.
+      </ion-note>
+
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption} from '@ionic/vue';
+import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonIcon, IonProgressBar} from '@ionic/vue';
+import {cloudDownloadOutline} from "ionicons/icons";
 </script>
 
 <script lang="ts">
 
 export default {
+  data() {
+    return {
+      downloaded: false,
+      loading: false
+    }
+  },
   methods: {
     handleThemeChangement(theme: string) {
       localStorage.setItem('userTheme', theme)
