@@ -49,7 +49,7 @@
       </ion-list>
 
       <ion-list inset>
-        <ion-item href="/marques-page" button color="primary">
+        <ion-item @click="goTo('/marques-page')" button color="primary">
           <ion-icon slot="start" :icon="bookmark"/>
           <ion-label>
             Mes marques page
@@ -70,12 +70,14 @@ import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 
 <script lang="ts">
 import {getAutocomplete} from "@/functions/dictionnary";
+import {useRouter} from "vue-router";
 
 export default {
   data() {
     return {
       results: [],
-      query: ''
+      query: '',
+      router: useRouter()
     }
   },
   methods: {
@@ -86,6 +88,9 @@ export default {
       } else {
         this.results = []
       }
+    },
+    goTo(path: string) {
+      this.router.push(path)
     }
   }
 }
