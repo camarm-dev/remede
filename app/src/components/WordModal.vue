@@ -9,9 +9,10 @@ import {
   IonSegmentButton,
   IonTitle,
   IonToolbar,
-  IonButton
+  IonButton, IonNavLink
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
+import WordModal from "@/components/WordModal.vue";
 </script>
 
 <template>
@@ -94,7 +95,9 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
       </div>
       <ul>
         <li v-for="syn in document.synonymes">
-          <a href="" @click="goTo(`/dictionnaire/${syn}`)">{{ syn }}</a>
+          <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: syn }">
+            <a>{{ syn }}</a>
+          </ion-nav-link>
         </li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
@@ -109,7 +112,9 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
       </div>
       <ul>
         <li v-for="ant in document.antonymes">
-          <a href="" @click="goTo(`/dictionnaire/${ant}`)">{{ ant }}</a>
+          <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: ant }">
+            <a>{{ ant }}</a>
+          </ion-nav-link>
         </li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
