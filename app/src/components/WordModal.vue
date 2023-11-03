@@ -126,7 +126,7 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
       </div>
       <br>
       <ion-list inset class="border-radius border">
-        <ion-item color="light">
+        <ion-item color="light" lines="full">
           <ion-label slot="start">
             <p>Mode</p>
           </ion-label>
@@ -134,7 +134,7 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
             <p>Temps</p>
           </ion-label>
         </ion-item>
-        <ion-item color="light">
+        <ion-item color="light" lines="full">
           <ion-select @ionChange="changeMode($event.target.value)" slot="start" interface="action-sheet" placeholder="Mode" :value="currentMode">
             <ion-select-option v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
           </ion-select>
