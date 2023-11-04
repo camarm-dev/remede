@@ -16,6 +16,7 @@ Open Source and free alternative to Antidote.
 - [x] Marques pages
 - [x] Partager un mot
 - [x] Complétion automatique sur la recherche
+- [x] Lire un mot
 - [ ] Page de présentation
 - [ ] Référencer tous les mots
 - [ ] API publique
@@ -25,7 +26,6 @@ Open Source and free alternative to Antidote.
   - [x] Dans un doc Remède
   - [ ] Afficher
 - [ ] Exemples
-- [ ] Lire un mot
 - [ ] Fiches de français
 
 ## Development
