@@ -1,11 +1,13 @@
 // import REMEDE from "../../../data/REMEDE.json"
 import REMEDE_a from "../../../data/REMEDE_a.json"
 import REMEDE_b from "../../../data/REMEDE_b.json"
+import REMEDE_c from "../../../data/REMEDE_c.json"
 
 const autocomplete = Object.keys(REMEDE_a)
 const REMEDE = {
     'a': REMEDE_a,
-    'b': REMEDE_b
+    'b': REMEDE_b,
+    'c': REMEDE_c
 }
 
 const transformLetter = {
