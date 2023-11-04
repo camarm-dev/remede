@@ -1,12 +1,10 @@
-// import REMEDE from "../../../data/REMEDE.json"
-import REMEDE_a from "../../../data/REMEDE_a.json"
-import REMEDE_b from "../../../data/REMEDE_b.json"
+import {RemedeDictionaryIndex} from "@/functions/types/remede";
 
-const autocomplete = Object.keys(REMEDE_a)
 const REMEDE = {
-    'a': REMEDE_a,
-    'b': REMEDE_b
-}
+    'a': await import("../../../data/REMEDE_a.json"),
+    'b': await import("../../../data/REMEDE_b.json"),
+    'c': await import("../../../data/REMEDE_c.json")
+} as RemedeDictionaryIndex
 
 const transformLetter = {
     'â': 'a',
@@ -26,7 +24,7 @@ const transformLetter = {
 
 
 function getRemedeByWord(word: string) {
-    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]] || {}
+    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]]
 }
 
 function getAutocompleteByWord(word: string) {
@@ -42,6 +40,7 @@ function getAutocomplete(query: string) {
 }
 
 function getRandomWord() {
+    const autocomplete = Object.keys(REMEDE['c'])
     return autocomplete[Math.floor(Math.random() * autocomplete.length)]
 }
 

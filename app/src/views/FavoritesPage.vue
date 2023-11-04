@@ -56,7 +56,7 @@ import {getStarredWords} from "@/functions/favorites";
 export default {
   data() {
     return {
-      starredWords: []
+      starredWords: [] as string[]
     }
   },
   mounted() {

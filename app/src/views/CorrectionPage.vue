@@ -103,16 +103,17 @@ import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionic
 
 <script lang="ts">
 import { Clipboard } from '@capacitor/clipboard';
+import {ExplainSegment, ReversoCorrection} from "@/functions/types/reverso";
 
 export default {
   data() {
     return {
       content: "",
-      corrections: [],
+      corrections: [] as ReversoCorrection[],
       corrected: "",
       locked: false,
       tab: "explain",
-      explainSegments: []
+      explainSegments: [] as ExplainSegment[]
     }
   },
   methods: {
@@ -144,7 +145,7 @@ export default {
         this.corrected = response.text
         let originalText = this.content
         let lastIndex = 0
-        let segmentedText = []
+        let segmentedText = [] as ExplainSegment[]
         for (const correction of this.corrections) {
           const startIndex = correction.startIndex
           const endIndex = correction.endIndex

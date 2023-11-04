@@ -2,7 +2,6 @@ import datetime
 import json
 import urllib.parse
 
-import bs4
 import requests
 from bs4 import BeautifulSoup
 
@@ -155,8 +154,8 @@ def remedize(word_list: list):
         print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs | {segments} segments sauvégardés")
 
 
-def getTimeDetails(time):
-    days, seconds = time.days, time.seconds
+def getTimeDetails(time_object):
+    days, seconds = time_object.days, time_object.seconds
     hours = days * 24 + seconds // 3600
     minutes = (seconds % 3600) // 60
     seconds = seconds % 60

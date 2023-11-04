@@ -75,7 +75,7 @@ import {useRouter} from "vue-router";
 export default {
   data() {
     return {
-      results: [],
+      results: [] as string[],
       query: '',
       router: useRouter()
     }
