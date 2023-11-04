@@ -142,7 +142,7 @@ def remedize(word_list: list):
     for word in word_list:
         if word.lower().startswith('a') or any([word.lower().startswith(char) for char in accepted_char['a']]):
             continue
-        if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char[current_char]]):
+        if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)
             del remede_dictionary
             remede_dictionary = {}
