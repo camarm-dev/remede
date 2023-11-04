@@ -1,9 +1,10 @@
+import {RemedeDictionaryIndex} from "@/functions/types/remede";
 
 const REMEDE = {
     'a': import("../../../data/REMEDE_a.json"),
     'b': import("../../../data/REMEDE_b.json"),
     'c': import("../../../data/REMEDE_c.json")
-}
+} as RemedeDictionaryIndex
 
 const transformLetter = {
     'â': 'a',
