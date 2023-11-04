@@ -62,6 +62,7 @@ def get_autocomplete(query: str):
 if __name__ == '__main__':
     REMEDE = {
         'a': get_remede_json('a'),
-        'b': get_remede_json('b')
+        'b': get_remede_json('b'),
+        'c': get_remede_json('c')
     }
     uvicorn.run(app, host='0.0.0.0')
