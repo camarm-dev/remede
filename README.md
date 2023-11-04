@@ -74,7 +74,7 @@ Le dossier `data` est destiné aux ressources linguistiques utilisées par Remè
 
 `data/ipa.json`: Pour une clé 'mot', renvoi l'IPA
 
-`data/REMEDE_a.jon`: Le fichier d'indexation final (par lettre); pour une clé 'mot' renvoi [son document selon le schéma REMEDE](#schéma-de-document-remède)
+`data/REMEDE_a.jon`: Le fichier d'indexation final (par lettre) ; pour une clé 'mot' renvoi [son document selon le schéma REMEDE](#schéma-de-document-remède)
 
 ### Schéma de document Remède
 Schéma JSON d'un document de mot indexé par Remède
@@ -141,7 +141,7 @@ Schéma JSON d'un document de mot indexé par Remède
 ### API
 
 - Installer python3
-- Installer les dépandances
+- Installer les dépendances
 ```shell
 pip install fastapi uvicorn
 ```

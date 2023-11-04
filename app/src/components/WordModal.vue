@@ -253,7 +253,6 @@ export default {
         player.play()
       })
     },
-    starWord
   }
 }
 </script>

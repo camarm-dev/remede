@@ -1,8 +1,8 @@
 
 interface RemedeWordDefinition {
-    genre: string
+    genre: string | string[]
     classe: string
-    explications: string[]
+    explications: string[] | string[][]
     exemples: string[]
 }
 
