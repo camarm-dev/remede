@@ -1,4 +1,5 @@
 import json
+from hashlib import md5
 
 import uvicorn
 from fastapi import FastAPI
@@ -41,7 +42,8 @@ def get_remede_doc(word: str):
 def root():
     return {
         "version": version,
-        "message": "Check /docs for documentation"
+        "message": "Check /docs for documentation",
+        "dataset": str(md5(str(REMEDE).encode()).hexdigest())[0:7]
     }
 
 
