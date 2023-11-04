@@ -1,9 +1,9 @@
 import {RemedeDictionaryIndex} from "@/functions/types/remede";
 
 const REMEDE = {
-    'a': import("../../../data/REMEDE_a.json"),
-    'b': import("../../../data/REMEDE_b.json"),
-    'c': import("../../../data/REMEDE_c.json")
+    'a': await import("../../../data/REMEDE_a.json"),
+    'b': await import("../../../data/REMEDE_b.json"),
+    'c': await import("../../../data/REMEDE_c.json")
 } as RemedeDictionaryIndex
 
 const transformLetter = {
@@ -24,7 +24,7 @@ const transformLetter = {
 
 
 function getRemedeByWord(word: string) {
-    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]] || {}
+    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]]
 }
 
 function getAutocompleteByWord(word: string) {
