@@ -39,6 +39,7 @@ function getAutocomplete(query: string) {
 }
 
 function getRandomWord() {
+    const autocomplete = Object.keys(REMEDE['c'])
     return autocomplete[Math.floor(Math.random() * autocomplete.length)]
 }
 
