@@ -18,6 +18,10 @@ Open Source and free alternative to Antidote.
 - [x] Complétion automatique sur la recherche
 - [x] Lire un mot
 - [ ] Page de présentation
+- [ ] Applications de bureaux
+  -  [ ] Windows 
+  -  [ ] MAC 
+  -  [ ] Linux 
 - [ ] Référencer tous les mots
 - [ ] API publique
   - [ ] Mot du jour
@@ -27,6 +31,13 @@ Open Source and free alternative to Antidote.
   - [ ] Afficher
 - [ ] Exemples
 - [ ] Fiches de français
+
+## Télécharger
+
+Téléchargez les exécutables pour votre plateforme depuis [la page releases](/releases)
+
+SOON: Disponible sur Play Store
+
 
 ## Development
 
