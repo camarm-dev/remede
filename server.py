@@ -52,6 +52,13 @@ def get_word_document(word: str):
     return get_remede_doc(word)
 
 
+@app.get('/autocomplete/{query}')
+def get_autocomplete(query: str):
+    json_object = get_remede_json(get_first_letter(query))
+    keys: list = json_object.keys()
+    return list(filter(lambda word: word.startswith(query), keys))[0:6]
+
+
 if __name__ == '__main__':
     REMEDE = {
         'a': get_remede_json('a'),
