@@ -140,4 +140,15 @@ Schéma JSON d'un document de mot indexé par Remède
 
 ### API
 
-Pas encore d'API
+- Installer python3
+- Installer les dépandances
+```shell
+pip install fastapi uvicorn
+```
+- Lancer le serveur
+```shell
+python3 server.py
+```
+En ligne sur [localhost:8000](http:/localhost:8000) !
+
+Documentation sur [localhost:8000/docs](http:/localhost:8000/docs).
