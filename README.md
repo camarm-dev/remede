@@ -41,16 +41,26 @@ SOON: Disponible sur Play Store
 
 ## Development
 
+- Installer les dépendances
+```shell
+npm i
+```
+- Installer ionic
+```shell
+npm i -g @ionic/cli
+```
+
 ### Application mobile
 
-[//]: # (TODO)
-
-Rien ici pour le moment
+- Construire un fichier APK:
+```shell
+ionic cap build android
+```
 
 ### Données Remède
 Remède créé sa propre base de mots, synonymes, antonymes français à partir de service tiers.
 
-- Les définitions par le [Wictionary français](), vie le wrapper de [Frederic Gainza]() de l'API
+- Les définitions par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), vie le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/) de l'API
 - Les synonymes via [synonymo.fr](https://www.synonymo.fr)
 - Les antonymes via [antonyme.org](https://www.antonyme.org)
 - Les exemples de ???? (pas encore disponible)
@@ -64,7 +74,7 @@ Le dossier `data` est destiné aux ressources linguistiques utilisées par Remè
 
 `data/ipa.json`: Pour une clé 'mot', renvoi l'IPA
 
-`data/REMEDE.jon`: Le fichier d'indexation final; pour une clé 'mot' renvoi [son document selon le schéma REMEDE](#schéma-de-document-remède)
+`data/REMEDE_a.jon`: Le fichier d'indexation final (par lettre); pour une clé 'mot' renvoi [son document selon le schéma REMEDE](#schéma-de-document-remède)
 
 ### Schéma de document Remède
 Schéma JSON d'un document de mot indexé par Remède
@@ -127,3 +137,7 @@ Schéma JSON d'un document de mot indexé par Remède
   - `[nom du mode]` (`{}`): Objet contenant les temps du mode
     - `[nom du temps]` (`{}`): Objet contenant les formes verbales du temps
       - `[sujet]` (`string`): Forme verbale du verbe (de `mode, temps, sujet`)
+
+### API
+
+Pas encore d'API
