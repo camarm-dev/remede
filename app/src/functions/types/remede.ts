@@ -55,5 +55,6 @@ interface RemedeDictionaryIndex {
 export type {
     RemedeDictionary,
     RemedeDictionaryIndex,
-    RemedeWordDocument
+    RemedeWordDocument,
+    RemedeConjugateDocument
 }

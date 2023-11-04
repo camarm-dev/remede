@@ -168,7 +168,7 @@ import WordModal from "@/components/WordModal.vue";
 import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
-import {RemedeWordDocument} from "@/functions/types/remede";
+import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 
 export default {
   props: ['motRemede'],
@@ -190,7 +190,7 @@ export default {
           name: '',
           url: ''
         },
-        conjugaisons: {}
+        conjugaisons: {} as RemedeConjugateDocument
       } as RemedeWordDocument,
       notFound: false,
       stared: false
