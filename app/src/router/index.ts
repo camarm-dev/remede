@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'fiches',
-        component: () => import ('../views/HomePage.vue')
+        component: () => import ('../views/FichesPage.vue')
       },
       {
         path: 'parametres',

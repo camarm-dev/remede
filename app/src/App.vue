@@ -11,54 +11,42 @@
             <div class="menu-links">
               <div class="start">
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/dictionnaire">
-                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/dictionnaire') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
-                      <ion-label>Dictionnaire</ion-label>
-                    </ion-item>
-                  </router-link>
+                  <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="path === '/dictionnaire' ? 'selected': ''">
+                    <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
+                    <ion-label>Dictionnaire</ion-label>
+                  </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/marques-page">
-                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/marques-page') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
-                      <ion-label>Marques Pages</ion-label>
-                    </ion-item>
-                  </router-link>
+                  <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="path === '/marques-page' ? 'selected': ''">
+                    <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
+                    <ion-label>Marques Pages</ion-label>
+                  </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/correction">
-                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/correction') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="medicalOutline"></ion-icon>
-                      <ion-label>Correction</ion-label>
-                    </ion-item>
-                  </router-link>
+                  <ion-item @click="goTo('/correction')" lines="none" :detail="false" class="hydrated" :class="path === '/correction' ? 'selected': ''">
+                    <ion-icon aria-hidden="true" slot="start" :icon="medicalOutline"></ion-icon>
+                    <ion-label>Correction</ion-label>
+                  </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/fiches">
-                    <ion-item disabled lines="none" :detail="false" class="hydrated" :class="isPage('/fiches') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
-                      <ion-label>Fiches</ion-label>
-                    </ion-item>
-                  </router-link>
+                  <ion-item @click="goTo('/fiches')" disabled lines="none" :detail="false" class="hydrated" :class="path === '/fiches' ? 'selected': ''">
+                    <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
+                    <ion-label>Fiches</ion-label>
+                  </ion-item>
                 </ion-menu-toggle>
               </div>
               <div class="end">
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/parametres">
-                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/parametres') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
-                      <ion-label>Paramètres</ion-label>
-                    </ion-item>
-                  </router-link>
+                  <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="path === '/parametres' ? 'selected': ''">
+                    <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
+                    <ion-label>Paramètres</ion-label>
+                  </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <router-link to="/a-propos">
-                    <ion-item lines="none" :detail="false" class="hydrated" :class="isPage('/a-propos') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="informationCircleOutline"></ion-icon>
-                      <ion-label>À propos</ion-label>
-                    </ion-item>
-                  </router-link>
+                  <ion-item @click="goTo('/a-propos')" lines="none" :detail="false" class="hydrated" :class="path === '/a-propos' ? 'selected': ''">
+                    <ion-icon aria-hidden="true" slot="start" :icon="informationCircleOutline"></ion-icon>
+                    <ion-label>À propos</ion-label>
+                  </ion-item>
                 </ion-menu-toggle>
               </div>
             </div>
@@ -95,13 +83,25 @@ import {
 </script>
 
 <script lang="ts">
+import {useRouter} from "vue-router";
+
 export default {
   mounted() {
     document.body.classList.add(localStorage.getItem('userTheme') || 'light')
   },
+  data() {
+    return {
+      router: useRouter(),
+      path: location.pathname
+    }
+  },
   methods: {
     isPage(path: string) {
       return location.pathname === path
+    },
+    goTo(path: string) {
+      this.router.push(path)
+      this.path = path
     }
   }
 }

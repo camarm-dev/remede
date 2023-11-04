@@ -1,16 +1,32 @@
 // import REMEDE from "../../../data/REMEDE.json"
 import REMEDE_a from "../../../data/REMEDE_a.json"
+import REMEDE_b from "../../../data/REMEDE_b.json"
 
 const autocomplete = Object.keys(REMEDE_a)
 const REMEDE = {
-    ...REMEDE_a
+    'a': REMEDE_a,
+    'b': REMEDE_b
+}
+
+const transformLetter = {
+    'â': 'a',
+    'æ': 'a',
+    'à': 'a',
+    'ç': 'c',
+    'î': 'i',
+    'ï': 'i',
+    'ù': 'u',
+    'û': 'u',
+    'ü': 'u',
+    'é': 'e',
+    'ë': 'e',
+    'ê': 'e',
+    'è': 'e'
 }
 
 
 function getRemedeByWord(word: string) {
-    // console.log(REMEDE[word[0]])
-    // return REMEDE[word[0]]
-    return REMEDE
+    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]] || {}
 }
 
 function getAutocompleteByWord(word: string) {
