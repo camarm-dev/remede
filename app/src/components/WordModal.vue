@@ -197,20 +197,23 @@ export default {
     }
   },
   created() {
-    this.mot = this.motRemede
-    if (!this.motRemede) {
-      this.mot = this.$router.params.mot
-    }
-    const document = getWordDocument(this.mot)
-    if (document) {
-      this.document = getWordDocument(this.mot)
-    } else {
-      this.notFound = true
-    }
-
-    this.stared = isWordStarred(this.mot)
+    this.loadData()
   },
   methods: {
+    async loadData() {
+      this.mot = this.motRemede
+      if (!this.motRemede) {
+        this.mot = this.$router.params.mot
+      }
+      const document = await getWordDocument(this.mot)
+      if (document) {
+        this.document = await getWordDocument(this.mot)
+      } else {
+        this.notFound = true
+      }
+
+      this.stared = isWordStarred(this.mot)
+    },
     async shareDefinition() {
       try {
         await Share.share({

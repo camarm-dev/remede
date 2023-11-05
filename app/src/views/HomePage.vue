@@ -81,10 +81,10 @@ export default {
     }
   },
   methods: {
-    handleSearchbarInput(input: string) {
+    async handleSearchbarInput(input: string) {
       this.query = input
       if (input != '') {
-        this.results = getAutocomplete(input)
+        this.results = await getAutocomplete(input)
       } else {
         this.results = []
       }

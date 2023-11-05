@@ -1,11 +1,5 @@
 import {RemedeDictionary, RemedeDictionaryIndex} from "@/functions/types/remede";
-
-const REMEDE = {
-    'a': await import("../../../data/REMEDE_a.json") as any as RemedeDictionary,
-    'b': await import("../../../data/REMEDE_b.json") as any as RemedeDictionary,
-    'c': await import("../../../data/REMEDE_c.json") as any as RemedeDictionary
-} as RemedeDictionaryIndex
-
+import {getOfflineDictionaryStatus} from "@/functions/offline";
 
 interface transformLetter {
     [key: string]: string
@@ -28,25 +22,45 @@ const transformLetter = {
 } as transformLetter
 
 
-function getRemedeByWord(word: string) {
-    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]]
+async function useApi() {
+    return !(await getOfflineDictionaryStatus()).downloaded
 }
 
-function getAutocompleteByWord(word: string) {
-    return Object.keys(getRemedeByWord(word.toLowerCase()))
+async function getAutocompleteWithAPI(word: string) {
+    return await fetch(`https://api-remede.camarm.fr/autocomplete/${word}`).then(resp => resp.json())
 }
 
-function getWordDocument(word: string) {
-    return getRemedeByWord(word)[word]
+async function getAutocompleteFromDatabase(word: string) {
+    // TODO
+    return []
 }
 
-function getAutocomplete(query: string) {
-    return getAutocompleteByWord(query).filter(word => word.startsWith(query)).slice(0, 6)
+async function getWordWithAPI(word: string) {
+    return await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json())
+}
+
+async function getWordFromDatabase(word: string) {
+    // TODO
+    return {}
+}
+
+async function getAutocomplete(word: string) {
+    if (await useApi()) {
+        return await getAutocompleteWithAPI(word)
+    }
+    return await getAutocompleteFromDatabase(word)
+}
+
+async function getWordDocument(word: string) {
+    if (await useApi()) {
+        return await getWordWithAPI(word)
+    }
+    return await getWordFromDatabase(word)
 }
 
 function getRandomWord() {
-    const autocomplete = Object.keys(REMEDE['c'])
-    return autocomplete[Math.floor(Math.random() * autocomplete.length)]
+    // TODO
+    return {}
 }
 
 export {
