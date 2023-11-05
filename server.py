@@ -63,6 +63,9 @@ if __name__ == '__main__':
     REMEDE = {
         'a': get_remede_json('a'),
         'b': get_remede_json('b'),
-        'c': get_remede_json('c')
+        'c': get_remede_json('c'),
+        'd': get_remede_json('d'),
+        'e': get_remede_json('e'),
+        'f': get_remede_json('f')
     }
     uvicorn.run(app, host='0.0.0.0')
