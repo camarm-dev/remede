@@ -77,17 +77,25 @@ export default {
     return {
       results: [] as string[],
       query: '',
-      router: useRouter()
+      router: useRouter(),
+      autocompleteTimeout: setTimeout(() => {}, 500)
     }
   },
   methods: {
     async handleSearchbarInput(input: string) {
       this.query = input
       if (input != '') {
-        this.results = await getAutocomplete(input)
+        this.startAutocompleteSearch(input)
       } else {
+        clearTimeout(this.autocompleteTimeout)
         this.results = []
       }
+    },
+    startAutocompleteSearch(input: string) {
+      clearTimeout(this.autocompleteTimeout)
+      this.autocompleteTimeout = setTimeout(async () => {
+        this.results = await getAutocomplete(input)
+      }, 500)
     },
     goTo(path: string) {
       this.router.push(path)
