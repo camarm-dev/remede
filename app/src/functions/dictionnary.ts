@@ -1,10 +1,15 @@
-import {RemedeDictionaryIndex} from "@/functions/types/remede";
+import {RemedeDictionary, RemedeDictionaryIndex} from "@/functions/types/remede";
 
 const REMEDE = {
-    'a': await import("../../../data/REMEDE_a.json"),
-    'b': await import("../../../data/REMEDE_b.json"),
-    'c': await import("../../../data/REMEDE_c.json")
+    'a': await import("../../../data/REMEDE_a.json") as any as RemedeDictionary,
+    'b': await import("../../../data/REMEDE_b.json") as any as RemedeDictionary,
+    'c': await import("../../../data/REMEDE_c.json") as any as RemedeDictionary
 } as RemedeDictionaryIndex
+
+
+interface transformLetter {
+    [key: string]: string
+}
 
 const transformLetter = {
     'â': 'a',
@@ -20,7 +25,7 @@ const transformLetter = {
     'ë': 'e',
     'ê': 'e',
     'è': 'e'
-}
+} as transformLetter
 
 
 function getRemedeByWord(word: string) {
