@@ -1,4 +1,5 @@
 import {getOfflineDictionaryStatus} from "@/functions/offline";
+import {RemedeDatabase} from "@/functions/database";
 
 async function useApi() {
     return !(await getOfflineDictionaryStatus()).downloaded
@@ -9,8 +10,7 @@ async function getAutocompleteWithAPI(word: string) {
 }
 
 async function getAutocompleteFromDatabase(word: string) {
-    // TODO
-    return []
+    return await database?.getAutocomplete(word) as any[]
 }
 
 async function getWordWithAPI(word: string) {
@@ -18,8 +18,8 @@ async function getWordWithAPI(word: string) {
 }
 
 async function getWordFromDatabase(word: string) {
-    // TODO
-    return {}
+    const results = await database?.getWord(word) as any[]
+    return results[0]
 }
 
 async function getAutocomplete(word: string) {
@@ -40,6 +40,8 @@ function getRandomWord() {
     // TODO
     return {}
 }
+
+const database = await useApi() ? null: new RemedeDatabase()
 
 export {
     getWordDocument,
