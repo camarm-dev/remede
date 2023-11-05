@@ -1,26 +1,4 @@
-import {RemedeDictionary, RemedeDictionaryIndex} from "@/functions/types/remede";
 import {getOfflineDictionaryStatus} from "@/functions/offline";
-
-interface transformLetter {
-    [key: string]: string
-}
-
-const transformLetter = {
-    'â': 'a',
-    'æ': 'a',
-    'à': 'a',
-    'ç': 'c',
-    'î': 'i',
-    'ï': 'i',
-    'ù': 'u',
-    'û': 'u',
-    'ü': 'u',
-    'é': 'e',
-    'ë': 'e',
-    'ê': 'e',
-    'è': 'e'
-} as transformLetter
-
 
 async function useApi() {
     return !(await getOfflineDictionaryStatus()).downloaded
