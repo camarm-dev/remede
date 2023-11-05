@@ -4,9 +4,17 @@ from hashlib import md5
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from starlette.middleware.cors import CORSMiddleware
 
 version = "1.0.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 transformLetter = {
     'â': 'a',
     'æ': 'a',

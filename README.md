@@ -145,7 +145,7 @@ Schéma JSON d'un document de mot indexé par Remède
 - Installer python3
 - Installer les dépendances
 ```shell
-pip install fastapi uvicorn
+pip install fastapi uvicorn starlette
 ```
 - Lancer le serveur
 ```shell
