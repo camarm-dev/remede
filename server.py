@@ -82,6 +82,7 @@ if __name__ == '__main__':
         'e': get_remede_json('e'),
         'f': get_remede_json('f'),
         'g': get_remede_json('g'),
-        'h': get_remede_json('h')
+        'h': get_remede_json('h'),
+        'i': get_remede_json('i')
     }
     uvicorn.run(app, host='0.0.0.0')
