@@ -130,7 +130,7 @@ export default {
       }
     },
     isWeb() {
-      return Capacitor.getPlatform() == 'web'
+      return !Capacitor.isNativePlatform()
     },
     async download() {
       this.loading = true
