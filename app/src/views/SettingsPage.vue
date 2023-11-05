@@ -54,6 +54,10 @@
         Veuillez ne pas quitter cette page pendant le téléchargement.
       </ion-note>
 
+      <ion-note v-if="!downloaded">
+        Télécharger le dictionnaire prendra environ 200Mb de stockage !
+      </ion-note>
+
     </ion-content>
   </ion-page>
 </template>
