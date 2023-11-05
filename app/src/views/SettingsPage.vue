@@ -31,12 +31,12 @@
 
       <ion-list inset v-if="downloaded">
         <ion-item>
-          Dictionnaire <pre>01ffea</pre> téléchargé: 240 562 entrées.
+          Dictionnaire "{{ dictionary.hash }}" téléchargé.
         </ion-item>
       </ion-list>
 
-      <ion-list inset v-else>
-        <ion-item :disabled="loading" color="light" @click="loading = true">
+      <ion-list inset v-else-if="canDownload">
+        <ion-item :disabled="loading" color="light" @click="download()">
           <ion-label>
             <h3>Télécharger le dictionnaire</h3>
           </ion-label>
@@ -46,7 +46,13 @@
           <ion-label slot="start">
             <p>Téléchargement en cour...</p>
           </ion-label>
-          <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
+          <ion-progress-bar :value="progress / total" color="primary"></ion-progress-bar>
+        </ion-item>
+      </ion-list>
+
+      <ion-list inset v-else>
+        <ion-item>
+          Vous ne pouvez pas télécharger le dictionnaire...
         </ion-item>
       </ion-list>
 
@@ -54,7 +60,7 @@
         Veuillez ne pas quitter cette page pendant le téléchargement.
       </ion-note>
 
-      <ion-note v-if="!downloaded">
+      <ion-note class="ion-padding" v-if="!downloaded && canDownload">
         Télécharger le dictionnaire prendra environ 200Mb de stockage !
       </ion-note>
 
@@ -63,18 +69,43 @@
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonIcon, IonProgressBar} from '@ionic/vue';
+import {
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonMenuButton,
+  IonPage,
+  IonProgressBar,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
 import {cloudDownloadOutline} from "ionicons/icons";
 </script>
 
 <script lang="ts">
 
+import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
+import {ProgressStatus} from "@capacitor/filesystem";
+import {Capacitor} from "@capacitor/core";
+
 export default {
   data() {
     return {
+      canDownload: false,
       downloaded: false,
-      loading: false
+      loading: false,
+      progress: 0,
+      total: 0,
+      dictionary: {
+        hash: ''
+      }
     }
+  },
+  mounted() {
+    this.reloadDictionaryStatus()
   },
   methods: {
     handleThemeChangement(theme: string) {
@@ -85,6 +116,32 @@ export default {
     },
     getCurrentTheme() {
       return localStorage.getItem('userTheme') || 'light'
+    },
+    async reloadDictionaryStatus() {
+      const status = await getOfflineDictionaryStatus()
+      this.dictionary = status
+      this.downloaded = status.downloaded
+
+      if (!this.isWeb()) {
+        this.canDownload = true
+      }
+      if (this.downloaded) {
+        this.canDownload = false
+      }
+    },
+    isWeb() {
+      return Capacitor.getPlatform() == 'web'
+    },
+    async download() {
+      this.loading = true
+      const listener = (progress: ProgressStatus) => {
+        this.progress = progress.bytes
+        this.total = progress.contentLength
+      }
+      await downloadDictionary(listener)
+
+      this.loading = false
+      await this.reloadDictionaryStatus()
     }
   }
 }
