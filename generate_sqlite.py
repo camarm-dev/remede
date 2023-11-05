@@ -48,7 +48,8 @@ if __name__ == '__main__':
         'd': get_remede_json('d'),
         'e': get_remede_json('e'),
         'f': get_remede_json('f'),
-        'g': get_remede_json('g')
+        'g': get_remede_json('g'),
+        'h': get_remede_json('h')
     }
 
     before = datetime.datetime.now()
