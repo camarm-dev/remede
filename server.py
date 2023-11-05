@@ -3,6 +3,7 @@ from hashlib import md5
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 
 version = "1.0.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
@@ -57,6 +58,11 @@ def get_autocomplete(query: str):
     json_object = get_remede_json(get_first_letter(query))
     keys: list = json_object.keys()
     return list(filter(lambda word: word.startswith(query), keys))[0:6]
+
+
+@app.get('/download')
+def download_database():
+    return FileResponse('data/remede.db')
 
 
 if __name__ == '__main__':
