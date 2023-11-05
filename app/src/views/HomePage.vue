@@ -87,12 +87,12 @@ export default {
       if (input != '') {
         this.startAutocompleteSearch(input)
       } else {
-        clearTimeout(this.autocompleteTimeout)
+        window.clearTimeout(this.autocompleteTimeout)
         this.results = []
       }
     },
     startAutocompleteSearch(input: string) {
-      clearTimeout(this.autocompleteTimeout)
+      window.clearTimeout(this.autocompleteTimeout)
       this.autocompleteTimeout = setTimeout(async () => {
         this.results = await getAutocomplete(input)
       }, 500)
