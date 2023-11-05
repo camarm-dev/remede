@@ -137,9 +137,9 @@ def remedize(word_list: list):
         'u': ['ù', 'û', 'ü'],
         "e": ['é', 'ê', 'è', 'ë']
     }
-    current_char = 'b'
+    current_char = 'j'
     for word in word_list:
-        if word.lower().startswith('a') or any([word.lower().startswith(char) for char in accepted_char['a']]):
+        if word.lower().startswith('a') or any([word.lower().startswith(char) for char in accepted_char['a']]) or any([word.lower().startswith(char) for char in accepted_char['c']]) or any([word.lower().startswith(char) for char in accepted_char['i']]) or word.lower().startswith('b') or word.lower().startswith('c') or word.lower().startswith('d') or word.lower().startswith('e') or any([word.lower().startswith(char) for char in accepted_char['e']]) or word.lower().startswith('f') or word.lower().startswith('g') or word.lower().startswith('h') or word.lower().startswith('i'):
             continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)
