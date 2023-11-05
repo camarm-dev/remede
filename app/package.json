@@ -13,6 +13,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@capacitor-community/sqlite": "^5.4.2-2",
     "@capacitor/android": "5.5.1",
     "@capacitor/app": "5.0.6",
     "@capacitor/clipboard": "^5.0.6",
