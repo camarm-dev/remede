@@ -1,9 +1,7 @@
-import { CapacitorSQLite, SQLiteConnection } from '@capacitor-community/sqlite'
-import {getOfflineDictionaryStatus} from "@/functions/offline";
+import { CapacitorSQLite } from '@capacitor-community/sqlite'
 
 async function openDatabase() {
-    const dictionary = await getOfflineDictionaryStatus()
-    await CapacitorSQLite.open({ database: dictionary.path })
+    await CapacitorSQLite.open({ database: 'remede' })
 }
 
 class RemedeDatabase {

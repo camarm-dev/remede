@@ -28,7 +28,7 @@ async function downloadDictionary(progressListener: Function) {
     addEventListener('progress', (progress) => { progressListener(progress) })
 
     const downloadResponse = await Filesystem.downloadFile({
-        path: "remede.db",
+        path: "remedeSQLite.db",
         url: 'https://api-remede.camarm.fr/download',
         progress: true
     })
