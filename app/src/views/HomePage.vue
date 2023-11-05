@@ -78,7 +78,7 @@ export default {
       results: [] as string[],
       query: '',
       router: useRouter(),
-      autocompleteTimeout: setTimeout(() => {}, 500)
+      autocompleteTimeout: window.setTimeout(() => {}, 500)
     }
   },
   methods: {
@@ -93,7 +93,7 @@ export default {
     },
     startAutocompleteSearch(input: string) {
       window.clearTimeout(this.autocompleteTimeout)
-      this.autocompleteTimeout = setTimeout(async () => {
+      this.autocompleteTimeout = window.setTimeout(async () => {
         this.results = await getAutocomplete(input)
       }, 500)
     },
