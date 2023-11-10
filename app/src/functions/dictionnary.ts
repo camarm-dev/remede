@@ -23,7 +23,7 @@ async function getWordFromDatabase(word: string) {
 }
 
 async function getRandomWordWithAPI() {
-    return await fetch(`https://api-remede.camarm.fr/random`).then(resp => resp.text())
+    return await fetch(`https://api-remede.camarm.fr/random`).then(resp => resp.json())
 }
 
 async function getRandomWordFromDatabase() {
