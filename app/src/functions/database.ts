@@ -11,7 +11,7 @@ class RemedeDatabase {
     }
 
     async getWord(word: string) {
-        const statement = 'SELECT * FROM  dictionary WHERE word IS ?'
+        const statement = 'SELECT * FROM  dictionary WHERE word = ?'
         const response = await this.query(statement, [word])
         return response.values
     }
@@ -19,6 +19,12 @@ class RemedeDatabase {
     async getAutocomplete(query: string) {
         const statement = "SELECT * FROM  dictionary WHERE word LIKE ? + '%'"
         const response = await this.query(statement, [query])
+        return response.values
+    }
+
+    async getRandomWord() {
+        const statement = "SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1"
+        const response = await this.query(statement, [])
         return response.values
     }
 

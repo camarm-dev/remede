@@ -38,7 +38,7 @@
             </ion-label>
           </ion-item>
         </ion-nav-link>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: getRandomWord() }">
+        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: randomWord }">
           <ion-item color="light" button>
             <ion-icon :icon="shuffle" slot="start"/>
             <ion-label>
@@ -64,12 +64,11 @@
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
-import {getRandomWord} from "@/functions/dictionnary";
 import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 </script>
 
 <script lang="ts">
-import {getAutocomplete} from "@/functions/dictionnary";
+import {getAutocomplete, getRandomWord} from "@/functions/dictionnary";
 import {useRouter} from "vue-router";
 
 export default {
@@ -78,8 +77,12 @@ export default {
       results: [] as string[],
       query: '',
       router: useRouter(),
-      autocompleteTimeout: window.setTimeout(() => {}, 500)
+      autocompleteTimeout: window.setTimeout(() => {}, 500),
+      randomWord: ''
     }
+  },
+  mounted() {
+    this.loadRandomWord()
   },
   methods: {
     async handleSearchbarInput(input: string) {
@@ -99,6 +102,9 @@ export default {
     },
     goTo(path: string) {
       this.router.push(path)
+    },
+    async loadRandomWord() {
+      this.randomWord = await getRandomWord()
     }
   }
 }

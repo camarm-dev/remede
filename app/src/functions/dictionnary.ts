@@ -22,6 +22,15 @@ async function getWordFromDatabase(word: string) {
     return results[0]
 }
 
+async function getRandomWordWithAPI() {
+    return await fetch(`https://api-remede.camarm.fr/random`).then(resp => resp.text())
+}
+
+async function getRandomWordFromDatabase() {
+    const results = await database?.getRandomWord() as any[]
+    return results[0]
+}
+
 async function getAutocomplete(word: string) {
     if (await useApi()) {
         return await getAutocompleteWithAPI(word)
@@ -36,9 +45,11 @@ async function getWordDocument(word: string) {
     return await getWordFromDatabase(word)
 }
 
-function getRandomWord() {
-    // TODO
-    return {}
+async function getRandomWord() {
+    if (await useApi()) {
+        return await getRandomWordWithAPI()
+    }
+    return await getRandomWordFromDatabase()
 }
 
 const database = await useApi() ? null: new RemedeDatabase()

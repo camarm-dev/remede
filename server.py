@@ -1,4 +1,5 @@
 import json
+import random
 from hashlib import md5
 
 import uvicorn
@@ -29,6 +30,7 @@ transformLetter = {
     'ë': 'e',
     'ê': 'e',
     'è': 'e'
+    # TODO: variantes de la lettre o
 }
 
 
@@ -41,6 +43,12 @@ def get_first_letter(word: str):
     if first_letter not in transformLetter.keys():
         return first_letter
     return transformLetter[first_letter]
+
+
+def get_random_word():
+    random_letter = random.choice(list(REMEDE.keys()))
+    random_word = random.choice(list(REMEDE[random_letter].keys()))
+    return random_word
 
 
 def get_remede_doc(word: str):
@@ -59,6 +67,11 @@ def root():
 @app.get('/word/{word}')
 def get_word_document(word: str):
     return get_remede_doc(word)
+
+
+@app.get('/random')
+def get_random_word_document():
+    return get_random_word()
 
 
 @app.get('/autocomplete/{query}')
