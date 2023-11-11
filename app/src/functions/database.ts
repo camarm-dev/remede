@@ -11,13 +11,13 @@ class RemedeDatabase {
     }
 
     async getWord(word: string) {
-        const statement = 'SELECT * FROM  dictionary WHERE word = ?'
+        const statement = 'SELECT * FROM dictionary WHERE word = ?'
         const response = await this.query(statement, [word])
         return response.values
     }
 
     async getAutocomplete(query: string) {
-        const statement = "SELECT * FROM  dictionary WHERE word LIKE ? + '%'"
+        const statement = "SELECT word FROM dictionary WHERE word LIKE ? + '%'"
         const response = await this.query(statement, [query])
         return response.values
     }
