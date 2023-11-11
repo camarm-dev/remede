@@ -10,6 +10,8 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
+  IonSelect,
+  IonSelectOption
   IonNavLink,
   IonList,
   IonNote,
@@ -135,30 +137,32 @@ import WordModal from "@/components/WordModal.vue";
         </header>
       </div>
       <br>
-      <div v-for="mode in getModes()">
-        <details>
-          <summary>{{ mode }}</summary>
-          <ion-list class="border-radius ion-margin-top">
-            <ion-accordion-group>
-              <ion-accordion :value="temps" v-for="temps in getTemps(mode)">
-                <ion-item class="header" color="light" slot="header">
-                  <ion-label>{{ temps }}</ion-label>
-                </ion-item>
-                <ion-list class="no-radius" slot="content">
-                  <ion-item v-for="sujet in getSujets(mode, temps)">
-                    <ion-label>
-                      <p>{{ sujet }}</p>
-                    </ion-label>
-                    <ion-label slot="end">
-                      {{ getFormeVerbale(mode, temps, sujet) }}
-                    </ion-label>
-                  </ion-item>
-                </ion-list>
-              </ion-accordion>
-            </ion-accordion-group>
-          </ion-list>
-        </details>
-      </div>
+      <ion-list inset class="border-radius border">
+        <ion-item color="light" lines="full">
+          <ion-label slot="start">
+            <p>Mode</p>
+          </ion-label>
+          <ion-label slot="end">
+            <p>Temps</p>
+          </ion-label>
+        </ion-item>
+        <ion-item color="light" lines="full">
+          <ion-select @ionChange="changeMode($event.target.value)" slot="start" interface="action-sheet" placeholder="Mode" :value="currentMode">
+            <ion-select-option v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
+          </ion-select>
+          <ion-select @ionChange="changeTemps($event.target.value)" slot="end" interface="action-sheet" placeholder="Temps" :value="currentTemps">
+            <ion-select-option v-for="temps in modeTemps" :value="temps">{{ temps }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item v-for="sujet in currentSujets">
+          <ion-label>
+            <p>{{ sujet }}</p>
+          </ion-label>
+          <ion-label slot="end">
+            {{ getFormeVerbale(currentMode, currentTemps, sujet) }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
       <br>
       <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${mot}`">conjuguons.fr</a></ion-note>
     </div>
@@ -182,6 +186,10 @@ export default {
   data() {
     return {
       mot: '',
+      currentMode: '',
+      currentTemps: '',
+      modeTemps: [],
+      currentSujets: [],
       tab: localStorage.getItem('defaultTab') || 'def',
       document: {
         synonymes: [] as string[],
@@ -263,6 +271,16 @@ export default {
         player.play()
       })
     },
+    changeMode(mode: string) {
+      this.currentMode = mode
+      this.modeTemps = this.getTemps(this.currentMode)
+      this.changeTemps(this.modeTemps[0])
+    },
+    changeTemps(temps: string) {
+      this.currentTemps = temps
+      this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
+    },
+    starWord
   }
 }
 </script>
@@ -316,34 +334,13 @@ summary {
   font-weight: 400;
 }
 
-ion-item.header {
-  transition: .2s ease-in-out;
-}
-
-ion-accordion:first-child ion-item.header {
-  border-top-right-radius: 12px;
-  border-top-left-radius: 12px;
-  border-top: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)))
-}
-
-ion-accordion:last-child ion-item.header, ion-accordion.accordion-expanded:last-child ion-list.no-radius ion-item:last-child {
-  border-bottom-right-radius: 12px;
-  border-bottom-left-radius: 12px;
-  border-bottom: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
-}
-
-ion-accordion.accordion-expanded:last-child ion-item.header {
-  border-radius: 0;
-  border-bottom: none;
-}
-
-ion-item {
-  border-left: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
-  border-right: solid .55px var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
-}
-
 .border-radius {
   border-radius: 12px;
+}
+
+.border {
+  margin: 0;
+  border: .55px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
 }
 
 ion-item:not(+ ion-item)::part(native) {
