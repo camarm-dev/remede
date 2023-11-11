@@ -102,7 +102,7 @@ export default {
       downloaded: false,
       loading: false,
       progress: 0,
-      total: 0,
+      total: 1,
       dictionary: {
         hash: ''
       }
