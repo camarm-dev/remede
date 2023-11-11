@@ -43,7 +43,7 @@
           <ion-icon slot="end" :icon="cloudDownloadOutline"/>
         </ion-item>
         <ion-item color="light" v-if="loading">
-          <ion-label slot="start">
+          <ion-label>
             <p>Téléchargement en cour...</p>
             <ion-progress-bar :value="progress / total" color="primary"></ion-progress-bar>
           </ion-label>
