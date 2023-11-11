@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonList} from '@ionic/vue';
 import {logoGooglePlaystore, reloadOutline} from "ionicons/icons";
 </script>
 

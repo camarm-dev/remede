@@ -12,8 +12,16 @@ import {
   IonButton,
   IonSelect,
   IonSelectOption
+  IonNavLink,
+  IonList,
+  IonNote,
+  IonLabel,
+  IonAccordion,
+  IonAccordionGroup,
+  IonItem
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
+import WordModal from "@/components/WordModal.vue";
 </script>
 
 <template>
@@ -96,7 +104,9 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
       </div>
       <ul>
         <li v-for="syn in document.synonymes">
-          <a :href="`/dictionnaire/${syn}`" >{{ syn }}</a>
+          <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: syn }">
+            <a>{{ syn }}</a>
+          </ion-nav-link>
         </li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
@@ -111,7 +121,9 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
       </div>
       <ul>
         <li v-for="ant in document.antonymes">
-          <a href="" @click="goTo(`/dictionnaire/${ant}`)">{{ ant }}</a>
+          <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: ant }">
+            <a>{{ ant }}</a>
+          </ion-nav-link>
         </li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
@@ -152,7 +164,7 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
         </ion-item>
       </ion-list>
       <br>
-      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${this.mot}`">conjuguons.fr</a></ion-note>
+      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${mot}`">conjuguons.fr</a></ion-note>
     </div>
     <br>
     <br>
@@ -167,6 +179,7 @@ import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
 import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
+import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 
 export default {
   props: ['motRemede'],
@@ -192,34 +205,30 @@ export default {
           name: '',
           url: ''
         },
-        conjugaisons: {}
-      },
+        conjugaisons: {} as RemedeConjugateDocument
+      } as RemedeWordDocument,
       notFound: false,
       stared: false
     }
   },
   created() {
-    this.mot = this.motRemede
-    if (!this.motRemede) {
-      this.mot = this.$router.params.mot
-    }
-    const document = getWordDocument(this.mot)
-    if (document) {
-      this.document = getWordDocument(this.mot)
-    } else {
-      this.notFound = true
-    }
-
-    this.stared = isWordStarred(this.mot)
-
-    if (this.getModes().length > 0) {
-      this.currentMode = this.getModes()[0]
-      this.modeTemps = this.getTemps(this.currentMode)
-      this.currentTemps = this.modeTemps[0]
-      this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
-    }
+    this.loadData()
   },
   methods: {
+    async loadData() {
+      this.mot = this.motRemede
+      if (!this.motRemede) {
+        this.mot = this.$router.params.mot
+      }
+      const document = await getWordDocument(this.mot)
+      if (document) {
+        this.document = await getWordDocument(this.mot)
+      } else {
+        this.notFound = true
+      }
+
+      this.stared = isWordStarred(this.mot)
+    },
     async shareDefinition() {
       try {
         await Share.share({

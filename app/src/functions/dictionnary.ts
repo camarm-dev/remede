@@ -1,33 +1,58 @@
-// import REMEDE from "../../../data/REMEDE.json"
-import REMEDE_a from "../../../data/REMEDE_a.json"
+import {getOfflineDictionaryStatus} from "@/functions/offline";
+import {RemedeDatabase} from "@/functions/database";
 
-const autocomplete = Object.keys(REMEDE_a)
-const REMEDE = {
-    ...REMEDE_a
+async function useApi() {
+    return !(await getOfflineDictionaryStatus()).downloaded
 }
 
-
-function getRemedeByWord(word: string) {
-    // console.log(REMEDE[word[0]])
-    // return REMEDE[word[0]]
-    return REMEDE
+async function getAutocompleteWithAPI(word: string) {
+    return await fetch(`https://api-remede.camarm.fr/autocomplete/${word}`).then(resp => resp.json())
 }
 
-function getAutocompleteByWord(word: string) {
-    return Object.keys(getRemedeByWord(word.toLowerCase()))
+async function getAutocompleteFromDatabase(word: string) {
+    return await database?.getAutocomplete(word) as any[]
 }
 
-function getWordDocument(word: string) {
-    return getRemedeByWord(word)[word]
+async function getWordWithAPI(word: string) {
+    return await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json())
 }
 
-function getAutocomplete(query: string) {
-    return getAutocompleteByWord(query).filter(word => word.startsWith(query)).slice(0, 6)
+async function getWordFromDatabase(word: string) {
+    const results = await database?.getWord(word) as any[]
+    return results[0]
 }
 
-function getRandomWord() {
-    return autocomplete[Math.floor(Math.random() * autocomplete.length)]
+async function getRandomWordWithAPI() {
+    return await fetch(`https://api-remede.camarm.fr/random`).then(resp => resp.json())
 }
+
+async function getRandomWordFromDatabase() {
+    const results = await database?.getRandomWord() as any[]
+    return results[0]
+}
+
+async function getAutocomplete(word: string) {
+    if (await useApi()) {
+        return await getAutocompleteWithAPI(word)
+    }
+    return await getAutocompleteFromDatabase(word)
+}
+
+async function getWordDocument(word: string) {
+    if (await useApi()) {
+        return await getWordWithAPI(word)
+    }
+    return await getWordFromDatabase(word)
+}
+
+async function getRandomWord() {
+    if (await useApi()) {
+        return await getRandomWordWithAPI()
+    }
+    return await getRandomWordFromDatabase()
+}
+
+const database = await useApi() ? null: new RemedeDatabase()
 
 export {
     getWordDocument,

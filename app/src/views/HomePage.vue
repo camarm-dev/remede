@@ -8,6 +8,7 @@
       </ion-toolbar>
       <ion-toolbar>
         <ion-searchbar :value="query" @ionInput="handleSearchbarInput($event.detail.value)" placeholder="Rechercher un mot"></ion-searchbar>
+        <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`">
         <ion-list class="search-results">
@@ -38,7 +39,7 @@
             </ion-label>
           </ion-item>
         </ion-nav-link>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: getRandomWord() }">
+        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: randomWord }">
           <ion-item color="light" button>
             <ion-icon :icon="shuffle" slot="start"/>
             <ion-label>
@@ -49,7 +50,7 @@
       </ion-list>
 
       <ion-list inset>
-        <ion-item href="/marques-page" button color="primary">
+        <ion-item @click="goTo('/marques-page')" button color="primary">
           <ion-icon slot="start" :icon="bookmark"/>
           <ion-label>
             Mes marques page
@@ -62,30 +63,64 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon, IonLabel, IonItem, IonList, IonProgressBar } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
-import {getRandomWord} from "@/functions/dictionnary";
 import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 </script>
 
 <script lang="ts">
-import {getAutocomplete} from "@/functions/dictionnary";
+import {getAutocomplete, getRandomWord} from "@/functions/dictionnary";
+import {useRouter} from "vue-router";
+import {toastController} from "@ionic/vue";
 
 export default {
   data() {
     return {
-      results: [],
-      query: ''
+      results: [] as string[],
+      query: '',
+      router: useRouter(),
+      autocompleteTimeout: window.setTimeout(() => {}, 500),
+      randomWord: '',
+      loading: false
     }
   },
+  mounted() {
+    this.loadRandomWord()
+  },
   methods: {
-    handleSearchbarInput(input: string) {
+    async handleSearchbarInput(input: string) {
       this.query = input
       if (input != '') {
-        this.results = getAutocomplete(input)
+        this.startAutocompleteSearch(input)
       } else {
+        window.clearTimeout(this.autocompleteTimeout)
         this.results = []
       }
+    },
+    startAutocompleteSearch(input: string) {
+      window.clearTimeout(this.autocompleteTimeout)
+      this.autocompleteTimeout = window.setTimeout(async () => {
+        this.loading = true
+        try {
+          this.results = await getAutocomplete(input)
+        } catch (e) {
+          const message = await toastController.create({
+            header: 'Erreur',
+            message: `La recherche dans le dictionnaire à échouée: ${e}`,
+            duration: 5000,
+            color: 'danger'
+          })
+
+          await message.present()
+        }
+        this.loading = false
+      }, 500)
+    },
+    goTo(path: string) {
+      this.router.push(path)
+    },
+    async loadRandomWord() {
+      this.randomWord = await getRandomWord()
     }
   }
 }

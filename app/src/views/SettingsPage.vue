@@ -30,47 +30,90 @@
       <br>
 
       <ion-list inset v-if="downloaded">
-        <ion-item>
-          Dictionnaire <pre>01ffea</pre> téléchargé: 240 562 entrées.
+        <ion-item color="light">
+          Dictionnaire "{{ dictionary.hash }}" téléchargé.
+        </ion-item>
+        <ion-item button color="danger" @click="deleteDictionary(); reloadDictionaryStatus()">
+          <ion-label>Supprimer</ion-label>
         </ion-item>
       </ion-list>
 
-      <ion-list inset v-else>
-        <ion-item :disabled="loading" color="light" @click="loading = true">
+      <ion-list inset v-else-if="canDownload">
+        <ion-item :disabled="loading" color="light" @click="download()">
           <ion-label>
             <h3>Télécharger le dictionnaire</h3>
           </ion-label>
           <ion-icon slot="end" :icon="cloudDownloadOutline"/>
         </ion-item>
         <ion-item color="light" v-if="loading">
-          <ion-label slot="start">
-            <p>Téléchargement en cour...</p>
+          <ion-label>
+            <p>Téléchargement en cours...</p>
+            <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
           </ion-label>
-          <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
         </ion-item>
       </ion-list>
 
-      <ion-note class="ion-padding" v-if="loading">
-        Veuillez ne pas quitter cette page pendant le téléchargement.
-      </ion-note>
+      <ion-list inset v-else>
+        <ion-item>
+          Vous ne pouvez pas télécharger le dictionnaire...
+        </ion-item>
+      </ion-list>
+
+      <ion-list inset>
+        <ion-note class="ion-padding" v-if="loading">
+          Veuillez ne pas quitter cette page pendant le téléchargement.<br>Il est conseiller de redémarrer l'application après le téléchargement.
+        </ion-note>
+        <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
+          Télécharger le dictionnaire prendra environ 200Mb de stockage !
+        </ion-note>
+      </ion-list>
 
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonIcon, IonProgressBar} from '@ionic/vue';
+import {
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonMenuButton,
+  IonPage,
+  IonProgressBar,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
+  IonItem,
+  IonLabel,
+  IonNote,
+  IonList
+} from '@ionic/vue';
 import {cloudDownloadOutline} from "ionicons/icons";
+import {deleteDictionary} from "@/functions/offline";
 </script>
 
 <script lang="ts">
 
+import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
+import {ProgressStatus} from "@capacitor/filesystem";
+import {Capacitor} from "@capacitor/core";
+import {toastController} from "@ionic/vue";
+
 export default {
   data() {
     return {
+      canDownload: false,
       downloaded: false,
-      loading: false
+      loading: false,
+      dictionary: {
+        hash: ''
+      }
     }
+  },
+  mounted() {
+    this.reloadDictionaryStatus()
   },
   methods: {
     handleThemeChangement(theme: string) {
@@ -81,8 +124,46 @@ export default {
     },
     getCurrentTheme() {
       return localStorage.getItem('userTheme') || 'light'
+    },
+    async reloadDictionaryStatus() {
+      const status = await getOfflineDictionaryStatus()
+      this.dictionary = status
+      this.downloaded = status.downloaded
+
+      if (!this.isWeb()) {
+        this.canDownload = true
+      }
+      if (this.downloaded) {
+        this.canDownload = false
+      }
+    },
+    isWeb() {
+      return false
+    },
+    async download() {
+      this.loading = true
+      try {
+        await downloadDictionary()
+      } catch (e) {
+        const message = await toastController.create({
+          header: 'Échec de téléchargement',
+          message: `Le dictionnaire hors-ligne n'a pas pu être téléchargé: ${e}`,
+          duration: 5000,
+          color: 'danger'
+        })
+
+        await message.present()
+      }
+
+      this.loading = false
+      await this.reloadDictionaryStatus()
     }
   }
 }
 </script>
+<style scoped>
+ion-label ion-progress-bar {
+  margin-top: 8px;
+}
+</style>
 

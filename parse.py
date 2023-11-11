@@ -2,7 +2,6 @@ import datetime
 import json
 import urllib.parse
 
-import bs4
 import requests
 from bs4 import BeautifulSoup
 
@@ -136,11 +135,14 @@ def remedize(word_list: list):
         'c': ['ç'],
         'i': ['î', 'ï'],
         'u': ['ù', 'û', 'ü'],
-        "e": ['é', 'ê', 'è', 'ë']
+        "e": ['é', 'ê', 'è', 'ë'],
+        'o': ['ô', 'ö', 'œ']
     }
-    current_char = 'a'
+    current_char = 'n'
     for word in word_list:
-        if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char[current_char]]):
+        if word.lower()[0] in 'abcdefghijklm' or any([word.lower().startswith(char) for char in accepted_char['a']]) or any([word.lower().startswith(char) for char in accepted_char['c']]) or any([word.lower().startswith(char) for char in accepted_char['i']]) or word.lower().startswith('b') or any([word.lower().startswith(char) for char in accepted_char['e']]):
+            continue
+        if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)
             del remede_dictionary
             remede_dictionary = {}
@@ -153,8 +155,8 @@ def remedize(word_list: list):
         print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs | {segments} segments sauvégardés")
 
 
-def getTimeDetails(time):
-    days, seconds = time.days, time.seconds
+def getTimeDetails(time_object):
+    days, seconds = time_object.days, time_object.seconds
     hours = days * 24 + seconds // 3600
     minutes = (seconds % 3600) // 60
     seconds = seconds % 60

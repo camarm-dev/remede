@@ -36,7 +36,7 @@
           </ion-segment>
         </ion-item>
         <ion-item color="light" class="no-border">
-          <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="500" counter :value="content"
+          <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="360" counter :value="content"
                         @ionInput="content = $event.detail.value"
                         placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
           <div v-else-if="tab == 'correction'" class="content">
@@ -96,23 +96,29 @@ import {
   IonText,
   IonSegment,
   IonSegmentButton,
-  IonButton
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonPopover,
+  IonList,
+  IonNote
 } from '@ionic/vue';
 import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons";
 </script>
 
 <script lang="ts">
 import { Clipboard } from '@capacitor/clipboard';
+import {ExplainSegment, ReversoCorrection} from "@/functions/types/reverso";
 
 export default {
   data() {
     return {
       content: "",
-      corrections: [],
+      corrections: [] as ReversoCorrection[],
       corrected: "",
       locked: false,
       tab: "explain",
-      explainSegments: []
+      explainSegments: [] as ExplainSegment[]
     }
   },
   methods: {
@@ -144,7 +150,7 @@ export default {
         this.corrected = response.text
         let originalText = this.content
         let lastIndex = 0
-        let segmentedText = []
+        let segmentedText = [] as ExplainSegment[]
         for (const correction of this.corrections) {
           const startIndex = correction.startIndex
           const endIndex = correction.endIndex
