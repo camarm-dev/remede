@@ -99,6 +99,7 @@ import {deleteDictionary} from "@/functions/offline";
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
 import {ProgressStatus} from "@capacitor/filesystem";
 import {Capacitor} from "@capacitor/core";
+import {toastController} from "@ionic/vue";
 
 export default {
   data() {
@@ -141,7 +142,18 @@ export default {
     },
     async download() {
       this.loading = true
-      await downloadDictionary()
+      try {
+        await downloadDictionary()
+      } catch (e) {
+        const message = await toastController.create({
+          header: 'Échec de téléchargement',
+          message: `Le dictionnaire hors-ligne n'a pas pu être téléchargé: ${e}`,
+          duration: 5000,
+          color: 'danger'
+        })
+
+        await message.present()
+      }
 
       this.loading = false
       await this.reloadDictionaryStatus()
