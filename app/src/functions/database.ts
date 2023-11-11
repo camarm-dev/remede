@@ -1,13 +1,22 @@
-import { CapacitorSQLite } from '@capacitor-community/sqlite'
+import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite'
 
 async function openDatabase() {
-    await CapacitorSQLite.open({ database: 'remede' })
+    const sqlite = new SQLiteConnection(CapacitorSQLite)
+    const db = await sqlite.createConnection('remedeSQLite', false, '', 1, true)
+    await db.open()
+    return db
 }
 
 class RemedeDatabase {
 
+    private db: SQLiteDBConnection | any
+
     constructor() {
-        openDatabase()
+        this.getDatabase()
+    }
+
+    private async getDatabase() {
+        this.db = await openDatabase()
     }
 
     async getWord(word: string) {
@@ -29,11 +38,7 @@ class RemedeDatabase {
     }
 
     async query(statement: string, values: string[]) {
-        return await CapacitorSQLite.query({
-            database: 'remede',
-            statement: statement,
-            values: values
-        })
+        return await this.db.query(statement, values)
     }
 }
 
