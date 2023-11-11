@@ -30,8 +30,9 @@ class RemedeDatabase {
 
     async query(statement: string, values: string[]) {
         return await CapacitorSQLite.query({
-          statement: statement,
-          values: values
+            database: 'remede',
+            statement: statement,
+            values: values
         })
     }
 }
