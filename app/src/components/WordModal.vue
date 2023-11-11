@@ -9,7 +9,14 @@ import {
   IonSegmentButton,
   IonTitle,
   IonToolbar,
-  IonButton, IonNavLink
+  IonButton,
+  IonNavLink,
+  IonList,
+  IonNote,
+  IonLabel,
+  IonAccordion,
+  IonAccordionGroup,
+  IonItem
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
 import WordModal from "@/components/WordModal.vue";

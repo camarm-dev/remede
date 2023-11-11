@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon, IonLabel, IonItem, IonList } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
 import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 </script>

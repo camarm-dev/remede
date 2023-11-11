@@ -42,7 +42,11 @@ import {
   IonTitle,
   IonToolbar,
   IonNavLink,
-  IonIcon
+  IonIcon,
+  IonList,
+  IonNote,
+  IonLabel,
+  IonItem
 } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
 import {bookmark} from "ionicons/icons";

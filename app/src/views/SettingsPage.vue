@@ -80,7 +80,11 @@ import {
   IonSelect,
   IonSelectOption,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonItem,
+  IonLabel,
+  IonNote,
+  IonList
 } from '@ionic/vue';
 import {cloudDownloadOutline} from "ionicons/icons";
 </script>
