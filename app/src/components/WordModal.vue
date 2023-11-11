@@ -9,7 +9,14 @@ import {
   IonSegmentButton,
   IonTitle,
   IonToolbar,
-  IonButton, IonNavLink
+  IonButton,
+  IonNavLink,
+  IonList,
+  IonNote,
+  IonLabel,
+  IonAccordion,
+  IonAccordionGroup,
+  IonItem
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
 import WordModal from "@/components/WordModal.vue";
@@ -153,7 +160,7 @@ import WordModal from "@/components/WordModal.vue";
         </details>
       </div>
       <br>
-      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${this.mot}`">conjuguons.fr</a></ion-note>
+      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${mot}`">conjuguons.fr</a></ion-note>
     </div>
     <br>
     <br>
@@ -197,20 +204,23 @@ export default {
     }
   },
   created() {
-    this.mot = this.motRemede
-    if (!this.motRemede) {
-      this.mot = this.$router.params.mot
-    }
-    const document = getWordDocument(this.mot)
-    if (document) {
-      this.document = getWordDocument(this.mot)
-    } else {
-      this.notFound = true
-    }
-
-    this.stared = isWordStarred(this.mot)
+    this.loadData()
   },
   methods: {
+    async loadData() {
+      this.mot = this.motRemede
+      if (!this.motRemede) {
+        this.mot = this.$router.params.mot
+      }
+      const document = await getWordDocument(this.mot)
+      if (document) {
+        this.document = await getWordDocument(this.mot)
+      } else {
+        this.notFound = true
+      }
+
+      this.stared = isWordStarred(this.mot)
+    },
     async shareDefinition() {
       try {
         await Share.share({

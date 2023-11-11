@@ -58,11 +58,12 @@ ionic cap build android
 ```
 
 ### Données Remède
-Remède créé sa propre base de mots, synonymes, antonymes français à partir de service tiers.
+Remède créé sa propre base de mots, synonymes, antonymes français à partir de services tiers.
 
 - Les définitions par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), vie le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/) de l'API
-- Les synonymes via [synonymo.fr](https://www.synonymo.fr)
-- Les antonymes via [antonyme.org](https://www.antonyme.org)
+- Les synonymes via [synonymo.fr](http://www.synonymo.fr)
+- Les antonymes via [antonyme.org](http://www.antonyme.org)
+- Les conjugaisons via [conjuguons.fr](http://www.conjuguons.fr)
 - Les exemples de ???? (pas encore disponible)
 - Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
 
@@ -75,6 +76,8 @@ Le dossier `data` est destiné aux ressources linguistiques utilisées par Remè
 `data/ipa.json`: Pour une clé 'mot', renvoi l'IPA
 
 `data/REMEDE_a.jon`: Le fichier d'indexation final (par lettre) ; pour une clé 'mot' renvoi [son document selon le schéma REMEDE](#schéma-de-document-remède)
+
+`data/remede.db`: Une base sql ([référence](#base-sqlite))
 
 ### Schéma de document Remède
 Schéma JSON d'un document de mot indexé par Remède
@@ -143,7 +146,7 @@ Schéma JSON d'un document de mot indexé par Remède
 - Installer python3
 - Installer les dépendances
 ```shell
-pip install fastapi uvicorn
+pip install fastapi uvicorn starlette
 ```
 - Lancer le serveur
 ```shell
@@ -152,3 +155,16 @@ python3 server.py
 En ligne sur [localhost:8000](http:/localhost:8000) !
 
 Documentation sur [localhost:8000/docs](http:/localhost:8000/docs).
+
+## Base sqlite
+
+Le fichier `data/remede.db`, généré par le script `generate_sqlite.py` contient une base de données contenant tous les mots Remède.
+
+Elle s'organise ainsi
+- Une table `dictionary`
+
+- Les champs
+  - word (`string`: le mot)
+  - document (`string`: le document Remède en format JSON)
+
+Un questionnement se pose: se schéma n'étant pas propre (stocker du JSON dans une base sql), faut-il retranscrire complètement le schéma de document Remède en plusieurs tables dnas une base ?

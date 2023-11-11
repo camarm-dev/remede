@@ -11,11 +11,14 @@ const config: CapacitorConfig = {
       "splashFullScreen": true,
       "splashImmersive": false,
       "backgroundColor": "#ffffff"
+    },
+    CapacitorHttp: {
+      enabled: false
     }
   },
   server: {
     androidScheme: 'https'
-  }
+  },
 };
 
 export default config;

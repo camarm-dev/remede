@@ -135,11 +135,12 @@ def remedize(word_list: list):
         'c': ['ç'],
         'i': ['î', 'ï'],
         'u': ['ù', 'û', 'ü'],
-        "e": ['é', 'ê', 'è', 'ë']
+        "e": ['é', 'ê', 'è', 'ë'],
+        'o': ['ô', 'ö', 'œ']
     }
-    current_char = 'b'
+    current_char = 'n'
     for word in word_list:
-        if word.lower().startswith('a') or any([word.lower().startswith(char) for char in accepted_char['a']]):
+        if word.lower()[0] in 'abcdefghijklm' or any([word.lower().startswith(char) for char in accepted_char['a']]) or any([word.lower().startswith(char) for char in accepted_char['c']]) or any([word.lower().startswith(char) for char in accepted_char['i']]) or word.lower().startswith('b') or any([word.lower().startswith(char) for char in accepted_char['e']]):
             continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)

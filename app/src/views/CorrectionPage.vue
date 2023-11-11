@@ -96,7 +96,12 @@ import {
   IonText,
   IonSegment,
   IonSegmentButton,
-  IonButton
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonPopover,
+  IonList,
+  IonNote
 } from '@ionic/vue';
 import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons";
 </script>

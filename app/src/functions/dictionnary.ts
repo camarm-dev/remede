@@ -1,48 +1,58 @@
-import {RemedeDictionaryIndex} from "@/functions/types/remede";
+import {getOfflineDictionaryStatus} from "@/functions/offline";
+import {RemedeDatabase} from "@/functions/database";
 
-const REMEDE = {
-    'a': await import("../../../data/REMEDE_a.json"),
-    'b': await import("../../../data/REMEDE_b.json"),
-    'c': await import("../../../data/REMEDE_c.json")
-} as RemedeDictionaryIndex
-
-const transformLetter = {
-    'â': 'a',
-    'æ': 'a',
-    'à': 'a',
-    'ç': 'c',
-    'î': 'i',
-    'ï': 'i',
-    'ù': 'u',
-    'û': 'u',
-    'ü': 'u',
-    'é': 'e',
-    'ë': 'e',
-    'ê': 'e',
-    'è': 'e'
+async function useApi() {
+    return !(await getOfflineDictionaryStatus()).downloaded
 }
 
-
-function getRemedeByWord(word: string) {
-    return REMEDE[word[0]] || REMEDE[transformLetter[word[0]]]
+async function getAutocompleteWithAPI(word: string) {
+    return await fetch(`https://api-remede.camarm.fr/autocomplete/${word}`).then(resp => resp.json())
 }
 
-function getAutocompleteByWord(word: string) {
-    return Object.keys(getRemedeByWord(word.toLowerCase()))
+async function getAutocompleteFromDatabase(word: string) {
+    return await database?.getAutocomplete(word) as any[]
 }
 
-function getWordDocument(word: string) {
-    return getRemedeByWord(word)[word]
+async function getWordWithAPI(word: string) {
+    return await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json())
 }
 
-function getAutocomplete(query: string) {
-    return getAutocompleteByWord(query).filter(word => word.startsWith(query)).slice(0, 6)
+async function getWordFromDatabase(word: string) {
+    const results = await database?.getWord(word) as any[]
+    return results[0]
 }
 
-function getRandomWord() {
-    const autocomplete = Object.keys(REMEDE['c'])
-    return autocomplete[Math.floor(Math.random() * autocomplete.length)]
+async function getRandomWordWithAPI() {
+    return await fetch(`https://api-remede.camarm.fr/random`).then(resp => resp.json())
 }
+
+async function getRandomWordFromDatabase() {
+    const results = await database?.getRandomWord() as any[]
+    return results[0]
+}
+
+async function getAutocomplete(word: string) {
+    if (await useApi()) {
+        return await getAutocompleteWithAPI(word)
+    }
+    return await getAutocompleteFromDatabase(word)
+}
+
+async function getWordDocument(word: string) {
+    if (await useApi()) {
+        return await getWordWithAPI(word)
+    }
+    return await getWordFromDatabase(word)
+}
+
+async function getRandomWord() {
+    if (await useApi()) {
+        return await getRandomWordWithAPI()
+    }
+    return await getRandomWordFromDatabase()
+}
+
+const database = await useApi() ? null: new RemedeDatabase()
 
 export {
     getWordDocument,
