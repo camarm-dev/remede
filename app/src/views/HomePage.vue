@@ -71,6 +71,7 @@ import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 <script lang="ts">
 import {getAutocomplete, getRandomWord} from "@/functions/dictionnary";
 import {useRouter} from "vue-router";
+import {toastController} from "@ionic/vue";
 
 export default {
   data() {
@@ -100,7 +101,18 @@ export default {
       window.clearTimeout(this.autocompleteTimeout)
       this.autocompleteTimeout = window.setTimeout(async () => {
         this.loading = true
-        this.results = await getAutocomplete(input)
+        try {
+          this.results = await getAutocomplete(input)
+        } catch (e) {
+          const message = await toastController.create({
+            header: 'Erreur',
+            message: `La recherche dans le dictionnaire à échouée: ${e}`,
+            duration: 5000,
+            color: 'danger'
+          })
+
+          await message.present()
+        }
         this.loading = false
       }, 500)
     },
