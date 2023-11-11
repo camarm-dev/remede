@@ -56,13 +56,14 @@
         </ion-item>
       </ion-list>
 
-      <ion-note class="ion-padding" v-if="loading">
-        Veuillez ne pas quitter cette page pendant le téléchargement.
-      </ion-note>
-
-      <ion-note class="ion-padding" v-if="!downloaded && canDownload">
-        Télécharger le dictionnaire prendra environ 200Mb de stockage !
-      </ion-note>
+      <ion-list inset>
+        <ion-note class="ion-padding" v-if="loading">
+          Veuillez ne pas quitter cette page pendant le téléchargement.
+        </ion-note>
+        <ion-note class="ion-padding" v-if="!downloaded && canDownload">
+          Télécharger le dictionnaire prendra environ 200Mb de stockage !
+        </ion-note>
+      </ion-list>
 
     </ion-content>
   </ion-page>
