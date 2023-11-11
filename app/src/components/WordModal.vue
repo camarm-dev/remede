@@ -153,7 +153,7 @@ import WordModal from "@/components/WordModal.vue";
         </details>
       </div>
       <br>
-      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${this.mot}`">conjuguons.fr</a></ion-note>
+      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${mot}`">conjuguons.fr</a></ion-note>
     </div>
     <br>
     <br>
