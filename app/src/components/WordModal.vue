@@ -11,13 +11,11 @@ import {
   IonToolbar,
   IonButton,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
   IonNavLink,
   IonList,
   IonNote,
   IonLabel,
-  IonAccordion,
-  IonAccordionGroup,
   IonItem
 } from "@ionic/vue";
 import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
@@ -228,6 +226,13 @@ export default {
       }
 
       this.stared = isWordStarred(this.mot)
+
+      if (this.getModes().length > 0) {
+        this.currentMode = this.getModes()[0]
+        this.modeTemps = this.getTemps(this.currentMode)
+        this.currentTemps = this.modeTemps[0]
+        this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
+      }
     },
     async shareDefinition() {
       try {
