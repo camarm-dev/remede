@@ -138,7 +138,7 @@ def remedize(word_list: list):
         "e": ['é', 'ê', 'è', 'ë'],
         'o': ['ô', 'ö', 'œ']
     }
-    current_char = 'm'
+    current_char = 'n'
     for word in word_list:
         if word.lower()[0] in 'abcdefghijklm' or any([word.lower().startswith(char) for char in accepted_char['a']]) or any([word.lower().startswith(char) for char in accepted_char['c']]) or any([word.lower().startswith(char) for char in accepted_char['i']]) or word.lower().startswith('b') or any([word.lower().startswith(char) for char in accepted_char['e']]):
             continue
