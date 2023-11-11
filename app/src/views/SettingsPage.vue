@@ -47,7 +47,7 @@
         </ion-item>
         <ion-item color="light" v-if="loading">
           <ion-label>
-            <p>Téléchargement en cour...</p>
+            <p>Téléchargement en cours...</p>
             <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
           </ion-label>
         </ion-item>
