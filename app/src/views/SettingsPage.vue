@@ -45,8 +45,8 @@
         <ion-item color="light" v-if="loading">
           <ion-label slot="start">
             <p>Téléchargement en cour...</p>
+            <ion-progress-bar :value="progress / total" color="primary"></ion-progress-bar>
           </ion-label>
-          <ion-progress-bar :value="progress / total" color="primary"></ion-progress-bar>
         </ion-item>
       </ion-list>
 
@@ -150,4 +150,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+ion-label ion-progress-bar {
+  margin-top: 8px;
+}
+</style>
 
