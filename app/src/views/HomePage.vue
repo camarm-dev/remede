@@ -8,6 +8,7 @@
       </ion-toolbar>
       <ion-toolbar>
         <ion-searchbar :value="query" @ionInput="handleSearchbarInput($event.detail.value)" placeholder="Rechercher un mot"></ion-searchbar>
+        <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`">
         <ion-list class="search-results">
@@ -62,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon, IonLabel, IonItem, IonList } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon, IonLabel, IonItem, IonList, IonProgressBar } from '@ionic/vue';
 import WordModal from "@/components/WordModal.vue";
 import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 </script>
@@ -78,7 +79,8 @@ export default {
       query: '',
       router: useRouter(),
       autocompleteTimeout: window.setTimeout(() => {}, 500),
-      randomWord: ''
+      randomWord: '',
+      loading: false
     }
   },
   mounted() {
@@ -97,7 +99,9 @@ export default {
     startAutocompleteSearch(input: string) {
       window.clearTimeout(this.autocompleteTimeout)
       this.autocompleteTimeout = window.setTimeout(async () => {
+        this.loading = true
         this.results = await getAutocomplete(input)
+        this.loading = false
       }, 500)
     },
     goTo(path: string) {
