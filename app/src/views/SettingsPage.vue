@@ -61,7 +61,7 @@
 
       <ion-list inset>
         <ion-note class="ion-padding" v-if="loading">
-          Veuillez ne pas quitter cette page pendant le téléchargement.
+          Veuillez ne pas quitter cette page pendant le téléchargement.<br>Il est conseiller de redémarrer l'application après le téléchargement.
         </ion-note>
         <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
           Télécharger le dictionnaire prendra environ 200Mb de stockage !
