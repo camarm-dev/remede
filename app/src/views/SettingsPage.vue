@@ -34,7 +34,12 @@
           Dictionnaire "{{ dictionary.hash }}" téléchargé.
         </ion-item>
         <ion-item button color="danger" @click="deleteDictionary(); reloadDictionaryStatus()">
+          <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
           <ion-label>Supprimer</ion-label>
+        </ion-item>
+        <ion-item v-if="hasUpdate" button color="primary" @click="deleteDictionary(); reloadDictionaryStatus(); downloadDictionary()">
+          <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
+          <ion-label>Mettre à jour vers "{{ latestDictionary }}"</ion-label>
         </ion-item>
       </ion-list>
 
@@ -61,7 +66,9 @@
 
       <ion-list inset>
         <ion-note class="ion-padding" v-if="loading">
-          Veuillez ne pas quitter cette page pendant le téléchargement.<br>Il est conseiller de redémarrer l'application après le téléchargement.
+          Veuillez ne pas quitter cette page pendant le téléchargement.
+
+          Il est conseiller de redémarrer l'application après le téléchargement.
         </ion-note>
         <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
           Télécharger le dictionnaire prendra environ 200Mb de stockage !
@@ -90,7 +97,7 @@ import {
   IonNote,
   IonList
 } from '@ionic/vue';
-import {cloudDownloadOutline} from "ionicons/icons";
+import {cloudDownloadOutline, refreshOutline, trashBinOutline} from "ionicons/icons";
 import {deleteDictionary} from "@/functions/offline";
 </script>
 
@@ -100,6 +107,7 @@ import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offlin
 import {ProgressStatus} from "@capacitor/filesystem";
 import {Capacitor} from "@capacitor/core";
 import {toastController} from "@ionic/vue";
+import {InformationsResponse} from "@/functions/types/api_responses";
 
 export default {
   data() {
@@ -107,6 +115,8 @@ export default {
       canDownload: false,
       downloaded: false,
       loading: false,
+      latestDictionary: '',
+      hasUpdate: false,
       dictionary: {
         hash: ''
       }
@@ -136,6 +146,10 @@ export default {
       if (this.downloaded) {
         this.canDownload = false
       }
+
+      const specs = await fetch('https://api-remede.camarm.fr').then(resp => resp.json()) as InformationsResponse
+      this.latestDictionary = specs.dataset
+      this.hasUpdate = this.dictionary.hash != specs.dataset
     },
     isWeb() {
       return false
