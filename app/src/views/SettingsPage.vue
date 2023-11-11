@@ -30,8 +30,11 @@
       <br>
 
       <ion-list inset v-if="downloaded">
-        <ion-item>
+        <ion-item color="light">
           Dictionnaire "{{ dictionary.hash }}" téléchargé.
+        </ion-item>
+        <ion-item button color="danger" @click="deleteDictionary(); reloadDictionaryStatus()">
+          <ion-label>Supprimer</ion-label>
         </ion-item>
       </ion-list>
 
@@ -45,7 +48,7 @@
         <ion-item color="light" v-if="loading">
           <ion-label>
             <p>Téléchargement en cour...</p>
-            <ion-progress-bar :value="progress / total" color="primary"></ion-progress-bar>
+            <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -88,6 +91,7 @@ import {
   IonList
 } from '@ionic/vue';
 import {cloudDownloadOutline} from "ionicons/icons";
+import {deleteDictionary} from "@/functions/offline";
 </script>
 
 <script lang="ts">
@@ -102,8 +106,6 @@ export default {
       canDownload: false,
       downloaded: false,
       loading: false,
-      progress: 0,
-      total: 1,
       dictionary: {
         hash: ''
       }
@@ -135,15 +137,11 @@ export default {
       }
     },
     isWeb() {
-      return !Capacitor.isNativePlatform()
+      return false
     },
     async download() {
       this.loading = true
-      const listener = (progress: ProgressStatus) => {
-        this.progress = progress.bytes
-        this.total = progress.contentLength
-      }
-      await downloadDictionary(listener)
+      await downloadDictionary()
 
       this.loading = false
       await this.reloadDictionaryStatus()

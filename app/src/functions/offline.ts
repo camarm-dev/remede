@@ -1,5 +1,5 @@
 import {InformationsResponse} from "@/functions/types/api_responses";
-import {Filesystem} from '@capacitor/filesystem'
+import {Directory, Filesystem} from '@capacitor/filesystem'
 import {Preferences} from '@capacitor/preferences'
 
 async function getOfflineDictionaryStatus() {
@@ -22,14 +22,13 @@ async function getOfflineDictionaryStatus() {
 }
 
 
-async function downloadDictionary(progressListener: Function) {
+async function downloadDictionary() {
     const datasetInformations = await fetch('https://api-remede.camarm.fr').then(resp => resp.json()) as InformationsResponse
-
-    addEventListener('progress', (progress) => { progressListener(progress) })
 
     const downloadResponse = await Filesystem.downloadFile({
         path: "remedeSQLite.db",
         url: 'https://api-remede.camarm.fr/download',
+        directory: Directory.Data,
         progress: true
     })
 
@@ -46,7 +45,23 @@ async function downloadDictionary(progressListener: Function) {
     return
 }
 
+async function deleteDictionary() {
+    await Preferences.set({
+        key: 'offlineDictionary',
+        value: JSON.stringify({
+            'downloaded': false,
+            'path': '',
+            'hash': ''
+        })
+    })
+    await Filesystem.deleteFile({
+        path: 'remedeSQLite.db',
+        directory: Directory.Data
+    })
+}
+
 export {
     downloadDictionary,
+    deleteDictionary,
     getOfflineDictionaryStatus
 }
