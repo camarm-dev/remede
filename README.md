@@ -17,20 +17,19 @@ Open Source and free alternative to Antidote.
 - [x] Partager un mot
 - [x] Complétion automatique sur la recherche
 - [x] Lire un mot
+- [x] Conjugaisons
+- [x] Dans un doc Remède
+- [x] Afficher
 - [ ] Page de présentation
 - [ ] Applications de bureaux
   -  [ ] Windows 
   -  [ ] MAC 
   -  [ ] Linux 
-- [ ] Référencer tous les mots
+- [ ] Référencer tous les mots (#21)
 - [ ] API publique
   - [ ] Mot du jour
-  - [ ] Obtenir document d'un mot
-- [ ] Conjugaisons
-  - [x] Dans un doc Remède
-  - [ ] Afficher
-- [ ] Exemples
-- [ ] Fiches de français
+  - [x] Obtenir document d'un mot
+- [ ] Fiches de français (#4)
 
 ## Télécharger
 
