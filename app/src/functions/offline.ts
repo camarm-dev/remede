@@ -60,8 +60,19 @@ async function deleteDictionary() {
     })
 }
 
+
+async function getRawDictionary() {
+    const file = await Filesystem.readFile({
+        path: 'remedeSQLite.db',
+        directory: Directory.Data
+    })
+
+    return await file.data.arrayBuffer().then(buf => new Uint8Array(buf))
+}
+
 export {
     downloadDictionary,
     deleteDictionary,
-    getOfflineDictionaryStatus
+    getOfflineDictionaryStatus,
+    getRawDictionary
 }

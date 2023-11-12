@@ -13,7 +13,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@capacitor-community/sqlite": "^5.4.2-2",
     "@capacitor/android": "5.5.1",
     "@capacitor/app": "5.0.6",
     "@capacitor/clipboard": "^5.0.6",
@@ -26,7 +25,9 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.5.3",
+    "@types/sql.js": "^1.4.9",
     "ionicons": "^7.0.0",
+    "sql.js": "^1.8.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
