@@ -60,7 +60,8 @@ def root():
     return {
         "version": version,
         "message": "Check /docs for documentation",
-        "dataset": str(md5(str(REMEDE).encode()).hexdigest())[0:7]
+        "dataset": md5(open('data/remede.db','rb').read()).hexdigest()[0:7],
+        "hash": str(md5(str(REMEDE).encode()).hexdigest())[0:7]
     }
 
 
