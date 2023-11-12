@@ -60,8 +60,8 @@ def root():
     return {
         "version": version,
         "message": "Check /docs for documentation",
-        "dataset": md5(open('data/remede.db','rb').read()).hexdigest()[0:7],
-        "hash": str(md5(str(REMEDE).encode()).hexdigest())[0:7]
+        "dataset": DATASET,
+        "hash": HASH
     }
 
 
@@ -106,4 +106,6 @@ if __name__ == '__main__':
         'o': get_remede_json('o'),
         'p': get_remede_json('p')
     }
+    DATASET = md5(open('data/remede.db','rb').read()).hexdigest()[0:7]
+    HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
     uvicorn.run(app, host='0.0.0.0')
