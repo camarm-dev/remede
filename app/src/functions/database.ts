@@ -48,7 +48,8 @@ class RemedeDatabase {
 
     async getRandomWord() {
         const statement = "SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1"
-        return await this.query(statement)[0]
+        const response = await this.query(statement)
+        return response[0]
     }
 
     async query(statement: string): Promise<Array<string>> {
