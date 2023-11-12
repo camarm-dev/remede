@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
@@ -18,7 +17,7 @@ import {
   IonLabel,
   IonItem
 } from "@ionic/vue";
-import {bookmark, bookmarkOutline, play, shareOutline} from "ionicons/icons";
+import {bookmark, bookmarkOutline, chevronBackOutline, play, shareOutline} from "ionicons/icons";
 import WordModal from "@/components/WordModal.vue";
 </script>
 
@@ -26,7 +25,12 @@ import WordModal from "@/components/WordModal.vue";
   <ion-header :translucent="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/dictionnaire" text="Retour"></ion-back-button>
+        <ion-nav-link router-direction="back">
+          <ion-button @click="navigateBack()">
+            <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
+            Retour
+          </ion-button>
+        </ion-nav-link>
       </ion-buttons>
       <ion-title>Définition "{{ mot }}"</ion-title>
       <ion-buttons slot="end">
@@ -178,8 +182,10 @@ import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
+import {useIonRouter, UseIonRouterResult} from "@ionic/vue";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   props: ['motRemede'],
   data() {
     return {
@@ -206,8 +212,19 @@ export default {
         conjugaisons: {} as RemedeConjugateDocument
       } as RemedeWordDocument,
       notFound: false,
-      stared: false
+      stared: false,
+      navigateBack: () => "" as Function
     }
+  },
+  mounted() {
+    const ionRouter = useIonRouter()
+    function navigateBackIfNoHistory() {
+      if (!ionRouter.canGoBack()) {
+        ionRouter.navigate('/dictionnaire', 'back', 'replace')
+      }
+    }
+
+    this.navigateBack = navigateBackIfNoHistory
   },
   created() {
     this.loadData()
@@ -287,7 +304,7 @@ export default {
     },
     starWord
   }
-}
+})
 </script>
 
 <style scoped>

@@ -86,7 +86,7 @@ export default {
     }
   },
   mounted() {
-    setTimeout(this.loadRandomWord, 2000)
+    this.loadRandomWord()
   },
   methods: {
     async handleSearchbarInput(input: string) {
