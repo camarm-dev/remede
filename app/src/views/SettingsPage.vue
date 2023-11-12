@@ -37,7 +37,7 @@
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
           <ion-label>Supprimer</ion-label>
         </ion-item>
-        <ion-item v-if="hasUpdate" button color="primary" @click="deleteDictionary(); reloadDictionaryStatus(); downloadDictionary()">
+        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; deleteDictionary(); reloadDictionaryStatus(); downloadDictionary()">
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
           <ion-label>Mettre à jour vers "{{ latestDictionary }}"</ion-label>
         </ion-item>
@@ -68,7 +68,7 @@
         <ion-note class="ion-padding" v-if="loading">
           Veuillez ne pas quitter cette page pendant le téléchargement.
 
-          Il est conseiller de redémarrer l'application après le téléchargement.
+          Il est conseillé de redémarrer l'application après le téléchargement.
         </ion-note>
         <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
           Télécharger le dictionnaire prendra environ 200Mb de stockage !

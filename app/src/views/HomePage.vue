@@ -40,7 +40,7 @@
           </ion-item>
         </ion-nav-link>
         <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: randomWord }">
-          <ion-item color="light" button>
+          <ion-item :disabled="randomWordDisabled" color="light" button>
             <ion-icon :icon="shuffle" slot="start"/>
             <ion-label>
               <h2>Mot au hasard</h2>
@@ -81,11 +81,12 @@ export default {
       router: useRouter(),
       autocompleteTimeout: window.setTimeout(() => {}, 500),
       randomWord: '',
-      loading: false
+      loading: false,
+      randomWordDisabled: true
     }
   },
   mounted() {
-    this.loadRandomWord()
+    setTimeout(this.loadRandomWord, 2000)
   },
   methods: {
     async handleSearchbarInput(input: string) {
@@ -121,6 +122,7 @@ export default {
     },
     async loadRandomWord() {
       this.randomWord = await getRandomWord()
+      this.randomWordDisabled = false
     }
   }
 }

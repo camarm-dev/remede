@@ -18,8 +18,7 @@ async function getWordWithAPI(word: string) {
 }
 
 async function getWordFromDatabase(word: string) {
-    const results = await database?.getWord(word) as any[]
-    return results[0]
+    return await database?.getWord(word) as any[]
 }
 
 async function getRandomWordWithAPI() {
@@ -27,8 +26,7 @@ async function getRandomWordWithAPI() {
 }
 
 async function getRandomWordFromDatabase() {
-    const results = await database?.getRandomWord() as any[]
-    return results[0]
+    return await database?.getRandomWord() as any[]
 }
 
 async function getAutocomplete(word: string) {
