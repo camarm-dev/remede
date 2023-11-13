@@ -29,8 +29,10 @@ transformLetter = {
     'é': 'e',
     'ë': 'e',
     'ê': 'e',
-    'è': 'e'
-    # TODO: variantes de la lettre o
+    'è': 'e',
+    'ô': 'o',
+    'ö': 'o',
+    'œ': 'o'
 }
 
 
