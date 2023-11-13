@@ -105,7 +105,9 @@ if __name__ == '__main__':
         'n': get_remede_json('n'),
         'o': get_remede_json('o'),
         'p': get_remede_json('p'),
-        'q': get_remede_json('q')
+        'q': get_remede_json('q'),
+        'r': get_remede_json('r'),
+        's': get_remede_json('s')
     }
     DATASET = md5(open('data/remede.db','rb').read()).hexdigest()[0:7]
     HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
