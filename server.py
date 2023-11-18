@@ -59,6 +59,12 @@ def get_remede_doc(word: str):
 
 @app.get('/')
 def root():
+    """
+    ### Renvoie des informations utiles à propos de l'API:
+    - Sa version
+    - L'identifiant du dataset API (`dataset`)
+    - Le hash du dataset de la base Sqlite (`hash`)
+    """
     return {
         "version": version,
         "message": "Check /docs for documentation",
@@ -69,16 +75,25 @@ def root():
 
 @app.get('/word/{word}')
 def get_word_document(word: str):
+    """
+    Renvoie le document Remède du mot `word`
+    """
     return get_remede_doc(word)
 
 
 @app.get('/random')
 def get_random_word_document():
+    """
+    Renvoie un mot au hasard
+    """
     return get_random_word()
 
 
 @app.get('/autocomplete/{query}')
 def get_autocomplete(query: str):
+    """
+    Renvoie les 6 premiers mots commençant par `query`
+    """
     json_object = get_remede_json(get_first_letter(query))
     keys: list = json_object.keys()
     return list(filter(lambda word: word.startswith(query), keys))[0:6]
@@ -86,6 +101,9 @@ def get_autocomplete(query: str):
 
 @app.get('/download')
 def download_database():
+    """
+    Télécharge la base Sqlite sous form de fichier.
+    """
     return FileResponse('data/remede.db')
 
 
