@@ -138,8 +138,10 @@ def remedize(word_list: list):
         "e": ['é', 'ê', 'è', 'ë'],
         'o': ['ô', 'ö', 'œ']
     }
-    current_char = 'p'
+    current_char = 'z'
     for word in word_list:
+        if not word.lower().startswith('z'):
+            continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)
             del remede_dictionary
@@ -151,6 +153,7 @@ def remedize(word_list: list):
             errored += 1
         remede_dictionary[word] = inserted_word
         print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs | {segments} segments sauvégardés")
+    saveRemede(current_char, remede_dictionary)
 
 
 def getTimeDetails(time_object):

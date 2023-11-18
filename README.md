@@ -21,7 +21,7 @@ Open Source and free alternative to Antidote.
 - [x] Dans un doc Remède
 - [x] Afficher
 - [x] Référencer tous les mots (#21)
-- [ ] Page de présentation
+- [x] Page de présentation
 - [ ] Applications de bureaux
   -  [ ] Windows 
   -  [ ] MAC 

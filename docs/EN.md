@@ -63,7 +63,6 @@ Running on [localhost:8000](http:/localhost:8000) !
 
 Documentation available at [localhost:8000/docs](http:/localhost:8000/docs).
 
-> [!NOTE]
 > Please [generate the sqlite database](#sqlite-database) to serve the latest version of this one through the API !
 
 ## Datas
