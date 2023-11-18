@@ -20,12 +20,12 @@ Open Source and free alternative to Antidote.
 - [x] Conjugaisons
 - [x] Dans un doc Remède
 - [x] Afficher
+- [x] Référencer tous les mots (#21)
 - [ ] Page de présentation
 - [ ] Applications de bureaux
   -  [ ] Windows 
   -  [ ] MAC 
   -  [ ] Linux 
-- [ ] Référencer tous les mots (#21)
 - [ ] API publique
   - [ ] Mot du jour
   - [x] Obtenir document d'un mot
