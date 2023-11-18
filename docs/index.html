@@ -1,3 +1,6 @@
+---
+# front matter tells Jekyll to process Liquid
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +61,7 @@
 <section class="section">
   <div class="columns is-multiline">
     {% for post in site.posts %}
-    <div class="column is-one-third">
+    <div class="column is-half">
       <div class="card">
         <div class="card-content">
           <p class="title">
@@ -71,7 +74,7 @@
           <span class="tag is-rounded">{{ tag }}</span>
           {% endfor %}
           {% for category in post.categories %}
-          <span class="tag is-rounded">{{ category }}</span>
+          <span class="tag mt-2">{{ category }}</span>
           {% endfor %}
         </div>
         <footer class="card-footer">
