@@ -63,7 +63,6 @@ En ligne sur [localhost:8000](http:/localhost:8000) !
 
 Documentation sur [localhost:8000/docs](http:/localhost:8000/docs).
 
-> [!NOTE]
 > Veuillez [générer la base sqlite](#base-sqlite) pour fournir la dernière version de celle-ci !
 
 ## Données
