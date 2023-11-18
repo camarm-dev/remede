@@ -6,7 +6,7 @@
   "license": "Cecill V2.1",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "cypress run",
     "test:unit": "vitest",

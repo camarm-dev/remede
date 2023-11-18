@@ -29,8 +29,10 @@ transformLetter = {
     'é': 'e',
     'ë': 'e',
     'ê': 'e',
-    'è': 'e'
-    # TODO: variantes de la lettre o
+    'è': 'e',
+    'ô': 'o',
+    'ö': 'o',
+    'œ': 'o'
 }
 
 
@@ -105,7 +107,16 @@ if __name__ == '__main__':
         'n': get_remede_json('n'),
         'o': get_remede_json('o'),
         'p': get_remede_json('p'),
-        'q': get_remede_json('q')
+        'q': get_remede_json('q'),
+        'r': get_remede_json('r'),
+        's': get_remede_json('s'),
+        't': get_remede_json('t'),
+        'u': get_remede_json('u'),
+        'v': get_remede_json('v'),
+        'w': get_remede_json('w'),
+        'x': get_remede_json('x'),
+        'y': get_remede_json('y'),
+        'z': get_remede_json('z')
     }
     DATASET = md5(open('data/remede.db','rb').read()).hexdigest()[0:7]
     HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
