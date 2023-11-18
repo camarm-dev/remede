@@ -68,7 +68,7 @@
             {{ post.title }}
           </p>
           <p class="subtitle">
-            {{ post.author }}
+            {{ post.author }}, {{ post.readable_date }}
           </p>
           {% for tag in post.tags %}
           <span class="tag is-rounded">{{ tag }}</span>
