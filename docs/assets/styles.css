@@ -83,7 +83,7 @@ a:hover {
 }
 
 .columns {
-    max-width: 880px;
+    max-width: 920px;
 }
 
 .level {
@@ -175,6 +175,10 @@ footer p {
 .icon img {
     height: 3em;
     width: 3em;
+}
+
+.columns.is-multiline {
+    margin: auto;
 }
 
 @media (max-width: 1024px) {
