@@ -6,7 +6,7 @@
 # Remède
 Open Source and free alternative to Antidote.
 
-[Data credits](https://remede.camarm.fr/FR#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE)
+[Data credits](https://remede.camarm.fr/FR#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr)**
 
 </div>
 
@@ -34,6 +34,8 @@ Open Source and free alternative to Antidote.
 ## Télécharger
 
 Téléchargez les exécutables pour votre plateforme depuis [la page releases](/releases)
+
+Voir les autres méthodes de téléchargement sur [notre site](https://remede.camarm.fr).
 
 SOON: Disponible sur Play Store
 

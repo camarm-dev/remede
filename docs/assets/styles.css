@@ -2,6 +2,7 @@
 :root {
     --text: #000000;
     --bg: #FFFFFF;
+    --bg-light-alt: #e5e5e5;
     --bg-alt: #d5d5d5;
     --grey: #9995A4;
     --border: #514F54;
@@ -120,6 +121,20 @@ a:hover {
 
 .is-centered {
     margin: auto;
+}
+
+.dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
+    cursor: pointer;
+    background-color: var(--bg-light-alt);
+}
+
+.button.is-outlined:hover .icon svg, .button.is-outlined:focus .icon svg, .button.is-outlined:active .icon svg {
+    color: var(--bg) !important;
+}
+
+.is-20x20 {
+    width: 20px;
+    height: 20px;
 }
 
 .container.center {
