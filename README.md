@@ -22,13 +22,13 @@ Open Source and free alternative to Antidote.
 - [x] Afficher
 - [x] Référencer tous les mots (#21)
 - [x] Page de présentation
+- [x] API publique
+  - [x] Mot du jour
+  - [x] Obtenir document d'un mot
 - [ ] Applications de bureaux
   -  [ ] Windows 
   -  [ ] MAC 
   -  [ ] Linux 
-- [ ] API publique
-  - [ ] Mot du jour
-  - [x] Obtenir document d'un mot
 - [ ] Fiches de français (#4)
 
 ## Télécharger

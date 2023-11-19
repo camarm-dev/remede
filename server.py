@@ -1,5 +1,7 @@
 import json
+import math
 import random
+import time
 from hashlib import md5
 
 import uvicorn
@@ -53,6 +55,26 @@ def get_random_word():
     return random_word
 
 
+def get_remede_word_of_day():
+    """
+    This function return a random word based on today timestamp.
+    1. Det today timestamp
+    2. Generate a random number with today timestamp
+    3. Get a random word using this random number
+    :return: word string
+    """
+    today = math.floor(time.time() / 1000)
+    random_number = random.Random(today).random()
+
+    all_letters = list(REMEDE.keys())
+    letter = all_letters[math.floor(random_number * len(all_letters))]
+
+    all_words = list(REMEDE[letter].keys())
+    word = all_words[math.floor(random_number * len(all_words))]
+
+    return word
+
+
 def get_remede_doc(word: str):
     return REMEDE[get_first_letter(word)].get(word, {'message': 'Mot non trouvé'})
 
@@ -87,6 +109,14 @@ def get_random_word_document():
     Renvoie un mot au hasard
     """
     return get_random_word()
+
+
+@app.get('/word-of-day')
+def get_word_of_day():
+    """
+    Renvoie le mot du jour
+    """
+    return get_remede_word_of_day()
 
 
 @app.get('/autocomplete/{query}')

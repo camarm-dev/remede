@@ -50,10 +50,19 @@ async function getRandomWord() {
     return await getRandomWordFromDatabase()
 }
 
+async function getTodayWord() {
+    try {
+        return await fetch(`https://api-remede.camarm.fr/word-of-day`).then(resp => resp.json())
+    } catch (e) {
+        return ''
+    }
+}
+
 const database = await useApi() ? null: new RemedeDatabase()
 
 export {
     getWordDocument,
     getAutocomplete,
-    getRandomWord
+    getRandomWord,
+    getTodayWord
 }

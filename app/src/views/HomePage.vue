@@ -31,8 +31,8 @@
       </ion-header>
 
       <ion-list inset>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: 'à' }">
-          <ion-item color="light" button>
+        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: todayWord }">
+          <ion-item :disabled="todayWordDisabled" color="light" button>
             <ion-icon slot="start" :icon="calendarOutline"/>
             <ion-label>
               <h2>Mot du jour</h2>
@@ -69,7 +69,7 @@ import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 </script>
 
 <script lang="ts">
-import {getAutocomplete, getRandomWord} from "@/functions/dictionnary";
+import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary";
 import {useRouter} from "vue-router";
 import {toastController} from "@ionic/vue";
 
@@ -82,11 +82,14 @@ export default {
       autocompleteTimeout: window.setTimeout(() => {}, 500),
       randomWord: '',
       loading: false,
-      randomWordDisabled: true
+      randomWordDisabled: true,
+      todayWord: '',
+      todayWordDisabled: true
     }
   },
   mounted() {
     this.loadRandomWord()
+    this.loadTodayWord()
   },
   methods: {
     async handleSearchbarInput(input: string) {
@@ -123,6 +126,10 @@ export default {
     async loadRandomWord() {
       this.randomWord = await getRandomWord()
       this.randomWordDisabled = false
+    },
+    async loadTodayWord() {
+      this.todayWord = await getTodayWord()
+      this.todayWordDisabled = false
     }
   }
 }
