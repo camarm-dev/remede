@@ -52,7 +52,46 @@
   <div class="container center">
     <div class="mb-6 columns is-multiline">
       <p class="buttons">
-        <button class="button is-link is-outlined">Télécharger</button>
+        <div class="dropdown mr-5" onclick="this.classList.toggle('is-active')">
+          <div class="dropdown-trigger">
+            <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu2">
+              <span>Télécharger</span>
+              <span class="icon is-small mt-0">
+                <i class="fas fa-angle-down has-text-link" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item" onclick="window.open('https://github.com/camarm-dev/remede/releases')">
+                <h4 class="subtitle mb-0">
+                  <i class="fab fa-github has-text-dark"></i>&nbsp;Github
+                </h4>
+                <p class="content has-text-grey mt-0">
+                  Depuis la page releases
+                </p>
+              </div>
+              <hr class="dropdown-divider">
+              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">
+                <h4 class="subtitle mb-0 is-inline-flex">
+                  <i class="image is-20x20"><img src="assets/gplay.webp" alt="Google Play Ion"/></i>&nbsp;Play Store
+                </h4>
+                <p class="content has-text-grey mt-0">
+                  Depuis votre mobile.
+                </p>
+              </div>
+              <hr class="dropdown-divider">
+              <div class="dropdown-item pt-2" onclick="window.open('https://media.githubusercontent.com/media/camarm-dev/remede/main/data/remede.db?download=true')">
+                <h4 class="subtitle mb-0">
+                  <i class="fas fa-database mr-1 has-text-link"></i>&nbsp;remede.db
+                </h4>
+                <p class="content has-text-grey mt-0">
+                  Téléchargez notre base de données.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         <button onclick="location.href = '/FR'" class="button is-focused is-success">Documentation</button>
       </p>
     </div>
