@@ -71,7 +71,7 @@
           Il est conseillé de redémarrer l'application après le téléchargement.
         </ion-note>
         <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
-          Télécharger le dictionnaire prendra environ 200Mb de stockage !
+          Télécharger le dictionnaire prendra environ 205Mb de stockage !
         </ion-note>
       </ion-list>
 
