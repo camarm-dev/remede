@@ -37,7 +37,7 @@
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
           <ion-label>Supprimer</ion-label>
         </ion-item>
-        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; deleteDictionary(); reloadDictionaryStatus(); downloadDictionary()">
+        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; deleteDictionary(); reloadDictionaryStatus(); download()">
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
           <ion-label>Mettre à jour vers "{{ latestDictionary }}"</ion-label>
         </ion-item>
