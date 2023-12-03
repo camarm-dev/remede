@@ -158,14 +158,14 @@ export default {
       this.loading = true
       try {
         await downloadDictionary()
-        const message = await toastController.create({
+        const successMessage = await toastController.create({
           header: 'Téléchargement réussi',
-          message: `Le dictionnaire hors-ligne a été éléchargé`,
+          message: `Le dictionnaire hors-ligne a été téléchargé`,
           duration: 5000,
           color: 'success'
         })
 
-        await message.present()
+        await successMessage.present()
       } catch (e) {
         const message = await toastController.create({
           header: 'Échec de téléchargement',
