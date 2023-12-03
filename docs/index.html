@@ -55,6 +55,9 @@
         <div class="dropdown mr-5" onclick="this.classList.toggle('is-active')">
           <div class="dropdown-trigger">
             <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu2">
+              <span class="icon is-small mt-0">
+                <i class="fas fa-download has-text-link" aria-hidden="true"></i>
+              </span>
               <span>Télécharger</span>
               <span class="icon is-small mt-0">
                 <i class="fas fa-angle-down has-text-link" aria-hidden="true"></i>
@@ -92,7 +95,18 @@
             </div>
           </div>
         </div>
-        <button onclick="location.href = '/FR'" class="button is-focused is-success">Documentation</button>
+        <button onclick="location.href = '/FR'" class="button is-focused is-success mr-5">
+          <span class="icon mt-0">
+            <i class="fas fa-book has-text-white" aria-hidden="true"></i>
+          </span>
+          <span>Documentation</span>
+        </button>
+        <button onclick="window.open('https://remede-app.camarm.fr')" class="button is-outlined is-link">
+          <span class="icon mt-0">
+            <i class="fas fa-external-link-square has-text-link" aria-hidden="true"></i>
+          </span>
+          <span>Ouvrir l'app</span>
+        </button>
       </p>
     </div>
   </div>

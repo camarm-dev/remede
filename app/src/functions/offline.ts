@@ -1,6 +1,7 @@
 import {InformationsResponse} from "@/functions/types/api_responses";
 import {Directory, Filesystem} from '@capacitor/filesystem'
 import {Preferences} from '@capacitor/preferences'
+import {Capacitor} from "@capacitor/core";
 
 async function getOfflineDictionaryStatus() {
     const status = JSON.parse((await Preferences.get({ key: 'offlineDictionary' })).value || '{}')
@@ -62,12 +63,12 @@ async function deleteDictionary() {
 
 
 async function getRawDictionary() {
-    const file = await Filesystem.readFile({
-        path: 'remedeSQLite.db',
-        directory: Directory.Data
-    })
+    const path = (await getOfflineDictionaryStatus()).path
+    const newSrc = Capacitor.convertFileSrc(`${path}`)
 
-    return await file.data.arrayBuffer().then(buf => new Uint8Array(buf))
+    const file = await fetch(newSrc).then(resp => resp.arrayBuffer())
+
+    return new Uint8Array(file)
 }
 
 export {

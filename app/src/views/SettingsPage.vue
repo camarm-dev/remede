@@ -37,7 +37,7 @@
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
           <ion-label>Supprimer</ion-label>
         </ion-item>
-        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; deleteDictionary(); reloadDictionaryStatus(); downloadDictionary()">
+        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; deleteDictionary(); reloadDictionaryStatus(); download()">
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
           <ion-label>Mettre à jour vers "{{ latestDictionary }}"</ion-label>
         </ion-item>
@@ -71,7 +71,7 @@
           Il est conseillé de redémarrer l'application après le téléchargement.
         </ion-note>
         <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
-          Télécharger le dictionnaire prendra environ 205Mb de stockage !
+          Télécharger le dictionnaire prendra environ 220Mb de stockage !
         </ion-note>
       </ion-list>
 
@@ -158,6 +158,14 @@ export default {
       this.loading = true
       try {
         await downloadDictionary()
+        const successMessage = await toastController.create({
+          header: 'Téléchargement réussi',
+          message: `Le dictionnaire hors-ligne a été téléchargé`,
+          duration: 5000,
+          color: 'success'
+        })
+
+        await successMessage.present()
       } catch (e) {
         const message = await toastController.create({
           header: 'Échec de téléchargement',
