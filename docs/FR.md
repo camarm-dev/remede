@@ -29,6 +29,10 @@ npm i
 ```shell
 npm i -g @ionic/cli
 ```
+- Installer Git LFS
+```shell
+git lfs install
+```
 
 ### Application mobile
 
@@ -54,6 +58,10 @@ npm run dev
 - Installer les dépendances
 ```shell
 pip install fastapi uvicorn starlette
+```
+- Récupérer la base de données avec Git LFS
+```shell
+git lfs pull
 ```
 - Lancer le serveur
 ```shell

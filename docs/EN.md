@@ -29,6 +29,12 @@ npm i
 ```shell
 npm i -g @ionic/cli
 ```
+- Install Git LFS
+1. Install extension [here](https://packagecloud.io/github/git-lfs/install)
+2. Setup extension
+```shell
+git lfs install
+```
 
 ### Mobile application
 
@@ -54,6 +60,10 @@ npm run dev
 - Install dependencies
 ```shell
 pip install fastapi uvicorn starlette
+```
+- Fetch database with Git LFS
+```shell
+git lfs pull
 ```
 - Start the server
 ```shell
