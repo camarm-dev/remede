@@ -152,10 +152,17 @@ def get_autocomplete(query: str):
 @app.get('/sheets')
 def get_cheatsheets():
     """
-    Cheatsheet
     Renvoie la totalité des fiches de grammaire, d'orthographe et de règles référencées
     """
     return SHEETS
+
+
+@app.get('/sheets/{slug}')
+def get_cheatsheet_by_slug(slug: str):
+    """
+    Renvoie la fiche de grammaire / d'orthographe avec le slug `slug`
+    """
+    return SHEETS_BY_SLUG.get(slug, {})
 
 
 @app.get('/download')
@@ -198,4 +205,5 @@ if __name__ == '__main__':
     DATASET = md5(open('data/remede.db','rb').read()).hexdigest()[0:7]
     HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
     SHEETS = get_sheets()
+    SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
     uvicorn.run(app, host='0.0.0.0')
