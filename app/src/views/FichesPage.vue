@@ -15,7 +15,21 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-note>Rien ici pour le moment...</ion-note>
+      <ion-note v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
+      <ion-item v-if="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <ion-note>Chargement en cour...</ion-note>
+      </ion-item>
+
+      <ion-list inset v-for="sheet in sheets">
+        <ion-item button color="light" lines="none">
+          <ion-label>
+            <h1>{{ sheet.nom }}</h1>
+            <p>{{ sheet.description }}</p>
+            <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
+          </ion-label>
+        </ion-item>
+      </ion-list>
 
     </ion-content>
   </ion-page>
@@ -30,5 +44,45 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  IonSpinner,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonBadge
 } from '@ionic/vue';
+</script>
+
+<script lang="ts">
+export default {
+  data() {
+    return {
+      loading: true,
+      failed: false,
+      sheets: []
+    }
+  },
+  mounted() {
+    this.loadSheets()
+  },
+  methods: {
+    async loadSheets() {
+      try {
+        this.sheets = await fetch('http://127.0.0.1:8000/sheets').then(resp => resp.json())
+      } catch {
+        this.failed = true
+      }
+      this.loading = false
+    },
+    getTagColor(tag: string) {
+      switch (tag) {
+        case 'orthographe':
+          return 'primary'
+        case 'grammaire':
+          return 'success'
+        default:
+          return 'grey'
+      }
+    }
+  }
+}
 </script>
