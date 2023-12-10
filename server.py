@@ -92,6 +92,7 @@ def get_sheets():
                 'nom': metadata['nom'],
                 'description': metadata['description'],
                 'tags': metadata['tags'],
+                'credits': metadata['credits'],
                 'contenu': markdown.markdown(metadata.content)
             })
     return sheets

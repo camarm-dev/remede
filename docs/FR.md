@@ -188,6 +188,7 @@ Exemple de fiche:
 ---
 nom: Exemple de fiche
 description: Ceci est la première fiche
+credits: http://example.com
 tags: 
   - grammaire
   - orthographe
