@@ -19,6 +19,10 @@
         </ion-toolbar>
       </ion-header>
 
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
       <ion-note class="ion-padding ion-float-end" v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
       <ion-nav-link router-direction="forward" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
         <ion-list inset>
@@ -31,7 +35,6 @@
           </ion-item>
         </ion-list>
       </ion-nav-link>
-
     </ion-content>
   </ion-page>
 </template>
@@ -84,6 +87,11 @@ export default {
         default:
           return 'grey'
       }
+    },
+    handleRefresh(event: CustomEvent) {
+      this.loadSheets().then(() => {
+        event.target.complete()
+      })
     }
   }
 }
