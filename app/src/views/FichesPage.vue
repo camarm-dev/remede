@@ -52,7 +52,6 @@ import {
   IonList,
   IonBadge, IonNavLink
 } from '@ionic/vue';
-import WordModal from "@/components/WordModal.vue";
 import FicheModal from "@/components/FicheModal.vue";
 </script>
 
