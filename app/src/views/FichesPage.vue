@@ -19,7 +19,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-note v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
+      <ion-note class="ion-padding ion-float-end" v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
       <ion-nav-link router-direction="forward" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
         <ion-list inset>
           <ion-item button color="light" lines="none">
