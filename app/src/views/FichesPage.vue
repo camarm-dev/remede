@@ -21,15 +21,17 @@
         <ion-note>Chargement en cour...</ion-note>
       </ion-item>
 
-      <ion-list inset v-for="sheet in sheets">
-        <ion-item button color="light" lines="none">
-          <ion-label>
-            <h1>{{ sheet.nom }}</h1>
-            <p>{{ sheet.description }}</p>
-            <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+      <ion-nav-link router-direction="forward" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
+        <ion-list inset>
+          <ion-item button color="light" lines="none">
+            <ion-label>
+              <h1>{{ sheet.nom }}</h1>
+              <p>{{ sheet.description }}</p>
+              <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-nav-link>
 
     </ion-content>
   </ion-page>
@@ -48,8 +50,10 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonBadge
+  IonBadge, IonNavLink
 } from '@ionic/vue';
+import WordModal from "@/components/WordModal.vue";
+import FicheModal from "@/components/FicheModal.vue";
 </script>
 
 <script lang="ts">
