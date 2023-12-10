@@ -17,6 +17,7 @@ Bienvenue sur la page de documentation de Remède. Naviguez à travers les conte
   - [Dataset](#dataset) 
   - [Schéma de données](#schéma-de-document-remède) 
   - [Base Sqlite](#base-sqlite) 
+  - [Fiches de français](#fiches-de-francais) 
 
 ## Dévelopment
 
@@ -57,7 +58,7 @@ npm run dev
 - Installer python3
 - Installer les dépendances
 ```shell
-pip install fastapi uvicorn starlette
+pip install fastapi uvicorn starlette python-frontmatter markdown
 ```
 - Récupérer la base de données avec Git LFS
 ```shell
@@ -174,3 +175,27 @@ Elle s'organise ainsi
     - document (`string`: le document Remède en format JSON)
 
 Un questionnement se pose: se schéma n'étant pas propre (stocker du JSON dans une base sql), faut-il retranscrire complètement le schéma de document Remède en plusieurs tables dnas une base ?
+
+### Fiches de français
+
+Des fiches de français sont écrites et référencées dans le dossier `data/fiches`.
+
+Elles sont écrites en `markdown` et utilisent le `front-matter` pour fonctionner.
+
+Exemple de fiche:
+
+```markdown
+---
+nom: Exemple de fiche
+description: Ceci est la première fiche
+tags: 
+  - grammaire
+  - orthographe
+---
+
+# Exemple
+
+Ceci est un exemple de fiche.
+```
+
+Les tags disponibles sont: `grammaire`, `orthographe`

@@ -17,6 +17,7 @@ Welcome on the documentation page of Remède ! Navigate through the contents bel
     - [Dataset](#dataset)
     - [Remede document schema](#remède-document-schema)
     - [Sqlite Database](#sqlite-database)
+    - [Cheatsheets](#cheatsheets)
 
 ## Development
 
@@ -59,7 +60,7 @@ npm run dev
 - Install python3
 - Install dependencies
 ```shell
-pip install fastapi uvicorn starlette
+pip install fastapi uvicorn starlette python-frontmatter markdown
 ```
 - Fetch database with Git LFS
 ```shell
@@ -174,3 +175,27 @@ His schema is:
 - With fields
     - word (`string`: the mot)
     - document (`string`: the Remède document in JSON format)
+
+### Cheatsheets
+
+Cheatsheet containing french orthography and grammar lessons are written in the `data/fiches` folder.
+
+They are written in `markdown` and use `fronr-matter` to work.
+
+Cheatsheet example:
+
+```markdown
+---
+nom: Exemple de fiche
+description: Ceci est la première fiche
+tags: 
+  - grammaire
+  - orthographe
+---
+
+# Exemple
+
+Ceci est un exemple de fiche.
+```
+
+Available tags: `grammaire`, `orthographe`
