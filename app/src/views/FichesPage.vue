@@ -73,7 +73,7 @@ export default {
     async loadSheets() {
       this.loading = true
       try {
-        this.sheets = await fetch('http://127.0.0.1:8000/sheets').then(resp => resp.json())
+        this.sheets = await fetch('https://api-remede.camarm.fr/sheets').then(resp => resp.json())
         this.failed = false
       } catch {
         this.failed = true

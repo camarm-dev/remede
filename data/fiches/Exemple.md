@@ -10,4 +10,4 @@ tags:
 
 # Exemple
 
-Ceci est un exemple de fiche.
+Ceci est un exemple de fiche. Les fiches continuellement améliorées et encore en train d'être écrites. Vous pouuvez contribuer sur [github](https://github.com/camarm-dev/remede).

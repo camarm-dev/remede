@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async loadSheet() {
-      this.fiche = await fetch(`http://127.0.0.1:8000/sheets/${this.$route.params.slug}`).then(resp => resp.json())
+      this.fiche = await fetch(`https://api-remede.camarm.fr/sheets/${this.$route.params.slug}`).then(resp => resp.json())
     }
   }
 }
