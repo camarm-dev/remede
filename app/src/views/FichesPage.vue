@@ -13,14 +13,13 @@
         <ion-toolbar>
           <ion-title size="large">Fiches</ion-title>
         </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar disabled placeholder="Rechercher une fiche"></ion-searchbar>
+          <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
+        </ion-toolbar>
       </ion-header>
 
       <ion-note v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
-      <ion-item v-if="loading">
-        <ion-spinner name="crescent"></ion-spinner>
-        <ion-note>Chargement en cour...</ion-note>
-      </ion-item>
-
       <ion-nav-link router-direction="forward" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
         <ion-list inset>
           <ion-item button color="light" lines="none">
@@ -50,7 +49,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonBadge, IonNavLink
+  IonBadge, IonNavLink, IonProgressBar, IonSearchbar
 } from '@ionic/vue';
 import FicheModal from "@/components/FicheModal.vue";
 </script>
