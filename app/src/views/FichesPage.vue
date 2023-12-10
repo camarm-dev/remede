@@ -71,8 +71,10 @@ export default {
   },
   methods: {
     async loadSheets() {
+      this.loading = true
       try {
         this.sheets = await fetch('http://127.0.0.1:8000/sheets').then(resp => resp.json())
+        this.failed = false
       } catch {
         this.failed = true
       }
@@ -84,6 +86,14 @@ export default {
           return 'primary'
         case 'grammaire':
           return 'success'
+        case 'lexique':
+          return 'tertiary'
+        case 'conjugaison':
+          return 'secondary'
+        case 'style':
+          return 'warning'
+        case 'typographie':
+          return 'danger'
         default:
           return 'grey'
       }

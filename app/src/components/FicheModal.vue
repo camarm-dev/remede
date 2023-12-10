@@ -101,6 +101,14 @@ export default defineComponent({
           return 'primary'
         case 'grammaire':
           return 'success'
+        case 'lexique':
+          return 'tertiary'
+        case 'conjugaison':
+          return 'secondary'
+        case 'style':
+          return 'warning'
+        case 'typographie':
+          return 'danger'
         default:
           return 'grey'
       }
