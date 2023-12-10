@@ -189,6 +189,7 @@ Cheatsheet example:
 nom: Exemple de fiche
 description: Ceci est la première fiche
 credits: http://example.com
+slug: /exemple
 tags: 
   - grammaire
   - orthographe
