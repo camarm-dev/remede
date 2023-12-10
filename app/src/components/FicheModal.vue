@@ -10,7 +10,7 @@ import {
   IonNavLink,
   IonLabel,
 } from "@ionic/vue";
-import {chevronBackOutline, open, pushOutline} from "ionicons/icons";
+import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
 </script>
 
 <template>
@@ -25,6 +25,11 @@ import {chevronBackOutline, open, pushOutline} from "ionicons/icons";
         </ion-nav-link>
       </ion-buttons>
       <ion-title>{{ nom }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button @click="shareSheet()">
+          <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content :fullscreen="true" class="ion-padding">
@@ -49,9 +54,10 @@ import {chevronBackOutline, open, pushOutline} from "ionicons/icons";
 <script lang="ts">
 import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
+import {Share} from "@capacitor/share";
 
 export default defineComponent({
-  props: ['nom', 'description', 'contenu', 'tags', 'credits'],
+  props: ['nom', 'description', 'contenu', 'tags', 'credits', 'slug'],
   data() {
     return {
       navigateBack: () => "" as Function
@@ -73,6 +79,18 @@ export default defineComponent({
     },
     openCredits() {
       window.open(this.credits)
+    },
+    async shareSheet() {
+      try {
+        await Share.share({
+          title: `"${this.nom}" sur Remède`,
+          text: `La fiche de français "${this.nom}" est sur Remède !`,
+          url: `https://remede.camam.fr/fiche/${this.slug}`,
+          dialogTitle: 'Partager la fiche',
+        })
+      } catch {
+        alert('Fonctionnalité non supportée par votre navigateur')
+      }
     }
   }
 })
