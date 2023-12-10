@@ -37,11 +37,7 @@ import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
       <ion-toolbar>
         <ion-label>
           <ion-title class="remede-font ion-wrap" size="large">{{ nom }}</ion-title>
-          <p class="ion-padding-start">{{ description }}</p>
         </ion-label>
-        <div class="ion-padding">
-          <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in tags">{{ tag }}</ion-badge>
-        </div>
         <ion-buttons slot="end">
           <ion-button @click="openCredits()">
             <ion-icon slot="icon-only" :icon="pushOutline" color="medium"/>
@@ -49,6 +45,12 @@ import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+    <ion-label>
+      <p class="ion-padding-start">{{ description }}</p>
+    </ion-label>
+    <div class="ion-padding">
+      <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in tags">{{ tag }}</ion-badge>
+    </div>
     <br>
     <div class="ion-padding" v-html="contenu"/>
   </ion-content>
