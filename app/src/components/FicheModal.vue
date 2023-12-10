@@ -8,7 +8,7 @@ import {
   IonToolbar,
   IonButton,
   IonNavLink,
-  IonLabel,
+  IonLabel, IonBadge,
 } from "@ionic/vue";
 import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
 </script>
@@ -39,6 +39,9 @@ import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
           <ion-title class="remede-font ion-wrap" size="large">{{ nom }}</ion-title>
           <p class="ion-padding-start">{{ description }}</p>
         </ion-label>
+        <div class="ion-padding">
+          <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in tags">{{ tag }}</ion-badge>
+        </div>
         <ion-buttons slot="end">
           <ion-button @click="openCredits()">
             <ion-icon slot="icon-only" :icon="pushOutline" color="medium"/>
@@ -90,6 +93,16 @@ export default defineComponent({
         })
       } catch {
         alert('Fonctionnalité non supportée par votre navigateur')
+      }
+    },
+    getTagColor(tag: string) {
+      switch (tag) {
+        case 'orthographe':
+          return 'primary'
+        case 'grammaire':
+          return 'success'
+        default:
+          return 'grey'
       }
     }
   }
