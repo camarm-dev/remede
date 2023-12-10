@@ -162,7 +162,14 @@ def get_cheatsheet_by_slug(slug: str):
     """
     Renvoie la fiche de grammaire / d'orthographe avec le slug `slug`
     """
-    return SHEETS_BY_SLUG.get(slug, {})
+    return SHEETS_BY_SLUG.get(slug, {
+        "contenu": "",
+        "description": "La fiche n'a pas été trouvée !",
+        "nom": "Pas de fiche",
+        "tags": [],
+        "slug": "",
+        "credits": ""
+    })
 
 
 @app.get('/download')
