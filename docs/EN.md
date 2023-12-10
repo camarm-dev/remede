@@ -189,7 +189,7 @@ Cheatsheet example:
 nom: Exemple de fiche
 description: Ceci est la première fiche
 credits: https://remede.camarm.fr/sheets-credits#example
-slug: /exemple
+slug: exemple
 tags: 
   - grammaire
   - orthographe
