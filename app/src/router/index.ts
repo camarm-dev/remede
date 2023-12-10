@@ -7,7 +7,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/dictionnaire/:mot',
     component: () => import ('../views/WordPage.vue')
   },
-
+  {
+    path: '/fiches/:slug',
+    component: () => import ('../views/FichePage.vue')
+  },
   {
     path: '/',
     component: Outlet,
