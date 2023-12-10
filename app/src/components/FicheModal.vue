@@ -90,7 +90,7 @@ export default defineComponent({
         await Share.share({
           title: `"${this.nom}" sur Remède`,
           text: `La fiche de français "${this.nom}" est sur Remède !`,
-          url: `https://remede.camam.fr/fiche/${this.slug}`,
+          url: `https://remede.camam.fr/fiches/${this.slug}`,
           dialogTitle: 'Partager la fiche',
         })
       } catch {
