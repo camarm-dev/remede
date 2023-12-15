@@ -15,6 +15,22 @@
         </ion-toolbar>
         <ion-toolbar>
           <ion-searchbar disabled placeholder="Rechercher une fiche"></ion-searchbar>
+          <ion-item class="item-carousel ion-text-wrap" lines="none">
+            <ion-chip id="open-filters">
+              <ion-icon :icon="filterCircleOutline"></ion-icon>
+              <ion-label>Filtres</ion-label>
+            </ion-chip>
+            <ion-popover alignment="center" trigger="open-filters" trigger-action="click">
+              <ion-chip class="filter" @click="addFilter(filter)" :color="getTagColor(filter)" v-for="filter in availableFilters">
+                {{ filter }}
+              </ion-chip>
+            </ion-popover>
+
+            <ion-chip v-for="filter in filters" :color="getTagColor(filter)">
+              <ion-label>{{ filter }}</ion-label>
+              <ion-icon :icon="close" @click="deleteFilter(filter)"></ion-icon>
+            </ion-chip>
+          </ion-item>
           <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
         </ion-toolbar>
       </ion-header>
@@ -48,13 +64,15 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonSpinner,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
+  IonChip,
   IonBadge, IonNavLink, IonProgressBar, IonSearchbar
 } from '@ionic/vue';
 import FicheModal from "@/components/FicheModal.vue";
+import {add, close, filterCircleOutline} from "ionicons/icons";
 </script>
 
 <script lang="ts">
@@ -63,7 +81,10 @@ export default {
     return {
       loading: true,
       failed: false,
-      sheets: []
+      sheets: [],
+      all_sheets: [],
+      filters: [],
+      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie']
     }
   },
   mounted() {
@@ -73,7 +94,9 @@ export default {
     async loadSheets() {
       this.loading = true
       try {
-        this.sheets = await fetch('https://api-remede.camarm.fr/sheets').then(resp => resp.json())
+        this.all_sheets = await fetch('https://api-remede.camarm.fr/sheets').then(resp => resp.json())
+        this.sheets = this.all_sheets
+        this.filters = []
         this.failed = false
       } catch {
         this.failed = true
@@ -102,7 +125,47 @@ export default {
       this.loadSheets().then(() => {
         event.target.complete()
       })
+    },
+    loadFilteredSheets() {
+      const filteredSheets = this.all_sheets.filter((value) => { value.tags.includes() })
+    },
+    addFilter(tag: string) {
+      this.filters.push(tag)
+      this.availableFilters.splice(this.availableFilters.indexOf(tag), 1)
+    },
+    deleteFilter(tag: string) {
+      this.filters.splice(this.filters.indexOf(tag), 1)
+      this.availableFilters.push(tag)
     }
   }
 }
 </script>
+<style>
+.item-carousel {
+  min-width: max-content;
+  overflow-x: scroll;
+}
+
+.filter {
+  min-width: max-content;
+  justify-content: center;
+}
+
+ion-popover {
+  --background: #e0e0e0;
+  --border: 0;
+  --width: max-content;
+}
+
+ion-popover .popover-content, ion-popover ion-content {
+  --background: #e0e0e0;
+  width: max-content !important;
+}
+
+ion-popover .popover-viewport {
+  --background: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+</style>
