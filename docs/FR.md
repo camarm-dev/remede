@@ -17,6 +17,7 @@ Bienvenue sur la page de documentation de Remède. Naviguez à travers les conte
   - [Dataset](#dataset) 
   - [Schéma de données](#schéma-de-document-remède) 
   - [Base Sqlite](#base-sqlite) 
+  - [Fiches de français](#fiches-de-francais) 
 
 ## Dévelopment
 
@@ -57,7 +58,7 @@ npm run dev
 - Installer python3
 - Installer les dépendances
 ```shell
-pip install fastapi uvicorn starlette
+pip install fastapi uvicorn starlette python-frontmatter markdown
 ```
 - Récupérer la base de données avec Git LFS
 ```shell
@@ -174,3 +175,56 @@ Elle s'organise ainsi
     - document (`string`: le document Remède en format JSON)
 
 Un questionnement se pose: se schéma n'étant pas propre (stocker du JSON dans une base sql), faut-il retranscrire complètement le schéma de document Remède en plusieurs tables dnas une base ?
+
+### Fiches de français
+
+Des fiches de français sont écrites et référencées dans le dossier `data/fiches`.
+
+Elles sont écrites en `markdown` et utilisent le `front-matter` pour fonctionner.
+
+Exemple de fiche:
+
+```markdown
+---
+nom: Exemple de fiche
+description: Ceci est la première fiche
+credits: https://remede.camarm.fr/sheets-credits#exemple
+slug: exemple
+tags: 
+  - grammaire
+  - orthographe
+---
+
+# Exemple
+
+Ceci est un exemple de fiche.
+```
+
+Les tags disponibles sont: `grammaire`, `orthographe`, `conjugaison`, `lexique`, `style`, `typographie`
+
+Notez que pour les crédits, si la fiche est écrite par un contributeur ou plusieurs (vous) la page `https://remede.camarm.fr/sheets-credits`, placé dans `docs/sheets-credits.md` permet de vous créditer et d'y placer les sources qui vous ont aidés.
+- Vous le ferez alors ainsi:
+```markdown
+[...]
+
+## Credits
+
+[//]: # (Nouveau crédit)
+
+### Exemple
+
+- Author(s): [Nom](lien github / site / page wiki / sans lien)
+- Source: [Remède / Source externe](lien remede / lien externe)
+[//]: # (Si source remède, ajouter)
+    - Inspiré de [nom](lien)
+    - Inspiré de [autre nom](autre lien)
+
+[//]: # (Autres champs possibles)
+
+- File historic and contributions: [On Github](https://github.com/camarm-dev/remede/commits/main/data/fiches/<nom-fiche>.md)
+
+[//]: # (Fin des mentions)
+```
+- Vos crédits seront alors accessible à `https://remede.camarm.fr/sheets-credits#exemple`
+
+Remplissez bien cette fiche, car elle permet la traçabilité et le respect de la propriété privée et intellectuelle concernant Rèmede et la provenance de ses données.

@@ -29,7 +29,7 @@
                   </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/fiches')" disabled lines="none" :detail="false" class="hydrated" :class="path === '/fiches' ? 'selected': ''">
+                  <ion-item @click="goTo('/fiches')" lines="none" :detail="false" class="hydrated" :class="path === '/fiches' ? 'selected': ''">
                     <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
                     <ion-label>Fiches</ion-label>
                   </ion-item>

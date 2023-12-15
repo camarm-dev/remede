@@ -17,6 +17,7 @@ Welcome on the documentation page of Remède ! Navigate through the contents bel
     - [Dataset](#dataset)
     - [Remede document schema](#remède-document-schema)
     - [Sqlite Database](#sqlite-database)
+    - [Cheatsheets](#cheatsheets)
 
 ## Development
 
@@ -59,7 +60,7 @@ npm run dev
 - Install python3
 - Install dependencies
 ```shell
-pip install fastapi uvicorn starlette
+pip install fastapi uvicorn starlette python-frontmatter markdown
 ```
 - Fetch database with Git LFS
 ```shell
@@ -174,3 +175,56 @@ His schema is:
 - With fields
     - word (`string`: the mot)
     - document (`string`: the Remède document in JSON format)
+
+### Cheatsheets
+
+Cheatsheet containing french orthography and grammar lessons are written in the `data/fiches` folder.
+
+They are written in `markdown` and use `fronr-matter` to work.
+
+Cheatsheet example:
+
+```markdown
+---
+nom: Exemple de fiche
+description: Ceci est la première fiche
+credits: https://remede.camarm.fr/sheets-credits#example
+slug: exemple
+tags: 
+  - grammaire
+  - orthographe
+---
+
+# Exemple
+
+Ceci est un exemple de fiche.
+```
+
+Available tags: `grammaire`, `orthographe`, `conjugaison`, `lexique`, `style`, `typographie`
+
+Please don't forget that to credits one or many contributors, the page `https://remede.camarm.fr/sheets-credits`, placed in `docs/sheets-credits.md` is here to credit yourself and quote the source(s) that helped you.
+- Here is how to correctly use this file
+```markdown
+[...]
+
+## Credits
+
+[//]: # (Begin new crédit)
+
+### Exemple
+
+- Author(s): [Nom](github link / website / wiki page / without link)
+- Source: [Remède / Extern source name](remede github link / extern link)
+[//]: # (If the source is remède, add)
+    - With help of [source name](source link)
+    - With help of [other source name](other source link)
+
+[//]: # (Other fields available)
+
+- File historic and contributions: [On Github](https://github.com/camarm-dev/remede/commits/main/data/fiches/<nom-fiche>.md)
+
+[//]: # (End new credits)
+```
+- Your credits will be available at `https://remede.camarm.fr/sheets-credits#exemple`
+
+Please fill correctly this file, because it tracks authors and contributions, and is here to respect privacy policies and copyrights about Rèmede and the sources of its data ! 

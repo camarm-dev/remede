@@ -1,9 +1,12 @@
 import json
 import math
+import os
 import random
 import time
 from hashlib import md5
 
+import frontmatter
+import markdown
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -79,6 +82,23 @@ def get_remede_doc(word: str):
     return REMEDE[get_first_letter(word)].get(word, {'message': 'Mot non trouvé'})
 
 
+def get_sheets():
+    files = os.listdir('data/fiches')
+    sheets = []
+    for filename in files:
+        with open(f'data/fiches/{filename}') as file:
+            metadata = frontmatter.load(file)
+            sheets.append({
+                'nom': metadata['nom'],
+                'description': metadata['description'],
+                'tags': metadata['tags'],
+                'credits': metadata['credits'],
+                'slug': metadata['slug'],
+                'contenu': markdown.markdown(metadata.content)
+            })
+    return sheets
+
+
 @app.get('/')
 def root():
     """
@@ -129,6 +149,29 @@ def get_autocomplete(query: str):
     return list(filter(lambda word: word.startswith(query), keys))[0:6]
 
 
+@app.get('/sheets')
+def get_cheatsheets():
+    """
+    Renvoie la totalité des fiches de grammaire, d'orthographe et de règles référencées
+    """
+    return SHEETS
+
+
+@app.get('/sheets/{slug}')
+def get_cheatsheet_by_slug(slug: str):
+    """
+    Renvoie la fiche de grammaire / d'orthographe avec le slug `slug`
+    """
+    return SHEETS_BY_SLUG.get(slug, {
+        "contenu": "",
+        "description": "La fiche n'a pas été trouvée !",
+        "nom": "Pas de fiche",
+        "tags": [],
+        "slug": "",
+        "credits": ""
+    })
+
+
 @app.get('/download')
 def download_database():
     """
@@ -168,4 +211,6 @@ if __name__ == '__main__':
     }
     DATASET = md5(open('data/remede.db','rb').read()).hexdigest()[0:7]
     HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
+    SHEETS = get_sheets()
+    SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
     uvicorn.run(app, host='0.0.0.0')
