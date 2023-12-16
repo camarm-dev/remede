@@ -9,6 +9,10 @@ assignees: ''
 
 ## [Give a name to this security issue]
 
+Please open a discussion on [support.camarm.fr](https://support.camarm.fr), with tag `security report` and link it below.
+
+[Labse Support Disscussion](https://support.camarm.fr)
+
 ### Which component of the project it impacts ? / Quelle partie du projet cette faille impacte ? (check)
 - [ ] Remède API
 - [ ] Remède Frontend
