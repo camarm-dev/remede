@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@capacitor/android": "5.5.1",
