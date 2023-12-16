@@ -28,11 +28,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Go to app directory
-        run: cd app
-
       - name: Setup Environnement
-        run: npm install
+        run: cd app && npm install
 
       - name: Run ESLint
-        run: npm run lint
+        run: cd app && npm run lint
