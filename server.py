@@ -8,7 +8,7 @@ from hashlib import md5
 import frontmatter
 import markdown
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
@@ -94,7 +94,8 @@ def get_sheets():
                 'tags': metadata['tags'],
                 'credits': metadata['credits'],
                 'slug': metadata['slug'],
-                'contenu': markdown.markdown(metadata.content)
+                'contenu': markdown.markdown(metadata.content),
+                'path': f'data/fiches/{filename}'
             })
     return sheets
 
@@ -170,6 +171,25 @@ def get_cheatsheet_by_slug(slug: str):
         "slug": "",
         "credits": ""
     })
+
+
+@app.get('/sheets/download/{slug}')
+def download_cheatsheet_by_slug(slug: str):
+    """
+    Renvoie le fichier markdown correspondant à la fiche avec le slug `slug`
+    """
+    fiche = SHEETS_BY_SLUG.get(slug, {
+        "contenu": "",
+        "description": "La fiche n'a pas été trouvée !",
+        "nom": "Pas de fiche",
+        "tags": [],
+        "slug": "",
+        "credits": "",
+        "path": None
+    })
+    if fiche['path']:
+        return FileResponse(fiche['path'])
+    return HTTPException(status_code=404, detail='Fiche non trouvée !')
 
 
 @app.get('/download')
