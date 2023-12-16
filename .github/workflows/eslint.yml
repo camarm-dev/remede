@@ -32,7 +32,7 @@ jobs:
         run: cd app
 
       - name: Setup Environnement
-        run: cd app npm install
+        run: npm install
 
       - name: Run ESLint
         run: npm run lint
