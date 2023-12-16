@@ -58,6 +58,9 @@
                       <br>
                       <ion-text @click="explainSegments[explainSegments.indexOf(segment)] = { correction: false, text: suggested.text }" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
                     </ion-label>
+                    <ion-label>
+                      <ion-text @click="explainSegments[explainSegments.indexOf(segment)] = { correction: false, text: segment.correction.mistakeText }" color="primary">Ne pas remplacer "{{ segment.correction.mistakeText }}"</ion-text>
+                    </ion-label>
                   </ion-content>
                 </ion-popover>
               </span>
