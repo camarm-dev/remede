@@ -76,15 +76,17 @@ import {close, filterCircleOutline} from "ionicons/icons";
 </script>
 
 <script lang="ts">
+import {RemedeSheet} from "@/functions/types/remede";
+
 export default {
   data() {
     return {
       loading: true,
       failed: false,
-      sheets: [],
-      all_sheets: [],
-      filters: [],
-      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie'],
+      sheets: [] as RemedeSheet[],
+      all_sheets: [] as RemedeSheet[],
+      filters: [] as string[],
+      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie'] as string[],
       query: ''
     }
   },
