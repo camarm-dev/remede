@@ -127,15 +127,24 @@ export default {
       })
     },
     loadFilteredSheets() {
-      const filteredSheets = this.all_sheets.filter((value) => { value.tags.includes() })
+      if (this.filters.length == 0) this.sheets = this.all_sheets
+      else {
+        this.sheets = this.all_sheets.filter((value) => {
+          for (const tag of this.filters) {
+            if (value.tags.includes(tag)) return true
+          }
+        })
+      }
     },
     addFilter(tag: string) {
       this.filters.push(tag)
       this.availableFilters.splice(this.availableFilters.indexOf(tag), 1)
+      this.loadFilteredSheets()
     },
     deleteFilter(tag: string) {
       this.filters.splice(this.filters.indexOf(tag), 1)
       this.availableFilters.push(tag)
+      this.loadFilteredSheets()
     }
   }
 }
