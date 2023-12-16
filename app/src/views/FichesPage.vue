@@ -14,7 +14,7 @@
           <ion-title size="large">Fiches</ion-title>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-searchbar disabled placeholder="Rechercher une fiche"></ion-searchbar>
+          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value)" placeholder="Rechercher une fiche"></ion-searchbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
             <ion-chip id="open-filters">
               <ion-icon :icon="filterCircleOutline"></ion-icon>
@@ -84,7 +84,8 @@ export default {
       sheets: [],
       all_sheets: [],
       filters: [],
-      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie']
+      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie'],
+      query: ''
     }
   },
   mounted() {
@@ -125,6 +126,19 @@ export default {
       this.loadSheets().then(() => {
         event.target.complete()
       })
+    },
+    searchInSheets() {
+      if (this.query.length == 0) this.loadFilteredSheets()
+      else {
+        if (this.sheets.length == 0) this.loadFilteredSheets()
+        this.sheets = this.sheets.filter((value) => {
+          return value.nom.toLowerCase().includes(this.query.toLowerCase())
+        })
+      }
+    },
+    handleSearchBarInput(query: string) {
+      this.query = query
+      this.searchInSheets()
     },
     loadFilteredSheets() {
       if (this.filters.length == 0) this.sheets = this.all_sheets
