@@ -1,6 +1,6 @@
 
 function starWord(word: string) {
-    let starredWords = JSON.parse(localStorage.getItem('userStars') || '[]') as Array<string>
+    const starredWords = JSON.parse(localStorage.getItem('userStars') || '[]') as Array<string>
     if (!starredWords.includes(word)) {
         starredWords.push(word)
     } else {
@@ -10,7 +10,7 @@ function starWord(word: string) {
 }
 
 function isWordStarred(word: string) {
-    let starredWords = JSON.parse(localStorage.getItem('userStars') || '[]') as Array<string>
+    const starredWords = JSON.parse(localStorage.getItem('userStars') || '[]') as Array<string>
     return starredWords.includes(word)
 }
 

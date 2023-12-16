@@ -78,7 +78,7 @@ import WordModal from "@/components/WordModal.vue";
           <figcaption>{{ document.image.credits }}</figcaption>
         </figure>
       </div>
-      <div class="definition" v-for="def in document.definitions">
+      <div class="definition" :key="def" v-for="def in document.definitions">
         <header>
           <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
           <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
@@ -87,10 +87,10 @@ import WordModal from "@/components/WordModal.vue";
         </header>
         <div class="content">
           <ul>
-            <li v-for="meaning in def.explications">
+            <li :key="meaning" v-for="meaning in def.explications">
               <span v-html="meaning.replaceAll('https://fr.wiktionary.org/wiki/', '/dictionnaire/')" v-if="typeof meaning === 'string'"></span>
               <ul v-else class="ion-padding-start">
-                <li v-for="subMeaning in meaning" v-html="subMeaning"></li>
+                <li :key="subMeaning" v-for="subMeaning in meaning" v-html="subMeaning"></li>
               </ul>
             </li>
           </ul>
@@ -105,7 +105,7 @@ import WordModal from "@/components/WordModal.vue";
         </header>
       </div>
       <ul>
-        <li v-for="syn in document.synonymes">
+        <li :key="syn" v-for="syn in document.synonymes">
           <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: syn }">
             <a>{{ syn }}</a>
           </ion-nav-link>
@@ -122,7 +122,7 @@ import WordModal from "@/components/WordModal.vue";
         </header>
       </div>
       <ul>
-        <li v-for="ant in document.antonymes">
+        <li :key="ant" v-for="ant in document.antonymes">
           <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: ant }">
             <a>{{ ant }}</a>
           </ion-nav-link>
@@ -150,13 +150,13 @@ import WordModal from "@/components/WordModal.vue";
         </ion-item>
         <ion-item color="light" lines="full">
           <ion-select @ionChange="changeMode($event.target.value)" slot="start" interface="action-sheet" placeholder="Mode" :value="currentMode">
-            <ion-select-option v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
+            <ion-select-option :key="mode" v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
           </ion-select>
           <ion-select @ionChange="changeTemps($event.target.value)" slot="end" interface="action-sheet" placeholder="Temps" :value="currentTemps">
-            <ion-select-option v-for="temps in modeTemps" :value="temps">{{ temps }}</ion-select-option>
+            <ion-select-option :key="temps" v-for="temps in modeTemps" :value="temps">{{ temps }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item v-for="sujet in currentSujets">
+        <ion-item :key="sujet" v-for="sujet in currentSujets">
           <ion-label>
             <p>{{ sujet }}</p>
           </ion-label>
@@ -182,8 +182,9 @@ import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
-import {useIonRouter, UseIonRouterResult} from "@ionic/vue";
+import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
+import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['motRemede'],
@@ -213,7 +214,7 @@ export default defineComponent({
       } as RemedeWordDocument,
       notFound: false,
       stared: false,
-      navigateBack: () => "" as Function
+      navigateBack: () => "" as navigateBackFunction
     }
   },
   mounted() {

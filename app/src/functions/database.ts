@@ -5,7 +5,7 @@ import {toastController} from "@ionic/vue";
 async function openDatabase() {
     try {
         const SQL = await initSqlJS({
-            locateFile: file => `/sql-wasm.wasm`
+            locateFile: () => `/sql-wasm.wasm`
         })
         const raw = await getRawDictionary()
         return new SQL.Database(raw)

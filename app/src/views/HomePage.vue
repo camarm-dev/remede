@@ -12,7 +12,7 @@
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`">
         <ion-list class="search-results">
-          <ion-nav-link v-for="result in results" router-direction="forward" :component="WordModal" :component-props="{ motRemede: result }">
+          <ion-nav-link :key="result" v-for="result in results" router-direction="forward" :component="WordModal" :component-props="{ motRemede: result }">
             <ion-item class="ion-no-padding" button>
               <ion-label>
                 {{ result }}
@@ -79,6 +79,8 @@ export default {
       results: [] as string[],
       query: '',
       router: useRouter(),
+      // Ignoring linter error about empty function (@typescript-eslint/no-empty-function)
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       autocompleteTimeout: window.setTimeout(() => {}, 500),
       randomWord: '',
       loading: false,

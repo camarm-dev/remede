@@ -43,7 +43,7 @@
             {{ corrected }}
           </div>
           <div v-else class="content ion-padding-bottom">
-            <span v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
+            <span :key="segment" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
                 <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.type}`">{{ segment.correction.mistakeText }}</ion-text>
                 <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
@@ -56,7 +56,7 @@
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
                       <br>
-                      <ion-text @click="explainSegments[explainSegments.indexOf(segment)] = { correction: false, text: suggested.text }" color="primary" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
+                      <ion-text @click="explainSegments[explainSegments.indexOf(segment)] = { correction: false, text: suggested.text }" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
                     </ion-label>
                   </ion-content>
                 </ion-popover>
@@ -148,9 +148,9 @@ export default {
       }).then(resp => resp.json()).then(response => {
         this.corrections = response.corrections
         this.corrected = response.text
-        let originalText = this.content
+        const originalText = this.content
         let lastIndex = 0
-        let segmentedText = [] as ExplainSegment[]
+        const segmentedText = [] as ExplainSegment[]
         for (const correction of this.corrections) {
           const startIndex = correction.startIndex
           const endIndex = correction.endIndex

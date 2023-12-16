@@ -57,7 +57,7 @@ import {
       <p class="ion-padding-start">{{ description }}</p>
     </ion-label>
     <div class="ion-padding">
-      <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in tags">{{ tag }}</ion-badge>
+      <ion-badge class="ion-margin-end" :color="getTagColor(tag)" :key="tag" v-for="tag in tags">{{ tag }}</ion-badge>
     </div>
     <br>
     <div class="ion-padding" v-html="contenu"/>
@@ -68,12 +68,13 @@ import {
 import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
 import {Share} from "@capacitor/share";
+import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['nom', 'description', 'contenu', 'tags', 'credits', 'slug'],
   data() {
     return {
-      navigateBack: () => "" as Function
+      navigateBack: () => "" as navigateBackFunction
     }
   },
   mounted() {
