@@ -8,9 +8,9 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "test:e2e": "cypress run",
-    "test:unit": "vitest",
-    "lint": "eslint"
+    "test": "cypress run",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@capacitor/android": "5.5.1",
@@ -43,7 +43,6 @@
     "jsdom": "^22.1.0",
     "typescript": "^5.1.6",
     "vite": "^4.5.1",
-    "vitest": "^0.32.2",
     "vue-tsc": "^1.0.24"
   },
   "description": "A french mobile and offline dictionary."

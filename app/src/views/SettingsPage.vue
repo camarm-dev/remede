@@ -104,8 +104,6 @@ import {deleteDictionary} from "@/functions/offline";
 <script lang="ts">
 
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
-import {ProgressStatus} from "@capacitor/filesystem";
-import {Capacitor} from "@capacitor/core";
 import {toastController} from "@ionic/vue";
 import {InformationsResponse} from "@/functions/types/api_responses";
 

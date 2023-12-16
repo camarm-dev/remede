@@ -6,5 +6,5 @@
 
 <script setup lang="ts">
 import { IonApp, IonNav } from '@ionic/vue';
-import Root from "@/Root.vue";
+import Root from "@/AppRoot.vue";
 </script>

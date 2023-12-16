@@ -16,7 +16,7 @@
       </ion-header>
 
       <ion-list inset>
-        <ion-nav-link v-for="word in starredWords" :component="WordModal" router-direction="forward" :component-props="{ motRemede: word }">
+        <ion-nav-link :key="word" v-for="word in starredWords" :component="WordModal" router-direction="forward" :component-props="{ motRemede: word }">
           <ion-item color="light">
             <ion-icon color="primary" :icon="bookmark" @click="starWord(word); refresh()" slot="start"/>
             <ion-label>

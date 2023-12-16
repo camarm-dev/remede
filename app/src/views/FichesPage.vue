@@ -21,12 +21,12 @@
               <ion-label>Filtres</ion-label>
             </ion-chip>
             <ion-popover alignment="center" trigger="open-filters" trigger-action="click">
-              <ion-chip class="filter" @click="addFilter(filter)" :color="getTagColor(filter)" v-for="filter in availableFilters">
+              <ion-chip :key="filter" class="filter" @click="addFilter(filter)" :color="getTagColor(filter)" v-for="filter in availableFilters">
                 {{ filter }}
               </ion-chip>
             </ion-popover>
 
-            <ion-chip v-for="filter in filters" :color="getTagColor(filter)">
+            <ion-chip :key="filter" v-for="filter in filters" :color="getTagColor(filter)">
               <ion-label>{{ filter }}</ion-label>
               <ion-icon :icon="close" @click="deleteFilter(filter)"></ion-icon>
             </ion-chip>
@@ -40,13 +40,13 @@
       </ion-refresher>
 
       <ion-note class="ion-padding ion-float-end" v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
-      <ion-nav-link router-direction="forward" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
+      <ion-nav-link router-direction="forward" :key="sheet.nom" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
         <ion-list inset>
           <ion-item button color="light" lines="none">
             <ion-label>
               <h1>{{ sheet.nom }}</h1>
               <p>{{ sheet.description }}</p>
-              <ion-badge class="ion-margin-end" :color="getTagColor(tag)" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
+              <ion-badge class="ion-margin-end" :color="getTagColor(tag)" :key="tag" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -72,19 +72,21 @@ import {
   IonBadge, IonNavLink, IonProgressBar, IonSearchbar
 } from '@ionic/vue';
 import FicheModal from "@/components/FicheModal.vue";
-import {add, close, filterCircleOutline} from "ionicons/icons";
+import {close, filterCircleOutline} from "ionicons/icons";
 </script>
 
 <script lang="ts">
+import {RemedeSheet} from "@/functions/types/remede";
+
 export default {
   data() {
     return {
       loading: true,
       failed: false,
-      sheets: [],
-      all_sheets: [],
-      filters: [],
-      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie'],
+      sheets: [] as RemedeSheet[],
+      all_sheets: [] as RemedeSheet[],
+      filters: [] as string[],
+      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie'] as string[],
       query: ''
     }
   },

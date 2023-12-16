@@ -188,7 +188,7 @@ def download_cheatsheet_by_slug(slug: str):
         "path": None
     })
     if fiche['path']:
-        return FileResponse(fiche['path'])
+        return FileResponse(fiche['path'], filename=f"{slug}.md")
     return HTTPException(status_code=404, detail='Fiche non trouvée !')
 
 

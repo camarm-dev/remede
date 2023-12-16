@@ -1,3 +1,9 @@
+interface RemedeSheet {
+    nom: string
+    description: string
+    contenu: string
+    tags: string[]
+}
 
 interface RemedeWordDefinition {
     genre: string | string[]
@@ -56,5 +62,6 @@ export type {
     RemedeDictionary,
     RemedeDictionaryIndex,
     RemedeWordDocument,
-    RemedeConjugateDocument
+    RemedeConjugateDocument,
+    RemedeSheet
 }

@@ -9,8 +9,8 @@ interface ReversoCorrection {
     longDescription: string
     mistakeText: string
     suggestions: ReversoCorrectionSuggestion[]
-    startIndex: Number
-    endIndex: Number
+    startIndex: number
+    endIndex: number
 }
 
 interface ExplainSegment {
