@@ -3,7 +3,7 @@ Welcome at Rèmede ! We are happy to welcome new contributors like you !
 
 ## How to contribute
 **To contribute, you can:**
-- Open an issue ([here](/issues))
+- Open an issue ([here](https://github.com/camarm-dev/remede/issues))
 - Choose an issue, fork the repository, resolve it and open a pull request ! ([complete guide](#guide))
 - Contact us to become part of our team (software@camarm.dev)
   - So you'll have access to this repository
@@ -84,7 +84,7 @@ sequenceDiagram
 ```
 
 ### Big steps
-1. Open or choose an issue on our [issue page](/issues)
+1. Open or choose an issue on our [issue page](https://github.com/camarm-dev/remede/issues)
 2. Fork and clone the repository on your computer
 3. Read [the documentation](https://remede.camarm.fr/EN), and contact us for more informations (at software@camarm.dev).
 4. Make your changes, and separate your work in multiple commits
