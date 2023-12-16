@@ -8,7 +8,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "test:e2e": "cypress run",
+    "test": "cypress run",
     "lint": "eslint src",
     "lint:fix": "eslint --fix"
   },
