@@ -10,7 +10,12 @@ import {
   IonNavLink,
   IonLabel, IonBadge,
 } from "@ionic/vue";
-import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
+import {
+  chevronBackOutline,
+  cloudDownloadOutline,
+  informationCircleOutline,
+  shareOutline
+} from "ionicons/icons";
 </script>
 
 <template>
@@ -29,6 +34,9 @@ import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
         <ion-button @click="shareSheet()">
           <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
         </ion-button>
+        <ion-button :download="`${slug}.md`" :href="`https://api-remede.camarm.fr/sheets/download/${slug}`">
+          <ion-icon slot="icon-only" :icon="cloudDownloadOutline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -40,7 +48,7 @@ import {chevronBackOutline, pushOutline, shareOutline} from "ionicons/icons";
         </ion-label>
         <ion-buttons slot="end">
           <ion-button @click="openCredits()">
-            <ion-icon slot="icon-only" :icon="pushOutline" color="medium"/>
+            <ion-icon slot="icon-only" :icon="informationCircleOutline" color="medium"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
