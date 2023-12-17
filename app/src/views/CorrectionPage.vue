@@ -56,8 +56,8 @@
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
                       <br>
-                      <ion-text v-if="segment.correction.suggestions" @click="setSegmentAsText(segment, suggested.text)" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
-                      <ion-text v-else color="primary" @click="setSegmentAsText(segment, segment.correction.replacementText)">{{ segment.correction.replacementText }}<br></ion-text>
+                      <ion-text @click="setSegmentAsText(segment, suggested.text)" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
+                      <ion-text  v-if="!segment.correction.suggestions" color="primary" @click="setSegmentAsText(segment, segment.correction.replacementText)">{{ segment.correction.replacementText }}<br></ion-text>
                     </ion-label>
                     <ion-label>
                       <ion-text @click="setSegmentAsText(segment, segment.correction.mistakeText)" color="primary">Ne pas remplacer "{{ segment.correction.mistakeText }}"</ion-text>
