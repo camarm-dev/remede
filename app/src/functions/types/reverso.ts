@@ -9,6 +9,7 @@ interface ReversoCorrection {
     longDescription: string
     mistakeText: string
     suggestions: ReversoCorrectionSuggestion[]
+    replacementText: string
     startIndex: number
     endIndex: number
 }

@@ -48,7 +48,7 @@
                 <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.type}`">{{ segment.correction.mistakeText }}</ion-text>
                 <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
                   <ion-content class="ion-padding">
-                    <ion-label>
+                    <ion-label v-if="segment.correction.shortDescription">
                       <h2>{{ segment.correction.shortDescription }}</h2>
                       <p v-html="segment.correction.longDescription.replaceAll('#!', `<a href=/dictionnaire/${segment.correction.mistakeText}>`).replaceAll('#$', '</a>')"></p>
                     </ion-label>
@@ -56,7 +56,11 @@
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
                       <br>
-                      <ion-text @click="explainSegments[explainSegments.indexOf(segment)] = { correction: false, text: suggested.text }" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
+                      <ion-text @click="setSegmentAsText(segment, suggested.text)" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
+                      <ion-text  v-if="!segment.correction.suggestions" color="primary" @click="setSegmentAsText(segment, segment.correction.replacementText)">{{ segment.correction.replacementText }}<br></ion-text>
+                    </ion-label>
+                    <ion-label>
+                      <ion-text @click="setSegmentAsText(segment, segment.correction.mistakeText)" color="primary">Ne pas remplacer "{{ segment.correction.mistakeText }}"</ion-text>
                     </ion-label>
                   </ion-content>
                 </ion-popover>
@@ -146,7 +150,7 @@ export default {
           'Content-Type': 'application/*+json'
         }
       }).then(resp => resp.json()).then(response => {
-        this.corrections = response.corrections
+        this.corrections = response.corrections.concat(response.autoReplacements)
         this.corrected = response.text
         const originalText = this.content
         let lastIndex = 0
@@ -155,8 +159,8 @@ export default {
           const startIndex = correction.startIndex
           const endIndex = correction.endIndex
           segmentedText.push({
-            correction: false,
-            text: originalText.slice(lastIndex, lastIndex == 0 ? startIndex: startIndex - 1)
+            correction: false as any as ReversoCorrection,
+            text: originalText.slice(lastIndex == 0 ? lastIndex: lastIndex + 1, startIndex)
           })
           segmentedText.push({
             correction: correction,
@@ -164,6 +168,11 @@ export default {
           })
           lastIndex = endIndex
         }
+
+        segmentedText.push({
+          correction: false as any as ReversoCorrection,
+          text: originalText.slice(lastIndex + 1, originalText.length)
+        })
 
         this.explainSegments = segmentedText
         this.locked = true
@@ -178,6 +187,9 @@ export default {
       return this.explainSegments.map(obj => {
         return obj.correction ? obj.correction.mistakeText: obj.text
       }).join('')
+    },
+    setSegmentAsText(segment: ExplainSegment, text: string) {
+      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false, text: text }
     }
   }
 }
