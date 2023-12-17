@@ -257,7 +257,7 @@ export default defineComponent({
         await Share.share({
           title: `Définition "${this.mot}" sur Remède`,
           text: `La définition du mot "${this.mot}" est sur Remède !`,
-          url: `https://remede.camam.fr/dictionnaire/${this.mot}`,
+          url: `https://remede-app.camarm.fr/dictionnaire/${this.mot}`,
           dialogTitle: 'Partager la définition',
         })
       } catch {
