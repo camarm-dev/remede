@@ -15,7 +15,7 @@ Une **classe grammaticale** ou **nature d'un mot** est la catégorie à laquelle
 # Les 9 natures de mot
 
 - Les **noms** <sup>[1](#les-noms)</sup>
-- Les **adjectifs** <sup>[2](#les-noms)</sup>
+- Les **adjectifs** <sup>[2](#les-adjectifs)</sup>
 - Les **déterminants** <sup>[3](#les-noms)</sup>
 - Les **verbes** <sup>[4](#les-noms)</sup>
 - Les **pronoms** <sup>[5](#les-noms)</sup>
@@ -27,15 +27,18 @@ Une **classe grammaticale** ou **nature d'un mot** est la catégorie à laquelle
 ### Les noms
 
 > Le nom est un mot ou un groupe de mots servant à désigner des êtres, des choses et des concepts.
-> Le nom peut ainsi désigner une catégorie de personnes, d'animaux ou de choses, mais aussi de notions, d'actions, ayant des caractéristiques communes, ou, au contraire, désigner un être ou un lieu, voire une chose particulière, auquel cas, il s’agit d’un nom propre.
-
-_Citation de [Wikipedia](https://fr.wikipedia.org/wiki/Nom)_
+> Le nom peut ainsi désigner une catégorie de personnes, d'animaux ou de choses, mais aussi de notions, d'actions, ayant des caractéristiques communes, ou, au contraire, désigner un être ou un lieu, voire une chose particulière, auquel cas, il s’agit d’un nom propre. _[*](https://fr.wikipedia.org/wiki/Nom)_
 
 Il existe 2 types de noms:
+
 - Les **noms communs**
   - Désignent tous les êtres ou toutes les choses qui appartiennent à une même catégorie logique.  
 - Les **noms propres**
     - Commencent par une majuscule
     - Désignent un individu (ou groupe d'individus), un lieu ou une chose unique
+
+### Les adjectifs
+
+> Un adjectif
 
 Contribuer sur [github](https://github.com/camarm-dev/remede).

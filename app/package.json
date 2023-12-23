@@ -1,7 +1,7 @@
 {
   "name": "remede",
   "private": true,
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "type": "module",
   "license": "Cecill V2.1",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@capacitor/android": "5.5.1",
-    "@capacitor/app": "5.0.6",
+    "@capacitor/app": "^5.0.6",
     "@capacitor/clipboard": "^5.0.6",
     "@capacitor/core": "5.5.1",
     "@capacitor/filesystem": "^5.1.4",
@@ -26,6 +26,7 @@
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.5.3",
     "@types/sql.js": "^1.4.9",
+    "install": "^0.13.0",
     "ionicons": "^7.0.0",
     "sql.js": "^1.8.0",
     "vue": "^3.2.45",
