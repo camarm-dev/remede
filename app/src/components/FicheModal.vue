@@ -9,6 +9,7 @@ import {
   IonButton,
   IonNavLink,
   IonLabel, IonBadge,
+  IonAlert
 } from "@ionic/vue";
 import {
   chevronBackOutline,
@@ -47,12 +48,20 @@ import {
           <ion-title class="remede-font ion-wrap" size="large">{{ nom }}</ion-title>
         </ion-label>
         <ion-buttons slot="end">
-          <ion-button @click="openCredits()">
+          <ion-button id="present-credits">
             <ion-icon slot="icon-only" :icon="informationCircleOutline" color="medium"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+    <ion-alert
+        class="alert"
+        trigger="present-credits"
+        header="Crédits"
+        :sub-header="`Attributions à ${credits.attributions}`"
+        :message="credits.text">
+
+    </ion-alert>
     <ion-label>
       <p class="ion-padding-start">{{ description }}</p>
     </ion-label>
@@ -91,9 +100,6 @@ export default defineComponent({
     goTo(path: string) {
       this.$router.push(path)
     },
-    openCredits() {
-      window.open(this.credits)
-    },
     async shareSheet() {
       try {
         await Share.share({
@@ -123,7 +129,13 @@ export default defineComponent({
         default:
           return 'grey'
       }
-    }
+    },
   }
 })
 </script>
+<style>
+.alert .alert-message {
+  text-align: justify;
+  color: var(--ion-color-medium);
+}
+</style>

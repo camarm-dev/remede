@@ -1,7 +1,14 @@
 ---
 nom: Exemple de fiche
 description: Ceci est la première fiche
-credits: https://remede.camarm.fr/sheets-credits#example
+credits:
+  attribution: Remède
+  url: https://github.com/camarm-dev/remede
+  text: "
+Author(s): [camarm](https://github.com/camarm-dev)
+Source: [Remède](https://github.com/camarm-dev/remede)
+File historic and contributions: [On Github](https://github.com/camarm-dev/remede/commits/main/data/fiches/Exemple.md)
+"
 slug: example
 tags: 
   - grammaire
