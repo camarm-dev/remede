@@ -1,0 +1,16 @@
+# YAML 1.2
+---
+cff-version: "1.1.0"
+message: "If you use this software, or part of this one, please cite it using these metadata."
+# doi: 10.23721/100/1503924
+title: "Remède - French open source dictionary"
+authors:
+  -
+    family-names: CAMPONOVO
+    given-names: Armand
+    orcid: https://orcid.org/0009-0005-8995-6918
+abstract: "Remède is a french dictionary database, API and mobile application. It's an open source alternative to Antidote."
+date-released: 2023-12-23
+repository-code: "https://github.com/camarm-dev/remede"
+license: CeCill V2.1
+...
