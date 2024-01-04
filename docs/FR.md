@@ -184,11 +184,18 @@ Elles sont écrites en `markdown` et utilisent le `front-matter` pour fonctionne
 
 Exemple de fiche:
 
-```markdown
+```yaml
 ---
 nom: Exemple de fiche
 description: Ceci est la première fiche
-credits: https://remede.camarm.fr/sheets-credits#exemple
+credits:
+  attribution: Remède
+  url: https://github.com/camarm-dev/remede
+  text: "
+Author(s): [camarm](https://github.com/camarm-dev)
+Source: [Remède](https://github.com/camarm-dev/remede)
+File historic and contributions: [On Github](https://github.com/camarm-dev/remede/commits/main/data/fiches/Exemple.md)
+"
 slug: exemple
 tags: 
   - grammaire
@@ -202,29 +209,10 @@ Ceci est un exemple de fiche.
 
 Les tags disponibles sont: `grammaire`, `orthographe`, `conjugaison`, `lexique`, `style`, `typographie`
 
-Notez que pour les crédits, si la fiche est écrite par un contributeur ou plusieurs (vous) la page `https://remede.camarm.fr/sheets-credits`, placé dans `docs/sheets-credits.md` permet de vous créditer et d'y placer les sources qui vous ont aidés.
-- Vous le ferez alors ainsi:
-```markdown
-[...]
+Pour créditer et permettre l'attribution de ces fiches, veuillez remplir correctement les champs `credits`.
 
-## Credits
-
-[//]: # (Nouveau crédit)
-
-### Exemple
-
-- Author(s): [Nom](lien github / site / page wiki / sans lien)
-- Source: [Remède / Source externe](lien remede / lien externe)
-[//]: # (Si source remède, ajouter)
-    - Inspiré de [nom](lien)
-    - Inspiré de [autre nom](autre lien)
-
-[//]: # (Autres champs possibles)
-
-- File historic and contributions: [On Github](https://github.com/camarm-dev/remede/commits/main/data/fiches/<nom-fiche>.md)
-
-[//]: # (Fin des mentions)
-```
-- Vos crédits seront alors accessible à `https://remede.camarm.fr/sheets-credits#exemple`
+- `credits.url`: L'url de la source (Le github Remède, ou lien du site source)
+- `credits.attributions`: La personne ou le projet à citer en cas d'attribution
+- `credits.text`: Les ressources annexes qui vous ont aidés, l'historique des modifications du fichier
 
 Remplissez bien cette fiche, car elle permet la traçabilité et le respect de la propriété privée et intellectuelle concernant Rèmede et la provenance de ses données.

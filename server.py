@@ -88,6 +88,7 @@ def get_sheets():
     for filename in files:
         with open(f'data/fiches/{filename}') as file:
             metadata = frontmatter.load(file)
+            metadata['credits']['text'] = markdown.markdown(metadata['credits']['text'])
             sheets.append({
                 'nom': metadata['nom'],
                 'description': metadata['description'],

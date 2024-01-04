@@ -1,7 +1,16 @@
 ---
 nom: Les classes grammaticales
 description: Les 9 classes grammaticales et comment les reconnaître !
-credits: https://remede.camarm.fr/sheets-credits#classes-grammaticales
+credits: 
+  attributions: Remède
+  url: https://github.com/camarm-dev/remede
+  text: "
+Author(s): [camarm](https://github.com/camarm-dev)
+Source: [Remède](https://github.com/camarm-dev/remede)
+With help of: [Le Robert en ligne](https://dictionnaire.lerobert.com/guide/qu-est-ce-qu-une-classe-grammaticale)   
+With help of: [Wikipedia](https://fr.wikipedia.org/wiki/Nom) 
+File historic and contributions: [On Github](https://github.com/camarm-dev/remede/commits/main/data/fiches/Classes-grammaticales.md)
+"
 slug: classes-grammaticales
 tags: 
   - grammaire
