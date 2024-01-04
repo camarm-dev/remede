@@ -9,6 +9,7 @@ authors:
     family-names: CAMPONOVO
     given-names: Armand
     orcid: https://orcid.org/0009-0005-8995-6918
+    email: software@camarm.dev
 abstract: "Remède is a french dictionary database, API and mobile application. It's an open source alternative to Antidote."
 date-released: 2023-12-23
 repository-code: "https://github.com/camarm-dev/remede"
