@@ -138,4 +138,49 @@ export default defineComponent({
   text-align: justify;
   color: var(--ion-color-medium);
 }
+
+b, strong {
+  display: inline-block;
+  transition: .5s ease-in-out;
+  font-weight: normal;
+  margin-top: 0;
+  padding: 0 5px;
+  margin-bottom: 0;
+  background: linear-gradient(to right, rgba(255, 235, 9, 0.5), rgba(255, 235, 9, 0.4), rgba(255, 235, 9, 0.5));
+  border-radius: 3px;
+}
+
+b:hover, strong:hover {
+  z-index: 50;
+  transform: translateY(-1px);
+  transition: .5s ease-in-out;
+  cursor: pointer;
+  background: var(--ion-color-light);
+}
+
+blockquote {
+  margin-left: 5px;
+  border-left: 4px rgba(var(--ion-color-primary-rgb), .7) solid;
+  background-color: var(--ion-color-light);
+  padding-left: 7px;
+  border-radius: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+blockquote p {
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+a {
+  color: var(--ion-color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ion-color-primary-tint);
+  text-decoration: underline var(--ion-color-primary-tint);
+}
 </style>
