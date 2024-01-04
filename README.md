@@ -27,11 +27,11 @@ Open Source and free alternative to Antidote.
 - [x] API publique
   - [x] Mot du jour
   - [x] Obtenir document d'un mot
+- [x] Fiches de français (#4)
 - [ ] Applications de bureaux
   -  [ ] Windows 
   -  [ ] MAC 
   -  [ ] Linux 
-- [ ] Fiches de français (#4)
 
 ## Télécharger
 
