@@ -13,3 +13,11 @@ npx cap sync @capacitor-community/electron
 ```shell
 npx cap open @capacitor-community/electron
 ```
+
+### Build
+
+[Electron documentation](https://www.electronjs.org/docs/latest/tutorial/tutorial-packaging)
+
+```shell
+npm run make
+```
