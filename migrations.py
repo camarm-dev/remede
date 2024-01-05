@@ -24,6 +24,7 @@ def browse_words(dictionary: dict, letter: str):
         document: dict = dictionary[word]
         if not document:
             dictionary.pop(word)
+            continue
         document.pop('image')
         dictionary[word] = document
         insert_document(document, word)
