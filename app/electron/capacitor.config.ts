@@ -23,7 +23,8 @@ const config: CapacitorConfig = {
     deepLinkingEnabled: true,
     deepLinkingCustomProtocol: 'remede',
     splashScreenImageName: "splash.png",
-    splashScreenEnabled: true
+    splashScreenEnabled: true,
+    customUrlScheme: 'remede'
   }
 };
 
