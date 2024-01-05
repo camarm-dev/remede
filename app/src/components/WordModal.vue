@@ -72,12 +72,6 @@ import WordModal from "@/components/WordModal.vue";
       </ion-note>
     </div>
     <div v-if="tab == 'def'" class="tab-content">
-      <div class="image" v-if="document.image.url !== ''">
-        <figure>
-          <img :alt="`Image de ${mot}`" :src="document.image.url"/>
-          <figcaption>{{ document.image.credits }}</figcaption>
-        </figure>
-      </div>
       <div class="definition" :key="def" v-for="def in document.definitions">
         <header>
           <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
@@ -200,10 +194,6 @@ export default defineComponent({
         synonymes: [] as string[],
         antonymes: [] as string[],
         definitions: [],
-        image: {
-          url: '',
-          credits: ''
-        },
         references: [],
         ipa: '',
         credits: {
