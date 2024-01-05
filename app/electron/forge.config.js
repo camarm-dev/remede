@@ -30,7 +30,7 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-          name: "Remède",
+          name: "remede",
           description: "Open source and free French dictionary !",
           productName: "Remède",
           productDescription: "Remède is an open source alternative to Antidote. It's free and open source !",
@@ -46,7 +46,7 @@ module.exports = {
       name: '@electron-forge/maker-rpm',
       config: {
         options: {
-          name: "Remède",
+          name: "remede",
           description: "Open source and free French dictionary !",
           productName: "Remède",
           productDescription: "Remède is an open source alternative to Antidote. It's free and open source !",
