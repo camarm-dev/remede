@@ -130,10 +130,6 @@ JSON schema of an indexed word by Remède.
     "name": "page Wiktionnaire",
     "url": ""
   },
-  "image": {
-    "url": "",
-    "credits": ""
-  },
   "ipa": "//",
   "conjugaisons": {
     "indicatif": {
@@ -156,9 +152,6 @@ JSON schema of an indexed word by Remède.
 - `credits` (`{}`): Object containing credits of the definitions
     - `name` (`string`): Source name
     - `url` (`string`): Source Url
-- `image` (`{}`): object containing an image related to the definition
-    - `url` (`string`): Image Url
-    - `credits` (`string`): Credits Url
 - `ipa` (`string`): International Phonetic Alphabet pronunciation of the word
 - `conjugaisons` (`{}`): Object containing word's conjugations
     - `[nom du mode]` (`{}`): Object containing conjugations' tenses for mode

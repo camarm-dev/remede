@@ -128,10 +128,6 @@ Schéma JSON d'un document de mot indexé par Remède
     "name": "page Wiktionnaire",
     "url": ""
   },
-  "image": {
-    "url": "",
-    "credits": ""
-  },
   "ipa": "//",
   "conjugaisons": {
     "indicatif": {
@@ -154,9 +150,6 @@ Schéma JSON d'un document de mot indexé par Remède
 - `credits` (`{}`): Objet contenant les crédits relatifs à la définition
     - `name` (`string`): Nom de la source
     - `url` (`string`): Url de la source
-- `image` (`{}`): Objet contenant une image complémentaire à la définition
-    - `url` (`string`): Url de l'image
-    - `credits` (`string`): Url redirigeant vers les droits d'auteur de l'image
 - `ipa` (`string`): Prononciation du mot selon l'International Phonetic Alphabet
 - `conjugaisons` (`{}`): Objet contenant les conjugaisons du mot si c'est un verbe
     - `[nom du mode]` (`{}`): Objet contenant les temps du mode
