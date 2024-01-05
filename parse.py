@@ -112,10 +112,6 @@ def get_word_document(word: str):
             "name": "page Wiktionnaire",
             "url": result['direct_link']
         },
-        "image": {
-            "url": result["url_img"],
-            "credits": result["url_credits"]
-        },
         "ipa": get_ipa(word),
         "conjugaisons": conjugaisons
     }
