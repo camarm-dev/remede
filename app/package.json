@@ -4,6 +4,14 @@
   "version": "1.0.0",
   "type": "module",
   "license": "Cecill V2.1",
+  "author": {
+    "name": "Armand CAMPONOVO (@camarm-dev)",
+    "email": "software@camarm.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/camarm-dev/remede"
+  },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
@@ -13,6 +21,7 @@
     "lint:fix": "eslint --fix"
   },
   "dependencies": {
+    "@capacitor-community/electron": "^5.0.1",
     "@capacitor/android": "5.5.1",
     "@capacitor/app": "^5.0.6",
     "@capacitor/clipboard": "^5.0.6",
