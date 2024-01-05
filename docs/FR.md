@@ -21,7 +21,15 @@ Bienvenue sur la page de documentation de Remède. Naviguez à travers les conte
 
 ## Dévelopment
 
+### Structure
+
+- `app`: The ionic project
+- `scripts`: Build, migrate and generate database
+- `data`: Dataset and related ressources
+- `builds`: Executables by platform
+
 ### Installation de l'environnement de développement
+Dans le dossier `app`
 - Installer les dépendances
 ```shell
 npm i
@@ -36,7 +44,7 @@ git lfs install
 ```
 
 ### Application mobile
-
+Dans le dossier `app`
 - Construire le projet android:
 ```shell
 ionic cap build android
@@ -44,6 +52,7 @@ ionic cap build android
 - Continuer ensuite dans Android Studio pour construire l'APK
 
 ### Application Web
+Dans le dossier `app`
 
 Ce projet utilise [ionic](https://ionicframework.com/docs).
 
@@ -54,7 +63,7 @@ npm run dev
 
 
 ### API
-
+À la racine du projet
 - Installer python3
 - Installer les dépendances
 ```shell
@@ -158,7 +167,7 @@ Schéma JSON d'un document de mot indexé par Remède
 
 ### Base sqlite
 
-Le fichier `data/remede.db`, généré par le script `generate_sqlite.py` contient une base de données contenant tous les mots Remède.
+Le fichier `data/remede.db`, généré par le script `scripts/generate_sqlite.py` (à exécuter depuis la racine du project) contient une base de données contenant tous les mots Remède.
 
 Elle s'organise ainsi
 - Une table `dictionary`
