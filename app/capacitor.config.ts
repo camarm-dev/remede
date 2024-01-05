@@ -19,6 +19,13 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https'
   },
+  electron: {
+    deepLinkingEnabled: true,
+    deepLinkingCustomProtocol: 'remede',
+    splashScreenImageName: "splash.png",
+    splashScreenEnabled: true,
+    customUrlScheme: 'remede'
+  }
 };
 
 export default config;
