@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "An Amazing Capacitor App",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Armand CAMPONOVO (@camarm-dev)",
+    "email": "software@camarm.dev"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/camarm-dev/remede"
   },
-  "license": "MIT",
+  "license": "CeCill V2.1",
   "main": "build/src/index.js",
   "scripts": {
     "build": "tsc && electron-rebuild",
