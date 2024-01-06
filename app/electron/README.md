@@ -21,3 +21,14 @@ npx cap open @capacitor-community/electron
 ```shell
 npm run make
 ```
+
+### Multiplatform build with docker
+
+```shell
+bash build-container.sh
+```
+
+And execute in the container
+```shell
+yarn && yarn dist
+```
