@@ -1,5 +1,5 @@
 {
-  "name": "Remède",
+  "name": "remede",
   "version": "1.0.0",
   "description": "An Amazing Capacitor App",
   "author": {
@@ -20,7 +20,8 @@
     "electron:make": "npm run build && electron-builder build -c ./electron-builder.config.json -p always",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.0",
