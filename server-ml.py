@@ -1,9 +1,10 @@
+import sqlite3
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from server import get_remede_doc
 from corrector import RemedeCorrectorEngine
+from data.utils import transformLetter
 
 
 class Correction(BaseModel):
@@ -58,5 +59,7 @@ def tts(body: Pronunciation):
 
 
 if __name__ == '__main__':
-    # corrector = RemedeCorrectorEngine({}, {})
+    database = sqlite3.connect('data/remede.db')
+    cursor = database.cursor()
+    corrector = RemedeCorrectorEngine(cursor, transformLetter)
     uvicorn.run(app, host='0.0.0.0')

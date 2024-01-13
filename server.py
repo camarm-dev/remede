@@ -12,6 +12,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
+from data.utils import transformLetter
+
 version = "1.0.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
 app.add_middleware(
@@ -21,24 +23,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-transformLetter = {
-    'â': 'a',
-    'æ': 'a',
-    'à': 'a',
-    'ç': 'c',
-    'î': 'i',
-    'ï': 'i',
-    'ù': 'u',
-    'û': 'u',
-    'ü': 'u',
-    'é': 'e',
-    'ë': 'e',
-    'ê': 'e',
-    'è': 'e',
-    'ô': 'o',
-    'ö': 'o',
-    'œ': 'o'
-}
 
 
 def get_remede_json(letter: str):
