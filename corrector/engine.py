@@ -1,18 +1,23 @@
-from sqlite3 import Cursor
+import sqlite3
+import string
+from sqlite3 import Connection, Cursor
 
 
 class RemedeCorrectorEngine:
 
-    def __init__(self, database_cursor: Cursor, transform_letters: dict):
-        self.db = database_cursor
+    def __init__(self, database: Connection, transform_letters: dict):
+        self.db = database.cursor()
         self.aliases = transform_letters
+        self.uppercase = string.ascii_uppercase
 
     def __does_word_exist(self, word: str) -> bool:
         """
-        Returns True if the words exists
+        Returns True if the words exists. Returns True if word startswith an uppercase letter.
         :param word: str
         :return: bool
         """
+        if any([word.startswith(letter) for letter in self.uppercase]):
+            return True
         self.db.execute("SELECT word FROM dictionary WHERE word = ?", (word,))
         row = self.db.fetchone()
         return row is not None
@@ -28,7 +33,7 @@ class RemedeCorrectorEngine:
         print(words)
         return []
 
-    def correct(self, text: str) -> dict:
+    def correct(self, text: str) -> list:
         """
         Correct :text:
         :param text: text to correct: str
@@ -36,8 +41,9 @@ class RemedeCorrectorEngine:
         """
         corrections = []
 
-        tokens = text.split(' ')
-        for word in tokens:
+        tokenized_text = text.split(' ')
+        for token in tokenized_text:
+            word = token.replace(',', '')
             if not self.__does_word_exist(word):
                 corrections.append({
                     "startIndex": text.index(word),
@@ -47,6 +53,4 @@ class RemedeCorrectorEngine:
                     "suggestions": self.__find_other_word(word),
                     "message": "Ce mot n'a pas été trouvé dans la base Remède."
                 })
-        return {
-
-        }
+        return corrections

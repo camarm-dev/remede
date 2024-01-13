@@ -44,7 +44,7 @@ def correct_text(body: Correction):
     Corrige le texte `texte` dans le corps de requête.
     """
     return {
-
+        "corrections": corrector.correct(body.texte)
     }
 
 
@@ -59,7 +59,6 @@ def tts(body: Pronunciation):
 
 
 if __name__ == '__main__':
-    database = sqlite3.connect('data/remede.db')
-    cursor = database.cursor()
-    corrector = RemedeCorrectorEngine(cursor, transformLetter)
+    database = sqlite3.connect('data/remede.db', check_same_thread=False)
+    corrector = RemedeCorrectorEngine(database, transformLetter)
     uvicorn.run(app, host='0.0.0.0')
