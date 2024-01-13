@@ -52,7 +52,7 @@ import WordModal from "@/components/WordModal.vue";
         </ion-label>
         <ion-buttons slot="end">
           <ion-button @click="readWord()" :disabled="notFound">
-            <ion-icon slot="icon-only" :icon="play" color="medium"/>
+            <ion-icon ref="readWordIcon" slot="icon-only" :icon="play" color="medium"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -204,7 +204,7 @@ export default defineComponent({
       } as RemedeWordDocument,
       notFound: false,
       stared: false,
-      navigateBack: () => "" as navigateBackFunction
+      navigateBack() {}
     }
   },
   mounted() {
@@ -270,6 +270,7 @@ export default defineComponent({
       return this.document.conjugaisons[mode][temps][sujet]
     },
     readWord() {
+      this.$refs.readWordIcon.$el.classList.add('loading')
       const url = 'https://iawll6of90.execute-api.us-east-1.amazonaws.com/production'
       const data = {
         text: this.document.ipa.replaceAll('/', ''),
@@ -282,6 +283,7 @@ export default defineComponent({
         const player = new window.Audio()
         player.src = `data:audio/mpeg;base64,${audio}`
         player.play()
+        this.$refs.readWordIcon.$el.classList.remove('loading')
       })
     },
     changeMode(mode: string) {
