@@ -1,7 +1,7 @@
 
 class RemedeCorrectorEngine:
 
-    def __int__(self, remede_database: dict, transform_letters: dict):
+    def __init__(self, remede_database: dict, transform_letters: dict):
         self.db = remede_database
         self.aliases = transform_letters
 

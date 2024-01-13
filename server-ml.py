@@ -1,0 +1,62 @@
+import uvicorn
+from fastapi import FastAPI, HTTPException
+from starlette.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from server import get_remede_doc
+from corrector import RemedeCorrectorEngine
+
+
+class Correction(BaseModel):
+    texte: str
+
+
+class Pronunciation(BaseModel):
+    mot: str
+
+
+version = "1.0.0"
+app = FastAPI(title='Remède ML', description='Machine Learning API for Remède: corrector and TTS.', version=version)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get('/')
+def root():
+    """
+    ### Renvoie des informations utiles à propos de l'API:
+    - Sa version
+    """
+    return {
+        "version": version,
+        "message": "Check /docs for documentation"
+    }
+
+
+@app.post('/correct')
+def correct_text(body: Correction):
+    """
+    Corrige le texte `texte` dans le corps de requête.
+    """
+    return {
+
+    }
+
+
+@app.post('/pronunciation')
+def tts(body: Pronunciation):
+    """
+    Renvoie une base64 d'un audio lisant le mot du champ `mot` du corps de requête.
+    """
+    return {
+
+    }
+
+
+if __name__ == '__main__':
+    # corrector = RemedeCorrectorEngine({}, {})
+    uvicorn.run(app, host='0.0.0.0')
