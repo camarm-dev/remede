@@ -52,7 +52,8 @@ import WordModal from "@/components/WordModal.vue";
         </ion-label>
         <ion-buttons slot="end">
           <ion-button @click="readWord()" :disabled="notFound">
-            <ion-icon ref="readWordIcon" slot="icon-only" :icon="play" color="medium"/>
+            <ion-icon v-if="!audioLoading" slot="icon-only" :icon="play" color="medium"/>
+            <ion-spinner v-else slot="icon-only" name="circles" color="medium"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -204,6 +205,7 @@ export default defineComponent({
       } as RemedeWordDocument,
       notFound: false,
       stared: false,
+      audioLoading: false,
       navigateBack() {}
     }
   },
@@ -270,7 +272,7 @@ export default defineComponent({
       return this.document.conjugaisons[mode][temps][sujet]
     },
     readWord() {
-      this.$refs.readWordIcon.$el.classList.add('loading')
+      this.audioLoading = true
       const url = 'https://iawll6of90.execute-api.us-east-1.amazonaws.com/production'
       const data = {
         text: this.document.ipa.replaceAll('/', ''),
@@ -283,7 +285,7 @@ export default defineComponent({
         const player = new window.Audio()
         player.src = `data:audio/mpeg;base64,${audio}`
         player.play()
-        this.$refs.readWordIcon.$el.classList.remove('loading')
+        this.audioLoading = false
       })
     },
     changeMode(mode: string) {
@@ -365,4 +367,20 @@ ion-item:not(+ ion-item)::part(native) {
 ion-list.no-radius ion-item:last-child {
   --inner-border-width: 0;
 }
+
+ion-icon.loading#playIcon {
+  animation: .5s infinite loading;
+  transition: .5s ease-in-out;
+}
+
+@keyframes loading {
+  from {
+    color: transparent !important;
+  }
+
+  to {
+    color: var(--ion-color-medium) !important;
+  }
+}
+
 </style>
