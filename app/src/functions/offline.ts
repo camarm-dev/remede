@@ -63,7 +63,7 @@ async function deleteDictionary() {
 
 
 async function getRawDictionary() {
-    if (!Capacitor.isNativePlatform()) {
+    if (!Capacitor.isNativePlatform() || Capacitor.getPlatform() === 'electron') {
         const file = await Filesystem.readFile({
             path: 'remedeSQLite.db',
             directory: Directory.Data
