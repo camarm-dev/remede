@@ -44,7 +44,6 @@ interface RemedeWordDocument {
     antonymes: string[]
     definitions: RemedeWordDefinition[]
     credits: RemedeDefinitionCredits
-    image: RemedeImage
     ipa: string
     conjugaisons: RemedeConjugateDocument
 }
