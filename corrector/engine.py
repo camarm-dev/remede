@@ -1,6 +1,4 @@
-import sqlite3
-import string
-from sqlite3 import Connection, Cursor
+from sqlite3 import Connection
 
 
 class RemedeCorrectorEngine:
@@ -8,7 +6,6 @@ class RemedeCorrectorEngine:
     def __init__(self, database: Connection, transform_letters: dict):
         self.db = database.cursor()
         self.aliases = transform_letters
-        self.uppercase = string.ascii_uppercase
 
     def __does_word_exist(self, word: str) -> bool:
         """
@@ -16,8 +13,6 @@ class RemedeCorrectorEngine:
         :param word: str
         :return: bool
         """
-        if any([word.startswith(letter) for letter in self.uppercase]):
-            return True
         self.db.execute("SELECT word FROM dictionary WHERE word = ?", (word,))
         row = self.db.fetchone()
         return row is not None
@@ -43,10 +38,10 @@ class RemedeCorrectorEngine:
 
         tokenized_text = text.split(' ')
         for token in tokenized_text:
-            word = token.replace(',', '')
+            word = token.replace(',', '').lower()
             if not self.__does_word_exist(word):
                 corrections.append({
-                    "startIndex": text.index(word),
+                    "startIndex": text.index(token),
                     "endIndex": 0,
                     "type": "orthographe",
                     "errorWord": word,
