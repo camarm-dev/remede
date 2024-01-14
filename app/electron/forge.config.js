@@ -12,8 +12,8 @@ module.exports = {
         description: "Open source and free French dictionary !",
         iconUrl: "https://raw.githubusercontent.com/camarm-dev/remede/main/app/electron/assets/appIcon.ico",
         setupIcon: "./assets/appIcon.ico",
-        authors: "Armand CAMPONOVO (@camarm-dev) & Remède contributors",
-        owners: "Armand CAMPONOVO (@camarm-dev) & Labse Software",
+        authors: "Armand CAMPONOVO (@camarm-dev) and Remède contributors",
+        owners: "Armand CAMPONOVO (@camarm-dev) and Labse Software",
         copyright: "Copyrights 2024 Remède, CeCill V2.1"
       },
     },
