@@ -31,7 +31,7 @@ Open Source and free alternative to Antidote.
 - [ ] Applications de bureaux
   -  [ ] Windows 
   -  [ ] MAC 
-  -  [ ] Linux 
+  -  [x] Linux 
 
 ## Télécharger
 
@@ -40,6 +40,11 @@ Téléchargez les exécutables pour votre plateforme depuis [la page releases](/
 Voir les autres méthodes de téléchargement sur [notre site](https://remede.camarm.fr).
 
 SOON: Disponible sur Play Store
+
+## Générer les bases de données
+
+- Guide: [PARSING.md](https://github.com/camarm-dev/remede/blob/main/PARSING.md)
+- Références: [documentation en ligne](https://remede.camarm.fr/FR#donn%C3%A9es)
 
 ## Documentation
 
