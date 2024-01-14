@@ -109,6 +109,11 @@ Le dossier `data` est destiné aux ressources linguistiques utilisées par Remè
 
 `data/remede.db`: Une base sql ([référence](#base-sqlite))
 
+`data/remede-less.db`: Une base sql ([référence](#base-sqlite)) MAIS
+- Sans les exemples
+- Sans les étymologies
+- Sans les rimes
+
 ### Schéma de document Remède
 Schéma JSON d'un document de mot indexé par Remède
 

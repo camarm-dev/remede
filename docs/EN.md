@@ -113,6 +113,11 @@ The `data` folder is destined to the linguistics ressources used by Remède.
 
 `data/remede.db`: A sqlite database ([reference](#sqlite-database))
 
+`data/remede-less.db`: A sqlite database ([reference](#sqlite-database)) BUT
+- Without examples
+- Without etymologies
+- Without rimes
+
 ### Remède document schema
 JSON schema of an indexed word by Remède.
 
