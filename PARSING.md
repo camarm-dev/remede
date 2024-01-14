@@ -16,7 +16,9 @@ Générer les données Remède consiste à générer **les fichiers JSON**, pour
 
 **Comment ça fonctionne ?**
 1. Il itère + 250 000 mots (depuis `data/mots.txt`)
-2. Pour chaque mot, il trouve sa définition avec [`api-definition`](#api-définition)
+2. Pour chaque mot, il trouve sa définition avec [`api-definition`](#api-définition) et des services tiers
+3. Il génère le document Remède
+4. Il enregistre sous format `JSON`
 
 ```mermaid
 flowchart TB
