@@ -5,12 +5,16 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-wix',
+      name: '@electron-forge/maker-squirrel',
       config: {
-        name: "Remède",
+        title: "Remède",
         manufacturer: "Labse Software",
         description: "Open source and free French dictionary !",
-        icon: "./assets/appIcon.ico"
+        iconUrl: "https://raw.githubusercontent.com/camarm-dev/remede/main/app/electron/assets/appIcon.ico",
+        setupIcon: "./assets/appIcon.ico",
+        authors: "Armand CAMPONOVO (@camarm-dev) and Remède contributors",
+        owners: "Armand CAMPONOVO (@camarm-dev) and Labse Software",
+        copyright: "Copyrights 2024 Remède, CeCill V2.1"
       },
     },
     {

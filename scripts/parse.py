@@ -42,14 +42,6 @@ def get_ipa(word: str):
     return all_ipa.get(word, '')
 
 
-def get_examples(word: str):
-    # {
-    #     "contenu": "",
-    #     "credits": ""
-    # }
-    return []
-
-
 def get_wictionary_doc(word: str):
     response = requests.post('http://localhost:8089/app/api_wiki.php', data={'motWiki': urllib.parse.quote(word)})
     try:
@@ -97,14 +89,13 @@ def get_word_document(word: str):
     return {
         "synonymes": get_synonyms(word),
         "antonymes": get_antonyms(word),
+        "etymologies": result['etymologies'],
         "definitions": [
             {
                 "genre": result['genre'][index],
                 "classe": result['nature'][index],
                 "explications": result['natureDef'][index][0],
-                "exemples": [
-
-                ]
+                "exemples": result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1]
             }
             for index in range(len(result['nature']))
         ],
@@ -134,10 +125,8 @@ def remedize(word_list: list):
         "e": ['é', 'ê', 'è', 'ë'],
         'o': ['ô', 'ö', 'œ']
     }
-    current_char = 'z'
+    current_char = 'a'
     for word in word_list:
-        if not word.lower().startswith('z'):
-            continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)
             del remede_dictionary

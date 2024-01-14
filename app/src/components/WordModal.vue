@@ -17,8 +17,16 @@ import {
   IonLabel,
   IonItem
 } from "@ionic/vue";
-import {bookmark, bookmarkOutline, chevronBackOutline, play, shareOutline} from "ionicons/icons";
+import {
+  bookmark,
+  bookmarkOutline,
+  chevronBackOutline, link,
+  play,
+  shareOutline
+} from "ionicons/icons";
 import WordModal from "@/components/WordModal.vue";
+import example from "@/assets/example.svg"
+import copyright from "@/assets/copyright.svg"
 </script>
 
 <template>
@@ -58,11 +66,10 @@ import WordModal from "@/components/WordModal.vue";
         </ion-buttons>
       </ion-toolbar>
       <ion-toolbar>
-        <ion-segment :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value">
+        <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value">
           <ion-segment-button value="def">Définition</ion-segment-button>
           <ion-segment-button value="syn">Synonymes</ion-segment-button>
           <ion-segment-button value="ant">Antonymes</ion-segment-button>
-          <ion-segment-button v-if="getModes().length > 0" value="conj">Conjugaison</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
     </ion-header>
@@ -80,6 +87,11 @@ import WordModal from "@/components/WordModal.vue";
           <h4 v-else>{{ def.genre }}</h4>
           <hr>
         </header>
+        <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
+          <ion-item lines="none" color="light" button @click="tab = 'conj'">
+            Ouvrir la conjugaison
+          </ion-item>
+        </ion-list>
         <div class="content">
           <ul>
             <li :key="meaning" v-for="meaning in def.explications">
@@ -87,10 +99,29 @@ import WordModal from "@/components/WordModal.vue";
               <ul v-else class="ion-padding-start">
                 <li :key="subMeaning" v-for="subMeaning in meaning" v-html="subMeaning"></li>
               </ul>
+              <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
+              <ion-popover :trigger="meaning">
+                <div class="ion-padding examples">
+                  <h5>
+                    Exemples
+                    <span class="ion-color-medium">{{ mot }}</span>,
+                    <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
+                    <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
+                    <span v-else>{{ def.genre }}</span>
+                  </h5>
+                  <p v-for="exemple in def.exemples" :key="exemple.contenu"><i>{{ exemple.contenu }}</i> <span class="sources" v-html="exemple.sources"/><br></p>
+                </div>
+              </ion-popover>
             </li>
           </ul>
         </div>
       </div>
+      <br>
+      <ion-list class="border-radius">
+        <ion-item @click="open(document.credits.url)" button color="light" lines="none" :detail-icon="link">
+          Source ({{ document.credits.name }})
+        </ion-item>
+      </ion-list>
     </div>
     <div v-if="tab == 'syn'" class="tab-content">
       <div class="definition">
@@ -107,7 +138,11 @@ import WordModal from "@/components/WordModal.vue";
         </li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
-      <ion-note v-else>Via <a target="_blank" :href="`http://synonymo.fr/synonyme/${mot}`">synonymo.fr</a></ion-note>
+      <ion-list v-else class="border-radius">
+        <ion-item @click="open(`http://synonymo.fr/synonyme/${mot}`)" button color="light" lines="none" :detail-icon="link">
+          Source
+        </ion-item>
+      </ion-list>
     </div>
     <div v-if="tab == 'ant'" class="tab-content">
       <div class="definition">
@@ -124,7 +159,11 @@ import WordModal from "@/components/WordModal.vue";
         </li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
-      <ion-note v-else>Via <a target="_blank" :href="`http://www.antonyme.org/antonyme/${mot}`">antonyme.org</a></ion-note>
+      <ion-list v-else class="border-radius">
+        <ion-item @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button color="light" lines="none" :detail-icon="link">
+          Source
+        </ion-item>
+      </ion-list>
     </div>
     <div v-if="tab == 'conj'" class="tab-content">
       <div class="definition">
@@ -161,13 +200,30 @@ import WordModal from "@/components/WordModal.vue";
         </ion-item>
       </ion-list>
       <br>
-      <ion-note>Via <a target="_blank" :href="`http://conjuguons.fr/conjugaison/verbe/${mot}`">conjuguons.fr</a></ion-note>
+      <ion-list class="border-radius">
+        <ion-item @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button color="light" lines="none" :detail-icon="link">
+          Source
+        </ion-item>
+      </ion-list>
     </div>
     <br>
     <br>
-    <div class="credits ion-padding-start" v-if="document.credits.name != ''">
-      Voir <a target="_blank" :href="document.credits.url">{{ document.credits.name }}</a>
-    </div>
+    <ion-list class="border-radius">
+      <ion-item button color="primary" lines="none" disabled>
+        Ouvrir le dictionnaire des rimes
+      </ion-item>
+      <ion-item id="open-copyrights" button color="light" lines="none" :detail-icon="copyright">
+        Ouvrir les crédits
+      </ion-item>
+    </ion-list>
+    <ion-alert
+        trigger="open-copyrights"
+        header="Crédits"
+        :sub-header="`Source du mot '${mot}'`"
+        :message="getHtmlCredits()"
+    >
+    </ion-alert>
+    <br>
   </ion-content>
 </template>
 
@@ -296,6 +352,14 @@ export default defineComponent({
       this.currentTemps = temps
       this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
     },
+    getHtmlCredits() {
+      return `
+        Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède" target="_blank">de Remède</a>.
+      `
+    },
+    open(url: string) {
+      window.open(url)
+    },
     starWord
   }
 })
@@ -331,6 +395,10 @@ export default defineComponent({
 
 .definition .content li {
   margin-bottom: .5em;
+}
+
+.examples .sources {
+  font-size: .8em;
 }
 
 .credits {
@@ -380,6 +448,10 @@ ion-icon.loading#playIcon {
   to {
     color: var(--ion-color-medium) !important;
   }
+}
+
+.ion-color-medium {
+  color: var(--ion-color-medium)
 }
 
 </style>

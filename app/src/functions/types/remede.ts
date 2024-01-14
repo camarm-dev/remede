@@ -5,11 +5,16 @@ interface RemedeSheet {
     tags: string[]
 }
 
+interface RemedeExample {
+    contenu: string
+    sources: string
+}
+
 interface RemedeWordDefinition {
     genre: string | string[]
     classe: string
     explications: string[] | string[][]
-    exemples: string[]
+    exemples: RemedeExample[]
 }
 
 interface RemedeDefinitionCredits {

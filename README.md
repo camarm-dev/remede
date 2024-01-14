@@ -12,6 +12,17 @@ Open Source and free alternative to Antidote.
 
 </div>
 
+## Next: 1.1.0
+
+The next version of Remède; the v1.1.0 will introduce:
+- **Examples** on definition
+- **New UI** on definition page
+- **New database**
+- Possibility to choose **light** or complete database when downloading
+- **Desktop** applications
+- Own **pronunciation service**
+- Own **corrector service**
+
 ## Buts
 
 - [x] Interface de recherche
@@ -27,9 +38,11 @@ Open Source and free alternative to Antidote.
 - [x] API publique
   - [x] Mot du jour
   - [x] Obtenir document d'un mot
-- [x] Fiches de français (#4)
+- [x] Fiches de français
+- [ ] Service TTS
+- [ ] Service correcteur
 - [ ] Applications de bureaux
-  -  [ ] Windows 
+  -  [x] Windows 
   -  [ ] MAC 
   -  [x] Linux 
 

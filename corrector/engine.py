@@ -1,18 +1,21 @@
+from sqlite3 import Connection
+
 
 class RemedeCorrectorEngine:
 
-    def __int__(self, remede_database: dict, transform_letters: dict):
-        self.db = remede_database
+    def __init__(self, database: Connection, transform_letters: dict):
+        self.db = database.cursor()
         self.aliases = transform_letters
 
     def __does_word_exist(self, word: str) -> bool:
         """
-        Returns True if the words exists
+        Returns True if the words exists. Returns True if word startswith an uppercase letter.
         :param word: str
         :return: bool
         """
-        first_letter = word[0] if word[0] not in self.aliases.keys() else self.aliases[word[0]]
-        return self.db[first_letter].get(word, False) != False
+        self.db.execute("SELECT word FROM dictionary WHERE word = ?", (word,))
+        row = self.db.fetchone()
+        return row is not None
 
     def __find_other_word(self, word: str) -> list:
         """
@@ -20,9 +23,12 @@ class RemedeCorrectorEngine:
         :param word: str
         :return: list
         """
+        self.db.execute("SELECT word FROM dictionary WHERE word LIKE ? + '%'", (word,))
+        words = self.db.fetchall()
+        print(words)
         return []
 
-    def correct(self, text: str) -> dict:
+    def correct(self, text: str) -> list:
         """
         Correct :text:
         :param text: text to correct: str
@@ -30,16 +36,16 @@ class RemedeCorrectorEngine:
         """
         corrections = []
 
-        tokens = text.split(' ')
-        for word in tokens:
+        tokenized_text = text.split(' ')
+        for token in tokenized_text:
+            word = token.replace(',', '').lower()
             if not self.__does_word_exist(word):
                 corrections.append({
-                    "startIndex": text.index(word),
+                    "startIndex": text.index(token),
                     "endIndex": 0,
                     "type": "orthographe",
                     "errorWord": word,
-                    "suggestions": self.__find_other_word(word)
+                    "suggestions": self.__find_other_word(word),
+                    "message": "Ce mot n'a pas été trouvé dans la base Remède."
                 })
-        return {
-
-        }
+        return corrections
