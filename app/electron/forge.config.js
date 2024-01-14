@@ -7,11 +7,14 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: "Remède",
+        title: "Remède",
         manufacturer: "Labse Software",
         description: "Open source and free French dictionary !",
-        iconUrl: "./assets/appIcon.ico",
-        authors: "Armand CAMPONOVO (@camarm-dev) & Remède contributors"
+        iconUrl: "https://raw.githubusercontent.com/camarm-dev/remede/main/app/electron/assets/appIcon.ico",
+        setupIcon: "./assets/appIcon.ico",
+        authors: "Armand CAMPONOVO (@camarm-dev) & Remède contributors",
+        owners: "Armand CAMPONOVO (@camarm-dev) & Labse Software",
+        copyright: "Copyrights 2024 Remède, CeCill V2.1"
       },
     },
     {
