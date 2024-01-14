@@ -1,4 +1,4 @@
-import {InformationsResponse} from "@/functions/types/api_responses";
+import {InformationsResponse, RemedeDictionaryOption} from "@/functions/types/api_responses";
 import {Directory, Filesystem} from '@capacitor/filesystem'
 import {Preferences} from '@capacitor/preferences'
 import {Capacitor} from "@capacitor/core";
@@ -11,24 +11,24 @@ async function getOfflineDictionaryStatus() {
             value: JSON.stringify({
                 'downloaded': false,
                 'path': '',
-                'hash': ''
+                'hash': '',
+                'slug': ''
             })
         })
         return {
             downloaded: false,
-            hash: ''
+            hash: '',
+            slug: ''
         }
     }
     return status
 }
 
 
-async function downloadDictionary() {
-    const datasetInformations = await fetch('https://api-remede.camarm.fr').then(resp => resp.json()) as InformationsResponse
-
+async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     const downloadResponse = await Filesystem.downloadFile({
         path: "remedeSQLite.db",
-        url: 'https://api-remede.camarm.fr/download',
+        url: `https://api-remede.camarm.fr/download?variant=${dictionary.slug}`,
         directory: Directory.Data,
         progress: true
     })
@@ -36,7 +36,8 @@ async function downloadDictionary() {
     const offlineDictionary = {
         downloaded: true,
         path: downloadResponse.path,
-        hash: datasetInformations.dataset
+        hash: dictionary.hash,
+        slug: dictionary.slug
     }
 
     await Preferences.set({
