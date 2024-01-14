@@ -93,7 +93,7 @@ This section is destined to the data used and distributed by Remède.
 ### Remède's data
 Remède creates is own base of french words, synonyms, antonyms with extern services.
 
-- Definitions by the [french Wictionary](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), with the API wrapper made by [Frederic Gainza](https://api-definition.fgainza.fr/).
+- Definitions, examples and etymologies by the [french Wictionary](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), with the API wrapper made by [Frederic Gainza](https://api-definition.fgainza.fr/).
 - Synonyms from [synonymo.fr](http://www.synonymo.fr)
 - Antonyms from [antonyme.org](http://www.antonyme.org)
 - Conjugations from [conjuguons.fr](http://www.conjuguons.fr)

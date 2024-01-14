@@ -90,11 +90,10 @@ Cette section est à propos des données utilisées et fournies par Remède.
 ### Données Remède
 Remède créé sa propre base de mots, synonymes, antonymes français à partir de services tiers.
 
-- Les définitions par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), via le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/) de l'API
+- Les définitions, exemples et étymologies par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), via le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/) de l'API
 - Les synonymes via [synonymo.fr](http://www.synonymo.fr)
 - Les antonymes via [antonyme.org](http://www.antonyme.org)
 - Les conjugaisons via [conjuguons.fr](http://www.conjuguons.fr)
-- Les exemples de ???? (pas encore disponible)
 - Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
 
 ### Dataset
