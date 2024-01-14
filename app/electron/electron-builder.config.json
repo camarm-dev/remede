@@ -1,5 +1,7 @@
 {
-  "appId": "com.yourdoamnin.yourapp",
+  "appId": "com.camarm.remede",
+  "productName": "Remède",
+  "copyright": "Copyright © 2024 Armand CAMPONOVO",
   "directories": {
     "buildResources": "resources"
   },

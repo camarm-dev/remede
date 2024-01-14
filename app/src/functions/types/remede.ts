@@ -17,11 +17,6 @@ interface RemedeDefinitionCredits {
     url: string
 }
 
-interface RemedeImage {
-    url: string
-    credits: string
-}
-
 interface RemedeConjugatePersons {
     [key: string]: string
 }
@@ -44,7 +39,6 @@ interface RemedeWordDocument {
     antonymes: string[]
     definitions: RemedeWordDefinition[]
     credits: RemedeDefinitionCredits
-    image: RemedeImage
     ipa: string
     conjugaisons: RemedeConjugateDocument
 }

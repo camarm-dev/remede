@@ -1,7 +1,12 @@
 {
-  "name": "Remède",
+  "name": "remede",
   "version": "1.0.0",
-  "description": "An Amazing Capacitor App",
+  "description": "A french mobile and offline dictionary.",
+  "build": {
+    "appId": "com.camarm.remede",
+    "productName": "Remède",
+    "copyright": "Copyright © 2024 Armand CAMPONOVO"
+  },
   "author": {
     "name": "Armand CAMPONOVO (@camarm-dev)",
     "email": "software@camarm.dev"

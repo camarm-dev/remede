@@ -93,7 +93,7 @@ This section is destined to the data used and distributed by Remède.
 ### Remède's data
 Remède creates is own base of french words, synonyms, antonyms with extern services.
 
-- Definitions by the [french Wictionary](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), with the API wrapper made by [Frederic Gainza](https://api-definition.fgainza.fr/).
+- Definitions, examples and etymologies by the [french Wictionary](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), with the API wrapper made by [Frederic Gainza](https://api-definition.fgainza.fr/), modified by [Labse Software](https://github.com/LabseSoftware/api-definition) for Remède.
 - Synonyms from [synonymo.fr](http://www.synonymo.fr)
 - Antonyms from [antonyme.org](http://www.antonyme.org)
 - Conjugations from [conjuguons.fr](http://www.conjuguons.fr)
@@ -112,6 +112,11 @@ The `data` folder is destined to the linguistics ressources used by Remède.
 `data/REMEDE_a.jon`: The final indexed file ; for a key 'word' returns [his document following the REMEDE schema](#remède-document-schema)
 
 `data/remede.db`: A sqlite database ([reference](#sqlite-database))
+
+`data/remede-less.db`: A sqlite database ([reference](#sqlite-database)) BUT
+- Without examples
+- Without etymologies
+- Without rimes
 
 ### Remède document schema
 JSON schema of an indexed word by Remède.

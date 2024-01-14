@@ -52,7 +52,8 @@ import WordModal from "@/components/WordModal.vue";
         </ion-label>
         <ion-buttons slot="end">
           <ion-button @click="readWord()" :disabled="notFound">
-            <ion-icon slot="icon-only" :icon="play" color="medium"/>
+            <ion-icon v-if="!audioLoading" slot="icon-only" :icon="play" color="medium"/>
+            <ion-spinner v-else slot="icon-only" name="circles" color="medium"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -178,7 +179,6 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
-import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['motRemede'],
@@ -204,7 +204,8 @@ export default defineComponent({
       } as RemedeWordDocument,
       notFound: false,
       stared: false,
-      navigateBack: () => "" as navigateBackFunction
+      audioLoading: false,
+      navigateBack() { return }
     }
   },
   mounted() {
@@ -270,6 +271,7 @@ export default defineComponent({
       return this.document.conjugaisons[mode][temps][sujet]
     },
     readWord() {
+      this.audioLoading = true
       const url = 'https://iawll6of90.execute-api.us-east-1.amazonaws.com/production'
       const data = {
         text: this.document.ipa.replaceAll('/', ''),
@@ -282,6 +284,7 @@ export default defineComponent({
         const player = new window.Audio()
         player.src = `data:audio/mpeg;base64,${audio}`
         player.play()
+        this.audioLoading = false
       })
     },
     changeMode(mode: string) {
@@ -363,4 +366,20 @@ ion-item:not(+ ion-item)::part(native) {
 ion-list.no-radius ion-item:last-child {
   --inner-border-width: 0;
 }
+
+ion-icon.loading#playIcon {
+  animation: .5s infinite loading;
+  transition: .5s ease-in-out;
+}
+
+@keyframes loading {
+  from {
+    color: transparent !important;
+  }
+
+  to {
+    color: var(--ion-color-medium) !important;
+  }
+}
+
 </style>
