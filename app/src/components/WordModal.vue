@@ -17,8 +17,15 @@ import {
   IonLabel,
   IonItem
 } from "@ionic/vue";
-import {bookmark, bookmarkOutline, chevronBackOutline, play, shareOutline} from "ionicons/icons";
+import {
+  bookmark,
+  bookmarkOutline,
+  chevronBackOutline,
+  play,
+  shareOutline
+} from "ionicons/icons";
 import WordModal from "@/components/WordModal.vue";
+import example from "@/assets/example.svg"
 </script>
 
 <template>
@@ -58,11 +65,10 @@ import WordModal from "@/components/WordModal.vue";
         </ion-buttons>
       </ion-toolbar>
       <ion-toolbar>
-        <ion-segment :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value">
+        <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value">
           <ion-segment-button value="def">Définition</ion-segment-button>
           <ion-segment-button value="syn">Synonymes</ion-segment-button>
           <ion-segment-button value="ant">Antonymes</ion-segment-button>
-          <ion-segment-button v-if="getModes().length > 0" value="conj">Conjugaison</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
     </ion-header>
@@ -80,6 +86,11 @@ import WordModal from "@/components/WordModal.vue";
           <h4 v-else>{{ def.genre }}</h4>
           <hr>
         </header>
+        <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre == 'Verbe'">
+          <ion-item lines="none" color="light" button @click="tab = 'conj'">
+            Ouvrir la conjugaison
+          </ion-item>
+        </ion-list>
         <div class="content">
           <ul>
             <li :key="meaning" v-for="meaning in def.explications">
@@ -87,6 +98,15 @@ import WordModal from "@/components/WordModal.vue";
               <ul v-else class="ion-padding-start">
                 <li :key="subMeaning" v-for="subMeaning in meaning" v-html="subMeaning"></li>
               </ul>
+              <sup>
+                <ion-icon :id="meaning" :icon="example" color="medium"/>
+                <ion-popover :trigger="meaning">
+                  <div class="ion-padding">
+                    <h3>Exemples</h3>
+                    - omzehfouehfzuef
+                  </div>
+                </ion-popover>
+              </sup>
             </li>
           </ul>
         </div>
