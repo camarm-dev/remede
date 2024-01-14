@@ -113,7 +113,19 @@ def root():
         "version": version,
         "message": "Check /docs for documentation",
         "dataset": DATASET,
-        "hash": HASH
+        "hash": HASH,
+        "dictionnaires": {
+            "remede": {
+                "nom": "Remède complet  ~350Mb",
+                "slug": "remede",
+                "hash": DATASET
+            },
+            "remede-less": {
+                "nom": "Remède mini  ~220Mb",
+                "slug": "remede-less",
+                "hash": DATASET_LESS
+            }
+        }
     }
 
 
@@ -194,11 +206,11 @@ def download_cheatsheet_by_slug(slug: str):
 
 
 @app.get('/download')
-def download_database():
+def download_database(variant: str = 'remede'):
     """
     Télécharge la base Sqlite sous form de fichier.
     """
-    return FileResponse('data/remede.db')
+    return FileResponse(f'data/{variant}.db')
 
 
 if __name__ == '__main__':
@@ -230,7 +242,8 @@ if __name__ == '__main__':
         'y': get_remede_json('y'),
         'z': get_remede_json('z')
     }
-    DATASET = md5(open('data/remede.db','rb').read()).hexdigest()[0:7]
+    DATASET = md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
+    DATASET_LESS = md5(open('data/remede-less.db', 'rb').read()).hexdigest()[0:7]
     HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
