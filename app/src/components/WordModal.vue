@@ -86,7 +86,7 @@ import example from "@/assets/example.svg"
           <h4 v-else>{{ def.genre }}</h4>
           <hr>
         </header>
-        <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre == 'Verbe'">
+        <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
           <ion-item lines="none" color="light" button @click="tab = 'conj'">
             Ouvrir la conjugaison
           </ion-item>
