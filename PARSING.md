@@ -18,6 +18,21 @@ Générer les données Remède consiste à générer **les fichiers JSON**, pour
 1. Il itère + 250 000 mots (depuis `data/mots.txt`)
 2. Pour chaque mot, il trouve sa définition avec [`api-definition`](#api-définition)
 
+```mermaid
+flowchart TB
+  words[(Word\ndatabase)] --> Loop
+  Loop(Parser loop) --> def[Definition API]
+  Loop --> syn[aynonymo.fr]
+  Loop --> ant[antonymes.org]
+  Loop .-> conj[conjuguons.fr]
+  def --> doc{{Remède document}}
+  syn --> doc
+  conj .-> doc
+  ant --> doc
+  doc --> json[[Remède\nJSON]]
+  json --> db[(Remède\nDatabase)]
+```
+
 ### Lancer le parsing
 
 1. Lancer [api-definition](#api-définition) en local
