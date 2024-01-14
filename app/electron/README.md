@@ -22,13 +22,29 @@ npx cap open @capacitor-community/electron
 npm run make
 ```
 
-### Multiplatform build with docker
+### Multiplatform build
 
+**Build EXE, DEB and RPM; on a Linux system**
+
+- Dependencies
 ```shell
-bash build-container.sh
+apt install mono-devel wine
 ```
 
-And execute in the container
+- _Linux platforms_
 ```shell
-yarn && yarn dist
+npm run make
+```
+
+- _Windows exe_
+```shell
+npm run make -- --platform win32
+```
+
+**Build DMG; using docker**
+
+// In development //
+
+```shell
+docker run sickcodes/docker-osx:naked
 ```
