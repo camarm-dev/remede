@@ -63,9 +63,14 @@ npm run dev
 
 
 ### API
+
+Les APIs ont été divisée en 2 parties:
+- API (`server.py`): Pour rechercher des mots, le mot du jour ect... 
+- API-ML (`server-ml.py`): Pour obtenir les prononciations et corriger un texte.
+
 À la racine du projet
 - Installer python3
-- Installer les dépendances
+- Installer les dépendances python
 ```shell
 pip install fastapi uvicorn starlette python-frontmatter markdown
 ```
@@ -73,6 +78,10 @@ pip install fastapi uvicorn starlette python-frontmatter markdown
 ```shell
 git lfs pull
 ```
+
+**Spécial**: Pour l'API ML
+- Installer le service de TTS (non-implémenté)
+
 - Lancer le serveur
 ```shell
 python3 server.py
