@@ -11,7 +11,7 @@ module.exports = {
         manufacturer: "Labse Software",
         description: "Open source and free French dictionary !",
         iconUrl: "./assets/appIcon.ico",
-        author: "Armand CAMPONOVO (@camarm-dev)"
+        authors: "Armand CAMPONOVO (@camarm-dev) & Remède contributors"
       },
     },
     {
