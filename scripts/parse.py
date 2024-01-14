@@ -51,7 +51,7 @@ def get_examples(word: str):
 
 
 def get_wictionary_doc(word: str):
-    response = requests.post('https://api-definition.fgainza.fr/app/api_wiki.php', data={'motWiki': urllib.parse.quote(word)})
+    response = requests.post('http://localhost:8089/app/api_wiki.php', data={'motWiki': urllib.parse.quote(word)})
     try:
         result = response.json()
         if result['error'] != '':
