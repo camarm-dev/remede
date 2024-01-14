@@ -21,6 +21,16 @@ http://ionicframework.com/docs/theming/ */
   font-weight: bold;
 }
 
+.list-title {
+  font-size: 1rem;
+  font-weight: 400;
+
+  opacity: 0.5;
+
+  margin: 12px 30px -7px;
+  color: var(--ion-color-base);
+}
+
 ion-header.header-translucent-ios .header-background {
   background-color: var(--ion-background-color) !important;
 }
