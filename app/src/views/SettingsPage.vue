@@ -15,6 +15,9 @@
         </ion-toolbar>
       </ion-header>
 
+      <div class="list-title">
+        Personnalisation
+      </div>
       <ion-list inset>
         <ion-item color="light">
           <ion-label>
@@ -28,6 +31,10 @@
       </ion-list>
 
       <br>
+
+      <div class="list-title">
+        Dictionnaire hors ligne
+      </div>
 
       <ion-list inset v-if="downloaded">
         <ion-item color="light">
@@ -44,11 +51,15 @@
       </ion-list>
 
       <ion-list inset v-else-if="canDownload">
-        <ion-item :disabled="loading" color="light" @click="download()">
+        <ion-item :disabled="loading" color="light" button @click="download()">
           <ion-label>
-            <h3>Télécharger le dictionnaire</h3>
+            Télécharger
           </ion-label>
-          <ion-icon slot="end" :icon="cloudDownloadOutline"/>
+        </ion-item>
+        <ion-item color="light">
+          <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="popover" label="Dictionnaire" value="remede" name="Dictionnaire">
+            <ion-select-option v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].nom }}</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item color="light" v-if="loading">
           <ion-label>
@@ -69,9 +80,6 @@
           Veuillez ne pas quitter cette page pendant le téléchargement.
 
           Il est conseillé de redémarrer l'application après le téléchargement.
-        </ion-note>
-        <ion-note class="ion-padding" v-if="!downloaded && canDownload && !loading">
-          Télécharger le dictionnaire prendra environ 220Mb de stockage !
         </ion-note>
       </ion-list>
 
@@ -97,7 +105,7 @@ import {
   IonNote,
   IonList
 } from '@ionic/vue';
-import {cloudDownloadOutline, refreshOutline, trashBinOutline} from "ionicons/icons";
+import {refreshOutline, trashBinOutline} from "ionicons/icons";
 import {deleteDictionary} from "@/functions/offline";
 </script>
 
@@ -105,19 +113,23 @@ import {deleteDictionary} from "@/functions/offline";
 
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
 import {toastController} from "@ionic/vue";
-import {InformationsResponse} from "@/functions/types/api_responses";
+import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses";
 
 export default {
   data() {
     return {
-      canDownload: false,
+      canDownload: true,
       downloaded: false,
       loading: false,
       latestDictionary: '',
       hasUpdate: false,
+      dictionaryToDownload: 'remede',
       dictionary: {
-        hash: ''
-      }
+        hash: '',
+        slug: ''
+      },
+      availableDictionaries: {} as RemedeAvailableDictionaries,
+      availableDictionariesName: [] as string[],
     }
   },
   mounted() {
@@ -138,24 +150,21 @@ export default {
       this.dictionary = status
       this.downloaded = status.downloaded
 
-      if (!this.isWeb()) {
-        this.canDownload = true
-      }
       if (this.downloaded) {
         this.canDownload = false
       }
 
       const specs = await fetch('https://api-remede.camarm.fr').then(resp => resp.json()) as InformationsResponse
+      this.availableDictionaries = specs.dictionnaires
+      this.availableDictionariesName = Object.keys(specs.dictionnaires)
+
       this.latestDictionary = specs.dataset
-      this.hasUpdate = this.dictionary.hash != specs.dataset
-    },
-    isWeb() {
-      return false
+      this.hasUpdate = this.dictionary.hash != specs.dictionnaires[this.dictionary.slug].hash
     },
     async download() {
       this.loading = true
       try {
-        await downloadDictionary()
+        await downloadDictionary(this.availableDictionaries[this.dictionaryToDownload])
         const successMessage = await toastController.create({
           header: 'Téléchargement réussi',
           message: `Le dictionnaire hors-ligne a été téléchargé`,
