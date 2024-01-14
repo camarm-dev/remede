@@ -5,12 +5,13 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-wix',
+      name: '@electron-forge/maker-squirrel',
       config: {
         name: "Remède",
         manufacturer: "Labse Software",
         description: "Open source and free French dictionary !",
-        icon: "./assets/appIcon.ico"
+        iconUrl: "./assets/appIcon.ico",
+        author: "Armand CAMPONOVO (@camarm-dev)"
       },
     },
     {
