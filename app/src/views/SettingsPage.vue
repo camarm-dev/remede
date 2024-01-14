@@ -40,7 +40,7 @@
         <ion-item color="light">
           Dictionnaire "{{ dictionary.hash }}" téléchargé.
         </ion-item>
-        <ion-item button color="danger" @click="deleteDictionary(); reloadDictionaryStatus()">
+        <ion-item button color="danger" @click="deleteDictionary().then(() => { reloadDictionaryStatus(); canDownload = true })">
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
           <ion-label>Supprimer</ion-label>
         </ion-item>
@@ -114,6 +114,7 @@ import {deleteDictionary} from "@/functions/offline";
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
 import {toastController} from "@ionic/vue";
 import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses";
+import {flag} from "ionicons/icons";
 
 export default {
   data() {
@@ -159,7 +160,11 @@ export default {
       this.availableDictionariesName = Object.keys(specs.dictionnaires)
 
       this.latestDictionary = specs.dataset
-      this.hasUpdate = this.dictionary.hash != specs.dictionnaires[this.dictionary.slug].hash
+      if (this.downloaded) {
+        this.hasUpdate = this.dictionary.hash != specs.dictionnaires[this.dictionary.slug].hash
+      } else {
+        this.hasUpdate = false
+      }
     },
     async download() {
       this.loading = true
