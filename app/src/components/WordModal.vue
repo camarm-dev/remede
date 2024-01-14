@@ -354,7 +354,7 @@ export default defineComponent({
     },
     getHtmlCredits() {
       return `
-        Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède">de Remède</a>.
+        Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède" target="_blank">de Remède</a>.
       `
     },
     open(url: string) {
