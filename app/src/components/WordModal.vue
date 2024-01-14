@@ -179,7 +179,6 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
-import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['motRemede'],
@@ -206,7 +205,7 @@ export default defineComponent({
       notFound: false,
       stared: false,
       audioLoading: false,
-      navigateBack() {}
+      navigateBack() { return }
     }
   },
   mounted() {

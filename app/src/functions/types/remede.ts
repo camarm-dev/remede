@@ -17,11 +17,6 @@ interface RemedeDefinitionCredits {
     url: string
 }
 
-interface RemedeImage {
-    url: string
-    credits: string
-}
-
 interface RemedeConjugatePersons {
     [key: string]: string
 }

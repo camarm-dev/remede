@@ -1,4 +1,4 @@
-import {InformationsResponse, RemedeDictionaryOption} from "@/functions/types/api_responses";
+import {RemedeDictionaryOption} from "@/functions/types/api_responses";
 import {Directory, Filesystem} from '@capacitor/filesystem'
 import {Preferences} from '@capacitor/preferences'
 import {Capacitor} from "@capacitor/core";

@@ -58,7 +58,7 @@
         </ion-item>
         <ion-item color="light">
           <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="popover" label="Dictionnaire" value="remede" name="Dictionnaire">
-            <ion-select-option v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].nom }}</ion-select-option>
+            <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].nom }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item color="light" v-if="loading">
@@ -114,7 +114,6 @@ import {deleteDictionary} from "@/functions/offline";
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
 import {toastController} from "@ionic/vue";
 import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses";
-import {flag} from "ionicons/icons";
 
 export default {
   data() {
