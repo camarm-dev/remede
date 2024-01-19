@@ -235,6 +235,7 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
+import { useBackButton } from '@ionic/vue';
 
 export default defineComponent({
   props: ['motRemede'],
@@ -273,6 +274,10 @@ export default defineComponent({
     }
 
     this.navigateBack = navigateBackIfNoHistory
+
+    useBackButton(10, () => {
+      this.navigateBack()
+    });
   },
   created() {
     this.loadData()

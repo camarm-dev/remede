@@ -74,16 +74,15 @@ import {
 </template>
 
 <script lang="ts">
-import {useIonRouter} from "@ionic/vue";
+import {useBackButton, useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
 import {Share} from "@capacitor/share";
-import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['nom', 'description', 'contenu', 'tags', 'credits', 'slug'],
   data() {
     return {
-      navigateBack: () => "" as navigateBackFunction
+      navigateBack() { return }
     }
   },
   mounted() {
@@ -95,6 +94,10 @@ export default defineComponent({
     }
 
     this.navigateBack = navigateBackIfNoHistory
+
+    useBackButton(10, () => {
+      this.navigateBack()
+    });
   },
   methods: {
     goTo(path: string) {
