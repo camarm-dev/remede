@@ -1,4 +1,4 @@
-type navigateBackFunction = () => void
+type navigateBackFunction = () => boolean
 
 export type {
     navigateBackFunction

@@ -15,7 +15,9 @@ import {
   IonList,
   IonNote,
   IonLabel,
-  IonItem
+  IonItem,
+  useBackButton,
+  useIonRouter
 } from "@ionic/vue";
 import {
   bookmark,
@@ -27,6 +29,16 @@ import {
 import WordModal from "@/components/WordModal.vue";
 import example from "@/assets/example.svg"
 import copyright from "@/assets/copyright.svg"
+
+const ionRouter = useIonRouter()
+
+useBackButton(110, () => {
+  if (ionRouter.canGoBack()) {
+    ionRouter.back()
+    return
+  }
+  ionRouter.navigate('/dictionnaire', 'back', 'replace')
+});
 </script>
 
 <template>
@@ -233,9 +245,8 @@ import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
-import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
-import { useBackButton } from '@ionic/vue';
+import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['motRemede'],
@@ -262,22 +273,21 @@ export default defineComponent({
       notFound: false,
       stared: false,
       audioLoading: false,
-      navigateBack() { return }
+      navigateBack: function () {
+        return false
+      } as navigateBackFunction
     }
   },
   mounted() {
-    const ionRouter = useIonRouter()
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
         ionRouter.navigate('/dictionnaire', 'back', 'replace')
+        return true
       }
+      return false
     }
 
     this.navigateBack = navigateBackIfNoHistory
-
-    useBackButton(10, () => {
-      this.navigateBack()
-    });
   },
   created() {
     this.loadData()
