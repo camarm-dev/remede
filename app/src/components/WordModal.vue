@@ -16,13 +16,16 @@ import {
   IonNote,
   IonLabel,
   IonItem,
+  IonModal,
+  IonAccordion,
+  IonAccordionGroup,
   useBackButton,
   useIonRouter
 } from "@ionic/vue";
 import {
   bookmark,
   bookmarkOutline,
-  chevronBackOutline, link,
+  chevronBackOutline, chevronDownOutline, link,
   play,
   shareOutline
 } from "ionicons/icons";
@@ -128,12 +131,6 @@ useBackButton(110, () => {
           </ul>
         </div>
       </div>
-      <br>
-      <ion-list class="border-radius">
-        <ion-item @click="open(document.credits.url)" button color="light" lines="none" :detail-icon="link">
-          Source ({{ document.credits.name }})
-        </ion-item>
-      </ion-list>
     </div>
     <div v-if="tab == 'syn'" class="tab-content">
       <div class="definition">
@@ -150,11 +147,6 @@ useBackButton(110, () => {
         </li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
-      <ion-list v-else class="border-radius">
-        <ion-item @click="open(`http://synonymo.fr/synonyme/${mot}`)" button color="light" lines="none" :detail-icon="link">
-          Source
-        </ion-item>
-      </ion-list>
     </div>
     <div v-if="tab == 'ant'" class="tab-content">
       <div class="definition">
@@ -171,11 +163,6 @@ useBackButton(110, () => {
         </li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
-      <ion-list v-else class="border-radius">
-        <ion-item @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button color="light" lines="none" :detail-icon="link">
-          Source
-        </ion-item>
-      </ion-list>
     </div>
     <div v-if="tab == 'conj'" class="tab-content">
       <div class="definition">
@@ -212,29 +199,63 @@ useBackButton(110, () => {
         </ion-item>
       </ion-list>
       <br>
-      <ion-list class="border-radius">
-        <ion-item @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button color="light" lines="none" :detail-icon="link">
-          Source
-        </ion-item>
-      </ion-list>
     </div>
     <br>
     <br>
     <ion-list class="border-radius">
-      <ion-item button color="primary" lines="none" disabled>
-        Ouvrir le dictionnaire des rimes
-      </ion-item>
-      <ion-item id="open-copyrights" button color="light" lines="none" :detail-icon="copyright">
-        Ouvrir les crédits
+      <ion-item id="open-modal" button lines="none">
+        Plus
       </ion-item>
     </ion-list>
-    <ion-alert
-        trigger="open-copyrights"
-        header="Crédits"
-        :sub-header="`Source du mot '${mot}'`"
-        :message="getHtmlCredits()"
-    >
-    </ion-alert>
+    <ion-modal trigger="open-modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+      <ion-content class="ion-padding">
+        <div class="list-title no-margin ion-padding-bottom">
+          Dictionnaire
+        </div>
+        <ion-list class="border-radius">
+          <ion-item button color="primary" lines="none" disabled>
+            Ouvrir le dictionnaire des rimes
+          </ion-item>
+        </ion-list>
+        <div class="list-title no-margin ion-padding-bottom">
+          Crédits & sources
+        </div>
+        <ion-list class="border-radius">
+          <ion-item id="open-copyrights" button color="light" lines="none" :detail-icon="copyright">
+            Ouvrir les crédits
+          </ion-item>
+          <ion-accordion-group>
+            <ion-accordion value="first">
+              <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
+                <ion-label>Sources</ion-label>
+              </ion-item>
+              <div slot="content" class="accordion-content">
+                <ion-item @click="open(document.credits.url)" button lines="inset" :detail-icon="link">
+                  {{ document.credits.name }}
+                </ion-item>
+                <ion-item v-if="document.synonymes.length > 0" @click="open(`http://synonymo.fr/synonyme/${mot}`)" button lines="inset" :detail-icon="link">
+                  Synonymes
+                </ion-item>
+                <ion-item v-if="document.antonymes.length > 0" @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button lines="inset" :detail-icon="link">
+                  Antonymes
+                </ion-item>
+                <ion-item v-if="Object.keys(document.conjugaisons).length > 0" @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button lines="none" :detail-icon="link">
+                  Conjugaison
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </ion-list>
+        <ion-alert
+            trigger="open-copyrights"
+            header="Crédits"
+            :sub-header="`Source du mot '${mot}'`"
+            :message="getHtmlCredits()"
+        >
+        </ion-alert>
+      </ion-content>
+    </ion-modal>
+
     <br>
   </ion-content>
 </template>
@@ -469,4 +490,7 @@ ion-icon.loading#playIcon {
   color: var(--ion-color-medium)
 }
 
+div.accordion-content[slot='content'] ion-item {
+  --background: rgba(var(--ion-color-light-rgb), 0.5);
+}
 </style>

@@ -31,6 +31,10 @@ http://ionicframework.com/docs/theming/ */
   color: var(--ion-color-base);
 }
 
+.list-title.no-margin {
+  margin-left: 0;
+}
+
 ion-header.header-translucent-ios .header-background {
   background-color: var(--ion-background-color) !important;
 }
