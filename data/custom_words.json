@@ -1,0 +1,141 @@
+{
+  "remède": {
+    "synonymes": [
+      "acupuncture",
+      "électuaire",
+      "émulsion",
+      "antidote",
+      "épithème",
+      "bain",
+      "baume",
+      "biais",
+      "bouillon",
+      "calmant",
+      "cataplasme",
+      "cautère",
+      "charme",
+      "compresse",
+      "confection",
+      "contrepoison",
+      "cure",
+      "diète",
+      "douche",
+      "drogue",
+      "emplâtre",
+      "enveloppement",
+      "expédient",
+      "friction",
+      "fumigation",
+      "gargarisme",
+      "grog",
+      "implantation",
+      "infusion",
+      "inhalation",
+      "injection",
+      "instillation",
+      "insufflation",
+      "lavement",
+      "médecine",
+      "médicament",
+      "médication",
+      "manoeuvre",
+      "mithridate",
+      "moyen",
+      "onguent",
+      "orviétan",
+      "palliatif",
+      "panacée",
+      "pansement",
+      "parade",
+      "perfusion",
+      "piqûre",
+      "placebo",
+      "pommade",
+      "ponction",
+      "potion",
+      "préparatif",
+      "préparation",
+      "préservatif",
+      "purgation",
+      "purge",
+      "rééducation",
+      "régime",
+      "recette",
+      "recours",
+      "refuge",
+      "relaxation",
+      "ressource",
+      "saignée",
+      "sérum",
+      "sinapisme",
+      "solution",
+      "soulagement",
+      "spécialité",
+      "spécifique",
+      "suralimentation",
+      "thérapeutique",
+      "thériaque",
+      "tisane",
+      "topique",
+      "traitement",
+      "transfusion"
+    ],
+    "antonymes": [
+      "embrocation",
+      "expédient",
+      "mal",
+      "maladie"
+    ],
+    "definitions": [
+      {
+        "genre": [
+          "Nom propre",
+          "masculin"
+        ],
+        "classe": "Nom propre",
+        "explications": {
+          "1": "(Informatique) Dictionnaire français, open source et gratuit qui a pour objectif de remplacer Antidote."
+        },
+        "exemples": [
+          {
+            "contenu": "Tu connais pas <b>Remède</b> ? C'est le meilleur dictionnaire mobile !",
+            "sources": "Un utilisateur de Remède, 2024"
+          }
+        ]
+      },
+      {
+        "genre": [
+          "Nom commun",
+          "masculin"
+        ],
+        "classe": "Nom commun",
+        "explications": {
+          "1": "(Médecine) Substance qui sert à guérir un mal ou une maladie. ",
+          "2": "(Sens figuré) Ce qui sert à guérir les maladies de l’âme. ",
+          "3": "(Sens figuré) Ce qui sert à prévenir, surmonter ou faire cesser un malheur, un inconvénient ou une disgrâce. ",
+          "4": "(En particulier) Lavement. "
+        },
+        "exemples": [
+          {
+            "contenu": "Et, s’il acceptait qu’on le soignât, il refusait rudement tout <b>remède</b>, dans le doute où il était tombé de la médecine.",
+            "sources": "(Émile Zola, <i>Le Docteur Pascal</i>, G. Charpentier, 1893, chapitre VI)"
+          },
+          {
+            "contenu": "Ce fut M. de Chalvet-Rochemonteix qui apprit aux paysans à se prémunir contre les ravages de la carie dans les grains par le sulfatage de la semence, dont les résultats furent souverains. Le mal cessa avec l’application de ce <b>remède</b>.",
+            "sources": "(Abbé Henri-Dominique Larrondo, <i>Monographie de la commune de Merville (Haute-Garonne)</i>, dans <i>Monographies de communes</i>, concours ouvert en 1897 par la Société des agriculteurs de France, Paris &amp; Lille&#160;: J. Lefort - A. Taffin-Lefort, successeur, 1898, page 96)"
+          }
+        ]
+      }
+    ],
+    "credits": {
+      "name": "page Wiktionnaire",
+      "url": "https://fr.wiktionary.org/wiki/rem%C3%A8de"
+    },
+    "image": {
+      "url": "",
+      "credits": ""
+    },
+    "ipa": "/ʁəmɛd/",
+    "conjugaisons": {}
+  }
+}
