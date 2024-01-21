@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonModal, IonItem, IonList, IonLabel, IonIcon} from '@ionic/vue';
+import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonModal, IonItem, IonList, IonLabel, IonIcon, IonAvatar} from '@ionic/vue';
 import {atOutline, documentAttachOutline, fingerPrintOutline, heartOutline, logoGithub} from "ionicons/icons";
 </script>
 
