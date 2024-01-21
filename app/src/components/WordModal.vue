@@ -101,7 +101,7 @@ useBackButton(110, () => {
       </ion-note>
     </div>
     <div v-if="tab == 'def'" class="tab-content">
-      <div class="definition" :key="def" v-for="def in document.definitions">
+      <div class="definition" :key="`def-genre-${document.definitions.indexOf(def).toString()}`" v-for="def in document.definitions">
         <header>
           <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
           <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
@@ -115,8 +115,8 @@ useBackButton(110, () => {
         </ion-list>
         <div class="content">
           <ul>
-            <li :key="meaning" v-for="meaning in def.explications">
-              <span v-html="meaning.replaceAll('https://fr.wiktionary.org/wiki/', '/dictionnaire/')" v-if="typeof meaning === 'string'"></span>
+            <li :key="`def-${Array.from(def.explications).indexOf(meaning)}`" v-for="meaning in def.explications">
+              <span v-html="meaning" v-if="typeof meaning === 'string'"></span>
               <ul v-else class="ion-padding-start">
                 <li :key="subMeaning" v-for="subMeaning in meaning" v-html="subMeaning"></li>
               </ul>
@@ -263,7 +263,7 @@ useBackButton(110, () => {
 
 <script lang="ts">
 
-import {getWordDocument} from "@/functions/dictionnary";
+import {getWordDocument, wordExists} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
@@ -277,9 +277,9 @@ export default defineComponent({
       mot: '',
       currentMode: '',
       currentTemps: '',
-      modeTemps: [],
-      currentSujets: [],
-      tab: localStorage.getItem('defaultTab') || 'def',
+      modeTemps: [] as string[],
+      currentSujets: [] as string[],
+      tab: localStorage.getItem('defaultTab') || 'def' as string,
       document: {
         synonymes: [] as string[],
         antonymes: [] as string[],
@@ -312,7 +312,9 @@ export default defineComponent({
     this.navigateBack = navigateBackIfNoHistory
   },
   created() {
-    this.loadData()
+    this.loadData().then(() => {
+      this.parseSpecialTags()
+    })
   },
   methods: {
     async loadData() {
@@ -352,13 +354,13 @@ export default defineComponent({
       this.$router.push(path)
     },
     getModes() {
-      return Object.keys(this.document.conjugaisons)
+      return Object.keys(this.document.conjugaisons) as string[]
     },
     getTemps(mode: string) {
-      return Object.keys(this.document.conjugaisons[mode])
+      return Object.keys(this.document.conjugaisons[mode]) as string[]
     },
     getSujets(mode: string, temps: string) {
-      return Object.keys(this.document.conjugaisons[mode][temps])
+      return Object.keys(this.document.conjugaisons[mode][temps]) as string[]
     },
     getFormeVerbale(mode: string, temps: string, sujet: string) {
       return this.document.conjugaisons[mode][temps][sujet]
@@ -396,6 +398,40 @@ export default defineComponent({
     },
     open(url: string) {
       window.open(url)
+    },
+    async parseSpecialTags() {
+      this.document.definitions.forEach(def => {
+        def.explications.forEach(async meaning => {
+          const newExplications = []
+          if (typeof meaning !== 'string') {
+            const newMeanings = []
+            for (let meaningElement of meaning) {
+              newMeanings.push(await this.parseMeaning(meaningElement))
+            }
+            newExplications.push(newMeanings)
+          } else {
+            newExplications.push(await this.parseMeaning(meaning))
+          }
+
+          const defIndex = this.document.definitions.indexOf(def)
+          this.document.definitions[defIndex] = newExplications
+        })
+      })
+    },
+    async parseMeaning(meaning: string) {
+      const html = document.createElement('div')
+      html.innerHTML = meaning
+      const anchors = Array.from(html.querySelectorAll('reference')) as HTMLElement[]
+      for (const a of anchors) {
+        const href = a.getAttribute('href') || ''
+        const word = href.replaceAll('https://fr.wiktionary.org/wiki/', '')
+        if (await wordExists(word)) {
+          a.outerHTML = `<router-link to="/dictionnaire/${word}">${a.innerText}</router-link>`
+        } else {
+          a.outerHTML = `<a href="${href}" target="_blank">${a.innerText}</a>`
+        }
+      }
+      return html.innerHTML
     },
     starWord
   }
