@@ -25,7 +25,10 @@ import {
 import {
   bookmark,
   bookmarkOutline,
-  chevronBackOutline, chevronDownOutline, link,
+  chevronBackOutline,
+  chevronDownOutline,
+  ellipsisVertical,
+  link,
   play,
   shareOutline
 } from "ionicons/icons";
@@ -62,6 +65,9 @@ useBackButton(110, () => {
         </ion-button>
         <ion-button @click="shareDefinition()">
           <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
+        </ion-button>
+        <ion-button :id="`open-modal-${mot}`">
+          <ion-icon slot="icon-only" :icon="ellipsisVertical"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -202,12 +208,7 @@ useBackButton(110, () => {
     </div>
     <br>
     <br>
-    <ion-list class="border-radius">
-      <ion-item id="open-modal" button lines="none">
-        Plus
-      </ion-item>
-    </ion-list>
-    <ion-modal trigger="open-modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+    <ion-modal :trigger="`open-modal-${mot}`" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
       <ion-content class="ion-padding">
         <div class="list-title no-margin ion-padding-bottom">
           Dictionnaire
@@ -221,7 +222,7 @@ useBackButton(110, () => {
           Crédits & sources
         </div>
         <ion-list class="border-radius">
-          <ion-item id="open-copyrights" button color="light" lines="none" :detail-icon="copyright">
+          <ion-item :id="`open-copyrights-${mot}`" button color="light" lines="none" :detail-icon="copyright">
             Ouvrir les crédits
           </ion-item>
           <ion-accordion-group>
@@ -247,7 +248,7 @@ useBackButton(110, () => {
           </ion-accordion-group>
         </ion-list>
         <ion-alert
-            trigger="open-copyrights"
+            :trigger="`open-copyrights-${mot}`"
             header="Crédits"
             :sub-header="`Source du mot '${mot}'`"
             :message="getHtmlCredits()"
