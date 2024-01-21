@@ -124,12 +124,16 @@
         },
         "exemples": [
           {
-            "contenu": "Et, s’il acceptait qu’on le soignât, il refusait rudement tout <b>remède</b>, dans le doute où il était tombé de la médecine.",
-            "sources": "(Émile Zola, <i>Le Docteur Pascal</i>, G. Charpentier, 1893, chapitre VI)"
+            "contenu": "<i>Le suc d'une certaine plante appelée par les Caraïbes </i>touloula<i>, et par les Français </i>herbes aux flèches<i>, est, dit-on, le seul <b>remède</b> contre les plaies faites par les flèches empoisonnées avec le suc de mancenilier.</i> ",
+            "sources": "(R. P. Jean-Baptiste Labat, <i>Voyages aux iles françaises de l'Amérique</i>, nouvelle édition d'après celle de 1722, Paris&#160;: chez Lefebvre &amp; chez A.-J. Ducollet, 1831, page 75)"
           },
           {
-            "contenu": "Ce fut M. de Chalvet-Rochemonteix qui apprit aux paysans à se prémunir contre les ravages de la carie dans les grains par le sulfatage de la semence, dont les résultats furent souverains. Le mal cessa avec l’application de ce <b>remède</b>.",
+            "contenu": "<i>Ce fut M. de Chalvet-Rochemonteix qui apprit aux paysans à se prémunir contre les ravages de la carie dans les grains par le sulfatage de la semence, dont les résultats furent souverains. Le mal cessa avec l’application de ce <b>remède</b>.</i> ",
             "sources": "(Abbé Henri-Dominique Larrondo, <i>Monographie de la commune de Merville (Haute-Garonne)</i>, dans <i>Monographies de communes</i>, concours ouvert en 1897 par la Société des agriculteurs de France, Paris &amp; Lille&#160;: J. Lefort - A. Taffin-Lefort, successeur, 1898, page 96)"
+          },
+          {
+            "contenu": "<i>Et, s’il acceptait qu’on le soignât, il refusait rudement tout <b>remède</b>, dans le doute où il était tombé de la médecine.</i> ",
+            "sources": "(Émile Zola, <i>Le Docteur Pascal</i>, G. Charpentier, 1893, chapitre VI)"
           }
         ]
       }
