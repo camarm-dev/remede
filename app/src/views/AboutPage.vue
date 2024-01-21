@@ -22,17 +22,77 @@
         <p>
           Remède est un dictionnaire français libre, construit sur plusieurs services tiers.
         </p>
-        <h2>Crédits / Sources</h2>
-        <a href="https://labse.camarm.fr" target="_blank">
-          <img width="150" alt="Powered by Labse Softwares" src="/labse_powered_by.png" />
-        </a>
-        <p>
-          <a href="https://github.com/camarm-dev/remede#données-remède" target="_blank">Données Remède</a>
-          •
-          <a href="https://github.com/camarm-dev/remede" target="_blank">Github</a>
-          •
-          <a href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">Licence Remède</a>
-        </p>
+        <ion-list class="border-radius">
+          <ion-item color="light" button href="https://github.com/camarm-dev/remede" target="_blank">
+            <ion-icon color="medium" slot="start" :icon="logoGithub"/>
+            <ion-label>
+              Github
+            </ion-label>
+          </ion-item>
+          <ion-item color="light" button id="open-contributors-screen">
+            <ion-icon color="medium" slot="start" :icon="heartOutline"/>
+            <ion-label>
+              Contributeurs & donateurs
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none" button href="https://ko-fi.com/camarm" target="_blank" :detail="false" class="buy-me-a-coffee">
+            <ion-label>
+              Donate on Ko-Fi
+            </ion-label>
+            <ion-avatar>
+              <img alt="Ko-Fi logo" src="@/assets/kofi.webp"/>
+            </ion-avatar>
+          </ion-item>
+        </ion-list>
+        <ion-modal trigger="open-contributors-screen" :initial-breakpoint="0.6" :breakpoints="[0, 0.6, 0.75, 0.99]">
+          <ion-content class="ion-padding">
+            <div class="list-title no-margin ion-padding-bottom">
+              Contributeurs
+            </div>
+            <ion-list class="border-radius">
+              <ion-item button :detail-icon="atOutline" href="https://github.com/camarm-dev" target="_blank" color="light">
+                <ion-avatar aria-hidden="true" slot="start">
+                  <img alt="Photo de profil de camarm" src="https://avatars.githubusercontent.com/u/77529508?s=88&v=4" />
+                </ion-avatar>
+                <ion-label>
+                  <h2>camarm</h2>
+                  <p>Fondateur</p>
+                </ion-label>
+              </ion-item>
+              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/labsesoftware" target="_blank" color="light">
+                <ion-avatar aria-hidden="true" slot="start">
+                  <img alt="Photo de profil de Labse Software" src="@/assets/labse.png" />
+                </ion-avatar>
+                <ion-label>
+                  <h2>Labse Software</h2>
+                  <p>Contributeurs</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+<!--            <div class="list-title no-margin ion-padding-bottom">-->
+<!--              Donateurs-->
+<!--            </div>-->
+<!--            <ion-note>Pas encore de donateurs, soyez le premier !</ion-note>-->
+            <div class="list-title no-margin ion-padding-bottom">
+              Crédits
+            </div>
+            <ion-list class="border-radius">
+              <ion-item color="light" button href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">
+                <ion-icon :icon="documentAttachOutline" slot="start" color="medium"/>
+                <ion-label>
+                  Licence
+                </ion-label>
+              </ion-item>
+              <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
+                <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
+                <ion-label>
+                  Données Remède
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ion-modal>
+        <br>
         <ion-note>Version {{ version }}, build {{ build }} • <a href="https://github.com/camarm-dev/remede/releases" target="_blank">All releases</a></ion-note>
       </ion-content>
 
@@ -41,7 +101,8 @@
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonModal, IonItem, IonList, IonLabel, IonIcon} from '@ionic/vue';
+import {atOutline, documentAttachOutline, fingerPrintOutline, heartOutline, logoGithub} from "ionicons/icons";
 </script>
 
 <script lang="ts">
@@ -66,3 +127,13 @@ export default {
   }
 }
 </script>
+<style>
+.border-radius {
+  border-radius: 12px;
+}
+
+.buy-me-a-coffee::part(native) {
+  background: #ff5f5f;
+  color: var(--ion-color-light);
+}
+</style>
