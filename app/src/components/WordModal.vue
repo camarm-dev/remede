@@ -18,13 +18,11 @@ import {
   IonItem,
   IonModal,
   IonAccordion,
-  IonAccordionGroup,
-  useBackButton,
-  useIonRouter
+  IonAccordionGroup
 } from "@ionic/vue";
 import {
   bookmark,
-  bookmarkOutline,
+  bookmarkOutline, caretBackOutline,
   chevronBackOutline,
   chevronDownOutline,
   ellipsisVertical,
@@ -35,16 +33,6 @@ import {
 import WordModal from "@/components/WordModal.vue";
 import example from "@/assets/example.svg"
 import copyright from "@/assets/copyright.svg"
-
-const ionRouter = useIonRouter()
-
-useBackButton(110, () => {
-  if (ionRouter.canGoBack()) {
-    ionRouter.back()
-    return
-  }
-  ionRouter.navigate('/dictionnaire', 'back', 'replace')
-});
 </script>
 
 <template>
@@ -74,6 +62,12 @@ useBackButton(110, () => {
   </ion-header>
   <ion-content :fullscreen="true" class="ion-padding">
     <ion-header collapse="condense">
+      <ion-buttons v-if="history.length > 0">
+        <ion-button size="small" color="dark" @click="goToPreviousDefinition()">
+          <ion-icon slot="start" :icon="caretBackOutline"/>
+          Revenir à "{{ history[history.length - 1] }}"
+        </ion-button>
+      </ion-buttons>
       <ion-toolbar>
         <ion-label>
           <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
@@ -101,7 +95,7 @@ useBackButton(110, () => {
       </ion-note>
     </div>
     <div v-if="tab == 'def'" class="tab-content">
-      <div class="definition" :key="def" v-for="def in document.definitions">
+      <div class="definition" :key="`def-genre-${document.definitions.indexOf(def).toString()}`" v-for="def in document.definitions">
         <header>
           <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
           <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
@@ -115,10 +109,10 @@ useBackButton(110, () => {
         </ion-list>
         <div class="content">
           <ul>
-            <li :key="meaning" v-for="meaning in def.explications">
-              <span v-html="meaning.replaceAll('https://fr.wiktionary.org/wiki/', '/dictionnaire/')" v-if="typeof meaning === 'string'"></span>
+            <li :key="`def-${meaning}`" v-for="meaning in def.explications">
+              <span v-html="parseMeaning(meaning)" v-if="typeof meaning === 'string'"></span>
               <ul v-else class="ion-padding-start">
-                <li :key="subMeaning" v-for="subMeaning in meaning" v-html="subMeaning"></li>
+                <li :key="subMeaning" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
               </ul>
               <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
               <ion-popover :trigger="meaning">
@@ -263,23 +257,40 @@ useBackButton(110, () => {
 
 <script lang="ts">
 
-import {getWordDocument} from "@/functions/dictionnary";
+import {getWordDocument, wordExists} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {defineComponent} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
+import {loadingController, useBackButton, useIonRouter} from "@ionic/vue";
+import { iosTransitionAnimation } from '@ionic/core';
 
 export default defineComponent({
   props: ['motRemede'],
+  setup() {
+    const ionRouter = useIonRouter()
+
+    useBackButton(110, () => {
+      if (ionRouter.canGoBack()) {
+        ionRouter.back(iosTransitionAnimation)
+        return
+      }
+      ionRouter.navigate('/dictionnaire', 'back', 'replace', iosTransitionAnimation)
+    });
+
+    return {
+      ionRouter
+    }
+  },
   data() {
     return {
       mot: '',
       currentMode: '',
       currentTemps: '',
-      modeTemps: [],
-      currentSujets: [],
-      tab: localStorage.getItem('defaultTab') || 'def',
+      modeTemps: [] as string[],
+      currentSujets: [] as string[],
+      tab: localStorage.getItem('defaultTab') || 'def' as string,
       document: {
         synonymes: [] as string[],
         antonymes: [] as string[],
@@ -295,28 +306,40 @@ export default defineComponent({
       notFound: false,
       stared: false,
       audioLoading: false,
+      history: [],
+      push: function () {
+        return
+      },
       navigateBack: function () {
         return false
       } as navigateBackFunction
     }
   },
   mounted() {
+    const ionRouter = useIonRouter()
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
-        ionRouter.navigate('/dictionnaire', 'back', 'replace')
+        ionRouter.navigate('/dictionnaire', 'back', 'replace', iosTransitionAnimation)
         return true
       }
       return false
     }
 
+    function push(path: string) {
+      ionRouter.push(path, iosTransitionAnimation)
+    }
+
+    this.push = push
     this.navigateBack = navigateBackIfNoHistory
   },
   created() {
-    this.loadData()
+    this.loadData().then(() => {
+      this.listenSpecialTags()
+    })
   },
   methods: {
-    async loadData() {
-      this.mot = this.motRemede
+    async loadData(mot: null | string) {
+      this.mot = mot || this.motRemede
       if (!this.motRemede) {
         this.mot = this.$router.params.mot
       }
@@ -352,13 +375,13 @@ export default defineComponent({
       this.$router.push(path)
     },
     getModes() {
-      return Object.keys(this.document.conjugaisons)
+      return Object.keys(this.document.conjugaisons) as string[]
     },
     getTemps(mode: string) {
-      return Object.keys(this.document.conjugaisons[mode])
+      return Object.keys(this.document.conjugaisons[mode]) as string[]
     },
     getSujets(mode: string, temps: string) {
-      return Object.keys(this.document.conjugaisons[mode][temps])
+      return Object.keys(this.document.conjugaisons[mode][temps]) as string[]
     },
     getFormeVerbale(mode: string, temps: string, sujet: string) {
       return this.document.conjugaisons[mode][temps][sujet]
@@ -390,12 +413,51 @@ export default defineComponent({
       this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
     },
     getHtmlCredits() {
-      return `
-        Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède" target="_blank">de Remède</a>.
-      `
+      return `Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède" target="_blank">de Remède</a>.`
     },
     open(url: string) {
       window.open(url)
+    },
+    async listenSpecialTags() {
+      document.querySelectorAll('reference').forEach(el => {
+        el.addEventListener('click', async () => {
+          const href = el.getAttribute('href')
+          const word = href.replaceAll('https://fr.wiktionary.org/wiki/', '')
+          if (await wordExists(word)) {
+            const oldWord = this.mot
+            const loader = await loadingController.create({
+              message: 'Chargement'
+            })
+            await loader.present()
+            await this.loadData(word).then(() => {
+              this.listenSpecialTags()
+              this.history.push(oldWord)
+            })
+            await loader.dismiss()
+          } else {
+            window.open(href)
+          }
+        })
+      })
+    },
+    parseMeaning(meaning: string) {
+      try {
+        return meaning.replaceAll('<a', '<reference').replaceAll('</a>', '</reference>')
+      } catch (e) {
+        return meaning
+      }
+    },
+    async goToPreviousDefinition() {
+      const word = this.history[this.history.length - 1]
+      const loader = await loadingController.create({
+        message: 'Chargement'
+      })
+      await loader.present()
+      await this.loadData(word).then(() => {
+        this.listenSpecialTags()
+        this.history.splice(-1, 1)
+      })
+      await loader.dismiss()
     },
     starWord
   }

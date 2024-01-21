@@ -29,6 +29,19 @@ async function getRandomWordFromDatabase() {
     return await database?.getRandomWord() as string
 }
 
+async function doesWordExistsWithAPI(word: string) {
+    return (await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json())).message != 'Mot non trouvé'
+}
+
+async function doesWordExistsWithDatabase(word: string) {
+    try {
+        await database?.getWord(word)
+        return true
+    } catch (e) {
+        return false
+    }
+}
+
 async function getAutocomplete(word: string) {
     if (await useApi()) {
         return await getAutocompleteWithAPI(word)
@@ -58,11 +71,19 @@ async function getTodayWord() {
     }
 }
 
+async function wordExists(word: string) {
+    if (await useApi()) {
+        return doesWordExistsWithAPI(word)
+    }
+    return doesWordExistsWithDatabase(word)
+}
+
 const database = await useApi() ? null: new RemedeDatabase()
 
 export {
     getWordDocument,
     getAutocomplete,
     getRandomWord,
-    getTodayWord
+    getTodayWord,
+    wordExists
 }

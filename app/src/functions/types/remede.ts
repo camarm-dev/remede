@@ -10,10 +10,15 @@ interface RemedeExample {
     sources: string
 }
 
+
+interface RemedeExplication {
+    [key: string]: string[] | string[][]
+}
+
 interface RemedeWordDefinition {
     genre: string | string[]
     classe: string
-    explications: string[] | string[][]
+    explications: RemedeExplication
     exemples: RemedeExample[]
 }
 
@@ -62,5 +67,6 @@ export type {
     RemedeDictionaryIndex,
     RemedeWordDocument,
     RemedeConjugateDocument,
-    RemedeSheet
+    RemedeSheet,
+    RemedeWordDefinition
 }

@@ -15,6 +15,17 @@ http://ionicframework.com/docs/theming/ */
   src: url("./font/IBMPlexSerif-Bold.ttf");
 }
 
+reference {
+  cursor: pointer;
+  color: var(--ion-color-primary);
+  text-decoration: underline solid var(--ion-color-primary);
+}
+
+reference:hover {
+  color: var(--ion-color-primary-tint);
+  text-decoration: underline solid var(--ion-color-primary-tint);
+}
+
 .remede-font {
   font-family: "IMBPlexSerif", serif !important;
   text-transform: capitalize;
