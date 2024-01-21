@@ -18,9 +18,7 @@ import {
   IonItem,
   IonModal,
   IonAccordion,
-  IonAccordionGroup,
-  useBackButton,
-  useIonRouter
+  IonAccordionGroup
 } from "@ionic/vue";
 import {
   bookmark,
@@ -35,8 +33,6 @@ import {
 import WordModal from "@/components/WordModal.vue";
 import example from "@/assets/example.svg"
 import copyright from "@/assets/copyright.svg"
-
-const ionRouter = useIonRouter()
 </script>
 
 <template>
@@ -267,7 +263,7 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {defineComponent} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
-import {IonNavLink, loadingController, modalController, useBackButton, useIonRouter} from "@ionic/vue";
+import {loadingController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
 
 export default defineComponent({
