@@ -15,18 +15,36 @@ import {
   IonList,
   IonNote,
   IonLabel,
-  IonItem
+  IonItem,
+  IonModal,
+  IonAccordion,
+  IonAccordionGroup,
+  useBackButton,
+  useIonRouter
 } from "@ionic/vue";
 import {
   bookmark,
   bookmarkOutline,
-  chevronBackOutline, link,
+  chevronBackOutline,
+  chevronDownOutline,
+  ellipsisVertical,
+  link,
   play,
   shareOutline
 } from "ionicons/icons";
 import WordModal from "@/components/WordModal.vue";
 import example from "@/assets/example.svg"
 import copyright from "@/assets/copyright.svg"
+
+const ionRouter = useIonRouter()
+
+useBackButton(110, () => {
+  if (ionRouter.canGoBack()) {
+    ionRouter.back()
+    return
+  }
+  ionRouter.navigate('/dictionnaire', 'back', 'replace')
+});
 </script>
 
 <template>
@@ -47,6 +65,9 @@ import copyright from "@/assets/copyright.svg"
         </ion-button>
         <ion-button @click="shareDefinition()">
           <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
+        </ion-button>
+        <ion-button :id="`open-modal-${mot}`">
+          <ion-icon slot="icon-only" :icon="ellipsisVertical"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -116,12 +137,6 @@ import copyright from "@/assets/copyright.svg"
           </ul>
         </div>
       </div>
-      <br>
-      <ion-list class="border-radius">
-        <ion-item @click="open(document.credits.url)" button color="light" lines="none" :detail-icon="link">
-          Source ({{ document.credits.name }})
-        </ion-item>
-      </ion-list>
     </div>
     <div v-if="tab == 'syn'" class="tab-content">
       <div class="definition">
@@ -138,11 +153,6 @@ import copyright from "@/assets/copyright.svg"
         </li>
       </ul>
       <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
-      <ion-list v-else class="border-radius">
-        <ion-item @click="open(`http://synonymo.fr/synonyme/${mot}`)" button color="light" lines="none" :detail-icon="link">
-          Source
-        </ion-item>
-      </ion-list>
     </div>
     <div v-if="tab == 'ant'" class="tab-content">
       <div class="definition">
@@ -159,11 +169,6 @@ import copyright from "@/assets/copyright.svg"
         </li>
       </ul>
       <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
-      <ion-list v-else class="border-radius">
-        <ion-item @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button color="light" lines="none" :detail-icon="link">
-          Source
-        </ion-item>
-      </ion-list>
     </div>
     <div v-if="tab == 'conj'" class="tab-content">
       <div class="definition">
@@ -200,29 +205,58 @@ import copyright from "@/assets/copyright.svg"
         </ion-item>
       </ion-list>
       <br>
-      <ion-list class="border-radius">
-        <ion-item @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button color="light" lines="none" :detail-icon="link">
-          Source
-        </ion-item>
-      </ion-list>
     </div>
     <br>
     <br>
-    <ion-list class="border-radius">
-      <ion-item button color="primary" lines="none" disabled>
-        Ouvrir le dictionnaire des rimes
-      </ion-item>
-      <ion-item id="open-copyrights" button color="light" lines="none" :detail-icon="copyright">
-        Ouvrir les crédits
-      </ion-item>
-    </ion-list>
-    <ion-alert
-        trigger="open-copyrights"
-        header="Crédits"
-        :sub-header="`Source du mot '${mot}'`"
-        :message="getHtmlCredits()"
-    >
-    </ion-alert>
+    <ion-modal :trigger="`open-modal-${mot}`" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+      <ion-content class="ion-padding">
+        <div class="list-title no-margin ion-padding-bottom">
+          Dictionnaire
+        </div>
+        <ion-list class="border-radius">
+          <ion-item button color="primary" lines="none" disabled>
+            Ouvrir le dictionnaire des rimes
+          </ion-item>
+        </ion-list>
+        <div class="list-title no-margin ion-padding-bottom">
+          Crédits & sources
+        </div>
+        <ion-list class="border-radius">
+          <ion-item :id="`open-copyrights-${mot}`" button color="light" lines="none" :detail-icon="copyright">
+            Ouvrir les crédits
+          </ion-item>
+          <ion-accordion-group>
+            <ion-accordion value="first">
+              <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
+                <ion-label>Sources</ion-label>
+              </ion-item>
+              <div slot="content" class="accordion-content">
+                <ion-item @click="open(document.credits.url)" button lines="inset" :detail-icon="link">
+                  {{ document.credits.name }}
+                </ion-item>
+                <ion-item v-if="document.synonymes.length > 0" @click="open(`http://synonymo.fr/synonyme/${mot}`)" button lines="inset" :detail-icon="link">
+                  Synonymes
+                </ion-item>
+                <ion-item v-if="document.antonymes.length > 0" @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button lines="inset" :detail-icon="link">
+                  Antonymes
+                </ion-item>
+                <ion-item v-if="Object.keys(document.conjugaisons).length > 0" @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button lines="none" :detail-icon="link">
+                  Conjugaison
+                </ion-item>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </ion-list>
+        <ion-alert
+            :trigger="`open-copyrights-${mot}`"
+            header="Crédits"
+            :sub-header="`Source du mot '${mot}'`"
+            :message="getHtmlCredits()"
+        >
+        </ion-alert>
+      </ion-content>
+    </ion-modal>
+
     <br>
   </ion-content>
 </template>
@@ -233,8 +267,8 @@ import {getWordDocument} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
-import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
+import {navigateBackFunction} from "@/functions/types/utils";
 
 export default defineComponent({
   props: ['motRemede'],
@@ -261,15 +295,18 @@ export default defineComponent({
       notFound: false,
       stared: false,
       audioLoading: false,
-      navigateBack() { return }
+      navigateBack: function () {
+        return false
+      } as navigateBackFunction
     }
   },
   mounted() {
-    const ionRouter = useIonRouter()
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
         ionRouter.navigate('/dictionnaire', 'back', 'replace')
+        return true
       }
+      return false
     }
 
     this.navigateBack = navigateBackIfNoHistory
@@ -454,4 +491,7 @@ ion-icon.loading#playIcon {
   color: var(--ion-color-medium)
 }
 
+div.accordion-content[slot='content'] ion-item {
+  --background: rgba(var(--ion-color-light-rgb), 0.5);
+}
 </style>

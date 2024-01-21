@@ -11,6 +11,11 @@ def get_words():
         return file.read().split(',')
 
 
+def get_custom_words():
+    with open('data/custom_words.json') as file:
+        return json.loads(file.read())
+
+
 def get_word2ipa():
     with open('data/ipa.json') as file:
         return json.loads(file.read())
@@ -127,6 +132,9 @@ def remedize(word_list: list):
     }
     current_char = 'a'
     for word in word_list:
+        if word in custom_words:
+            remede_dictionary[word] = custom_words[word]
+            continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             saveRemede(current_char, remede_dictionary)
             del remede_dictionary
@@ -153,6 +161,8 @@ if __name__ == '__main__':
     print("Génération de la base Remède...\n")
     all_words = get_words()
     all_ipa = get_word2ipa()
+    custom_words_json = get_custom_words()
+    custom_words = custom_words_json.keys()
     before = datetime.datetime.now()
     modes_conjugaison_sujets = {
         "Participe_Présent": "(en)",

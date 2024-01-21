@@ -8,8 +8,11 @@ import {
   IonToolbar,
   IonButton,
   IonNavLink,
-  IonLabel, IonBadge,
-  IonAlert
+  IonLabel,
+  IonBadge,
+  IonAlert,
+  useIonRouter,
+  useBackButton
 } from "@ionic/vue";
 import {
   chevronBackOutline,
@@ -17,6 +20,16 @@ import {
   informationCircleOutline,
   shareOutline
 } from "ionicons/icons";
+
+const ionRouter = useIonRouter()
+
+useBackButton(110, () => {
+  if (ionRouter.canGoBack()) {
+    ionRouter.back()
+    return
+  }
+  ionRouter.navigate('/fiches', 'back', 'replace')
+});
 </script>
 
 <template>
@@ -74,7 +87,6 @@ import {
 </template>
 
 <script lang="ts">
-import {useIonRouter} from "@ionic/vue";
 import {defineComponent} from "vue";
 import {Share} from "@capacitor/share";
 import {navigateBackFunction} from "@/functions/types/utils";
@@ -83,15 +95,18 @@ export default defineComponent({
   props: ['nom', 'description', 'contenu', 'tags', 'credits', 'slug'],
   data() {
     return {
-      navigateBack: () => "" as navigateBackFunction
+      navigateBack: function () {
+        return false
+      } as navigateBackFunction
     }
   },
   mounted() {
-    const ionRouter = useIonRouter()
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
         ionRouter.navigate('/fiches', 'back', 'replace')
+        return true
       }
+      return false
     }
 
     this.navigateBack = navigateBackIfNoHistory
