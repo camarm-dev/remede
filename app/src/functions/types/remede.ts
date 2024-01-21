@@ -62,5 +62,6 @@ export type {
     RemedeDictionaryIndex,
     RemedeWordDocument,
     RemedeConjugateDocument,
-    RemedeSheet
+    RemedeSheet,
+    RemedeWordDefinition
 }

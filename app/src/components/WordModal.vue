@@ -266,7 +266,7 @@ useBackButton(110, () => {
 import {getWordDocument, wordExists} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
-import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
+import {RemedeConjugateDocument, RemedeWordDefinition, RemedeWordDocument} from "@/functions/types/remede";
 import {defineComponent} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
 
@@ -402,19 +402,19 @@ export default defineComponent({
     async parseSpecialTags() {
       this.document.definitions.forEach(def => {
         def.explications.forEach(async meaning => {
-          const newExplications = []
+          const newExplications = [] as string[] | string[][]
           if (typeof meaning !== 'string') {
-            const newMeanings = []
+            const newMeanings = [] as string[]
             for (let meaningElement of meaning) {
               newMeanings.push(await this.parseMeaning(meaningElement))
             }
-            newExplications.push(newMeanings)
+            newExplications.push(newMeanings as string & string[])
           } else {
-            newExplications.push(await this.parseMeaning(meaning))
+            newExplications.push(await this.parseMeaning(meaning) as string & string[])
           }
 
           const defIndex = this.document.definitions.indexOf(def)
-          this.document.definitions[defIndex] = newExplications
+          this.document.definitions[defIndex].explications = newExplications
         })
       })
     },
