@@ -113,6 +113,15 @@ def get_word_document(word: str):
     }
 
 
+def safe_get_word_document(word: str):
+    try:
+        return get_word_document(word)
+    except Exception as e:
+        print(f'Pausing: errored with {e}. Enter to retry')
+        input()
+        return safe_get_word_document(word)
+
+
 def saveRemede(char: str, remede_dictionary):
     open(f'data/REMEDE_{char}.json', 'w+').write(json.dumps(remede_dictionary))
 
@@ -130,8 +139,10 @@ def remedize(word_list: list):
         "e": ['é', 'ê', 'è', 'ë'],
         'o': ['ô', 'ö', 'œ']
     }
-    current_char = 'a'
+    current_char = 'c'
     for word in word_list:
+        # if not word.startswith('c') and not word.startswith('ç') and current_char == 'c':
+        #     continue
         if word in custom_words:
             remede_dictionary[word] = custom_words[word]
             continue
@@ -141,7 +152,7 @@ def remedize(word_list: list):
             remede_dictionary = {}
             current_char = word[0].lower()
             segments += 1
-        inserted_word = get_word_document(word)
+        inserted_word = safe_get_word_document(word)
         if not inserted_word:
             errored += 1
         remede_dictionary[word] = inserted_word
