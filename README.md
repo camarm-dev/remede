@@ -63,3 +63,12 @@ SOON: Disponible sur Play Store
 
 La documentation est disponible sur [remede.camarm.fr](https://remede.camarm.fr)
 - Guide de contribution: [`CONTRIBUTING.md`](https://github.com/camarm-dev/remede/blob/main/CONTRIBUTING.md)
+
+## Screenshots
+
+| Home page                           | Word page                               |
+|-------------------------------------|-----------------------------------------|
+| ![homepage](.github/home.jpeg)      | ![word page](.github/word.jpeg)         |
+| Sheets page                         | Settings page                           |
+| ![sheets page](.github/sheets.jpeg) | ![settings page](.github/settings.jpeg) |
+  
