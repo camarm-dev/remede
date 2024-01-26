@@ -50,6 +50,10 @@ ion-header.header-translucent-ios .header-background {
   background-color: var(--ion-background-color) !important;
 }
 
+body {
+  background-color: var(--ion-background-color) !important;
+}
+
 :root {
   --ion-background-color: #fff;
   /** primary **/
