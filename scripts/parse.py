@@ -1,9 +1,38 @@
 import datetime
 import json
+import sys
 import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
+
+accepted_char = {
+    "a": ['â', 'à', 'æ'],
+    'c': ['ç'],
+    'i': ['î', 'ï'],
+    'u': ['ù', 'û', 'ü'],
+    "e": ['é', 'ê', 'è', 'ë'],
+    'o': ['ô', 'ö', 'œ']
+}
+
+reverse_accepted_char = {
+    'â': 'a',
+    'à': 'a',
+    'æ': 'a',
+    'ç': 'c',
+    'î': 'i',
+    'ï': 'i',
+    'ù': 'u',
+    'ü': 'u',
+    'û': 'u',
+    'é': 'e',
+    'è': 'e',
+    'ê': 'e',
+    'ë': 'e',
+    'ô': 'o',
+    'ö': 'o',
+    'œ': 'o'
+}
 
 
 def get_words():
@@ -131,26 +160,21 @@ def remedize(word_list: list):
     total = len(word_list)
     errored = 0
     segments = 0
-    accepted_char = {
-        "a": ['â', 'à', 'æ'],
-        'c': ['ç'],
-        'i': ['î', 'ï'],
-        'u': ['ù', 'û', 'ü'],
-        "e": ['é', 'ê', 'è', 'ë'],
-        'o': ['ô', 'ö', 'œ']
-    }
-    current_char = 'c'
+    current_char = 'a'
     for word in word_list:
-        # if not word.startswith('c') and not word.startswith('ç') and current_char == 'c':
-        #     continue
+        if not any([word.lower().startswith(letter) for letter in letters]) and letters != []:
+            continue
         if word in custom_words:
             remede_dictionary[word] = custom_words[word]
             continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
+            if remede_dictionary == {}:
+                current_char = reverse_accepted_char.get(word[0].lower(), word[0].lower())
+                continue
             saveRemede(current_char, remede_dictionary)
             del remede_dictionary
             remede_dictionary = {}
-            current_char = word[0].lower()
+            current_char = reverse_accepted_char.get(word[0].lower(), word[0].lower())
             segments += 1
         inserted_word = safe_get_word_document(word)
         if not inserted_word:
@@ -169,7 +193,16 @@ def getTimeDetails(time_object):
 
 
 if __name__ == '__main__':
-    print("Génération de la base Remède...\n")
+    letters = []
+    if '--letters' in sys.argv:
+        args = sys.argv[2].split(',')
+        letters = []
+        for accepted_letter in args:
+            letters.append(accepted_letter)
+            for special_char in accepted_char.get(accepted_letter, []):
+                letters.append(special_char)
+
+    print(f"Génération de la base Remède ({','.join(letters) if letters != [] else 'toutes lettres'})...\n")
     all_words = get_words()
     all_ipa = get_word2ipa()
     custom_words_json = get_custom_words()
