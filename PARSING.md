@@ -44,6 +44,9 @@ python3 scripts/parse.py
 ```
 Cette opération prend plusieurs jours !
 
+> [!NOTE]
+> Vous pouvez sélectionner certaines lettres à parser avec un argument : `python3 scripts/parse.py --letters a,b,c,d,e` 
+
 ## Api Définition
 
 Cette API, originellement écrite par [Frederic Gainza](https://api-definition.fgainza.fr/), scrap les données du [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil).
