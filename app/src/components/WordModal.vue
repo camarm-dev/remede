@@ -18,7 +18,9 @@ import {
   IonItem,
   IonModal,
   IonAccordion,
-  IonAccordionGroup
+  IonAccordionGroup,
+  IonAlert,
+  IonPopover
 } from "@ionic/vue";
 import {
   bookmark,
@@ -30,13 +32,12 @@ import {
   play,
   shareOutline
 } from "ionicons/icons";
-import WordModal from "@/components/WordModal.vue";
 import example from "@/assets/example.svg"
 import copyright from "@/assets/copyright.svg"
 </script>
 
 <template>
-  <ion-header :translucent="true">
+  <ion-header v-if="header" :translucent="true">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-nav-link router-direction="back">
@@ -141,6 +142,7 @@ import copyright from "@/assets/copyright.svg"
       </div>
       <ul>
         <li :key="syn" v-for="syn in document.synonymes">
+<!--          TODO Replace with reference tag -->
           <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: syn }">
             <a>{{ syn }}</a>
           </ion-nav-link>
@@ -157,6 +159,7 @@ import copyright from "@/assets/copyright.svg"
       </div>
       <ul>
         <li :key="ant" v-for="ant in document.antonymes">
+          <!--          TODO Replace with reference tag -->
           <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: ant }">
             <a>{{ ant }}</a>
           </ion-nav-link>
@@ -261,13 +264,15 @@ import {getWordDocument, wordExists} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
-import {loadingController, useBackButton, useIonRouter} from "@ionic/vue";
+import {loadingController, modalController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
+import WordModal from "@/components/WordModal.vue";
+
 
 export default defineComponent({
-  props: ['motRemede'],
+  props: ['motRemede', 'hasHeader'],
   setup() {
     const ionRouter = useIonRouter()
 
@@ -301,18 +306,18 @@ export default defineComponent({
           name: '',
           url: ''
         },
-        conjugaisons: {} as RemedeConjugateDocument
+        conjugaisons: {} as RemedeConjugateDocument,
+        etymologies: [] as string[]
       } as RemedeWordDocument,
       notFound: false,
       stared: false,
       audioLoading: false,
       history: [],
-      push: function () {
-        return
-      },
       navigateBack: function () {
         return false
-      } as navigateBackFunction
+      } as navigateBackFunction,
+      header: this.hasHeader !== undefined ? this.hasHeader: true,
+      el: null as any
     }
   },
   mounted() {
@@ -325,17 +330,16 @@ export default defineComponent({
       return false
     }
 
-    function push(path: string) {
-      ionRouter.push(path, iosTransitionAnimation)
-    }
-
-    this.push = push
     this.navigateBack = navigateBackIfNoHistory
+    this.el = ref(this.$el)
   },
   created() {
-    this.loadData().then(() => {
+    this.loadData(null).then(() => {
       this.listenSpecialTags()
     })
+  },
+  beforeUnmount() {
+    window.dispatchEvent(new Event('reset'))
   },
   methods: {
     async loadData(mot: null | string) {
@@ -420,23 +424,30 @@ export default defineComponent({
     },
     async listenSpecialTags() {
       document.querySelectorAll('reference').forEach(el => {
-        el.addEventListener('click', async () => {
-          const href = el.getAttribute('href')
+        const listener = async () => {
+          const href = el.getAttribute('href') || ''
           const word = href.replaceAll('https://fr.wiktionary.org/wiki/', '')
           if (await wordExists(word)) {
-            const oldWord = this.mot
-            const loader = await loadingController.create({
-              message: 'Chargement'
+            // TODO Sheet modal
+            const modal = await modalController.create({
+              component: WordModal,
+              componentProps: {
+                motRemede: word,
+                hasHeader: false
+              },
+              presentingElement: this.el,
+              handle: true
+              // initialBreakpoint: .25,
+              // breakpoints: [0, .25, .9]
             })
-            await loader.present()
-            await this.loadData(word).then(() => {
-              this.listenSpecialTags()
-              this.history.push(oldWord)
-            })
-            await loader.dismiss()
+            await modal.present()
           } else {
             window.open(href)
           }
+        }
+        el.addEventListener('click', listener)
+        window.addEventListener('reset', () => {
+          el.removeEventListener('click', listener)
         })
       })
     },
