@@ -40,7 +40,7 @@ import copyright from "@/assets/copyright.svg"
 
 <template>
   <ion-page>
-    <ion-header v-if="header" :translucent="true">
+    <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-nav-link router-direction="back">
@@ -271,7 +271,7 @@ import WordPreview from "@/components/WordPreview.vue";
 
 
 export default defineComponent({
-  props: ['motRemede', 'hasHeader'],
+  props: ['motRemede'],
   setup() {
     const ionRouter = useIonRouter()
 
@@ -314,7 +314,6 @@ export default defineComponent({
       navigateBack: function () {
         return false
       } as navigateBackFunction,
-      header: this.hasHeader !== undefined ? this.hasHeader: true,
       el: null as any
     }
   },
