@@ -332,9 +332,6 @@ export default defineComponent({
       this.listenSpecialTags()
     })
   },
-  // unmounted() {
-  //   window.dispatchEvent(new Event('reset'))
-  // },
   methods: {
     async loadData(mot: null | string) {
       this.mot = mot || this.motRemede
