@@ -59,7 +59,6 @@
 
 <script setup lang="ts">
 import {
-  IonApp,
   IonContent,
   IonIcon,
   IonItem,
