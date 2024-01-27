@@ -21,11 +21,12 @@ import {
   IonAccordionGroup,
   IonAlert,
   IonPopover,
-  IonPage
+  IonPage,
+  IonSpinner
 } from "@ionic/vue";
 import {
   bookmark,
-  bookmarkOutline, caretBackOutline,
+  bookmarkOutline,
   chevronBackOutline,
   chevronDownOutline,
   ellipsisVertical,
@@ -81,7 +82,7 @@ import copyright from "@/assets/copyright.svg"
           </ion-buttons>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value">
+          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value; refreshListeners()">
             <ion-segment-button value="def">Définition</ion-segment-button>
             <ion-segment-button value="syn">Synonymes</ion-segment-button>
             <ion-segment-button value="ant">Antonymes</ion-segment-button>
@@ -141,10 +142,9 @@ import copyright from "@/assets/copyright.svg"
         </div>
         <ul>
           <li :key="syn" v-for="syn in document.synonymes">
-  <!--          TODO Replace with reference tag -->
-            <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: syn }">
-              <a>{{ syn }}</a>
-            </ion-nav-link>
+            <reference :href="syn">
+              {{ syn }}
+            </reference>
           </li>
         </ul>
         <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
@@ -158,10 +158,9 @@ import copyright from "@/assets/copyright.svg"
         </div>
         <ul>
           <li :key="ant" v-for="ant in document.antonymes">
-            <!--          TODO Replace with reference tag -->
-            <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: ant }">
-              <a>{{ ant }}</a>
-            </ion-nav-link>
+            <reference :href="ant">
+              {{ ant }}
+            </reference>
           </li>
         </ul>
         <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
@@ -420,6 +419,10 @@ export default defineComponent({
     },
     open(url: string) {
       window.open(url)
+    },
+    refreshListeners() {
+      window.dispatchEvent(new Event('reset'))
+      this.listenSpecialTags()
     },
     async listenSpecialTags() {
       document.querySelectorAll('reference').forEach(el => {
