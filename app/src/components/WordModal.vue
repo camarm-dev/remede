@@ -113,7 +113,7 @@ import copyright from "@/assets/copyright.svg"
               <li :key="`def-${meaning}`" v-for="meaning in def.explications">
                 <span v-html="parseMeaning(meaning)" v-if="typeof meaning === 'string'"></span>
                 <ul v-else class="ion-padding-start">
-                  <li :key="subMeaning" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
+                  <li :key="`def-submeaning-${meaning.indexOf(subMeaning)}`" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
                 </ul>
                 <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
                 <ion-popover v-if="def.exemples.length > 0" :trigger="meaning">
