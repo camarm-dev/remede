@@ -64,9 +64,6 @@ import copyright from "@/assets/copyright.svg"
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-header v-else>
-      <button class="handle"></button>
-    </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-header collapse="condense">
         <ion-toolbar>
