@@ -262,7 +262,7 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {defineComponent, ref} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
-import {modalController, useBackButton, useIonRouter} from "@ionic/vue";
+import {loadingController, modalController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
 import WordPreview from "@/components/WordPreview.vue";
 
@@ -418,6 +418,10 @@ export default defineComponent({
       this.listenSpecialTags()
     },
     async openPreviewModal(word: string) {
+      const loading = await loadingController.create({
+        message: 'Chargement'
+      })
+      await loading.present()
       const modal = await modalController.create({
         component: WordPreview,
         componentProps: {
@@ -426,6 +430,7 @@ export default defineComponent({
         presentingElement: this.el,
         handle: true
       })
+      await loading.dismiss()
       await modal.present()
     },
     async listenSpecialTags() {
