@@ -116,7 +116,7 @@ import copyright from "@/assets/copyright.svg"
                   <li :key="subMeaning" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
                 </ul>
                 <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
-                <ion-popover :trigger="meaning">
+                <ion-popover v-if="def.exemples.length > 0" :trigger="meaning">
                   <div class="ion-padding examples">
                     <h5>
                       Exemples
@@ -142,9 +142,9 @@ import copyright from "@/assets/copyright.svg"
         </div>
         <ul>
           <li :key="syn" v-for="syn in document.synonymes">
-            <reference :href="syn">
+            <a @click="openPreviewModal(syn)">
               {{ syn }}
-            </reference>
+            </a>
           </li>
         </ul>
         <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
@@ -158,9 +158,9 @@ import copyright from "@/assets/copyright.svg"
         </div>
         <ul>
           <li :key="ant" v-for="ant in document.antonymes">
-            <reference :href="ant">
+            <a @click="openPreviewModal(ant)">
               {{ ant }}
-            </reference>
+            </a>
           </li>
         </ul>
         <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
@@ -265,9 +265,9 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {defineComponent, ref} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
-import {loadingController, modalController, useBackButton, useIonRouter} from "@ionic/vue";
+import {modalController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
-import WordModal from "@/components/WordModal.vue";
+import WordPreview from "@/components/WordPreview.vue";
 
 
 export default defineComponent({
@@ -336,9 +336,9 @@ export default defineComponent({
       this.listenSpecialTags()
     })
   },
-  beforeUnmount() {
-    window.dispatchEvent(new Event('reset'))
-  },
+  // unmounted() {
+  //   window.dispatchEvent(new Event('reset'))
+  // },
   methods: {
     async loadData(mot: null | string) {
       this.mot = mot || this.motRemede
@@ -347,7 +347,7 @@ export default defineComponent({
       }
       const document = await getWordDocument(this.mot)
       if (document) {
-        this.document = await getWordDocument(this.mot)
+        this.document = document
       } else {
         this.notFound = true
       }
@@ -424,6 +424,17 @@ export default defineComponent({
       window.dispatchEvent(new Event('reset'))
       this.listenSpecialTags()
     },
+    async openPreviewModal(word: string) {
+      const modal = await modalController.create({
+        component: WordPreview,
+        componentProps: {
+          mot: word
+        },
+        presentingElement: this.el,
+        handle: true
+      })
+      await modal.present()
+    },
     async listenSpecialTags() {
       document.querySelectorAll('reference').forEach(el => {
         const listener = async () => {
@@ -431,16 +442,7 @@ export default defineComponent({
           const word = href.replaceAll('https://fr.wiktionary.org/wiki/', '')
           if (await wordExists(word)) {
             // TODO works once, why ?
-            const modal = await modalController.create({
-              component: WordModal,
-              componentProps: {
-                motRemede: word,
-                hasHeader: false
-              },
-              presentingElement: this.el,
-              handle: true
-            })
-            await modal.present()
+            await this.openPreviewModal(word)
           } else {
             window.open(href)
           }
@@ -463,7 +465,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style>
 .definition header {
   display: flex;
   justify-content: space-between;
