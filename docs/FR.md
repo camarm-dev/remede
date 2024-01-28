@@ -104,6 +104,8 @@ Remède créé sa propre base de mots, synonymes, antonymes français à partir 
 - Les antonymes via [antonyme.org](http://www.antonyme.org)
 - Les conjugaisons via [conjuguons.fr](http://www.conjuguons.fr)
 - Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
+- Le service de TTS par [nanotts](https://github.com/gmn/nanotts), via l'API [opentts](https://github.com/synesthesiam/opentts), hébergée par nos soins
+- Le service de correction par [grammalecte](https://grammalecte.net/), hébergé par nos soins
 
 ### Dataset
 
