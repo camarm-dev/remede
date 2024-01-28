@@ -27,8 +27,8 @@ The next version of Remède; the v1.1.0 will introduce:
 - [ ] **New database** (revised database)
 - [x] Possibility to choose **light** or complete database when downloading
 - [x] **Desktop** applications
-- [ ] Own **pronunciation service** (maybe)
-- [ ] Own **corrector service** (maybe)
+- [x] Own **pronunciation service**
+- [ ] Own **corrector service**
 
 ## Télécharger
 
