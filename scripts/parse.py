@@ -165,7 +165,7 @@ def remedize(word_list: list):
         if not any([word.lower().startswith(letter) for letter in letters]) and letters != []:
             continue
         if word in custom_words:
-            remede_dictionary[word] = custom_words[word]
+            remede_dictionary[word] = custom_words_json[word]
             continue
         if not word.lower().startswith(current_char) and not any([word.lower().startswith(char) for char in accepted_char.get(current_char, [current_char])]):
             if remede_dictionary == {}:
