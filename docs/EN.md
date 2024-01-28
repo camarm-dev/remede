@@ -104,6 +104,9 @@ Remède creates is own base of french words, synonyms, antonyms with extern serv
 - Conjugations from [conjuguons.fr](http://www.conjuguons.fr)
 - Examples from ???? (not implemented)
 - IPA from [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
+- The TTS service from [nanotts](https://github.com/gmn/nanotts), implemented in the API [opentts](https://github.com/synesthesiam/opentts), hosted by us
+- The corrector service by [grammalecte](https://grammalecte.net/), hosted by us
+
 
 ### Dataset
 
