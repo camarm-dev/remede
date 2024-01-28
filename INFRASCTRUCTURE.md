@@ -18,6 +18,7 @@ graph LR
         subgraph docker["`fa:fa-docker Dedicated Docker Server`"]
             B --> G[TTS service]
             B -.-> H[Corrector service]
+            B -.-> L[Rimes graph service]
         end
         subgraph fa:fa-folder Filesystem
             C --> E[(Database)]
