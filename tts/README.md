@@ -19,6 +19,11 @@ Host: remede-tts.camarm.fr
 
 Requests is executed in [app/src/components/WordModal.vue:386](../app/src/components/WordModal.vue).
 
+- You should use these arguments to prevent container crashing 
+```shell
+docker run --name remede-tts --restart unless-stopped -d -p 5500:5500 synesthesiam/opentts:fr --no-glow-speak --no-larynx --no-espeak --no-marytts
+```
+
 ## Goal
 
 Utiliser le tag SSML `<phoneme alphabet="ipa" ph=""></phoneme>`.
