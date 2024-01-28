@@ -64,10 +64,6 @@ npm run dev
 
 ### API
 
-Les APIs ont été divisée en 2 parties:
-- API (`server.py`): Pour rechercher des mots, le mot du jour ect... 
-- API-ML (`server-ml.py`): Pour obtenir les prononciations et corriger un texte.
-
 À la racine du projet
 - Installer python3
 - Installer les dépendances python

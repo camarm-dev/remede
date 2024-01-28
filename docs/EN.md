@@ -66,10 +66,6 @@ npm run dev
 
 ### API
 
-APIs are divided in two parts:
-- API (`server.py`): To search word, get word of day ect...
-- API-ML (`server-ml.py`): To get pronunciation audios, and corrections
-
 At project root
 
 - Install python3
