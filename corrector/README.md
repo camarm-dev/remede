@@ -9,14 +9,14 @@ Nous utilisons une instance hébergée par nos soins de [languagetool.org](https
 
 ```shell
 docker run -d \
-  --name languagetool \
+  --name remede-corrector \
   --restart always \
   --cap-drop ALL \
   --cap-add CAP_SETUID \
   --cap-add CAP_SETGID \
   --security-opt no-new-privileges \
   --publish 9009:8010 \
-  --env download_ngrams_for_langs=en \
+  --env download_ngrams_for_langs=fr \
   --env langtool_languageModel=/ngrams \
   --env langtool_fasttextModel=/fasttext/lid.176.bin \
   --volume $PWD/ngrams:/ngrams \
