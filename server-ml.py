@@ -5,7 +5,6 @@ from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from corrector import RemedeCorrectorEngine
 from data.utils import transformLetter
-from tts import RemedeIPAToSpeechEngine
 
 
 class Correction(BaseModel):
@@ -49,16 +48,7 @@ def correct_text(body: Correction):
     }
 
 
-@app.post('/pronunciation')
-def tts(body: Pronunciation):
-    """
-    Renvoie une base64 d'un audio lisant le mot du champ `mot` du corps de requête.
-    """
-    return TTS.generate_audio(body.ipa)
-
-
 if __name__ == '__main__':
     database = sqlite3.connect('data/remede.db', check_same_thread=False)
     corrector = RemedeCorrectorEngine(database, transformLetter)
-    TTS = RemedeIPAToSpeechEngine()
     uvicorn.run(app, host='0.0.0.0')
