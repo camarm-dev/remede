@@ -4,10 +4,10 @@ This file is updated when the infrastructure changes. It shows a schema of the c
 
 ```mermaid
 graph LR
-    subgraph  fa:fa-user User side
+    subgraph "`fa:fa-user User side`"
         J[(Database)] <-.-> A((User))
     end
-    subgraph fa:fa-server Server side
+    subgraph "`fa:fa-server Server side`"
         subgraph fa:fa-circle-nodes Proxy
             A((User)) --> B([Load Balancer])
         end
@@ -15,7 +15,7 @@ graph LR
             B --> C[API]
             B --> D[Ionic Web]
         end
-        subgraph fa:fa-box Dedicated Docker Server
+        subgraph docker["`fa:fa-box Dedicated Docker Server`"]
             B --> G[TTS service]
             B -.-> H[Corrector service]
         end
@@ -24,4 +24,5 @@ graph LR
             E --> F[JSON]
         end
     end
+
 ```
