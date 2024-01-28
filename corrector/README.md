@@ -1,23 +1,11 @@
 ## Le correcteur: comment ça fonctionne ?
 
-### Goals
+Ce dossier contient le code source de [grammalecte](https://grammalecte.net/), un correcteur français open source !
 
-- [ ] Correction orthographique
-  - [x] Trouver les fautes
-  - [ ] Localiser les fautes
-  - [ ] Suggérer des corrections
-- [ ] Correction grammaticale
-  - [ ] Trouver les fautes 
-  - [ ] Localiser les fautes
-  - [ ] Suggérer des corrections
+> ![NOTE]
+> This project is not developed by Remède, please refer to the official website for any help and documentation...
 
-### Orthographe
+## Références
 
-1. Le texte est coupé en mots
-2. Chaque mot est vérifié orthographiquement
-3. Si un mot n'est pas dans la base de données, des mots ressemblants sont cherchés
-
-### Grammaire
-
-Pas encore disponible / WIP
-
+- Schéma de l'infrastructure [`INFRASTRUCTURE.md`](../INFRASCTRUCTURE.md)
+- Crédits des données Remède ; [documentation](../docs/FR.md#données-remède)
