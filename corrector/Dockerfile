@@ -26,4 +26,4 @@ CMD ["grammalecte-server.py","-ht", "0.0.0.0","-p","8080","-t"]
 # `docker build -t grammalecte:latest .`
 
 # Lauch the container with:
-# `docker run --rm -p 8080:8080 --name gr grammalecte:latest`
+# `docker run --rm -p 9009:8080 --name gr grammalecte:latest`
