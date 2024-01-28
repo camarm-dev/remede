@@ -15,7 +15,7 @@ graph LR
             B --> C[API]
             B --> D[Ionic Web]
         end
-        subgraph docker["`fa:fa-box Dedicated Docker Server`"]
+        subgraph docker["`fa:fa-docker Dedicated Docker Server`"]
             B --> G[TTS service]
             B -.-> H[Corrector service]
         end
