@@ -17,7 +17,7 @@ graph LR
         end
         subgraph docker["`fa:fa-docker Dedicated Docker Server`"]
             B --> G[TTS service]
-            B -.-> H[Corrector service]
+            B --> H[Corrector service]
             B -.-> L[Rimes graph service]
         end
         subgraph fa:fa-folder Filesystem
@@ -25,9 +25,8 @@ graph LR
             E --> F[JSON]
         end
     end
-
 ```
 
 ## Image on mermaid.live
 
-[![](https://mermaid.ink/img/pako:eNqFk-FugjAUhV-l6S9IZA9gliUqc9PoZsRtyQqJtb1oI1BTYJEY330X2FAjc_0Bze3Xe04OlwMVWgLt0rXhuw2ZzP2E4ErzVV3w6TLk3ZA7eQqGvJWPVElY-rQGyzVmlsszvuIp2AG5d-6cB9KzrBK27RqDRP7VGKkv7OrVr6vmzYWaFsqICJwETadkZvS-OKHlanSJgy76FptoLkmfRzwRYAL7RDeWWlRiiLUpiAtSCZ6BJO_TS5l-1X7AerNR0HbispFOlCAfsAr-k5RabMGwJpCV3p8pu9XpTzyYTKvcE1ssPFImqQRcE-UHeWYDbQyITJvb4ITNVYzh1uau0Vu5hTqSaHaoIkiLNIP4UmFQmX08H5dL4LEChmzsvb60SeKGdmgMJuZK4tAeyrJPsw3E4NMubiU323J8jsjxPNNekQjazUwOHZrvJEbqKo6W498iBo2RTOufQOgkVGu8uuPJp9YIhTxK4fgNaNbrOw?type=png)](https://mermaid.live/edit#pako:eNqFk-FugjAUhV-l6S9IZA9gliUqc9PoZsRtyQqJtb1oI1BTYJEY330X2FAjc_0Bze3Xe04OlwMVWgLt0rXhuw2ZzP2E4ErzVV3w6TLk3ZA7eQqGvJWPVElY-rQGyzVmlsszvuIp2AG5d-6cB9KzrBK27RqDRP7VGKkv7OrVr6vmzYWaFsqICJwETadkZvS-OKHlanSJgy76FptoLkmfRzwRYAL7RDeWWlRiiLUpiAtSCZ6BJO_TS5l-1X7AerNR0HbispFOlCAfsAr-k5RabMGwJpCV3p8pu9XpTzyYTKvcE1ssPFImqQRcE-UHeWYDbQyITJvb4ITNVYzh1uau0Vu5hTqSaHaoIkiLNIP4UmFQmX08H5dL4LEChmzsvb60SeKGdmgMJuZK4tAeyrJPsw3E4NMubiU323J8jsjxPNNekQjazUwOHZrvJEbqKo6W498iBo2RTOufQOgkVGu8uuPJp9YIhTxK4fgNaNbrOw)
+[![](https://mermaid.ink/img/pako:eNqFk-9ugjAUxV-l6SdMZA9AliUquml0M-K2ZIXE0l5mI1BTYJEY330X2PwTcbsfoLn9cc_Jod1ToSVQh34avl2T6cJPCVZWhE3Dp6uIOxG3iwwMea0emZKw8mkDVjVhlstzHvIMOgG5t-_sB9KzrArudBoMUnlrMFJfONVrXlfDjx80tFBGxGCnaDojc6N35Qmt6qhLbHTRt9hUc0n6POapABN0TvTRUotKAok2JXFBKsFzkORtdinTr8cPWG8-Dtp2XDbWqRLkHcLgP0mpxQYMOwYS6t2Zslvv_sSDybTKPbLl0iNVkkpAK_HEBtoYELk2t7nqx03ZQiWYbePtGv0rtkjHEr2OVAxZmeWQXCoMaifD89NyCQxrYMQm3stzmyQuaJcmYBKuJJ7ZfdX2ab6GBHzq4FJys6lOzwE5XuTaK1NBndwU0KXFVmKiruJoOfltYs4Yyay5A_VV6NItTz-0RiTicQaHb8ro6jI?type=png)](https://mermaid.live/edit#pako:eNqFk-9ugjAUxV-l6SdMZA9AliUquml0M-K2ZIXE0l5mI1BTYJEY330X2PwTcbsfoLn9cc_Jod1ToSVQh34avl2T6cJPCVZWhE3Dp6uIOxG3iwwMea0emZKw8mkDVjVhlstzHvIMOgG5t-_sB9KzrArudBoMUnlrMFJfONVrXlfDjx80tFBGxGCnaDojc6N35Qmt6qhLbHTRt9hUc0n6POapABN0TvTRUotKAok2JXFBKsFzkORtdinTr8cPWG8-Dtp2XDbWqRLkHcLgP0mpxQYMOwYS6t2Zslvv_sSDybTKPbLl0iNVkkpAK_HEBtoYELk2t7nqx03ZQiWYbePtGv0rtkjHEr2OVAxZmeWQXCoMaifD89NyCQxrYMQm3stzmyQuaJcmYBKuJJ7ZfdX2ab6GBHzq4FJys6lOzwE5XuTaK1NBndwU0KXFVmKiruJoOfltYs4Yyay5A_VV6NItTz-0RiTicQaHb8ro6jI)
