@@ -1,0 +1,6 @@
+version: '3'
+services:
+  remede-tts:
+    image: synesthesiam/opentts:fr
+    ports:
+      - "5500:5500"
