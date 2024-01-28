@@ -12,7 +12,7 @@ We use docker the image `synesthesiam/opentts:fr` to deploy a server at [remede-
 
 It returns a WAVE file using the following POST request:
 ```http request
-POST /api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.0&text=anticonstitutionnellement&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true
+POST /api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.0&text=<text-to-transform>&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true
 HTTP/1.1
 Host: remede-tts.camarm.fr
 ```
