@@ -24,10 +24,10 @@ Open Source and free alternative to Antidote.
 The next version of Remède; the v1.1.0 will introduce:
 - [x] **Examples** on definition
 - [x] **New UI** on definition page
-- [ ] **New database** (revised database)
 - [x] Possibility to choose **light** or complete database when downloading
 - [x] **Desktop** applications
 - [x] Own **pronunciation service**
+- [ ] **New database** (revised database)
 - [ ] Own **corrector service**
 
 ## Télécharger
