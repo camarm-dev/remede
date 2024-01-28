@@ -262,7 +262,7 @@ import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
 import {defineComponent, ref} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
-import {loadingController, modalController, useBackButton, useIonRouter} from "@ionic/vue";
+import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
 import WordPreview from "@/components/WordPreview.vue";
 
@@ -383,19 +383,24 @@ export default defineComponent({
     },
     readWord() {
       this.audioLoading = true
-      const url = 'https://iawll6of90.execute-api.us-east-1.amazonaws.com/production'
-      const data = {
-        text: this.document.ipa.replaceAll('/', ''),
-        voice: 'Mathieu'
-      }
+      const url = `https://remede-tts.camarm.fr/api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.005&text=${encodeURIComponent(this.mot)}&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true`
       fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data)
-      }).then(resp => resp.json()).then(audio => {
+        method: 'GET',
+        cache: 'no-cache'
+      }).then(resp => resp.blob()).then(audio => {
         const player = new window.Audio()
-        player.src = `data:audio/mpeg;base64,${audio}`
+        player.src = URL.createObjectURL(audio)
         player.play()
         this.audioLoading = false
+      }).catch(async e => {
+        const toast = await toastController.create({
+          header: 'Erreur',
+          message: `Impossible de lire le mot: ${e}`,
+          color: 'danger',
+          duration: 3000
+        })
+        this.audioLoading = false
+        await toast.present()
       })
     },
     changeMode(mode: string) {
