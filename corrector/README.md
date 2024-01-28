@@ -1,6 +1,6 @@
 ## Le correcteur: comment ça fonctionne ?
 
-Ce dossier contient le code source de [grammalecte](https://grammalecte.net/), un correcteur français open source !
+Nous utilisons une instance hébergée par nos soins de [languagetool.org](https://languagetool.org), un correcteur français open source !
 
 > ![NOTE]
 > This project is not developed by Remède, please refer to the official website for any help and documentation...
@@ -8,11 +8,24 @@ Ce dossier contient le code source de [grammalecte](https://grammalecte.net/), u
 ## Lancer le conteneur
 
 ```shell
-docker build -t grammalecte:latest .
+docker run -d \
+  --name languagetool \
+  --restart always \
+  --cap-drop ALL \
+  --cap-add CAP_SETUID \
+  --cap-add CAP_SETGID \
+  --security-opt no-new-privileges \
+  --publish 9009:8010 \
+  --env download_ngrams_for_langs=en \
+  --env langtool_languageModel=/ngrams \
+  --env langtool_fasttextModel=/fasttext/lid.176.bin \
+  --volume $PWD/ngrams:/ngrams \
+  --volume $PWD/fasttext:/fasttext \
+  meyay/languagetool:latest
 ```
 
-```shell
-docker run --rm -p 9009:8080 --name remede-corrector grammalecte:latest
+## Documentation pour l'API
+```
 ```
 
 ## Références

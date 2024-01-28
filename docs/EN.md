@@ -101,7 +101,7 @@ Remède creates is own base of french words, synonyms, antonyms with extern serv
 - Examples from ???? (not implemented)
 - IPA from [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
 - The TTS service from [nanotts](https://github.com/gmn/nanotts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, implemented in the API [opentts](https://github.com/synesthesiam/opentts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, hosted by us
-- The corrector service by [grammalecte](https://grammalecte.net/)<sup>[GPL 3](http://grammalecte.net:8080/file?name=LICENSE.txt&ci=tip)</sup>, hosted by us
+- The corrector service by [languagetool.org](https://languagetool.org)<sup>[LGPL 2.1](https://github.com/languagetool-org/languagetool/blob/master/COPYING.txt)</sup>, hosted by us
 
 
 ### Dataset
