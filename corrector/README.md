@@ -5,6 +5,16 @@ Ce dossier contient le code source de [grammalecte](https://grammalecte.net/), u
 > ![NOTE]
 > This project is not developed by Remède, please refer to the official website for any help and documentation...
 
+## Lancer le conteneur
+
+```shell
+docker build -t grammalecte:latest .
+```
+
+```shell
+docker run --rm -p 9009:8080 --name remede-corrector grammalecte:latest
+```
+
 ## Références
 
 - Schéma de l'infrastructure [`INFRASTRUCTURE.md`](../INFRASCTRUCTURE.md)
