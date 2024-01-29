@@ -100,7 +100,7 @@ def root():
         "hash": HASH,
         "dictionnaires": {
             "remede": {
-                "nom": "Remède complet  ~350Mb",
+                "nom": "Remède complet  ~290Mb",
                 "slug": "remede",
                 "hash": DATASET
             },

@@ -15,13 +15,13 @@ http://ionicframework.com/docs/theming/ */
   src: url("./font/IBMPlexSerif-Bold.ttf");
 }
 
-reference {
+reference, a {
   cursor: pointer;
   color: var(--ion-color-primary);
   text-decoration: underline solid var(--ion-color-primary);
 }
 
-reference:hover {
+reference:hover, a:hover {
   color: var(--ion-color-primary-tint);
   text-decoration: underline solid var(--ion-color-primary-tint);
 }
@@ -47,6 +47,10 @@ reference:hover {
 }
 
 ion-header.header-translucent-ios .header-background {
+  background-color: var(--ion-background-color) !important;
+}
+
+body {
   background-color: var(--ion-background-color) !important;
 }
 

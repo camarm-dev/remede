@@ -1,67 +1,64 @@
 <template>
-  <ion-app>
-    <ion-split-pane content-id="main-content">
-      <ion-menu content-id="main-content" type="overlay">
-        <ion-content>
-          <ion-list>
-            <img class="ion-margin-start" width="50" alt="Remède icon" src="/favicon.png" height="50"/>
-            <ion-list-header>Remède</ion-list-header>
-            <ion-note>Retrouvez vos mots en toute simplicité</ion-note>
+  <ion-split-pane content-id="main-content">
+    <ion-menu content-id="main-content" type="overlay">
+      <ion-content>
+        <ion-list>
+          <img class="ion-margin-start" width="50" alt="Remède icon" src="/favicon.png" height="50"/>
+          <ion-list-header>Remède</ion-list-header>
+          <ion-note>Retrouvez vos mots en toute simplicité</ion-note>
 
-            <div class="menu-links">
-              <div class="start">
-                <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="path === '/dictionnaire' ? 'selected': ''">
-                    <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
-                    <ion-label>Dictionnaire</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-                <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="path === '/marques-page' ? 'selected': ''">
-                    <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
-                    <ion-label>Marques Pages</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-                <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/correction')" lines="none" :detail="false" class="hydrated" :class="path === '/correction' ? 'selected': ''">
-                    <ion-icon aria-hidden="true" slot="start" :icon="medicalOutline"></ion-icon>
-                    <ion-label>Correction</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-                <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/fiches')" lines="none" :detail="false" class="hydrated" :class="path === '/fiches' ? 'selected': ''">
-                    <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
-                    <ion-label>Fiches</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-              </div>
-              <div class="end">
-                <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="path === '/parametres' ? 'selected': ''">
-                    <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
-                    <ion-label>Paramètres</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-                <ion-menu-toggle :auto-hide="false">
-                  <ion-item @click="goTo('/a-propos')" lines="none" :detail="false" class="hydrated" :class="path === '/a-propos' ? 'selected': ''">
-                    <ion-icon aria-hidden="true" slot="start" :icon="informationCircleOutline"></ion-icon>
-                    <ion-label>À propos</ion-label>
-                  </ion-item>
-                </ion-menu-toggle>
-              </div>
+          <div class="menu-links">
+            <div class="start">
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="path === '/dictionnaire' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
+                  <ion-label>Dictionnaire</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="path === '/marques-page' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
+                  <ion-label>Marques Pages</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/correction')" lines="none" :detail="false" class="hydrated" :class="path === '/correction' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="medicalOutline"></ion-icon>
+                  <ion-label>Correction</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/fiches')" lines="none" :detail="false" class="hydrated" :class="path === '/fiches' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
+                  <ion-label>Fiches</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
             </div>
-          </ion-list>
+            <div class="end">
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="path === '/parametres' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
+                  <ion-label>Paramètres</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/a-propos')" lines="none" :detail="false" class="hydrated" :class="path === '/a-propos' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="informationCircleOutline"></ion-icon>
+                  <ion-label>À propos</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            </div>
+          </div>
+        </ion-list>
 
-        </ion-content>
-      </ion-menu>
-      <ion-router-outlet id="main-content"></ion-router-outlet>
-    </ion-split-pane>
-  </ion-app>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </template>
 
 <script setup lang="ts">
 import {
-  IonApp,
   IonContent,
   IonIcon,
   IonItem,

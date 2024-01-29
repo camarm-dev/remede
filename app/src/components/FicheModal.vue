@@ -112,9 +112,6 @@ export default defineComponent({
     this.navigateBack = navigateBackIfNoHistory
   },
   methods: {
-    goTo(path: string) {
-      this.$router.push(path)
-    },
     async shareSheet() {
       try {
         await Share.share({

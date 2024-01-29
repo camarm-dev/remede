@@ -1,9 +1,9 @@
 ## Générer les données Remède
 
-Générer les données Remède consiste à générer **les fichiers JSON**, pour chaque lettre (`data/REMEDE_a.json`) mais aussi **la base Sqlite** `data.remede.db`.
+Générer les données Remède consiste à générer **les fichiers JSON**, pour chaque lettre (`data/REMEDE_a.json`) mais aussi **la base Sqlite** `data/remede.db`.
 
 > [!NOTE]
-> La base `data/remede-less.json` est une ancienne version, qui ne contient pas les champs `exemples`, `etymologies` et `rimes`. Elle est utilisée comme base **light**, pour les appareils avec peu de place.
+> La base `data/remede-less.db` est une ancienne version, qui ne contient pas les champs `exemples`, `etymologies` et `rimes`. Elle est utilisée comme base **light**, pour les appareils avec peu de place.
 
 **Organisation d'une génération de données:**
 1. `parse.py` génère un fichier JSON par lettre (plusieurs heures)
@@ -43,6 +43,9 @@ flowchart TB
 python3 scripts/parse.py
 ```
 Cette opération prend plusieurs jours !
+
+> [!NOTE]
+> Vous pouvez sélectionner certaines lettres à parser avec un argument : `python3 scripts/parse.py --letters a,b,c,d,e` 
 
 ## Api Définition
 

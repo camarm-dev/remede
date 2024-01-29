@@ -1,23 +1,34 @@
 ## Le correcteur: comment ça fonctionne ?
 
-### Goals
+Nous utilisons une instance hébergée par nos soins de [languagetool.org](https://languagetool.org), un correcteur français open source !
 
-- [ ] Correction orthographique
-  - [x] Trouver les fautes
-  - [ ] Localiser les fautes
-  - [ ] Suggérer des corrections
-- [ ] Correction grammaticale
-  - [ ] Trouver les fautes 
-  - [ ] Localiser les fautes
-  - [ ] Suggérer des corrections
+> ![NOTE]
+> This project is not developed by Remède, please refer to the official website for any help and documentation...
 
-### Orthographe
+## Lancer le conteneur
 
-1. Le texte est coupé en mots
-2. Chaque mot est vérifié orthographiquement
-3. Si un mot n'est pas dans la base de données, des mots ressemblants sont cherchés
+```shell
+docker run -d \
+  --name remede-corrector \
+  --restart always \
+  --cap-drop ALL \
+  --cap-add CAP_SETUID \
+  --cap-add CAP_SETGID \
+  --security-opt no-new-privileges \
+  --publish 9009:8010 \
+  --env download_ngrams_for_langs=fr \
+  --env langtool_languageModel=/ngrams \
+  --env langtool_fasttextModel=/fasttext/lid.176.bin \
+  --volume $PWD/ngrams:/ngrams \
+  --volume $PWD/fasttext:/fasttext \
+  meyay/languagetool:latest
+```
 
-### Grammaire
+## Documentation pour l'API
+```
+```
 
-Pas encore disponible / WIP
+## Références
 
+- Schéma de l'infrastructure [`INFRASTRUCTURE.md`](../INFRASCTRUCTURE.md)
+- Crédits des données Remède ; [documentation](../docs/FR.md#données-remède)

@@ -64,10 +64,6 @@ npm run dev
 
 ### API
 
-Les APIs ont été divisée en 2 parties:
-- API (`server.py`): Pour rechercher des mots, le mot du jour ect... 
-- API-ML (`server-ml.py`): Pour obtenir les prononciations et corriger un texte.
-
 À la racine du projet
 - Installer python3
 - Installer les dépendances python
@@ -99,11 +95,13 @@ Cette section est à propos des données utilisées et fournies par Remède.
 ### Données Remède
 Remède créé sa propre base de mots, synonymes, antonymes français à partir de services tiers.
 
-- Les définitions, exemples et étymologies par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil), via le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/) de l'API, réadapté par [Labse Software](https://github.com/LabseSoftware/api-definition)
+- Les définitions, exemples et étymologies par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil)<sup>[CC BY-SA 3.0 Deed](https://fr.wiktionary.org/wiki/Wiktionnaire:Licence)</sup>, via le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/)<sup>[GPL 3.0](https://github.com/FredGainza/api-definition/blob/main/LICENSE)</sup> de l'API, réadapté par [Labse Software](https://github.com/LabseSoftware/api-definition)
 - Les synonymes via [synonymo.fr](http://www.synonymo.fr)
 - Les antonymes via [antonyme.org](http://www.antonyme.org)
 - Les conjugaisons via [conjuguons.fr](http://www.conjuguons.fr)
-- Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)
+- Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)<sup>[MIT](https://github.com/open-dict-data/ipa-dict/blob/master/LICENSE)</sup>
+- Le service de TTS par [nanotts](https://github.com/gmn/nanotts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, via l'API [opentts](https://github.com/synesthesiam/opentts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, hébergée par nos soins
+- Le service de correction par [languagetool.org](https://languagetool.org)<sup>[LGPL 2.1](https://github.com/languagetool-org/languagetool/blob/master/COPYING.txt)</sup>, hébergé par nos soins
 
 ### Dataset
 

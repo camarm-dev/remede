@@ -51,6 +51,7 @@ interface RemedeWordDocument {
     credits: RemedeDefinitionCredits
     ipa: string
     conjugaisons: RemedeConjugateDocument
+    etymologies: string[]
 }
 
 interface RemedeDictionary {

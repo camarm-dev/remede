@@ -18,11 +18,15 @@ import {
   IonItem,
   IonModal,
   IonAccordion,
-  IonAccordionGroup
+  IonAccordionGroup,
+  IonAlert,
+  IonPopover,
+  IonPage,
+  IonSpinner
 } from "@ionic/vue";
 import {
   bookmark,
-  bookmarkOutline, caretBackOutline,
+  bookmarkOutline,
   chevronBackOutline,
   chevronDownOutline,
   ellipsisVertical,
@@ -30,229 +34,224 @@ import {
   play,
   shareOutline
 } from "ionicons/icons";
-import WordModal from "@/components/WordModal.vue";
 import example from "@/assets/example.svg"
 import copyright from "@/assets/copyright.svg"
 </script>
 
 <template>
-  <ion-header :translucent="true">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-nav-link router-direction="back">
-          <ion-button @click="navigateBack()">
-            <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
-            Retour
-          </ion-button>
-        </ion-nav-link>
-      </ion-buttons>
-      <ion-title>Définition "{{ mot }}"</ion-title>
-      <ion-buttons slot="end">
-        <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
-          <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
-        </ion-button>
-        <ion-button @click="shareDefinition()">
-          <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
-        </ion-button>
-        <ion-button :id="`open-modal-${mot}`">
-          <ion-icon slot="icon-only" :icon="ellipsisVertical"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content :fullscreen="true" class="ion-padding">
-    <ion-header collapse="condense">
-      <ion-buttons v-if="history.length > 0">
-        <ion-button size="small" color="dark" @click="goToPreviousDefinition()">
-          <ion-icon slot="start" :icon="caretBackOutline"/>
-          Revenir à "{{ history[history.length - 1] }}"
-        </ion-button>
-      </ion-buttons>
+  <ion-page>
+    <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-label>
-          <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
-          <p class="ion-padding-start">{{ document.ipa }}</p>
-        </ion-label>
+        <ion-buttons slot="start">
+          <ion-nav-link router-direction="back">
+            <ion-button @click="navigateBack()">
+              <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
+              Retour
+            </ion-button>
+          </ion-nav-link>
+        </ion-buttons>
+        <ion-title>Définition "{{ mot }}"</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="readWord()" :disabled="notFound">
-            <ion-icon v-if="!audioLoading" slot="icon-only" :icon="play" color="medium"/>
-            <ion-spinner v-else slot="icon-only" name="circles" color="medium"/>
+          <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
+            <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
+          </ion-button>
+          <ion-button @click="shareDefinition()">
+            <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
+          </ion-button>
+          <ion-button :id="`open-modal-${mot}`">
+            <ion-icon slot="icon-only" :icon="ellipsisVertical"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-toolbar>
-        <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value">
-          <ion-segment-button value="def">Définition</ion-segment-button>
-          <ion-segment-button value="syn">Synonymes</ion-segment-button>
-          <ion-segment-button value="ant">Antonymes</ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
     </ion-header>
-    <br>
-    <div v-if="notFound" class="ion-padding">
-      <ion-note>
-        Ce mot n'a pas été trouvé dans le dictionnaire Remède...
-      </ion-note>
-    </div>
-    <div v-if="tab == 'def'" class="tab-content">
-      <div class="definition" :key="`def-genre-${document.definitions.indexOf(def).toString()}`" v-for="def in document.definitions">
-        <header>
-          <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
-          <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
-          <h4 v-else>{{ def.genre }}</h4>
-          <hr>
-        </header>
-        <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
-          <ion-item lines="none" color="light" button @click="tab = 'conj'">
-            Ouvrir la conjugaison
-          </ion-item>
-        </ion-list>
-        <div class="content">
-          <ul>
-            <li :key="`def-${meaning}`" v-for="meaning in def.explications">
-              <span v-html="parseMeaning(meaning)" v-if="typeof meaning === 'string'"></span>
-              <ul v-else class="ion-padding-start">
-                <li :key="subMeaning" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
-              </ul>
-              <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
-              <ion-popover :trigger="meaning">
-                <div class="ion-padding examples">
-                  <h5>
-                    Exemples
-                    <span class="ion-color-medium">{{ mot }}</span>,
-                    <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
-                    <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
-                    <span v-else>{{ def.genre }}</span>
-                  </h5>
-                  <p v-for="exemple in def.exemples" :key="exemple.contenu"><i>{{ exemple.contenu }}</i> <span class="sources" v-html="exemple.sources"/><br></p>
-                </div>
-              </ion-popover>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div v-if="tab == 'syn'" class="tab-content">
-      <div class="definition">
-        <header>
-          <h4>Synonymes</h4>
-          <hr>
-        </header>
-      </div>
-      <ul>
-        <li :key="syn" v-for="syn in document.synonymes">
-          <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: syn }">
-            <a>{{ syn }}</a>
-          </ion-nav-link>
-        </li>
-      </ul>
-      <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
-    </div>
-    <div v-if="tab == 'ant'" class="tab-content">
-      <div class="definition">
-        <header>
-          <h4>Antonymes</h4>
-          <hr>
-        </header>
-      </div>
-      <ul>
-        <li :key="ant" v-for="ant in document.antonymes">
-          <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: ant }">
-            <a>{{ ant }}</a>
-          </ion-nav-link>
-        </li>
-      </ul>
-      <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
-    </div>
-    <div v-if="tab == 'conj'" class="tab-content">
-      <div class="definition">
-        <header>
-          <h4>Conjugaison</h4>
-          <hr>
-        </header>
-      </div>
-      <br>
-      <ion-list inset class="border-radius border">
-        <ion-item color="light" lines="full">
-          <ion-label slot="start">
-            <p>Mode</p>
-          </ion-label>
-          <ion-label slot="end">
-            <p>Temps</p>
-          </ion-label>
-        </ion-item>
-        <ion-item color="light" lines="full">
-          <ion-select @ionChange="changeMode($event.target.value)" slot="start" interface="action-sheet" placeholder="Mode" :value="currentMode">
-            <ion-select-option :key="mode" v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
-          </ion-select>
-          <ion-select @ionChange="changeTemps($event.target.value)" slot="end" interface="action-sheet" placeholder="Temps" :value="currentTemps">
-            <ion-select-option :key="temps" v-for="temps in modeTemps" :value="temps">{{ temps }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item :key="sujet" v-for="sujet in currentSujets">
+    <ion-content :fullscreen="true" class="ion-padding">
+      <ion-header collapse="condense">
+        <ion-toolbar>
           <ion-label>
-            <p>{{ sujet }}</p>
+            <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
+            <p class="ion-padding-start">{{ document.ipa }}</p>
           </ion-label>
-          <ion-label slot="end">
-            {{ getFormeVerbale(currentMode, currentTemps, sujet) }}
-          </ion-label>
-        </ion-item>
-      </ion-list>
+          <ion-buttons slot="end">
+            <ion-button @click="readWord()" :disabled="notFound">
+              <ion-icon v-if="!audioLoading" slot="icon-only" :icon="play" color="medium"/>
+              <ion-spinner v-else slot="icon-only" name="circles" color="medium"/>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value; refreshListeners()">
+            <ion-segment-button value="def">Définition</ion-segment-button>
+            <ion-segment-button value="syn">Synonymes</ion-segment-button>
+            <ion-segment-button value="ant">Antonymes</ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </ion-header>
       <br>
-    </div>
-    <br>
-    <br>
-    <ion-modal :trigger="`open-modal-${mot}`" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
-      <ion-content class="ion-padding">
-        <div class="list-title no-margin ion-padding-bottom">
-          Dictionnaire
+      <div v-if="notFound" class="ion-padding">
+        <ion-note>
+          Ce mot n'a pas été trouvé dans le dictionnaire Remède...
+        </ion-note>
+      </div>
+      <div v-if="tab == 'def'" class="tab-content">
+        <div class="definition" :key="`def-genre-${document.definitions.indexOf(def).toString()}`" v-for="def in document.definitions">
+          <header>
+            <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
+            <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
+            <h4 v-else>{{ def.genre }}</h4>
+            <hr>
+          </header>
+          <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
+            <ion-item lines="none" color="light" button @click="tab = 'conj'">
+              Ouvrir la conjugaison
+            </ion-item>
+          </ion-list>
+          <div class="content">
+            <ul>
+              <li :key="`def-${meaning}`" v-for="meaning in def.explications">
+                <span v-html="parseMeaning(meaning)" v-if="typeof meaning === 'string'"></span>
+                <ul v-else class="ion-padding-start">
+                  <li :key="`def-submeaning-${meaning.indexOf(subMeaning)}`" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
+                </ul>
+                <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
+                <ion-popover v-if="def.exemples.length > 0" :trigger="meaning">
+                  <div class="ion-padding examples">
+                    <h5>
+                      Exemples
+                      <span class="ion-color-medium">{{ mot }}</span>,
+                      <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
+                      <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
+                      <span v-else>{{ def.genre }}</span>
+                    </h5>
+                    <p v-for="exemple in def.exemples" :key="exemple.contenu"><i>{{ exemple.contenu }}</i> <span class="sources" v-html="exemple.sources"/><br></p>
+                  </div>
+                </ion-popover>
+              </li>
+            </ul>
+          </div>
         </div>
-        <ion-list class="border-radius">
-          <ion-item button color="primary" lines="none" disabled>
-            Ouvrir le dictionnaire des rimes
+      </div>
+      <div v-if="tab == 'syn'" class="tab-content">
+        <div class="definition">
+          <header>
+            <h4>Synonymes</h4>
+            <hr>
+          </header>
+        </div>
+        <ul>
+          <li :key="syn" v-for="syn in document.synonymes">
+            <a @click="openPreviewModal(syn)">
+              {{ syn }}
+            </a>
+          </li>
+        </ul>
+        <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
+      </div>
+      <div v-if="tab == 'ant'" class="tab-content">
+        <div class="definition">
+          <header>
+            <h4>Antonymes</h4>
+            <hr>
+          </header>
+        </div>
+        <ul>
+          <li :key="ant" v-for="ant in document.antonymes">
+            <a @click="openPreviewModal(ant)">
+              {{ ant }}
+            </a>
+          </li>
+        </ul>
+        <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
+      </div>
+      <div v-if="tab == 'conj'" class="tab-content">
+        <div class="definition">
+          <header>
+            <h4>Conjugaison</h4>
+            <hr>
+          </header>
+        </div>
+        <br>
+        <ion-list inset class="border-radius border">
+          <ion-item color="light" lines="full">
+            <ion-label slot="start">
+              <p>Mode</p>
+            </ion-label>
+            <ion-label slot="end">
+              <p>Temps</p>
+            </ion-label>
+          </ion-item>
+          <ion-item color="light" lines="full">
+            <ion-select @ionChange="changeMode($event.target.value)" slot="start" interface="action-sheet" placeholder="Mode" :value="currentMode">
+              <ion-select-option :key="mode" v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
+            </ion-select>
+            <ion-select @ionChange="changeTemps($event.target.value)" slot="end" interface="action-sheet" placeholder="Temps" :value="currentTemps">
+              <ion-select-option :key="temps" v-for="temps in modeTemps" :value="temps">{{ temps }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item :key="sujet" v-for="sujet in currentSujets">
+            <ion-label>
+              <p>{{ sujet }}</p>
+            </ion-label>
+            <ion-label slot="end">
+              {{ getFormeVerbale(currentMode, currentTemps, sujet) }}
+            </ion-label>
           </ion-item>
         </ion-list>
-        <div class="list-title no-margin ion-padding-bottom">
-          Crédits & sources
-        </div>
-        <ion-list class="border-radius">
-          <ion-item :id="`open-copyrights-${mot}`" button color="light" lines="none" :detail-icon="copyright">
-            Ouvrir les crédits
-          </ion-item>
-          <ion-accordion-group>
-            <ion-accordion value="first">
-              <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
-                <ion-label>Sources</ion-label>
-              </ion-item>
-              <div slot="content" class="accordion-content">
-                <ion-item @click="open(document.credits.url)" button lines="inset" :detail-icon="link">
-                  {{ document.credits.name }}
+        <br>
+      </div>
+      <br>
+      <br>
+      <ion-modal :trigger="`open-modal-${mot}`" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+        <ion-content class="ion-padding">
+          <div class="list-title no-margin ion-padding-bottom">
+            Dictionnaire
+          </div>
+          <ion-list class="border-radius">
+            <ion-item button color="primary" lines="none" disabled>
+              Ouvrir le dictionnaire des rimes
+            </ion-item>
+          </ion-list>
+          <div class="list-title no-margin ion-padding-bottom">
+            Crédits & sources
+          </div>
+          <ion-list class="border-radius">
+            <ion-item :id="`open-copyrights-${mot}`" button color="light" lines="none" :detail-icon="copyright">
+              Ouvrir les crédits
+            </ion-item>
+            <ion-accordion-group>
+              <ion-accordion value="first">
+                <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
+                  <ion-label>Sources</ion-label>
                 </ion-item>
-                <ion-item v-if="document.synonymes.length > 0" @click="open(`http://synonymo.fr/synonyme/${mot}`)" button lines="inset" :detail-icon="link">
-                  Synonymes
-                </ion-item>
-                <ion-item v-if="document.antonymes.length > 0" @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button lines="inset" :detail-icon="link">
-                  Antonymes
-                </ion-item>
-                <ion-item v-if="Object.keys(document.conjugaisons).length > 0" @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button lines="none" :detail-icon="link">
-                  Conjugaison
-                </ion-item>
-              </div>
-            </ion-accordion>
-          </ion-accordion-group>
-        </ion-list>
-        <ion-alert
-            :trigger="`open-copyrights-${mot}`"
-            header="Crédits"
-            :sub-header="`Source du mot '${mot}'`"
-            :message="getHtmlCredits()"
-        >
-        </ion-alert>
-      </ion-content>
-    </ion-modal>
+                <div slot="content" class="accordion-content">
+                  <ion-item @click="open(document.credits.url)" button lines="inset" :detail-icon="link">
+                    {{ document.credits.name }}
+                  </ion-item>
+                  <ion-item v-if="document.synonymes.length > 0" @click="open(`http://synonymo.fr/synonyme/${mot}`)" button lines="inset" :detail-icon="link">
+                    Synonymes
+                  </ion-item>
+                  <ion-item v-if="document.antonymes.length > 0" @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button lines="inset" :detail-icon="link">
+                    Antonymes
+                  </ion-item>
+                  <ion-item v-if="Object.keys(document.conjugaisons).length > 0" @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button lines="none" :detail-icon="link">
+                    Conjugaison
+                  </ion-item>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-list>
+          <ion-alert
+              :trigger="`open-copyrights-${mot}`"
+              header="Crédits"
+              :sub-header="`Source du mot '${mot}'`"
+              :message="getHtmlCredits()"
+          >
+          </ion-alert>
+        </ion-content>
+      </ion-modal>
 
-    <br>
-  </ion-content>
+      <br>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
@@ -261,10 +260,12 @@ import {getWordDocument, wordExists} from "@/functions/dictionnary";
 import {isWordStarred, starWord} from "@/functions/favorites";
 import {Share} from "@capacitor/share";
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
 import {navigateBackFunction} from "@/functions/types/utils";
-import {loadingController, useBackButton, useIonRouter} from "@ionic/vue";
+import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
+import WordPreview from "@/components/WordPreview.vue";
+
 
 export default defineComponent({
   props: ['motRemede'],
@@ -301,18 +302,16 @@ export default defineComponent({
           name: '',
           url: ''
         },
-        conjugaisons: {} as RemedeConjugateDocument
+        conjugaisons: {} as RemedeConjugateDocument,
+        etymologies: [] as string[]
       } as RemedeWordDocument,
       notFound: false,
       stared: false,
       audioLoading: false,
-      history: [],
-      push: function () {
-        return
-      },
       navigateBack: function () {
         return false
-      } as navigateBackFunction
+      } as navigateBackFunction,
+      el: null as any
     }
   },
   mounted() {
@@ -325,15 +324,11 @@ export default defineComponent({
       return false
     }
 
-    function push(path: string) {
-      ionRouter.push(path, iosTransitionAnimation)
-    }
-
-    this.push = push
     this.navigateBack = navigateBackIfNoHistory
+    this.el = ref(this.$el)
   },
   created() {
-    this.loadData().then(() => {
+    this.loadData(null).then(() => {
       this.listenSpecialTags()
     })
   },
@@ -345,7 +340,7 @@ export default defineComponent({
       }
       const document = await getWordDocument(this.mot)
       if (document) {
-        this.document = await getWordDocument(this.mot)
+        this.document = document
       } else {
         this.notFound = true
       }
@@ -388,19 +383,24 @@ export default defineComponent({
     },
     readWord() {
       this.audioLoading = true
-      const url = 'https://iawll6of90.execute-api.us-east-1.amazonaws.com/production'
-      const data = {
-        text: this.document.ipa.replaceAll('/', ''),
-        voice: 'Mathieu'
-      }
+      const url = `https://remede-tts.camarm.fr/api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.005&text=${encodeURIComponent(this.mot)}&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true`
       fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data)
-      }).then(resp => resp.json()).then(audio => {
+        method: 'GET',
+        cache: 'no-cache'
+      }).then(resp => resp.blob()).then(audio => {
         const player = new window.Audio()
-        player.src = `data:audio/mpeg;base64,${audio}`
+        player.src = URL.createObjectURL(audio)
         player.play()
         this.audioLoading = false
+      }).catch(async e => {
+        const toast = await toastController.create({
+          header: 'Erreur',
+          message: `Impossible de lire le mot: ${e}`,
+          color: 'danger',
+          duration: 3000
+        })
+        this.audioLoading = false
+        await toast.present()
       })
     },
     changeMode(mode: string) {
@@ -418,25 +418,41 @@ export default defineComponent({
     open(url: string) {
       window.open(url)
     },
+    refreshListeners() {
+      window.dispatchEvent(new Event('reset'))
+      this.listenSpecialTags()
+    },
+    async openPreviewModal(word: string) {
+      const loading = await loadingController.create({
+        message: 'Chargement'
+      })
+      await loading.present()
+      const modal = await modalController.create({
+        component: WordPreview,
+        componentProps: {
+          mot: word
+        },
+        presentingElement: this.el,
+        handle: true
+      })
+      await loading.dismiss()
+      await modal.present()
+    },
     async listenSpecialTags() {
       document.querySelectorAll('reference').forEach(el => {
-        el.addEventListener('click', async () => {
-          const href = el.getAttribute('href')
+        const listener = async () => {
+          const href = el.getAttribute('href') || ''
           const word = href.replaceAll('https://fr.wiktionary.org/wiki/', '')
           if (await wordExists(word)) {
-            const oldWord = this.mot
-            const loader = await loadingController.create({
-              message: 'Chargement'
-            })
-            await loader.present()
-            await this.loadData(word).then(() => {
-              this.listenSpecialTags()
-              this.history.push(oldWord)
-            })
-            await loader.dismiss()
+            // TODO works once, why ?
+            await this.openPreviewModal(word)
           } else {
             window.open(href)
           }
+        }
+        el.addEventListener('click', listener)
+        window.addEventListener('reset', () => {
+          el.removeEventListener('click', listener)
         })
       })
     },
@@ -447,24 +463,12 @@ export default defineComponent({
         return meaning
       }
     },
-    async goToPreviousDefinition() {
-      const word = this.history[this.history.length - 1]
-      const loader = await loadingController.create({
-        message: 'Chargement'
-      })
-      await loader.present()
-      await this.loadData(word).then(() => {
-        this.listenSpecialTags()
-        this.history.splice(-1, 1)
-      })
-      await loader.dismiss()
-    },
     starWord
   }
 })
 </script>
 
-<style scoped>
+<style>
 .definition header {
   display: flex;
   justify-content: space-between;
@@ -555,5 +559,15 @@ ion-icon.loading#playIcon {
 
 div.accordion-content[slot='content'] ion-item {
   --background: rgba(var(--ion-color-light-rgb), 0.5);
+}
+
+.handle {
+  width: 36px;
+  height: 5px;
+  border-radius: 8px;
+  display: block;
+  margin: 6px auto auto;
+  background: var(--ion-color-step-350, #c0c0be) !important;
+  cursor: pointer;
 }
 </style>
