@@ -85,6 +85,14 @@ Running on [localhost:8000](http:/localhost:8000) !
 
 Documentation available at [localhost:8000/docs](http:/localhost:8000/docs).
 
+To use the service which permit to users to open issues (about missing words in the dictionary), create a `.github.json`, file which contains the following:
+```json
+{
+  "token": "ghp_XXXXXXXX",
+  "repo": "camarm-dev/remede",
+  "labels": ["word"]
+}
+```
 > Please [generate the sqlite database](#sqlite-database) to serve the latest version of this one through the API !
 
 ## Datas
