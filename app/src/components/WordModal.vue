@@ -148,7 +148,8 @@ import copyright from "@/assets/copyright.svg"
               </li>
             </ul>
           </div>
-
+        </div>
+        <div class="definition">
           <header v-if="document.etymologies.length > 0">
             <h4>Étymologies</h4>
             <hr>
