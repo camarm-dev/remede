@@ -28,8 +28,8 @@ import {
   bookmark,
   bookmarkOutline,
   chevronBackOutline,
-  chevronDownOutline,
-  ellipsisVertical,
+  chevronDownOutline, documentAttachOutline,
+  ellipsisVertical, fingerPrintOutline,
   link,
   play,
   shareOutline
@@ -231,12 +231,26 @@ import copyright from "@/assets/copyright.svg"
             </ion-item>
           </ion-list>
           <div class="list-title no-margin ion-padding-bottom">
-            Crédits & sources
+            Crédits
           </div>
           <ion-list class="border-radius">
-            <ion-item :id="`open-copyrights-${mot}`" button color="light" lines="none" :detail-icon="copyright">
-              Ouvrir les crédits
+            <ion-item color="light" button href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">
+              <ion-icon :icon="documentAttachOutline" slot="start" color="medium"/>
+              <ion-label>
+                Licence
+              </ion-label>
             </ion-item>
+            <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
+              <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
+              <ion-label>
+                Données Remède
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <div class="list-title no-margin ion-padding-bottom">
+            Sources
+          </div>
+          <ion-list class="border-radius">
             <ion-accordion-group>
               <ion-accordion value="first">
                 <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
@@ -259,13 +273,6 @@ import copyright from "@/assets/copyright.svg"
               </ion-accordion>
             </ion-accordion-group>
           </ion-list>
-          <ion-alert
-              :trigger="`open-copyrights-${mot}`"
-              header="Crédits"
-              :sub-header="`Source du mot '${mot}'`"
-              :message="getHtmlCredits()"
-          >
-          </ion-alert>
         </ion-content>
       </ion-modal>
 
@@ -436,9 +443,6 @@ export default defineComponent({
     changeTemps(temps: string) {
       this.currentTemps = temps
       this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
-    },
-    getHtmlCredits() {
-      return `Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède" target="_blank">de Remède</a>.`
     },
     open(url: string) {
       window.open(url)
