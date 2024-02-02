@@ -34,7 +34,11 @@ import {
   play,
   shareOutline
 } from "ionicons/icons";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Pagination } from 'swiper/modules';
 import example from "@/assets/example.svg"
+import quoteOpen from "@/assets/openQuote.svg"
+import quoteClose from "@/assets/closeQuote.svg"
 import copyright from "@/assets/copyright.svg"
 </script>
 
@@ -95,9 +99,38 @@ import copyright from "@/assets/copyright.svg"
       <div v-if="tab == 'def'" class="tab-content">
         <div class="definition" :key="`def-genre-${document.definitions.indexOf(def).toString()}`" v-for="def in document.definitions">
           <header>
-            <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
-            <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
-            <h4 v-else>{{ def.genre }}</h4>
+            <div class="header-title">
+              <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
+              <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
+              <h4 v-else>{{ def.genre }}</h4>
+              <ion-icon v-if="def.exemples.length > 0" :id="`def-${mot}-examples-${document.definitions.indexOf(def).toString()}`" :icon="example" color="medium"/>
+            </div>
+            <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="`def-${mot}-examples-${document.definitions.indexOf(def).toString()}`">
+              <div class="ion-padding examples">
+                <h5>
+                  Exemples
+                  <span class="ion-color-medium">{{ mot }}</span>,
+                  <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
+                  <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
+                  <span v-else>{{ def.genre }}</span>
+                </h5>
+                <swiper
+                    :pagination="{ clickable: true, enabled: true }"
+                    :modules="[Pagination]"
+                >
+                  <swiper-slide v-for="exemple in def.exemples" :key="exemple.contenu">
+                    <div class="example-container">
+                      <ion-icon class="opening-quote" :icon="quoteOpen"/>
+                      <div>
+                        <i class="example-content" v-html="exemple.contenu"/>
+                        <ion-icon class="closing-quote" :icon="quoteClose" color="medium"/>
+                      </div>
+                      <span class="sources" v-html="exemple.sources"/>
+                    </div>
+                  </swiper-slide>
+                </swiper>
+              </div>
+            </ion-popover>
             <hr>
           </header>
           <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
@@ -112,19 +145,6 @@ import copyright from "@/assets/copyright.svg"
                 <ul v-else class="ion-padding-start">
                   <li :key="`def-submeaning-${meaning.indexOf(subMeaning)}`" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
                 </ul>
-                <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
-                <ion-popover v-if="def.exemples.length > 0" :trigger="meaning">
-                  <div class="ion-padding examples">
-                    <h5>
-                      Exemples
-                      <span class="ion-color-medium">{{ mot }}</span>,
-                      <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
-                      <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
-                      <span v-else>{{ def.genre }}</span>
-                    </h5>
-                    <p v-for="exemple in def.exemples" :key="exemple.contenu"><i>{{ exemple.contenu }}</i> <span class="sources" v-html="exemple.sources"/><br></p>
-                  </div>
-                </ion-popover>
               </li>
             </ul>
           </div>
@@ -265,6 +285,11 @@ import {navigateBackFunction} from "@/functions/types/utils";
 import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
 import WordPreview from "@/components/WordPreview.vue";
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import '@ionic/vue/css/ionic-swiper.css';
+
 
 
 export default defineComponent({
@@ -477,7 +502,18 @@ export default defineComponent({
 
 .definition header h4 {
   min-width: max-content;
+  margin: 0 .3em 0 0;
+}
+
+.header-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 1em 0 0;
+}
+
+.header-title ion-icon {
+  cursor: pointer;
 }
 
 .definition header hr {
@@ -501,7 +537,11 @@ export default defineComponent({
 }
 
 .examples .sources {
+  margin-top: 1em;
   font-size: .8em;
+  margin-left: 1em;
+  color: var(--ion-color-medium);
+  text-align: end;
 }
 
 .credits {
@@ -569,5 +609,49 @@ div.accordion-content[slot='content'] ion-item {
   margin: 6px auto auto;
   background: var(--ion-color-step-350, #c0c0be) !important;
   cursor: pointer;
+}
+
+.swiper-slide {
+  text-align: left;
+}
+
+ion-popover.example {
+  --width: 90%;
+}
+
+.examples {
+  padding: 1em 1.2em !important;
+  border-radius: 12px;
+  height: max-content;
+}
+
+.examples h5 {
+  margin-top: .5em !important;
+  margin-bottom: .7em !important;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container .example-content {
+  margin-bottom: .7em;
+  margin-left: .4em;
+  text-align: left;
+}
+
+.example-container .example-content * {
+  text-align: left;
+}
+
+.opening-quote {
+  margin-bottom: .3em;
+}
+
+.closing-quote {
+  position: relative;
+  padding-left: 1em;
+  top: .5em;
 }
 </style>
