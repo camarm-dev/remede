@@ -148,6 +148,16 @@ import copyright from "@/assets/copyright.svg"
               </li>
             </ul>
           </div>
+
+          <header v-if="document.etymologies.length > 0">
+            <h4>Étymologies</h4>
+            <hr>
+          </header>
+          <div class="content">
+            <ul>
+              <li v-for="content in document.etymologies" :key="content" v-html="content"/>
+            </ul>
+          </div>
         </div>
       </div>
       <div v-if="tab == 'syn'" class="tab-content">
