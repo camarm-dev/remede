@@ -21,6 +21,14 @@
           </ion-nav-link>
         </ion-list>
       </ion-toolbar>
+      <ion-toolbar v-if="results.length == 0 && query !== ''">
+        <ion-item color="light" class="border-radius" lines="none" button @click="report()">
+          <ion-label>
+            <p>Demander à ajouter un mot</p>
+            <h2>Reporter "{{ query }}"</h2>
+          </ion-label>
+        </ion-item>
+      </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
@@ -71,7 +79,7 @@ import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
 <script lang="ts">
 import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary";
 import {useRouter} from "vue-router";
-import {toastController} from "@ionic/vue";
+import {loadingController, toastController} from "@ionic/vue";
 
 export default {
   data() {
@@ -132,6 +140,21 @@ export default {
     async loadTodayWord() {
       this.todayWord = await getTodayWord()
       this.todayWordDisabled = false
+    },
+    async report() {
+      const loader = await loadingController.create({
+        message: 'Chargement'
+      })
+      await loader.present()
+      await fetch(`https://api-remede.camarm.fr/ask-new-word/${this.query}`)
+      const toast = await toastController.create({
+        header: 'Mot reporté',
+        message: `Vous avez bien demander à ajouter le mot "${this.query}"`,
+        duration: 3000
+      })
+      this.query = ''
+      await loader.dismiss()
+      await toast.present()
     }
   }
 }
