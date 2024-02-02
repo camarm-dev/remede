@@ -287,7 +287,7 @@ import { iosTransitionAnimation } from '@ionic/core';
 import WordPreview from "@/components/WordPreview.vue";
 
 import 'swiper/css';
-import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import '@ionic/vue/css/ionic-swiper.css';
 
 
@@ -609,6 +609,11 @@ div.accordion-content[slot='content'] ion-item {
   margin: 6px auto auto;
   background: var(--ion-color-step-350, #c0c0be) !important;
   cursor: pointer;
+}
+
+.swiper {
+  --bullet-background: var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
+  --bullet-background-active: var(--ion-color-medium);
 }
 
 .swiper-slide {
