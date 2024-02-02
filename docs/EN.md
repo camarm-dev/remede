@@ -90,7 +90,8 @@ To use the service which permit to users to open issues (about missing words in 
 {
   "token": "ghp_XXXXXXXX",
   "repo": "camarm-dev/remede",
-  "labels": ["word"]
+  "labels": ["word"],
+  "assignees": ["camarm-dev"]
 }
 ```
 > Please [generate the sqlite database](#sqlite-database) to serve the latest version of this one through the API !

@@ -88,7 +88,8 @@ Pour faire fonctionner le service qui permet d'ouvrir des issues, veuillez crée
 {
   "token": "ghp_XXXXXXXX",
   "repo": "camarm-dev/remede",
-  "labels": ["word"]
+  "labels": ["word"],
+  "assignees": ["camarm-dev"]
 }
 ```
 
