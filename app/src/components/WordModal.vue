@@ -37,7 +37,6 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination } from 'swiper/modules';
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
-import quoteClose from "@/assets/closeQuote.svg"
 </script>
 
 <template>
@@ -121,7 +120,6 @@ import quoteClose from "@/assets/closeQuote.svg"
                       <ion-icon class="opening-quote" :icon="quoteOpen"/>
                       <div>
                         <i class="example-content" v-html="exemple.contenu"/>
-                        <ion-icon class="closing-quote" :icon="quoteClose" color="medium"/>
                       </div>
                       <span class="sources" v-html="exemple.sources"/>
                     </div>
@@ -651,6 +649,7 @@ ion-popover.example {
 .example-container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 2em;
 }
 
 .example-container .example-content {
