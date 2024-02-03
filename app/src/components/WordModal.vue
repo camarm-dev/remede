@@ -19,7 +19,6 @@ import {
   IonModal,
   IonAccordion,
   IonAccordionGroup,
-  IonAlert,
   IonPopover,
   IonPage,
   IonSpinner
@@ -39,7 +38,6 @@ import { Pagination } from 'swiper/modules';
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
 import quoteClose from "@/assets/closeQuote.svg"
-import copyright from "@/assets/copyright.svg"
 </script>
 
 <template>
