@@ -62,6 +62,7 @@ interface RemedeDictionaryIndex {
     [key: string]: RemedeDictionary
 }
 
+type RemedeRhymeRow = string[] & number[]
 
 export type {
     RemedeDictionary,
@@ -69,5 +70,6 @@ export type {
     RemedeWordDocument,
     RemedeConjugateDocument,
     RemedeSheet,
-    RemedeWordDefinition
+    RemedeWordDefinition,
+    RemedeRhymeRow
 }
