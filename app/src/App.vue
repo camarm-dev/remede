@@ -33,6 +33,12 @@
                   <ion-label>Fiches</ion-label>
                 </ion-item>
               </ion-menu-toggle>
+              <ion-menu-toggle :auto-hide="false">
+                <ion-item @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="path === '/rimes' ? 'selected': ''">
+                  <ion-icon aria-hidden="true" slot="start" :icon="swapHorizontalOutline"></ion-icon>
+                  <ion-label>Rimes</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
             </div>
             <div class="end">
               <ion-menu-toggle :auto-hide="false">
@@ -74,7 +80,7 @@ import {
 import {
   bookOutline,
   informationCircleOutline,
-  cogOutline, documentOutline, bookmarkOutline, medicalOutline
+  cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
 } from 'ionicons/icons';
 
 </script>
