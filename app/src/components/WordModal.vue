@@ -665,6 +665,17 @@ ion-popover.example {
   text-align: left;
 }
 
+.example-container b, .example-container strong {
+  display: inline-block;
+  transition: .5s ease-in-out;
+  font-weight: normal;
+  margin-top: 0;
+  padding: 0 5px;
+  margin-bottom: 0;
+  background: linear-gradient(to right, rgba(255, 235, 9, 0.5), rgba(255, 235, 9, 0.4), rgba(255, 235, 9, 0.5));
+  border-radius: 3px;
+}
+
 .opening-quote {
   margin-bottom: .3em;
 }
