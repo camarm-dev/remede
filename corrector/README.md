@@ -30,5 +30,5 @@ docker run -d \
 
 ## Références
 
-- Schéma de l'infrastructure [`INFRASTRUCTURE.md`](../INFRASCTRUCTURE.md)
+- Schéma de l'infrastructure [`INFRASTRUCTURE.md`](../INFRASTRUCTURE.md)
 - Crédits des données Remède ; [documentation](../docs/FR.md#données-remède)

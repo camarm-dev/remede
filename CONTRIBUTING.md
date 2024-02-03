@@ -47,7 +47,7 @@ First, the folders;
 
 ### Lifecycle Schemas
 
-_These schemas are outdated and not really readable. Visit [`INFRASTRUCTURE.md`](INFRASCTRUCTURE.md) for more._
+_These schemas are outdated and not really readable. Visit [`INFRASTRUCTURE.md`](INFRASTRUCTURE.md) for more._
 
 In this section you will understand Remède Lifecycle with different schemas. 
 
