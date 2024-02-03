@@ -29,7 +29,7 @@
       </div>
       <ion-content v-else>
         <ul>
-          <li v-for="r in rhymes">{{r}}</li>
+          <li :key="r" v-for="r in rhymes">{{r}}</li>
         </ul>
       </ion-content>
     </ion-content>
@@ -45,15 +45,9 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonChip,
-  IonBadge, IonNavLink, IonProgressBar, IonSearchbar
+  IonProgressBar,
+  IonSearchbar
 } from '@ionic/vue';
-import FicheModal from "@/components/FicheModal.vue";
-import {close, filterCircleOutline} from "ionicons/icons";
 </script>
 
 <script lang="ts">
