@@ -49,6 +49,9 @@ def get_document(word: str):
 def safe_get_document(word: str):
     try:
         return get_document(word), True
+    except KeyboardInterrupt:
+        print("Exiting...")
+        exit()
     except:
         return [], False
 
@@ -60,6 +63,10 @@ def iterate_words(word_list: list):
         result, success = safe_get_document(word)
         if success:
             for row in result:
+                word1, word2, _ = row
+                existing = cursor.execute('SELECT * FROM dictionary WHERE word2 = ? AND word1 = ?', (word2, word1)).fetchall()
+                if len(existing) > 0:
+                    continue
                 cursor.execute("INSERT INTO dictionary VALUES (?,?,?)", row)
         else:
             errored += 1
