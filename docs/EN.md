@@ -18,6 +18,7 @@ Welcome on the documentation page of Remède ! Navigate through the contents bel
     - [Remede document schema](#remède-document-schema)
     - [Sqlite Database](#sqlite-database)
     - [Cheatsheets](#cheatsheets)
+    - [`Rhymes`](../rimes/README.md#english)
 
 ## Development
 

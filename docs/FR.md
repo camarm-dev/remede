@@ -18,6 +18,7 @@ Bienvenue sur la page de documentation de Remède. Naviguez à travers les conte
   - [Schéma de données](#schéma-de-document-remède) 
   - [Base Sqlite](#base-sqlite) 
   - [Fiches de français](#fiches-de-francais) 
+  - [`Rimes`](../rimes/README.md)
 
 ## Dévelopment
 
