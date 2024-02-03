@@ -102,7 +102,12 @@ if __name__ == '__main__':
 
     print('Génération de la base de rimes...')
     setup()
-    iterate_words(words)
+    try:
+        iterate_words(words)
+    except:
+        print("Exiting...")
+        post_setup()
+        exit()
     post_setup()
 
     after = datetime.datetime.now()
