@@ -51,6 +51,7 @@ def safe_get_document(word: str):
         return get_document(word), True
     except KeyboardInterrupt:
         print("Exiting...")
+        post_setup()
         exit()
     except:
         return [], False
