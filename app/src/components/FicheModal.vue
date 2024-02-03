@@ -145,7 +145,7 @@ export default defineComponent({
   }
 })
 </script>
-<style>
+<style scoped>
 .alert .alert-message {
   text-align: justify;
   color: var(--ion-color-medium);
