@@ -1,3 +1,2 @@
 data/remede.db filter=lfs diff=lfs merge=lfs -text
 data/remede-less.db filter=lfs diff=lfs merge=lfs -text
-builds/1.0.0/remede-1.0.0-setup.exe filter=lfs diff=lfs merge=lfs -text
