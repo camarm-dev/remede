@@ -7,6 +7,7 @@ from hashlib import md5
 
 import frontmatter
 import markdown
+import requests
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -85,6 +86,33 @@ def get_sheets():
     return sheets
 
 
+def get_github_config():
+    with open('.github.json') as file:
+        return json.loads(file.read())
+
+
+def register_new_word_idea(word: str):
+    try:
+        config = get_github_config()
+        repo = config['repo']
+        token = config['token']
+        headers = {
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {token}",
+            "X-GitHub-Api-Version": "2022-11-28"
+        }
+        data = {
+            "title": f"📘 [Anonymous:Word] Add word \"{word}\"",
+            "body": f"Word \"{word}\" was searched on Remède but no definition was found so an anonymous user reported it !",
+            "labels": config['labels'],
+            "assignees": config['assignees']
+        }
+        response = requests.post(f"https://api.github.com/repos/{repo}/issues", headers=headers, json=data)
+        return response.status_code == 201
+    except:
+        return False
+
+
 @app.get('/')
 def root():
     """
@@ -145,6 +173,21 @@ def get_autocomplete(query: str):
     json_object = get_remede_json(get_first_letter(query))
     keys: list = json_object.keys()
     return list(filter(lambda word: word.startswith(query), keys))[0:6]
+
+
+@app.get('/ask-new-word/{query}')
+def send_new_word(query: str):
+    """
+    Enregistre le word `query` comme mot à rajouter au dictionnaire !
+    """
+    success = register_new_word_idea(query)
+    if success:
+        return {
+            "message": "Successfully added word to words to add."
+        }
+    return  {
+        "message": "Failed to add word to list..."
+    }
 
 
 @app.get('/sheets')

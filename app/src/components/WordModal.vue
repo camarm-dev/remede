@@ -19,7 +19,6 @@ import {
   IonModal,
   IonAccordion,
   IonAccordionGroup,
-  IonAlert,
   IonPopover,
   IonPage,
   IonSpinner
@@ -28,14 +27,16 @@ import {
   bookmark,
   bookmarkOutline,
   chevronBackOutline,
-  chevronDownOutline,
-  ellipsisVertical,
+  chevronDownOutline, documentAttachOutline,
+  ellipsisVertical, fingerPrintOutline,
   link,
   play,
   shareOutline
 } from "ionicons/icons";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Pagination } from 'swiper/modules';
 import example from "@/assets/example.svg"
-import copyright from "@/assets/copyright.svg"
+import quoteOpen from "@/assets/openQuote.svg"
 </script>
 
 <template>
@@ -95,9 +96,37 @@ import copyright from "@/assets/copyright.svg"
       <div v-if="tab == 'def'" class="tab-content">
         <div class="definition" :key="`def-genre-${document.definitions.indexOf(def).toString()}`" v-for="def in document.definitions">
           <header>
-            <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
-            <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
-            <h4 v-else>{{ def.genre }}</h4>
+            <div class="header-title">
+              <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
+              <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
+              <h4 v-else>{{ def.genre }}</h4>
+              <ion-icon v-if="def.exemples.length > 0" :id="`def-${mot}-examples-${document.definitions.indexOf(def).toString()}`" :icon="example" color="medium"/>
+            </div>
+            <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="`def-${mot}-examples-${document.definitions.indexOf(def).toString()}`">
+              <div class="ion-padding examples">
+                <h5>
+                  Exemples
+                  <span class="ion-color-medium">{{ mot }}</span>,
+                  <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
+                  <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
+                  <span v-else>{{ def.genre }}</span>
+                </h5>
+                <swiper
+                    :pagination="{ clickable: true, enabled: true }"
+                    :modules="[Pagination]"
+                >
+                  <swiper-slide v-for="exemple in def.exemples" :key="exemple.contenu">
+                    <div class="example-container">
+                      <ion-icon class="opening-quote" :icon="quoteOpen"/>
+                      <div>
+                        <i class="example-content" v-html="exemple.contenu"/>
+                      </div>
+                      <span class="sources" v-html="exemple.sources"/>
+                    </div>
+                  </swiper-slide>
+                </swiper>
+              </div>
+            </ion-popover>
             <hr>
           </header>
           <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
@@ -112,20 +141,18 @@ import copyright from "@/assets/copyright.svg"
                 <ul v-else class="ion-padding-start">
                   <li :key="`def-submeaning-${meaning.indexOf(subMeaning)}`" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
                 </ul>
-                <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
-                <ion-popover v-if="def.exemples.length > 0" :trigger="meaning">
-                  <div class="ion-padding examples">
-                    <h5>
-                      Exemples
-                      <span class="ion-color-medium">{{ mot }}</span>,
-                      <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
-                      <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
-                      <span v-else>{{ def.genre }}</span>
-                    </h5>
-                    <p v-for="exemple in def.exemples" :key="exemple.contenu"><i>{{ exemple.contenu }}</i> <span class="sources" v-html="exemple.sources"/><br></p>
-                  </div>
-                </ion-popover>
               </li>
+            </ul>
+          </div>
+        </div>
+        <div class="definition">
+          <header v-if="document.etymologies.length > 0">
+            <h4>Étymologies</h4>
+            <hr>
+          </header>
+          <div class="content">
+            <ul>
+              <li v-for="content in document.etymologies" :key="content" v-html="content"/>
             </ul>
           </div>
         </div>
@@ -211,12 +238,26 @@ import copyright from "@/assets/copyright.svg"
             </ion-item>
           </ion-list>
           <div class="list-title no-margin ion-padding-bottom">
-            Crédits & sources
+            Crédits
           </div>
           <ion-list class="border-radius">
-            <ion-item :id="`open-copyrights-${mot}`" button color="light" lines="none" :detail-icon="copyright">
-              Ouvrir les crédits
+            <ion-item color="light" button href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">
+              <ion-icon :icon="documentAttachOutline" slot="start" color="medium"/>
+              <ion-label>
+                Licence
+              </ion-label>
             </ion-item>
+            <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
+              <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
+              <ion-label>
+                Données Remède
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <div class="list-title no-margin ion-padding-bottom">
+            Sources
+          </div>
+          <ion-list class="border-radius">
             <ion-accordion-group>
               <ion-accordion value="first">
                 <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
@@ -239,13 +280,6 @@ import copyright from "@/assets/copyright.svg"
               </ion-accordion>
             </ion-accordion-group>
           </ion-list>
-          <ion-alert
-              :trigger="`open-copyrights-${mot}`"
-              header="Crédits"
-              :sub-header="`Source du mot '${mot}'`"
-              :message="getHtmlCredits()"
-          >
-          </ion-alert>
         </ion-content>
       </ion-modal>
 
@@ -265,6 +299,11 @@ import {navigateBackFunction} from "@/functions/types/utils";
 import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue";
 import { iosTransitionAnimation } from '@ionic/core';
 import WordPreview from "@/components/WordPreview.vue";
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import '@ionic/vue/css/ionic-swiper.css';
+
 
 
 export default defineComponent({
@@ -412,9 +451,6 @@ export default defineComponent({
       this.currentTemps = temps
       this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
     },
-    getHtmlCredits() {
-      return `Ce mot provient de la base Remède. Il suit les conditions et schémas <a href="https://remede.camarm.fr/FR#données-remède" target="_blank">de Remède</a>.`
-    },
     open(url: string) {
       window.open(url)
     },
@@ -477,7 +513,18 @@ export default defineComponent({
 
 .definition header h4 {
   min-width: max-content;
+  margin: 0 .3em 0 0;
+}
+
+.header-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 1em 0 0;
+}
+
+.header-title ion-icon {
+  cursor: pointer;
 }
 
 .definition header hr {
@@ -501,7 +548,11 @@ export default defineComponent({
 }
 
 .examples .sources {
+  margin-top: 1em;
   font-size: .8em;
+  margin-left: 1em;
+  color: var(--ion-color-medium);
+  text-align: end;
 }
 
 .credits {
@@ -569,5 +620,66 @@ div.accordion-content[slot='content'] ion-item {
   margin: 6px auto auto;
   background: var(--ion-color-step-350, #c0c0be) !important;
   cursor: pointer;
+}
+
+.swiper {
+  --bullet-background: var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
+  --bullet-background-active: var(--ion-color-medium);
+}
+
+.swiper-slide {
+  text-align: left;
+}
+
+ion-popover.example {
+  --width: 90%;
+}
+
+.examples {
+  padding: 1em 1.2em !important;
+  border-radius: 12px;
+  height: max-content;
+}
+
+.examples h5 {
+  margin-top: .5em !important;
+  margin-bottom: .7em !important;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2em;
+}
+
+.example-container .example-content {
+  margin-bottom: .7em;
+  margin-left: .4em;
+  text-align: left;
+}
+
+.example-container .example-content * {
+  text-align: left;
+}
+
+.example-container b, .example-container strong {
+  display: inline-block;
+  transition: .5s ease-in-out;
+  font-weight: normal;
+  margin-top: 0;
+  padding: 0 5px;
+  margin-bottom: 0;
+  background: linear-gradient(to right, rgba(255, 235, 9, 0.5), rgba(255, 235, 9, 0.4), rgba(255, 235, 9, 0.5));
+  border-radius: 3px;
+}
+
+.opening-quote {
+  margin-bottom: .3em;
+}
+
+.closing-quote {
+  position: relative;
+  padding-left: 1em;
+  top: .5em;
 }
 </style>

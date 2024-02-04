@@ -29,60 +29,57 @@
             </ion-button>
           </ion-buttons>
         </ion-item>
-        <ion-item color="light" class="no-border" v-if="locked">
-          <ion-segment @ionChange="tab = $event.detail.value" :value="tab">
-            <ion-segment-button value="explain">Explications</ion-segment-button>
-            <ion-segment-button value="correction">Corrigé</ion-segment-button>
-          </ion-segment>
-        </ion-item>
         <ion-item color="light" class="no-border">
-          <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="360" counter :value="content"
+          <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="1000" counter :value="content"
                         @ionInput="content = $event.detail.value"
                         placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
-          <div v-else-if="tab == 'correction'" class="content">
-            {{ corrected }}
-          </div>
           <div v-else class="content ion-padding-bottom">
             <span :key="segment" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
-                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.type}`">{{ segment.correction.mistakeText }}</ion-text>
+                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id}`">{{ segment.text }}</ion-text>
                 <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
                   <ion-content class="ion-padding">
-                    <ion-label v-if="segment.correction.shortDescription">
-                      <h2>{{ segment.correction.shortDescription }}</h2>
-                      <p v-html="segment.correction.longDescription.replaceAll('#!', `<a href=/dictionnaire/${segment.correction.mistakeText}>`).replaceAll('#$', '</a>')"></p>
+                    <ion-label v-if="segment.correction.shortMessage != ''">
+                      <h2>{{ segment.correction.shortMessage  }}</h2>
+                      <p>{{ segment.correction.message }}</p>
+                    </ion-label>
+                    <ion-label v-else>
+                      <h3>{{ segment.correction.message }}</h3>
                     </ion-label>
                     <br>
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
                       <br>
-                      <ion-text @click="setSegmentAsText(segment, suggested.text)" color="primary" :key="suggested" v-for="suggested in segment.correction.suggestions">{{ suggested.text }}<br></ion-text>
-                      <ion-text  v-if="!segment.correction.suggestions" color="primary" @click="setSegmentAsText(segment, segment.correction.replacementText)">{{ segment.correction.replacementText }}<br></ion-text>
+                      <ion-text @click="setSegmentAsText(segment, suggested.value)" color="primary" :key="suggested" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-text>
                     </ion-label>
                     <ion-label>
-                      <ion-text @click="setSegmentAsText(segment, segment.correction.mistakeText)" color="primary">Ne pas remplacer "{{ segment.correction.mistakeText }}"</ion-text>
+                      <ion-text @click="setSegmentAsText(segment, segment.text)" color="primary">Ne pas remplacer "{{ segment.text }}"</ion-text>
                     </ion-label>
                   </ion-content>
                 </ion-popover>
               </span>
-              {{ segment.text }}
+              <span v-else>
+                {{ segment.text }}
+              </span>
             </span>
           </div>
         </ion-item>
         <ion-item v-if="locked" class="no-border" color="light">
           <ion-buttons slot="end">
-            <ion-button @click="copy(tab == 'correction' ? corrected: getPartiallyCorrectedContent())" color="primary">
+            <ion-button @click="copy(getPartiallyCorrectedContent())" color="primary">
               Copier&nbsp;<ion-icon :icon="copyOutline"/>
             </ion-button>
-            <ion-button color="success" @click="content = tab == 'correction' ? corrected: getPartiallyCorrectedContent(); locked = false">
+            <ion-button color="success" @click="content = getPartiallyCorrectedContent(); locked = false">
               Réutiliser&nbsp;<ion-icon :icon="chevronForwardOutline"/>
             </ion-button>
           </ion-buttons>
         </ion-item>
       </ion-list>
-      <ion-note class="ion-padding">
-        Correction grâce à <a href="https://reverso.net" target="_blank">Reverso</a>.
-      </ion-note>
+      <div class="ion-padding">
+        <ion-note>
+          Correction grâce à <a href="https://languagetool.org" target="_blank">Languagetool</a>, <i>hébergé par Remède</i>.
+        </ion-note>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -98,8 +95,6 @@ import {
   IonToolbar,
   IonTextarea,
   IonText,
-  IonSegment,
-  IonSegmentButton,
   IonButton,
   IonItem,
   IonLabel,
@@ -112,66 +107,62 @@ import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionic
 
 <script lang="ts">
 import { Clipboard } from '@capacitor/clipboard';
-import {ExplainSegment, ReversoCorrection} from "@/functions/types/reverso";
+import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool";
 
 export default {
   data() {
     return {
       content: "",
-      corrections: [] as ReversoCorrection[],
-      corrected: "",
+      corrections: [] as LanguageToolCorrection[],
       locked: false,
-      tab: "explain",
       explainSegments: [] as ExplainSegment[]
     }
   },
   methods: {
+    saveWordToDictionary() {
+      // TODO, dict remede
+    },
+    deleteWordFromDictionary() {
+      // TODO, dict remede
+    },
+    getWordDictionary() {
+      // TODO, dict remede
+    },
     correct() {
-      const url = 'https://orthographe.reverso.net/api/v1/Spelling/'
-      const data = {
-        "englishDialect": "indifferent",
-        "autoReplace": true,
-        "getCorrectionDetails": true,
-        "interfaceLanguage": "fr",
-        "locale": "",
-        "language": "fra",
-        "text": this.content,
-        "originalText": "",
-        "spellingFeedbackOptions": {"insertFeedback": true, "userLoggedOn": false},
-        "origin": "interactive",
-        "isHtml": false,
-        "IsUserPremium": false
-      }
+      const url = 'https://remede-corrector.camarm.fr/v2/check'
+      const body = new FormData()
+      body.set('text', this.content)
+      body.set('language', 'fr')
+      body.set('motherTongue', 'fr')
 
       fetch(url, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: new URLSearchParams(body),
         headers: {
-          'Content-Type': 'application/*+json'
+          'Content-Type': 'multipart/form-data'
         }
       }).then(resp => resp.json()).then(response => {
-        this.corrections = response.corrections.concat(response.autoReplacements)
-        this.corrected = response.text
+        this.corrections = response.matches
         const originalText = this.content
         let lastIndex = 0
         const segmentedText = [] as ExplainSegment[]
         for (const correction of this.corrections) {
-          const startIndex = correction.startIndex
-          const endIndex = correction.endIndex
+          const startIndex = correction.offset
+          const endIndex = correction.offset + correction.length
           segmentedText.push({
-            correction: false as any as ReversoCorrection,
-            text: originalText.slice(lastIndex == 0 ? lastIndex: lastIndex + 1, startIndex)
+            correction: false as any as LanguageToolCorrection,
+            text: originalText.slice(lastIndex, startIndex)
           })
           segmentedText.push({
             correction: correction,
-            text: ''
+            text: correction.context.text.slice(correction.context.offset, correction.context.offset + correction.context.length)
           })
           lastIndex = endIndex
         }
 
         segmentedText.push({
-          correction: false as any as ReversoCorrection,
-          text: originalText.slice(lastIndex + 1, originalText.length)
+          correction: false as any as LanguageToolCorrection,
+          text: originalText.slice(lastIndex, originalText.length)
         })
 
         this.explainSegments = segmentedText
@@ -205,11 +196,11 @@ export default {
   text-decoration: underline wavy var(--ion-color-danger);
 }
 
-.error.Grammar {
+.error.CAT_GRAMMAIRE {
   text-decoration: underline wavy var(--ion-color-warning);
 }
 
-.error.Punctuation {
+.error.CAT_PONCTUATION {
   text-decoration: underline wavy var(--ion-color-success-shade);
 }
 

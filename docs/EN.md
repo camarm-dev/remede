@@ -18,6 +18,7 @@ Welcome on the documentation page of Remède ! Navigate through the contents bel
     - [Remede document schema](#remède-document-schema)
     - [Sqlite Database](#sqlite-database)
     - [Cheatsheets](#cheatsheets)
+    - [`Rhymes`](../rimes/README.md#english)
 
 ## Development
 
@@ -85,6 +86,15 @@ Running on [localhost:8000](http:/localhost:8000) !
 
 Documentation available at [localhost:8000/docs](http:/localhost:8000/docs).
 
+To use the service which permit to users to open issues (about missing words in the dictionary), create a `.github.json`, file which contains the following:
+```json
+{
+  "token": "ghp_XXXXXXXX",
+  "repo": "camarm-dev/remede",
+  "labels": ["word"],
+  "assignees": ["camarm-dev"]
+}
+```
 > Please [generate the sqlite database](#sqlite-database) to serve the latest version of this one through the API !
 
 ## Datas

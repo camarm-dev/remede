@@ -12,6 +12,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('../views/FichePage.vue')
   },
   {
+    path: '/rimes/:mot',
+    component: () => import ('../views/RimeQueryPage.vue')
+  },
+  {
     path: '/',
     component: Outlet,
     children: [
@@ -34,6 +38,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'fiches',
         component: () => import ('../views/FichesPage.vue')
+      },
+      {
+        path: 'rimes',
+        component: () => import ('../views/RimesPage.vue')
       },
       {
         path: 'parametres',

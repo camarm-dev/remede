@@ -47,7 +47,7 @@ First, the folders;
 
 ### Lifecycle Schemas
 
-_These schemas are outdated and not really readable. Visit [`INFRASTRUCTURE.md`](INFRASCTRUCTURE.md) for more._
+_These schemas are outdated and not really readable. Visit [`INFRASTRUCTURE.md`](INFRASTRUCTURE.md) for more._
 
 In this section you will understand Remède Lifecycle with different schemas. 
 
@@ -126,10 +126,12 @@ sequenceDiagram
 Remède fetches words from the Wictionary but sometimes, words are not in our list so, you can add custom words...
 
 1. Add it to `data/IPA.txt`
-   1.  At the end of the file, add your word with the following schema `word\t/phonetic/`
+   1.  In alphabetic order, add your word with the following schema `word\t/phonetic/` (`\t` represents a <kbd>TAB</kbd> char, not spaces)
 2. Add it to `data/custom_words.json`, if necessary
    1. Check on the [french Wictionary](https://fr.wiktionary.org) if your word exist.
    2. If it does not exist, fill his document manually in the `data/custom_words.json`. Don't forget to quote your sources in the `credits` field.
+3. Before making a PR, rebuild ressources (so your word will be added newt time database is built)
+   1. Run `python3 scripts/pre_generate_ressources.py`, if it outputs an error, check the previous steps...
 
 ### Parsing
 

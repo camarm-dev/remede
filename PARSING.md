@@ -6,6 +6,7 @@ Générer les données Remède consiste à générer **les fichiers JSON**, pour
 > La base `data/remede-less.db` est une ancienne version, qui ne contient pas les champs `exemples`, `etymologies` et `rimes`. Elle est utilisée comme base **light**, pour les appareils avec peu de place.
 
 **Organisation d'une génération de données:**
+0. `pre_generate_ressources.py` génère les ressources nécessaires (`mots.txt` et `ipa.json`, depuis `IPA.txt`)
 1. `parse.py` génère un fichier JSON par lettre (plusieurs heures)
 2. `generate_sqlite.py` génère la base Sqlite, depuis les fichiers JSON (plusieurs dizaines de minutes)
 

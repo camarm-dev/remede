@@ -18,6 +18,7 @@ Bienvenue sur la page de documentation de Remède. Naviguez à travers les conte
   - [Schéma de données](#schéma-de-document-remède) 
   - [Base Sqlite](#base-sqlite) 
   - [Fiches de français](#fiches-de-francais) 
+  - [`Rimes`](../rimes/README.md)
 
 ## Dévelopment
 
@@ -75,9 +76,6 @@ pip install fastapi uvicorn starlette python-frontmatter markdown
 git lfs pull
 ```
 
-**Spécial**: Pour l'API ML
-- Installer le service de TTS (non-implémenté)
-
 - Lancer le serveur
 ```shell
 python3 server.py
@@ -85,6 +83,16 @@ python3 server.py
 En ligne sur [localhost:8000](http:/localhost:8000) !
 
 Documentation sur [localhost:8000/docs](http:/localhost:8000/docs).
+
+Pour faire fonctionner le service qui permet d'ouvrir des issues, veuillez créer un fichier `.github.json`, qui contient:
+```json
+{
+  "token": "ghp_XXXXXXXX",
+  "repo": "camarm-dev/remede",
+  "labels": ["word"],
+  "assignees": ["camarm-dev"]
+}
+```
 
 > Veuillez [générer la base sqlite](#base-sqlite) pour fournir la dernière version de celle-ci !
 
