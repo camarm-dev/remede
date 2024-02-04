@@ -8,7 +8,7 @@ Open Source and free alternative to Antidote.
 
 [<kbd>Open application</kbd>](https://remede-app.camarm.fr)
 
-[Data credits](https://remede.camarm.fr/FR#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr)** • **[Try online](https://remede-app.camarm.fr)**
+[Data credits](https://remede.camarm.fr/FR#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr/download)** • **[API](https://api-remede.camarm.fr/docs)**
 
 </div>
 
