@@ -27,8 +27,9 @@ The next version of Remède; the v1.1.0 will introduce:
 - [x] Possibility to choose **light** or complete database when downloading
 - [x] **Desktop** applications
 - [x] Own **pronunciation service**
-- [ ] **New database** (revised database)
-- [ ] Own **corrector service**
+- [x] **New database** (revised database)
+- [x] Own **corrector service**
+- [ ] Rhymes dictionary
 
 ## Télécharger
 
