@@ -7,7 +7,7 @@ android {
         applicationId "com.camarm.remede"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1101
+        versionCode 11011
         versionName '1.1.0-beta.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
