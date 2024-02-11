@@ -1,18 +1,22 @@
 <template>
   <ion-page>
     <ion-header :translucent="true">
-      <ion-toolbar>
+      <ion-toolbar ref="mainToolbar">
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar :value="query" @ionInput="handleSearchbarInput($event.detail.value)" placeholder="Rechercher un mot"></ion-searchbar>
-        <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
+      <ion-toolbar ref="searchToolbar">
+        <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
+                       @ionInput="handleSearchbarInput($event.detail.value)"
+                       placeholder="Rechercher un mot"></ion-searchbar>
+        <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
+                          style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
-      <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`">
+      <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
         <ion-list class="search-results">
-          <ion-nav-link :key="result" v-for="result in results" router-direction="forward" :component="WordModal" :component-props="{ motRemede: result }">
+          <ion-nav-link :key="result" v-for="result in results" router-direction="forward" :component="WordModal"
+                        :component-props="{ motRemede: result }">
             <ion-item class="ion-no-padding" button>
               <ion-label>
                 {{ result }}
@@ -21,7 +25,7 @@
           </ion-nav-link>
         </ion-list>
       </ion-toolbar>
-      <ion-toolbar v-if="results.length == 0 && query !== ''">
+      <ion-toolbar v-if="results.length == 0 && query !== '' && !loading">
         <ion-item color="light" class="border-radius" lines="none" button @click="report()">
           <ion-label>
             <p>Demander à ajouter un mot</p>
@@ -70,18 +74,51 @@
   </ion-page>
 </template>
 
-<script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonNavLink, IonSearchbar, IonIcon, IonLabel, IonItem, IonList, IonProgressBar } from '@ionic/vue';
+<script lang="ts">
 import WordModal from "@/components/WordModal.vue";
 import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
-</script>
-
-<script lang="ts">
 import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary";
 import {useRouter} from "vue-router";
-import {loadingController, toastController} from "@ionic/vue";
+import {
+  createAnimation,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonNavLink,
+  IonSearchbar,
+  IonIcon,
+  IonLabel,
+  IonItem,
+  IonList,
+  IonProgressBar,
+  loadingController,
+  toastController, AnimationDirection
+} from "@ionic/vue";
+import {defineComponent, onMounted, ref} from "vue";
+import type {Animation} from "@ionic/vue";
 
-export default {
+
+export default defineComponent({
+  components: {
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonNavLink,
+    IonSearchbar,
+    IonIcon,
+    IonLabel,
+    IonItem,
+    IonList,
+    IonProgressBar,
+  },
   data() {
     return {
       results: [] as string[],
@@ -89,7 +126,8 @@ export default {
       router: useRouter(),
       // Ignoring linter error about empty function (@typescript-eslint/no-empty-function)
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      autocompleteTimeout: window.setTimeout(() => {}, 500),
+      autocompleteTimeout: window.setTimeout(() => {
+      }, 500),
       randomWord: '',
       loading: false,
       randomWordDisabled: true,
@@ -100,6 +138,63 @@ export default {
   mounted() {
     this.loadRandomWord()
     this.loadTodayWord()
+  },
+  setup() {
+    const mainToolbar = ref(null)
+    const searchToolbar = ref(null)
+    const content = ref(null)
+
+    let mainToolbarAnimation: Animation
+    let searchToolbarAnimation: Animation
+    let contentAnimation: Animation
+    let onLeaveTimeout = setTimeout(() => {}, 500)
+
+    onMounted(() => {
+      mainToolbarAnimation = createAnimation()
+          .addElement(mainToolbar.value.$el)
+          .duration(250)
+          .fromTo('transform', 'translateY(0)', 'translateY(-100%)')
+          .fromTo('opacity', '1', '0');
+      searchToolbarAnimation = createAnimation()
+          .addElement(searchToolbar.value.$el)
+          .duration(250)
+          .fromTo('transform', 'translateY(0)', 'translateY(-50%)')
+          .fromTo('scale', '1', '1.01')
+      contentAnimation = createAnimation()
+          .addElement(content.value.$el)
+          .duration(250)
+          .fromTo('transform', 'translateY(0)', 'translateY(-10%)')
+
+    })
+
+    const animateMain = (direction: AnimationDirection = 'normal') => mainToolbarAnimation.direction(direction).play()
+    const animateSearch = (direction: AnimationDirection = 'normal') => searchToolbarAnimation.direction(direction).play()
+    const animateContent = (direction: AnimationDirection = 'normal') => contentAnimation.direction(direction).play()
+
+    const onFocus = () => {
+      clearTimeout(onLeaveTimeout)
+      animateMain()
+      animateSearch()
+      animateContent()
+    }
+
+    const onLeave = () => {
+      animateMain("reverse")
+      animateSearch("reverse")
+      animateContent("reverse")
+    }
+
+    return {
+      bookmark,
+      calendarOutline,
+      shuffle,
+      WordModal,
+      onFocus,
+      onLeave,
+      mainToolbar,
+      searchToolbar,
+      content
+    }
   },
   methods: {
     async handleSearchbarInput(input: string) {
@@ -155,9 +250,9 @@ export default {
       this.query = ''
       await loader.dismiss()
       await toast.present()
-    }
+    },
   }
-}
+})
 </script>
 <style scoped>
 .results-wrapper {
