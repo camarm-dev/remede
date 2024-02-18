@@ -15,8 +15,8 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-list inset>
-        <ion-item color="light" class="no-border">
+      <ion-list inset class="ion-bg-light">
+        <ion-item color="light" class="no-border border-bottom">
           <ion-label slot="start">
             <p>Texte <span v-if="locked">Corrigé</span></p>
           </ion-label>
@@ -24,16 +24,19 @@
             <ion-button v-if="locked" @click="locked = false" color="primary">
               Éditer&nbsp;<ion-icon :icon="pencilOutline"/>
             </ion-button>
-            <ion-button v-else @click="correct()" color="success">
+            <ion-button v-else-if="!locked && !loading" @click="correct()" color="success">
               Corriger&nbsp;<ion-icon :icon="sparkles"/>
+            </ion-button>
+            <ion-button v-else color="success">
+              <ion-spinner name="dots" color="success"></ion-spinner>
             </ion-button>
           </ion-buttons>
         </ion-item>
-        <ion-item color="light" class="no-border">
+        <ion-item color="light" class="no-border pd-t">
           <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="1000" counter :value="content"
                         @ionInput="content = $event.detail.value"
                         placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
-          <div v-else class="content ion-padding-bottom">
+          <div v-else class="content ion-padding-bottom pd-t">
             <span :key="segment" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
                 <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id}`">{{ segment.text }}</ion-text>
@@ -115,6 +118,7 @@ export default {
       content: "",
       corrections: [] as LanguageToolCorrection[],
       locked: false,
+      loading: false,
       explainSegments: [] as ExplainSegment[]
     }
   },
@@ -129,6 +133,8 @@ export default {
       // TODO, dict remede
     },
     correct() {
+      this.loading = true
+
       const url = 'https://remede-corrector.camarm.fr/v2/check'
       const body = new FormData()
       body.set('text', this.content)
@@ -167,6 +173,7 @@ export default {
 
         this.explainSegments = segmentedText
         this.locked = true
+        this.loading = false
       })
     },
     copy(text: string) {
@@ -206,6 +213,20 @@ export default {
 
 .correction + .correction {
   margin-left: .2em;
+}
+
+.border-bottom {
+  border-bottom: var(--color-medium-light) .55px solid;
+  box-sizing: content-box;
+}
+
+.pd-t {
+  box-sizing: border-box;
+  padding-top: .5em
+}
+
+.ion-bg-light {
+  background: var(--ion-color-light);
 }
 </style>
 
