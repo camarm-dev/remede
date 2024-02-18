@@ -59,7 +59,7 @@ import quoteOpen from "@/assets/openQuote.svg"
           <ion-button @click="shareDefinition()">
             <ion-icon slot="icon-only" :icon="shareOutline"></ion-icon>
           </ion-button>
-          <ion-button :id="`open-modal-${mot}`">
+          <ion-button :id="id.modal">
             <ion-icon slot="icon-only" :icon="ellipsisVertical"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -100,9 +100,9 @@ import quoteOpen from "@/assets/openQuote.svg"
               <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
               <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
               <h4 v-else>{{ def.genre }}</h4>
-              <ion-icon v-if="def.exemples.length > 0" :id="`def-${mot}-examples-${document.definitions.indexOf(def).toString()}`" :icon="example" color="medium"/>
+              <ion-icon v-if="def.exemples.length > 0" :id="id.examples[document.definitions.indexOf(def)]" :icon="example" color="medium"/>
             </div>
-            <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="`def-${mot}-examples-${document.definitions.indexOf(def).toString()}`">
+            <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="id.examples[document.definitions.indexOf(def)]">
               <div class="ion-padding examples">
                 <h5>
                   Exemples
@@ -227,7 +227,7 @@ import quoteOpen from "@/assets/openQuote.svg"
       </div>
       <br>
       <br>
-      <ion-modal :trigger="`open-modal-${mot}`" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+      <ion-modal :trigger="id.modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
         <ion-content class="ion-padding">
           <div class="list-title no-margin ion-padding-bottom">
             Dictionnaire
@@ -303,6 +303,7 @@ import WordPreview from "@/components/WordPreview.vue";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '@ionic/vue/css/ionic-swiper.css';
+import {generateId} from "@/functions/id";
 
 
 
@@ -328,6 +329,10 @@ export default defineComponent({
       mot: '',
       currentMode: '',
       currentTemps: '',
+      id: {
+        modal: generateId(),
+        examples: []
+      },
       modeTemps: [] as string[],
       currentSujets: [] as string[],
       tab: localStorage.getItem('defaultTab') || 'def' as string,
@@ -380,6 +385,9 @@ export default defineComponent({
       const document = await getWordDocument(this.mot)
       if (document) {
         this.document = document
+        this.document.definitions.forEach(() => {
+          this.id.examples.push(generateId())
+        })
       } else {
         this.notFound = true
       }

@@ -13,6 +13,9 @@ import {
   IonTitle
 } from '@ionic/vue'
 import example from "@/assets/example.svg";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {Pagination} from "swiper/modules";
+import quoteOpen from "@/assets/openQuote.svg";
 </script>
 
 <template>
@@ -47,8 +50,34 @@ import example from "@/assets/example.svg";
             <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
             <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
             <h4 v-else>{{ def.genre }}</h4>
+            <ion-icon v-if="def.exemples.length > 0" :id="id.examples[document.definitions.indexOf(def)]" :icon="example" color="medium"/>
             <hr>
           </header>
+          <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="id.examples[document.definitions.indexOf(def)]">
+            <div class="ion-padding examples">
+              <h5>
+                Exemples
+                <span class="ion-color-medium">{{ mot }}</span>,
+                <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
+                <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
+                <span v-else>{{ def.genre }}</span>
+              </h5>
+              <swiper
+                  :pagination="{ clickable: true, enabled: true }"
+                  :modules="[Pagination]"
+              >
+                <swiper-slide v-for="exemple in def.exemples" :key="exemple.contenu">
+                  <div class="example-container">
+                    <ion-icon class="opening-quote" :icon="quoteOpen"/>
+                    <div>
+                      <i class="example-content" v-html="exemple.contenu"/>
+                    </div>
+                    <span class="sources" v-html="exemple.sources"/>
+                  </div>
+                </swiper-slide>
+              </swiper>
+            </div>
+          </ion-popover>
           <div class="content">
             <ul>
               <li :key="`def-${meaning}`" v-for="meaning in def.explications">
@@ -56,19 +85,6 @@ import example from "@/assets/example.svg";
                 <ul v-else class="ion-padding-start">
                   <li :key="subMeaning" v-for="subMeaning in meaning" v-html="subMeaning"></li>
                 </ul>
-                <ion-icon v-if="def.exemples.length > 0" :id="meaning" :icon="example" color="medium"/>
-                <ion-popover v-if="def.exemples.length > 0" :trigger="meaning">
-                  <div class="ion-padding examples">
-                    <h5>
-                      Exemples
-                      <span class="ion-color-medium">{{ mot }}</span>,
-                      <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
-                      <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
-                      <span v-else>{{ def.genre }}</span>
-                    </h5>
-                    <p v-for="exemple in def.exemples" :key="exemple.contenu"><i>{{ exemple.contenu }}</i> <span class="sources" v-html="exemple.sources"/><br></p>
-                  </div>
-                </ion-popover>
               </li>
             </ul>
           </div>
@@ -113,6 +129,7 @@ import example from "@/assets/example.svg";
 <script lang="ts">
 import {getWordDocument} from "@/functions/dictionnary";
 import {RemedeWordDocument} from "@/functions/types/remede";
+import {generateId} from "@/functions/id";
 
 export default {
   props: [
@@ -122,7 +139,10 @@ export default {
     return {
       document: {} as RemedeWordDocument,
       notFound: false,
-      tab: 'def' as string
+      tab: 'def' as string,
+      id: {
+        examples: []
+      }
     }
   },
   mounted() {
@@ -140,6 +160,9 @@ export default {
 
       if (document) {
         this.document = document
+        this.document.definitions.forEach(() => {
+          this.id.examples.push(generateId())
+        })
       } else {
         this.notFound = true
       }
