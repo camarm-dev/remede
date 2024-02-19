@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage } from '@ionic/vue';
-import WordModal from "@/components/WordModal.vue";
+import { IonPage } from "@ionic/vue"
+import WordModal from "@/components/WordModal.vue"
 </script>
 

@@ -22,7 +22,7 @@ import {
   IonPopover,
   IonPage,
   IonSpinner
-} from "@ionic/vue";
+} from "@ionic/vue"
 import {
   bookmark,
   bookmarkOutline,
@@ -32,9 +32,9 @@ import {
   link,
   play,
   shareOutline
-} from "ionicons/icons";
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Pagination } from 'swiper/modules';
+} from "ionicons/icons"
+import { Swiper, SwiperSlide } from "swiper/vue"
+import { Pagination } from "swiper/modules"
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
 </script>
@@ -290,25 +290,24 @@ import quoteOpen from "@/assets/openQuote.svg"
 
 <script lang="ts">
 
-import {getWordDocument, wordExists} from "@/functions/dictionnary";
-import {isWordStarred, starWord} from "@/functions/favorites";
-import {Share} from "@capacitor/share";
-import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede";
-import {defineComponent, ref} from "vue";
-import {navigateBackFunction} from "@/functions/types/utils";
-import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue";
-import { iosTransitionAnimation } from '@ionic/core';
-import WordPreview from "@/components/WordPreview.vue";
+import {getWordDocument, wordExists} from "@/functions/dictionnary"
+import {isWordStarred, starWord} from "@/functions/favorites"
+import {Share} from "@capacitor/share"
+import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede"
+import {defineComponent, ref} from "vue"
+import {navigateBackFunction} from "@/functions/types/utils"
+import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue"
+import { iosTransitionAnimation } from "@ionic/core"
+import WordPreview from "@/components/WordPreview.vue"
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import '@ionic/vue/css/ionic-swiper.css';
-import {generateId} from "@/functions/id";
-
+import "swiper/css"
+import "swiper/css/pagination"
+import "@ionic/vue/css/ionic-swiper.css"
+import {generateId} from "@/functions/id"
 
 
 export default defineComponent({
-  props: ['motRemede'],
+  props: ["motRemede"],
   setup() {
     const ionRouter = useIonRouter()
 
@@ -317,8 +316,8 @@ export default defineComponent({
         ionRouter.back(iosTransitionAnimation)
         return
       }
-      ionRouter.navigate('/dictionnaire', 'back', 'replace', iosTransitionAnimation)
-    });
+      ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
+    })
 
     return {
       ionRouter
@@ -326,25 +325,25 @@ export default defineComponent({
   },
   data() {
     return {
-      mot: '',
-      currentMode: '',
-      currentTemps: '',
+      mot: "",
+      currentMode: "",
+      currentTemps: "",
       id: {
         modal: generateId(),
         examples: []
       },
       modeTemps: [] as string[],
       currentSujets: [] as string[],
-      tab: localStorage.getItem('defaultTab') || 'def' as string,
+      tab: localStorage.getItem("defaultTab") || "def" as string,
       document: {
         synonymes: [] as string[],
         antonymes: [] as string[],
         definitions: [],
         references: [],
-        ipa: '',
+        ipa: "",
         credits: {
-          name: '',
-          url: ''
+          name: "",
+          url: ""
         },
         conjugaisons: {} as RemedeConjugateDocument,
         etymologies: [] as string[]
@@ -362,7 +361,7 @@ export default defineComponent({
     const ionRouter = useIonRouter()
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
-        ionRouter.navigate('/dictionnaire', 'back', 'replace', iosTransitionAnimation)
+        ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
         return true
       }
       return false
@@ -407,10 +406,10 @@ export default defineComponent({
           title: `Définition "${this.mot}" sur Remède`,
           text: `La définition du mot "${this.mot}" est sur Remède !`,
           url: `https://remede-app.camarm.fr/dictionnaire/${this.mot}`,
-          dialogTitle: 'Partager la définition',
+          dialogTitle: "Partager la définition",
         })
       } catch {
-        alert('Fonctionnalité non supportée par votre navigateur')
+        alert("Fonctionnalité non supportée par votre navigateur")
       }
     },
     goTo(path: string) {
@@ -432,8 +431,8 @@ export default defineComponent({
       this.audioLoading = true
       const url = `https://remede-tts.camarm.fr/api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.005&text=${encodeURIComponent(this.mot)}&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true`
       fetch(url, {
-        method: 'GET',
-        cache: 'no-cache'
+        method: "GET",
+        cache: "no-cache"
       }).then(resp => resp.blob()).then(audio => {
         const player = new window.Audio()
         player.src = URL.createObjectURL(audio)
@@ -441,9 +440,9 @@ export default defineComponent({
         this.audioLoading = false
       }).catch(async e => {
         const toast = await toastController.create({
-          header: 'Erreur',
+          header: "Erreur",
           message: `Impossible de lire le mot: ${e}`,
-          color: 'danger',
+          color: "danger",
           duration: 3000
         })
         this.audioLoading = false
@@ -463,12 +462,12 @@ export default defineComponent({
       window.open(url)
     },
     refreshListeners() {
-      window.dispatchEvent(new Event('reset'))
+      window.dispatchEvent(new Event("reset"))
       this.listenSpecialTags()
     },
     async openPreviewModal(word: string) {
       const loading = await loadingController.create({
-        message: 'Chargement'
+        message: "Chargement"
       })
       await loading.present()
       const modal = await modalController.create({
@@ -483,10 +482,10 @@ export default defineComponent({
       await modal.present()
     },
     async listenSpecialTags() {
-      document.querySelectorAll('reference').forEach(el => {
+      document.querySelectorAll("reference").forEach(el => {
         const listener = async () => {
-          const href = el.getAttribute('href') || ''
-          const word = href.replaceAll('https://fr.wiktionary.org/wiki/', '')
+          const href = el.getAttribute("href") || ""
+          const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "")
           if (await wordExists(word)) {
             // TODO works once, why ?
             await this.openPreviewModal(word)
@@ -494,15 +493,15 @@ export default defineComponent({
             window.open(href)
           }
         }
-        el.addEventListener('click', listener)
-        window.addEventListener('reset', () => {
-          el.removeEventListener('click', listener)
+        el.addEventListener("click", listener)
+        window.addEventListener("reset", () => {
+          el.removeEventListener("click", listener)
         })
       })
     },
     parseMeaning(meaning: string) {
       try {
-        return meaning.replaceAll('<a', '<reference').replaceAll('</a>', '</reference>')
+        return meaning.replaceAll("<a", "<reference").replaceAll("</a>", "</reference>")
       } catch (e) {
         return meaning
       }

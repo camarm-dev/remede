@@ -11,11 +11,11 @@ import {
   IonSegmentButton,
   IonSegment,
   IonTitle
-} from '@ionic/vue'
-import example from "@/assets/example.svg";
-import {Swiper, SwiperSlide} from "swiper/vue";
-import {Pagination} from "swiper/modules";
-import quoteOpen from "@/assets/openQuote.svg";
+} from "@ionic/vue"
+import example from "@/assets/example.svg"
+import {Swiper, SwiperSlide} from "swiper/vue"
+import {Pagination} from "swiper/modules"
+import quoteOpen from "@/assets/openQuote.svg"
 </script>
 
 <template>
@@ -127,19 +127,19 @@ import quoteOpen from "@/assets/openQuote.svg";
 </template>
 
 <script lang="ts">
-import {getWordDocument} from "@/functions/dictionnary";
-import {RemedeWordDocument} from "@/functions/types/remede";
-import {generateId} from "@/functions/id";
+import {getWordDocument} from "@/functions/dictionnary"
+import {RemedeWordDocument} from "@/functions/types/remede"
+import {generateId} from "@/functions/id"
 
 export default {
   props: [
-      'mot'
+      "mot"
   ],
   data() {
     return {
       document: {} as RemedeWordDocument,
       notFound: false,
-      tab: 'def' as string,
+      tab: "def" as string,
       id: {
         examples: []
       }

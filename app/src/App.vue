@@ -76,21 +76,21 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-} from '@ionic/vue';
+} from "@ionic/vue"
 import {
   bookOutline,
   informationCircleOutline,
   cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
-} from 'ionicons/icons';
+} from "ionicons/icons"
 
 </script>
 
 <script lang="ts">
-import {useRouter} from "vue-router";
+import {useRouter} from "vue-router"
 
 export default {
   mounted() {
-    document.body.classList.add(localStorage.getItem('userTheme') || 'light')
+    document.body.classList.add(localStorage.getItem("userTheme") || "light")
   },
   data() {
     return {

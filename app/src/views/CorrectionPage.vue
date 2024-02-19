@@ -104,13 +104,13 @@ import {
   IonPopover,
   IonList,
   IonNote
-} from '@ionic/vue';
-import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons";
+} from "@ionic/vue"
+import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons"
 </script>
 
 <script lang="ts">
-import { Clipboard } from '@capacitor/clipboard';
-import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool";
+import { Clipboard } from "@capacitor/clipboard"
+import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
 
 export default {
   data() {
@@ -135,17 +135,17 @@ export default {
     correct() {
       this.loading = true
 
-      const url = 'https://remede-corrector.camarm.fr/v2/check'
+      const url = "https://remede-corrector.camarm.fr/v2/check"
       const body = new FormData()
-      body.set('text', this.content)
-      body.set('language', 'fr')
-      body.set('motherTongue', 'fr')
+      body.set("text", this.content)
+      body.set("language", "fr")
+      body.set("motherTongue", "fr")
 
       fetch(url, {
-        method: 'POST',
+        method: "POST",
         body: new URLSearchParams(body),
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
         }
       }).then(resp => resp.json()).then(response => {
         this.corrections = response.matches
@@ -179,12 +179,12 @@ export default {
     copy(text: string) {
       Clipboard.write({
         string: text
-      });
+      })
     },
     getPartiallyCorrectedContent() {
       return this.explainSegments.map(obj => {
         return obj.correction ? obj.correction.mistakeText: obj.text
-      }).join('')
+      }).join("")
     },
     setSegmentAsText(segment: ExplainSegment, text: string) {
       this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false, text: text }

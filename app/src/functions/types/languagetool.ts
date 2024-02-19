@@ -1,4 +1,3 @@
-
 interface LanguageToolRule {
     id: string
     description: string

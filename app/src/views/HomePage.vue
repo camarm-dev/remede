@@ -75,10 +75,10 @@
 </template>
 
 <script lang="ts">
-import WordModal from "@/components/WordModal.vue";
-import {bookmark, calendarOutline, shuffle} from "ionicons/icons";
-import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary";
-import {useRouter} from "vue-router";
+import WordModal from "@/components/WordModal.vue"
+import {bookmark, calendarOutline, shuffle} from "ionicons/icons"
+import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary"
+import {useRouter} from "vue-router"
 import {
   createAnimation,
   IonButtons,
@@ -97,9 +97,9 @@ import {
   IonProgressBar,
   loadingController,
   toastController, AnimationDirection
-} from "@ionic/vue";
-import {defineComponent, onMounted, ref} from "vue";
-import type {Animation} from "@ionic/vue";
+} from "@ionic/vue"
+import {defineComponent, onMounted, ref} from "vue"
+import type {Animation} from "@ionic/vue"
 
 
 export default defineComponent({
@@ -122,16 +122,16 @@ export default defineComponent({
   data() {
     return {
       results: [] as string[],
-      query: '',
+      query: "",
       router: useRouter(),
       // Ignoring linter error about empty function (@typescript-eslint/no-empty-function)
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       autocompleteTimeout: window.setTimeout(() => {
       }, 500),
-      randomWord: '',
+      randomWord: "",
       loading: false,
       randomWordDisabled: true,
-      todayWord: '',
+      todayWord: "",
       todayWordDisabled: true
     }
   },
@@ -152,23 +152,23 @@ export default defineComponent({
       mainToolbarAnimation = createAnimation()
           .addElement(mainToolbar.value.$el)
           .duration(250)
-          .fromTo('transform', 'translateY(0)', 'translateY(-100%)')
-          .fromTo('opacity', '1', '0');
+          .fromTo("transform", "translateY(0)", "translateY(-100%)")
+          .fromTo("opacity", "1", "0")
       searchToolbarAnimation = createAnimation()
           .addElement(searchToolbar.value.$el)
           .duration(250)
-          .fromTo('transform', 'translateY(0)', 'translateY(-50%)')
-          .fromTo('scale', '1', '1.01')
+          .fromTo("transform", "translateY(0)", "translateY(-50%)")
+          .fromTo("scale", "1", "1.01")
       contentAnimation = createAnimation()
           .addElement(content.value.$el)
           .duration(250)
-          .fromTo('transform', 'translateY(0)', 'translateY(-10%)')
+          .fromTo("transform", "translateY(0)", "translateY(-10%)")
 
     })
 
-    const animateMain = (direction: AnimationDirection = 'normal') => mainToolbarAnimation.direction(direction).play()
-    const animateSearch = (direction: AnimationDirection = 'normal') => searchToolbarAnimation.direction(direction).play()
-    const animateContent = (direction: AnimationDirection = 'normal') => contentAnimation.direction(direction).play()
+    const animateMain = (direction: AnimationDirection = "normal") => mainToolbarAnimation.direction(direction).play()
+    const animateSearch = (direction: AnimationDirection = "normal") => searchToolbarAnimation.direction(direction).play()
+    const animateContent = (direction: AnimationDirection = "normal") => contentAnimation.direction(direction).play()
 
     const onFocus = () => {
       animateMain()
@@ -197,7 +197,7 @@ export default defineComponent({
   methods: {
     async handleSearchbarInput(input: string) {
       this.query = input
-      if (input != '') {
+      if (input != "") {
         this.startAutocompleteSearch(input)
       } else {
         window.clearTimeout(this.autocompleteTimeout)
@@ -212,10 +212,10 @@ export default defineComponent({
           this.results = await getAutocomplete(input)
         } catch (e) {
           const message = await toastController.create({
-            header: 'Erreur',
+            header: "Erreur",
             message: `La recherche dans le dictionnaire à échouée: ${e}`,
             duration: 5000,
-            color: 'danger'
+            color: "danger"
           })
 
           await message.present()
@@ -236,16 +236,16 @@ export default defineComponent({
     },
     async report() {
       const loader = await loadingController.create({
-        message: 'Chargement'
+        message: "Chargement"
       })
       await loader.present()
       await fetch(`https://api-remede.camarm.fr/ask-new-word/${this.query}`)
       const toast = await toastController.create({
-        header: 'Mot reporté',
+        header: "Mot reporté",
         message: `Vous avez bien demander à ajouter le mot "${this.query}"`,
         duration: 3000
       })
-      this.query = ''
+      this.query = ""
       await loader.dismiss()
       await toast.present()
     },

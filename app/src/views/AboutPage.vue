@@ -101,18 +101,18 @@
 </template>
 
 <script setup lang="ts">
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonModal, IonItem, IonList, IonLabel, IonIcon, IonAvatar} from '@ionic/vue';
-import {atOutline, documentAttachOutline, fingerPrintOutline, heartOutline, logoGithub} from "ionicons/icons";
+import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonModal, IonItem, IonList, IonLabel, IonIcon, IonAvatar} from "@ionic/vue"
+import {atOutline, documentAttachOutline, fingerPrintOutline, heartOutline, logoGithub} from "ionicons/icons"
 </script>
 
 <script lang="ts">
-import { App } from '@capacitor/app';
+import { App } from "@capacitor/app"
 
 export default {
   data() {
     return {
-      version: ':unavailable:',
-      build: ':unavailable:'
+      version: ":unavailable:",
+      build: ":unavailable:"
     }
   },
   mounted() {
