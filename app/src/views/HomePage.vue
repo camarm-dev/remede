@@ -147,7 +147,6 @@ export default defineComponent({
     let mainToolbarAnimation: Animation
     let searchToolbarAnimation: Animation
     let contentAnimation: Animation
-    let onLeaveTimeout = setTimeout(() => {}, 500)
 
     onMounted(() => {
       mainToolbarAnimation = createAnimation()
@@ -172,7 +171,6 @@ export default defineComponent({
     const animateContent = (direction: AnimationDirection = 'normal') => contentAnimation.direction(direction).play()
 
     const onFocus = () => {
-      clearTimeout(onLeaveTimeout)
       animateMain()
       animateSearch()
       animateContent()
