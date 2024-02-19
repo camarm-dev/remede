@@ -18,7 +18,7 @@
     "preview": "vite preview",
     "test": "cypress run",
     "lint": "eslint src",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint src --fix"
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.1",
