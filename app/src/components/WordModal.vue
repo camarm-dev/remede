@@ -48,7 +48,7 @@ import quoteOpen from "@/assets/openQuote.svg"
             Retour
           </ion-button>
         </ion-buttons>
-        <ion-title>Définition "{{ mot }}"</ion-title>
+        <ion-title>{{ mot }}</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
             <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
