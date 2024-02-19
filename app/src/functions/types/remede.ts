@@ -18,7 +18,7 @@ interface RemedeExplication {
 interface RemedeWordDefinition {
     genre: string | string[]
     classe: string
-    explications: RemedeExplication
+    explications: string | string[]
     exemples: RemedeExample[]
 }
 
