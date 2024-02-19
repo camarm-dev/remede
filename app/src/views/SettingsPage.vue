@@ -241,5 +241,9 @@ export default {
 ion-label ion-progress-bar {
   margin-top: 8px;
 }
+
+ion-note.ion-padding {
+  display: block;
+}
 </style>
 
