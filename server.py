@@ -156,7 +156,7 @@ def get_word_document(word: str):
     """
     Renvoie le document Remède du mot `word`
     """
-    return get_remede_doc(word)
+    return get_remede_doc(word.lower())
 
 
 @app.get('/random')
@@ -180,6 +180,7 @@ def get_autocomplete(query: str):
     """
     Renvoie les 6 premiers mots commençant par `query`
     """
+    query = query.lower()
     json_object = get_remede_json(get_first_letter(query))
     keys: list = json_object.keys()
     return list(filter(lambda word: word.startswith(query), keys))[0:6]
