@@ -4,10 +4,6 @@ import Outlet from "@/AppOutlet.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/dictionnaire/:mot",
-    component: () => import ("../views/WordPage.vue")
-  },
-  {
     path: "/fiches/:slug",
     component: () => import ("../views/FichePage.vue")
   },
@@ -26,6 +22,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "dictionnaire",
         component: () => import ("../views/HomePage.vue")
+      },
+      {
+        path: "dictionnaire/:mot",
+        component: () => import ("../components/WordModal.vue")
       },
       {
         path: "a-propos",

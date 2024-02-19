@@ -15,14 +15,11 @@
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
         <ion-list class="search-results">
-          <ion-nav-link :key="result" v-for="result in results" router-direction="forward" :component="WordModal"
-                        :component-props="{ motRemede: result }">
-            <ion-item class="ion-no-padding" button>
-              <ion-label>
-                {{ result }}
-              </ion-label>
-            </ion-item>
-          </ion-nav-link>
+          <ion-item :key="result" v-for="result in results" @click="goTo(`/dictionnaire/${result}`)" class="ion-no-padding" button>
+            <ion-label>
+              {{ result }}
+            </ion-label>
+          </ion-item>
         </ion-list>
       </ion-toolbar>
       <ion-toolbar v-if="results.length == 0 && query !== '' && !loading">
@@ -45,22 +42,18 @@
       </ion-header>
 
       <ion-list inset>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: todayWord }">
-          <ion-item :disabled="todayWordDisabled" color="light" button>
-            <ion-icon slot="start" :icon="calendarOutline"/>
-            <ion-label>
-              <h2>Mot du jour</h2>
-            </ion-label>
-          </ion-item>
-        </ion-nav-link>
-        <ion-nav-link router-direction="forward" :component="WordModal" :component-props="{ motRemede: randomWord }">
-          <ion-item :disabled="randomWordDisabled" color="light" button>
-            <ion-icon :icon="shuffle" slot="start"/>
-            <ion-label>
-              <h2>Mot au hasard</h2>
-            </ion-label>
-          </ion-item>
-        </ion-nav-link>
+        <ion-item @click="goTo(`/dictionnaire/${todayWord}`)" :disabled="todayWordDisabled" color="light" button>
+          <ion-icon slot="start" :icon="calendarOutline"/>
+          <ion-label>
+            <h2>Mot du jour</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item @click="goTo(`/dictionnaire/${randomWord}`)" :disabled="randomWordDisabled" color="light" button>
+          <ion-icon :icon="shuffle" slot="start"/>
+          <ion-label>
+            <h2>Mot au hasard</h2>
+          </ion-label>
+        </ion-item>
       </ion-list>
 
       <ion-list inset>
@@ -90,7 +83,6 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonNavLink,
   IonSearchbar,
   IonIcon,
   IonLabel,
@@ -98,10 +90,11 @@ import {
   IonList,
   IonProgressBar,
   loadingController,
-  toastController, AnimationDirection
+  toastController, AnimationDirection, useIonRouter, useBackButton
 } from "@ionic/vue"
 import {defineComponent, onMounted, ref} from "vue"
 import type {Animation} from "@ionic/vue"
+import {iosTransitionAnimation} from "@ionic/core"
 
 
 export default defineComponent({
@@ -113,7 +106,6 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    IonNavLink,
     IonSearchbar,
     IonIcon,
     IonLabel,
@@ -184,6 +176,20 @@ export default defineComponent({
       animateContent("reverse")
     }
 
+    const ionRouter = useIonRouter()
+
+    useBackButton(110, () => {
+      if (ionRouter.canGoBack()) {
+        ionRouter.back(iosTransitionAnimation)
+        return
+      }
+      ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
+    })
+
+    const goTo = (path: string) => {
+      ionRouter.push(path, iosTransitionAnimation)
+    }
+
     return {
       bookmark,
       calendarOutline,
@@ -193,7 +199,9 @@ export default defineComponent({
       onLeave,
       mainToolbar,
       searchToolbar,
-      content
+      content,
+      ionRouter,
+      goTo
     }
   },
   methods: {
@@ -224,9 +232,6 @@ export default defineComponent({
         }
         this.loading = false
       }, 500)
-    },
-    goTo(path: string) {
-      this.router.push(path)
     },
     async loadRandomWord() {
       this.randomWord = await getRandomWord()

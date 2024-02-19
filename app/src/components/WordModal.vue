@@ -11,7 +11,6 @@ import {
   IonButton,
   IonSelect,
   IonSelectOption,
-  IonNavLink,
   IonList,
   IonNote,
   IonLabel,
@@ -44,12 +43,10 @@ import quoteOpen from "@/assets/openQuote.svg"
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-nav-link router-direction="back">
-            <ion-button @click="navigateBack()">
-              <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
-              Retour
-            </ion-button>
-          </ion-nav-link>
+          <ion-button @click="navigateBack()">
+            <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
+            Retour
+          </ion-button>
         </ion-buttons>
         <ion-title>Définition "{{ mot }}"</ion-title>
         <ion-buttons slot="end">
@@ -296,7 +293,7 @@ import {Share} from "@capacitor/share"
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede"
 import {defineComponent, ref} from "vue"
 import {navigateBackFunction} from "@/functions/types/utils"
-import {loadingController, modalController, toastController, useBackButton, useIonRouter} from "@ionic/vue"
+import {loadingController, modalController, toastController, useIonRouter} from "@ionic/vue"
 import { iosTransitionAnimation } from "@ionic/core"
 import WordPreview from "@/components/WordPreview.vue"
 
@@ -308,21 +305,6 @@ import {generateId} from "@/functions/id"
 
 export default defineComponent({
   props: ["motRemede"],
-  setup() {
-    const ionRouter = useIonRouter()
-
-    useBackButton(110, () => {
-      if (ionRouter.canGoBack()) {
-        ionRouter.back(iosTransitionAnimation)
-        return
-      }
-      ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
-    })
-
-    return {
-      ionRouter
-    }
-  },
   data() {
     return {
       mot: "",
@@ -364,6 +346,7 @@ export default defineComponent({
         ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
         return true
       }
+      ionRouter.back(iosTransitionAnimation)
       return false
     }
 
@@ -378,8 +361,8 @@ export default defineComponent({
   methods: {
     async loadData(mot: null | string) {
       this.mot = mot || this.motRemede
-      if (!this.motRemede) {
-        this.mot = this.$router.params.mot
+      if (!this.mot) {
+        this.mot = this.$route.params.mot as string
       }
       const document = await getWordDocument(this.mot)
       if (document) {
