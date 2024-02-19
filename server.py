@@ -255,7 +255,7 @@ def download_binary(variant: BinariesVariant):
     """
     Télécharge les derniers exécutables
     """
-    return FileResponse(f'builds/latest/remede.{variant}')
+    return FileResponse(f'builds/latest/remede.{variant}', filename=f"remede.{variant}", media_type="multipart/form-data")
 
 
 if __name__ == '__main__':
