@@ -26,12 +26,14 @@
         </ion-list>
       </ion-toolbar>
       <ion-toolbar v-if="results.length == 0 && query !== '' && !loading">
-        <ion-item color="light" class="border-radius" lines="none" button @click="report()">
-          <ion-label>
-            <p>Demander à ajouter un mot</p>
-            <h2>Reporter "{{ query }}"</h2>
-          </ion-label>
-        </ion-item>
+        <ion-list inset>
+          <ion-item color="light" class="border-radius" lines="none" button @click="report()">
+            <ion-label>
+              <p>Demander à ajouter un mot</p>
+              <h2>Reporter "{{ query }}"</h2>
+            </ion-label>
+          </ion-item>
+        </ion-list>
       </ion-toolbar>
     </ion-header>
 

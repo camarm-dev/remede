@@ -638,6 +638,10 @@ div.accordion-content[slot='content'] ion-item {
   text-align: left;
 }
 
+.dark ion-popover.example {
+  --background: #0f0f0f;
+}
+
 ion-popover.example {
   --width: 90%;
 }
