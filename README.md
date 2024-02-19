@@ -19,17 +19,17 @@ Open Source and free alternative to Antidote.
 - [Documentation](#documentation)
 - [Screenshots](#screenshots)
 
-## Next: 1.1.0
+## Current: 1.1.0 — Goofy Jellyfish
 
-The next version of Remède; the v1.1.0 will introduce:
-- [x] **Examples** on definition
-- [x] **New UI** on definition page
-- [x] Possibility to choose **light** or complete database when downloading
-- [x] **Desktop** applications
-- [x] Own **pronunciation service**
-- [x] **New database** (revised database)
-- [x] Own **corrector service**
-- [ ] Rhymes dictionary
+La version `1.1.0`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionnalités suivantes :
+- [x] **Examples** sur les définitions
+- [x] **Nouvelle interface** sur la page de définitions
+- [x] Possibilité de télécharger une base de donnée **light**.
+- [x] Applications **Linux et Windows** (expérimentales)
+- [x] Service de **prononciation** open source et auto-hébergé !
+- [x] **Nouvelle base** (base de données révisée)
+- [x] **Service de correction** open source et autohébergé !
+- [ ] Rhymes dictionary (arrive en `1.2.0`)
 
 ## Télécharger
 
