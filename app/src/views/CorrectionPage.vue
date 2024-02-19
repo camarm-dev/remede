@@ -183,7 +183,7 @@ export default {
     },
     getPartiallyCorrectedContent() {
       return this.explainSegments.map(obj => {
-        return obj.correction ? obj.correction.mistakeText: obj.text
+        return obj.correction ? obj.correction.context.text.slice(obj.correction.context.offset, obj.correction.context.offset + obj.correction.context.length): obj.text
       }).join("")
     },
     setSegmentAsText(segment: ExplainSegment, text: string) {
