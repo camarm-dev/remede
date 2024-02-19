@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage } from '@ionic/vue';
-import FicheModal from "@/components/FicheModal.vue";
+import { IonPage } from "@ionic/vue"
+import FicheModal from "@/components/FicheModal.vue"
 </script>
 
 <script lang="ts">
@@ -15,12 +15,12 @@ export default {
   data() {
     return {
       fiche: {
-        contenu: '',
-        description: 'La fiche n\'a pas été trouvée !',
-        nom: 'Pas de fiche',
+        contenu: "",
+        description: "La fiche n'a pas été trouvée !",
+        nom: "Pas de fiche",
         tags: [],
-        slug: '',
-        credits: ''
+        slug: "",
+        credits: ""
       }
     }
   },

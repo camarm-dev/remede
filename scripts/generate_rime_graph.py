@@ -100,7 +100,7 @@ if __name__ == '__main__':
     database = sqlite3.connect('data/rimes.db')
     cursor = database.cursor()
 
-    print('Génération de la base de rimes...')
+    print('Génération de la base de rimes...\n')
     setup()
     try:
         iterate_words(words)

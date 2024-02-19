@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage } from '@ionic/vue';
-import RimePage from "@/views/RimesPage.vue";
+import { IonPage } from "@ionic/vue"
+import RimePage from "@/views/RimesPage.vue"
 </script>
 
 <script lang="ts">
@@ -14,7 +14,7 @@ import RimePage from "@/views/RimesPage.vue";
 export default {
   data() {
     return {
-      mot: ''
+      mot: ""
     }
   },
   created() {

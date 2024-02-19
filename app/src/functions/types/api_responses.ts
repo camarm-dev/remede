@@ -1,4 +1,4 @@
-import {RemedeWordDocument} from "@/functions/types/remede";
+import {RemedeWordDocument} from "@/functions/types/remede"
 
 interface RemedeDictionaryOption {
     nom: string

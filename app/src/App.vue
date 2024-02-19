@@ -34,7 +34,7 @@
                 </ion-item>
               </ion-menu-toggle>
               <ion-menu-toggle :auto-hide="false">
-                <ion-item @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="path === '/rimes' ? 'selected': ''">
+                <ion-item disabled @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="path === '/rimes' ? 'selected': ''">
                   <ion-icon aria-hidden="true" slot="start" :icon="swapHorizontalOutline"></ion-icon>
                   <ion-label>Rimes</ion-label>
                 </ion-item>
@@ -76,21 +76,21 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-} from '@ionic/vue';
+} from "@ionic/vue"
 import {
   bookOutline,
   informationCircleOutline,
   cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
-} from 'ionicons/icons';
+} from "ionicons/icons"
 
 </script>
 
 <script lang="ts">
-import {useRouter} from "vue-router";
+import {useRouter} from "vue-router"
 
 export default {
   mounted() {
-    document.body.classList.add(localStorage.getItem('userTheme') || 'light')
+    document.body.classList.add(localStorage.getItem("userTheme") || "light")
   },
   data() {
     return {

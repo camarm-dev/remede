@@ -1,2 +1,7 @@
 /.idea/
 /.github.json
+/builds/latest/remede.deb
+/builds/latest/remede.rpm
+/builds/latest/remede.exe
+/builds/latest/remede.nupkg
+/builds/latest/remede.dmg

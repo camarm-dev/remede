@@ -3,6 +3,7 @@ import math
 import os
 import random
 import time
+from enum import Enum
 from hashlib import md5
 
 import frontmatter
@@ -24,6 +25,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class BinariesVariant(str, Enum):
+    dmg = "dmg"
+    apk = "apk"
+    deb = "deb"
+    rpm = "rpm"
+    exe = "exe"
+    nupkg = "nupkg"
 
 
 def get_remede_json(letter: str):
@@ -238,6 +248,14 @@ def download_database(variant: str = 'remede'):
     Télécharge la base Sqlite sous form de fichier.
     """
     return FileResponse(f'data/{variant}.db')
+
+
+@app.get('/release/{variant}')
+def download_binary(variant: BinariesVariant):
+    """
+    Télécharge les derniers exécutables
+    """
+    return FileResponse(f'builds/latest/remede.{variant}')
 
 
 if __name__ == '__main__':

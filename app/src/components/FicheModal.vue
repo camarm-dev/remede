@@ -13,13 +13,13 @@ import {
   IonAlert,
   useIonRouter,
   useBackButton
-} from "@ionic/vue";
+} from "@ionic/vue"
 import {
   chevronBackOutline,
   cloudDownloadOutline,
   informationCircleOutline,
   shareOutline
-} from "ionicons/icons";
+} from "ionicons/icons"
 
 const ionRouter = useIonRouter()
 
@@ -28,8 +28,8 @@ useBackButton(110, () => {
     ionRouter.back()
     return
   }
-  ionRouter.navigate('/fiches', 'back', 'replace')
-});
+  ionRouter.navigate("/fiches", "back", "replace")
+})
 </script>
 
 <template>
@@ -87,12 +87,12 @@ useBackButton(110, () => {
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {Share} from "@capacitor/share";
-import {navigateBackFunction} from "@/functions/types/utils";
+import {defineComponent} from "vue"
+import {Share} from "@capacitor/share"
+import {navigateBackFunction} from "@/functions/types/utils"
 
 export default defineComponent({
-  props: ['nom', 'description', 'contenu', 'tags', 'credits', 'slug'],
+  props: ["nom", "description", "contenu", "tags", "credits", "slug"],
   data() {
     return {
       navigateBack: function () {
@@ -103,7 +103,7 @@ export default defineComponent({
   mounted() {
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
-        ionRouter.navigate('/fiches', 'back', 'replace')
+        ionRouter.navigate("/fiches", "back", "replace")
         return true
       }
       return false
@@ -118,28 +118,28 @@ export default defineComponent({
           title: `"${this.nom}" sur Remède`,
           text: `La fiche de français "${this.nom}" est sur Remède !`,
           url: `https://remede-app.camarm.fr/fiches/${this.slug}`,
-          dialogTitle: 'Partager la fiche',
+          dialogTitle: "Partager la fiche",
         })
       } catch {
-        alert('Fonctionnalité non supportée par votre navigateur')
+        alert("Fonctionnalité non supportée par votre navigateur")
       }
     },
     getTagColor(tag: string) {
       switch (tag) {
-        case 'orthographe':
-          return 'primary'
-        case 'grammaire':
-          return 'success'
-        case 'lexique':
-          return 'tertiary'
-        case 'conjugaison':
-          return 'secondary'
-        case 'style':
-          return 'warning'
-        case 'typographie':
-          return 'danger'
+        case "orthographe":
+          return "primary"
+        case "grammaire":
+          return "success"
+        case "lexique":
+          return "tertiary"
+        case "conjugaison":
+          return "secondary"
+        case "style":
+          return "warning"
+        case "typographie":
+          return "danger"
         default:
-          return 'grey'
+          return "grey"
       }
     },
   }

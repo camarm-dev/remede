@@ -1,20 +1,20 @@
-import {getRawDictionary} from "@/functions/offline";
+import {getRawDictionary} from "@/functions/offline"
 import initSqlJS, {Database} from "sql.js"
-import {toastController} from "@ionic/vue";
+import {toastController} from "@ionic/vue"
 
 async function openDatabase() {
     try {
         const SQL = await initSqlJS({
-            locateFile: () => `/sql-wasm.wasm`
+            locateFile: () => "/sql-wasm.wasm"
         })
         const raw = await getRawDictionary()
         return new SQL.Database(raw)
     } catch (e) {
         const message = await toastController.create({
-            header: 'Erreur',
+            header: "Erreur",
             message: `L'ouverture de la BDD à échouée: ${e}`,
             duration: 5000,
-            color: 'danger'
+            color: "danger"
         })
 
         await message.present()

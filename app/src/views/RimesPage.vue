@@ -47,20 +47,20 @@ import {
   IonToolbar,
   IonProgressBar,
   IonSearchbar
-} from '@ionic/vue';
+} from "@ionic/vue"
 </script>
 
 <script lang="ts">
-import {RemedeRhymeRow} from "@/functions/types/remede";
+import {RemedeRhymeRow} from "@/functions/types/remede"
 
 export default {
-  props: ['queryWord'],
+  props: ["queryWord"],
   data() {
     return {
       loading: false,
       failed: false,
       rhymes: [] as RemedeRhymeRow[],
-      query: '',
+      query: "",
       // Ignoring linter error about empty function (@typescript-eslint/no-empty-function)
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       searchTimeout: window.setTimeout(() => {}, 500),

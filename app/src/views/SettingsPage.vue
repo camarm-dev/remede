@@ -44,7 +44,7 @@
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
           <ion-label>Supprimer</ion-label>
         </ion-item>
-        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; deleteDictionary(); reloadDictionaryStatus(); download()">
+        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; canDownload = true; deleteDictionary(); reloadDictionaryStatus(); download()">
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
           <ion-label>Mettre à jour vers "{{ latestDictionary }}"</ion-label>
         </ion-item>
@@ -104,16 +104,16 @@ import {
   IonLabel,
   IonNote,
   IonList
-} from '@ionic/vue';
-import {refreshOutline, trashBinOutline} from "ionicons/icons";
-import {deleteDictionary} from "@/functions/offline";
+} from "@ionic/vue"
+import {refreshOutline, trashBinOutline} from "ionicons/icons"
+import {deleteDictionary} from "@/functions/offline"
 </script>
 
 <script lang="ts">
 
-import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline";
-import {toastController} from "@ionic/vue";
-import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses";
+import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline"
+import {toastController} from "@ionic/vue"
+import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses"
 
 export default {
   data() {
@@ -121,12 +121,12 @@ export default {
       canDownload: true,
       downloaded: false,
       loading: false,
-      latestDictionary: '',
+      latestDictionary: "",
       hasUpdate: false,
-      dictionaryToDownload: 'remede',
+      dictionaryToDownload: "remede",
       dictionary: {
-        hash: '',
-        slug: ''
+        hash: "",
+        slug: ""
       },
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
@@ -137,13 +137,13 @@ export default {
   },
   methods: {
     handleThemeChangement(theme: string) {
-      localStorage.setItem('userTheme', theme)
-      document.body.classList.remove('dark')
-      document.body.classList.remove('light')
+      localStorage.setItem("userTheme", theme)
+      document.body.classList.remove("dark")
+      document.body.classList.remove("light")
       document.body.classList.add(theme)
     },
     getCurrentTheme() {
-      return localStorage.getItem('userTheme') || 'light'
+      return localStorage.getItem("userTheme") || "light"
     },
     async reloadDictionaryStatus() {
       const status = await getOfflineDictionaryStatus()
@@ -154,7 +154,7 @@ export default {
         this.canDownload = false
       }
 
-      const specs = await fetch('https://api-remede.camarm.fr').then(resp => resp.json()) as InformationsResponse
+      const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionnaires
       this.availableDictionariesName = Object.keys(specs.dictionnaires)
 
@@ -170,19 +170,19 @@ export default {
       try {
         await downloadDictionary(this.availableDictionaries[this.dictionaryToDownload])
         const successMessage = await toastController.create({
-          header: 'Téléchargement réussi',
-          message: `Le dictionnaire hors-ligne a été téléchargé`,
+          header: "Téléchargement réussi",
+          message: "Le dictionnaire hors-ligne a été téléchargé",
           duration: 5000,
-          color: 'success'
+          color: "success"
         })
 
         await successMessage.present()
       } catch (e) {
         const message = await toastController.create({
-          header: 'Échec de téléchargement',
+          header: "Échec de téléchargement",
           message: `Le dictionnaire hors-ligne n'a pas pu être téléchargé: ${e}`,
           duration: 5000,
-          color: 'danger'
+          color: "danger"
         })
 
         await message.present()

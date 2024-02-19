@@ -1,24 +1,24 @@
-import {RemedeDictionaryOption} from "@/functions/types/api_responses";
-import {Directory, Filesystem} from '@capacitor/filesystem'
-import {Preferences} from '@capacitor/preferences'
-import {Capacitor} from "@capacitor/core";
+import {RemedeDictionaryOption} from "@/functions/types/api_responses"
+import {Directory, Filesystem} from "@capacitor/filesystem"
+import {Preferences} from "@capacitor/preferences"
+import {Capacitor} from "@capacitor/core"
 
 async function getOfflineDictionaryStatus() {
-    const status = JSON.parse((await Preferences.get({ key: 'offlineDictionary' })).value || '{}')
-    if (JSON.stringify(status) == '{}') {
+    const status = JSON.parse((await Preferences.get({ key: "offlineDictionary" })).value || "{}")
+    if (JSON.stringify(status) == "{}") {
         await Preferences.set({
-            key: 'offlineDictionary',
+            key: "offlineDictionary",
             value: JSON.stringify({
-                'downloaded': false,
-                'path': '',
-                'hash': '',
-                'slug': ''
+                "downloaded": false,
+                "path": "",
+                "hash": "",
+                "slug": ""
             })
         })
         return {
             downloaded: false,
-            hash: '',
-            slug: ''
+            hash: "",
+            slug: ""
         }
     }
     return status
@@ -41,7 +41,7 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     }
 
     await Preferences.set({
-        key: 'offlineDictionary',
+        key: "offlineDictionary",
         value: JSON.stringify(offlineDictionary)
     })
     return
@@ -49,25 +49,25 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
 
 async function deleteDictionary() {
     await Preferences.set({
-        key: 'offlineDictionary',
+        key: "offlineDictionary",
         value: JSON.stringify({
-            'downloaded': false,
-            'path': '',
-            'hash': '',
-            'slug': ''
+            "downloaded": false,
+            "path": "",
+            "hash": "",
+            "slug": ""
         })
     })
     await Filesystem.deleteFile({
-        path: 'remedeSQLite.db',
+        path: "remedeSQLite.db",
         directory: Directory.Data
     })
 }
 
 
 async function getRawDictionary() {
-    if (!Capacitor.isNativePlatform() || Capacitor.getPlatform() === 'electron') {
+    if (!Capacitor.isNativePlatform() || Capacitor.getPlatform() === "electron") {
         const file = await Filesystem.readFile({
-            path: 'remedeSQLite.db',
+            path: "remedeSQLite.db",
             directory: Directory.Data
         })
 

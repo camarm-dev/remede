@@ -70,13 +70,13 @@ import {
   IonList,
   IonChip,
   IonBadge, IonNavLink, IonProgressBar, IonSearchbar
-} from '@ionic/vue';
-import FicheModal from "@/components/FicheModal.vue";
-import {close, filterCircleOutline} from "ionicons/icons";
+} from "@ionic/vue"
+import FicheModal from "@/components/FicheModal.vue"
+import {close, filterCircleOutline} from "ionicons/icons"
 </script>
 
 <script lang="ts">
-import {RemedeSheet} from "@/functions/types/remede";
+import {RemedeSheet} from "@/functions/types/remede"
 
 export default {
   data() {
@@ -86,8 +86,8 @@ export default {
       sheets: [] as RemedeSheet[],
       all_sheets: [] as RemedeSheet[],
       filters: [] as string[],
-      availableFilters: ['orthographe', 'conjugaison', 'grammaire', 'lexique', 'style', 'typographie'] as string[],
-      query: ''
+      availableFilters: ["orthographe", "conjugaison", "grammaire", "lexique", "style", "typographie"] as string[],
+      query: ""
     }
   },
   mounted() {
@@ -97,7 +97,7 @@ export default {
     async loadSheets() {
       this.loading = true
       try {
-        this.all_sheets = await fetch('https://api-remede.camarm.fr/sheets').then(resp => resp.json())
+        this.all_sheets = await fetch("https://api-remede.camarm.fr/sheets").then(resp => resp.json())
         this.sheets = this.all_sheets
         this.filters = []
         this.failed = false
@@ -108,20 +108,20 @@ export default {
     },
     getTagColor(tag: string) {
       switch (tag) {
-        case 'orthographe':
-          return 'primary'
-        case 'grammaire':
-          return 'success'
-        case 'lexique':
-          return 'tertiary'
-        case 'conjugaison':
-          return 'secondary'
-        case 'style':
-          return 'warning'
-        case 'typographie':
-          return 'danger'
+        case "orthographe":
+          return "primary"
+        case "grammaire":
+          return "success"
+        case "lexique":
+          return "tertiary"
+        case "conjugaison":
+          return "secondary"
+        case "style":
+          return "warning"
+        case "typographie":
+          return "danger"
         default:
-          return 'grey'
+          return "grey"
       }
     },
     handleRefresh(event: CustomEvent) {
