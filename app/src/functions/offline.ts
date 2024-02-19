@@ -71,7 +71,9 @@ async function getRawDictionary() {
             directory: Directory.Data
         })
 
-        return await file.data.arrayBuffer().then(buf => new Uint8Array(buf))
+        const fileData = file.data as Blob
+
+        return await fileData.arrayBuffer().then(buf => new Uint8Array(buf))
     }
 
     const path = (await getOfflineDictionaryStatus()).path

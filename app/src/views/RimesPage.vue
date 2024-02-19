@@ -14,7 +14,7 @@
           <ion-title size="large">Dictionnaire des rimes</ion-title>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value)" placeholder="Entrez un mot"></ion-searchbar>
+          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" placeholder="Entrez un mot"></ion-searchbar>
           <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
         </ion-toolbar>
       </ion-header>
@@ -29,7 +29,7 @@
       </div>
       <ion-content v-else>
         <ul>
-          <li :key="r" v-for="r in rhymes">{{r}}</li>
+          <li :key="r.toString()" v-for="r in rhymes">{{r}}</li>
         </ul>
       </ion-content>
     </ion-content>

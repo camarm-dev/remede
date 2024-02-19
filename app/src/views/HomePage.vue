@@ -8,7 +8,7 @@
       </ion-toolbar>
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
-                       @ionInput="handleSearchbarInput($event.detail.value)"
+                       @ionInput="handleSearchbarInput($event.detail.value as string)"
                        placeholder="Rechercher un mot"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
@@ -92,7 +92,7 @@ import {
   loadingController,
   toastController, AnimationDirection, useIonRouter, useBackButton
 } from "@ionic/vue"
-import {defineComponent, onMounted, ref} from "vue"
+import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 
@@ -134,9 +134,9 @@ export default defineComponent({
     this.loadTodayWord()
   },
   setup() {
-    const mainToolbar = ref(null)
-    const searchToolbar = ref(null)
-    const content = ref(null)
+    const mainToolbar = ref(null) as any as Ref
+    const searchToolbar = ref(null) as any as Ref
+    const content = ref(null) as any as Ref
 
     let mainToolbarAnimation: Animation
     let searchToolbarAnimation: Animation
@@ -144,17 +144,17 @@ export default defineComponent({
 
     onMounted(() => {
       mainToolbarAnimation = createAnimation()
-          .addElement(mainToolbar.value.$el)
+          .addElement(mainToolbar.value?.$el)
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-100%)")
           .fromTo("opacity", "1", "0")
       searchToolbarAnimation = createAnimation()
-          .addElement(searchToolbar.value.$el)
+          .addElement(searchToolbar.value?.$el)
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-50%)")
           .fromTo("scale", "1", "1.01")
       contentAnimation = createAnimation()
-          .addElement(content.value.$el)
+          .addElement(content.value?.$el)
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-10%)")
 

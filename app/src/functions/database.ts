@@ -23,7 +23,7 @@ async function openDatabase() {
 
 class RemedeDatabase {
 
-    private db: Database
+    private db?: Database
 
     constructor() {
         this.getDatabase().then(() => {
@@ -69,7 +69,7 @@ class RemedeDatabase {
             }
         }
 
-        return parsed
+        return parsed as string[]
     }
 }
 

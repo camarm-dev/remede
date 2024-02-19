@@ -34,10 +34,10 @@
         </ion-item>
         <ion-item color="light" class="no-border pd-t">
           <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="1000" counter :value="content"
-                        @ionInput="content = $event.detail.value"
+                        @ionInput="content = $event.detail.value as string"
                         placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
           <div v-else class="content ion-padding-bottom pd-t">
-            <span :key="segment" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
+            <span :key="`segment-${explainSegments.indexOf(segment)}`" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
                 <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id}`">{{ segment.text }}</ion-text>
                 <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
@@ -53,7 +53,7 @@
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
                       <br>
-                      <ion-text @click="setSegmentAsText(segment, suggested.value)" color="primary" :key="suggested" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-text>
+                      <ion-text @click="setSegmentAsText(segment, suggested.value)" color="primary" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-text>
                     </ion-label>
                     <ion-label>
                       <ion-text @click="setSegmentAsText(segment, segment.text)" color="primary">Ne pas remplacer "{{ segment.text }}"</ion-text>
@@ -143,7 +143,7 @@ export default {
 
       fetch(url, {
         method: "POST",
-        body: new URLSearchParams(body),
+        body: new URLSearchParams(body as any),
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -187,7 +187,7 @@ export default {
       }).join("")
     },
     setSegmentAsText(segment: ExplainSegment, text: string) {
-      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false, text: text }
+      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false as any as LanguageToolCorrection, text: text }
     }
   }
 }

@@ -12,13 +12,13 @@ interface RemedeExample {
 
 
 interface RemedeExplication {
-    [key: string]: string[] | string[][]
+    [key: string]: string | string[]
 }
 
 interface RemedeWordDefinition {
     genre: string | string[]
     classe: string
-    explications: string | string[]
+    explications: RemedeExplication
     exemples: RemedeExample[]
 }
 
