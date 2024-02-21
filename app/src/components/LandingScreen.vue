@@ -119,7 +119,7 @@ import '@ionic/vue/css/ionic-swiper.css'
 import Icon from "@/assets/remede3d.png"
 import Quote from "@/assets/quote3d.png"
 import Ellipse from "@/assets/ellipse3d.png"
-import FunctionalitiesIllustration from "@/assets/functionnalities.png"
+import FunctionalitiesIllustration from "@/assets/functionalities.png"
 import RocketIcon from "@/assets/rocket.png"
 import OpenSourceIcon from "@/assets/osi.png"
 import LandingScreenNextButton from "@/components/LandingScreenNextButton.vue";
