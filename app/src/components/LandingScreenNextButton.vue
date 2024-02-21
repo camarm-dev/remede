@@ -1,6 +1,6 @@
 <template>
   <ion-button data-swiper-parallax-opacity="0.5" fill="clear" expand="full" @click="swiper.slideNext()">
-    Continuer <ion-icon slot="end" :icon="chevronForward"/>
+    {{ text || "Continuer" }} <ion-icon slot="end" :icon="chevronForward"/>
   </ion-button>
 </template>
 
@@ -12,6 +12,9 @@ import {useSwiper} from "swiper/vue";
 import {chevronForward} from "ionicons/icons";
 
 export default {
+  props: [
+      "text"
+  ],
   components: {
     IonButton,
     IonIcon
