@@ -90,11 +90,12 @@ import {
   IonList,
   IonProgressBar,
   loadingController,
-  toastController, AnimationDirection, useIonRouter, useBackButton
+  toastController, AnimationDirection, useIonRouter, useBackButton, modalController
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
+import LandingScreen from "@/components/LandingScreen.vue";
 
 
 export default defineComponent({
@@ -126,12 +127,15 @@ export default defineComponent({
       loading: false,
       randomWordDisabled: true,
       todayWord: "",
-      todayWordDisabled: true
+      todayWordDisabled: true,
+      el: null as any
     }
   },
   mounted() {
     this.loadRandomWord()
     this.loadTodayWord()
+    this.el = ref(this.$el)
+    this.openLandingScreen()
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -256,6 +260,21 @@ export default defineComponent({
       await loader.dismiss()
       await toast.present()
     },
+    async openLandingScreen() {
+      const hasOpenedLandingScreen = localStorage.getItem("landingScreen") || "false"
+      if (hasOpenedLandingScreen === "false") {
+        const modal = await modalController.create({
+          component: LandingScreen,
+          presentingElement: this.el,
+          handle: true
+        })
+        await modal.present()
+        window.addEventListener('landingScreenClosed', () => {
+          modal.dismiss()
+        })
+        // localStorage.setItem("landingScreen", "true")
+      }
+    }
   }
 })
 </script>
