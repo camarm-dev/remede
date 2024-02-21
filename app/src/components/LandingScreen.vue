@@ -59,7 +59,7 @@
               <h1 class="remede-font no-capitalize">Mais surtout ... <span class="contrast">open source</span> !</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              Eh oui ! Remède grandi avec sa communauté et est 100% open source !
+              Et oui ! Remède grandi avec sa communauté et est 100% open source !
             </div>
           </div>
           <div
@@ -77,7 +77,7 @@
               <h1 class="remede-font no-capitalize">Prêts à tenter l'<span class="contrast">aventure</span> ?</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              Parler comme Molière, c'est maintenant !
+              Guérir vos maux face au français, c'est possible dès maintenant avec Remède !
             </div>
           </div>
           <div
