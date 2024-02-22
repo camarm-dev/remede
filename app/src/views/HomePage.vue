@@ -318,7 +318,7 @@ export default defineComponent({
       }
 
       const tag = await fetch("https://api.github.com/repos/camarm-dev/remede/tags").then(resp => resp.json()).then((resp: any) => resp[0].name)
-      const version = (await App.getInfo())
+      const version = (await App.getInfo()).version
       if (!version.startsWith(tag)) {
         this.hasAppUpdate = true
       }
