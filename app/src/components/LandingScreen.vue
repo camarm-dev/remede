@@ -49,7 +49,7 @@
               data-swiper-parallax="-300"
               data-swiper-parallax-duration="600"
           >
-            <img class="slide-image" :src="FunctionalitiesIllustration" alt="Illustration"/>
+            <img class="slide-image large" :src="FunctionalitiesIllustration" alt="Illustration"/>
           </div>
           <LandingScreenNextButton/>
         </swiper-slide>
@@ -74,7 +74,7 @@
         <swiper-slide>
           <div>
             <div class="title" data-swiper-parallax="-100">
-              <h1 class="remede-font no-capitalize">Prêts à tenter l'<span class="contrast">aventure</span> ?</h1>
+              <h1 class="remede-font no-capitalize">Prêts à entrer dans l'<span class="contrast">aventure</span> ?</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
               Guérir vos maux face au français, c'est possible dès maintenant avec Remède !
@@ -234,6 +234,10 @@ ion-content {
 
 .slide-image {
   height: 60% !important;
+}
+
+.slide-image.large {
+  height: 90% !important;
 }
 
 .slide-image:not(.remede) {

@@ -350,7 +350,7 @@ export default defineComponent({
         window.addEventListener('landingScreenClosed', () => {
           modal.dismiss()
         })
-        // localStorage.setItem("landingScreen", "true")
+        localStorage.setItem("landingScreen", "true")
       }
     }
   }
