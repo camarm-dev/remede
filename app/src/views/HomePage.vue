@@ -65,6 +65,38 @@
         </ion-item>
       </ion-list>
 
+      <div class="list-title">
+        Pour vous
+      </div>
+      <ion-list inset>
+        <swiper :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
+          <swiper-slide v-if="hasDictionaryUpdate" @click="goTo('/parametres')">
+            <img :src="newBaseIllustration" alt="Mettez à jour votre dictionnaire !"/>
+          </swiper-slide>
+          <swiper-slide v-if="hasAppUpdate" @click="open('https://remede.camarm.fr/download')">
+            <img :src="newVersionIllustration" alt="Mettez à jour votre app !"/>
+          </swiper-slide>
+          <swiper-slide id="open-changelog">
+            <img :src="changelogIllustration" alt="Illustration changelog"/>
+          </swiper-slide>
+        </swiper>
+      </ion-list>
+      <ion-modal trigger="open-changelog" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+        <ion-content class="ion-padding">
+          <h1 class="remede-font">Notes de changement</h1>
+          <p>
+            La version sur laquelle vous naviguez est la version <code>1.1.1</code>, nom de code <i>Goofy Jellyfish, revision 1</i>.<br><br>
+            Elle apporte les nouveautés et patch suivants:
+            <ul>
+              <li>Les mot recherchés ne sont plus "case sensitive"</li>
+              <li>Téléchargement du dictionnaire amélioré</li>
+              <li>Écran d'accueil</li>
+              <li>Section "pour vous"</li>
+            </ul>
+          </p>
+        </ion-content>
+      </ion-modal>
+
     </ion-content>
   </ion-page>
 </template>
@@ -90,16 +122,35 @@ import {
   IonList,
   IonProgressBar,
   loadingController,
-  toastController, AnimationDirection, useIonRouter, useBackButton, modalController
+  toastController,
+  AnimationDirection,
+  useIonRouter,
+  useBackButton,
+  modalController,
+  IonAccordion,
+  IonModal,
+  IonAccordionGroup
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 import LandingScreen from "@/components/LandingScreen.vue";
-
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {Navigation, Pagination} from "swiper/modules"
+import changelogIllustration from  "@/assets/changelog.png"
+import newBaseIllustration from  "@/assets/newBase.png"
+import newVersionIllustration from  "@/assets/newVersion.png"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import '@ionic/vue/css/ionic-swiper.css'
+import {getOfflineDictionaryStatus} from "@/functions/offline";
+import {InformationsResponse} from "@/functions/types/api_responses";
+import {App} from "@capacitor/app";
 
 export default defineComponent({
   components: {
+    IonAccordionGroup, IonModal, IonAccordion,
     IonButtons,
     IonContent,
     IonHeader,
@@ -113,6 +164,8 @@ export default defineComponent({
     IonItem,
     IonList,
     IonProgressBar,
+    Swiper,
+    SwiperSlide
   },
   data() {
     return {
@@ -128,7 +181,9 @@ export default defineComponent({
       randomWordDisabled: true,
       todayWord: "",
       todayWordDisabled: true,
-      el: null as any
+      el: null as any,
+      hasDictionaryUpdate: false,
+      hasAppUpdate: false,
     }
   },
   mounted() {
@@ -136,6 +191,7 @@ export default defineComponent({
     this.loadTodayWord()
     this.el = ref(this.$el)
     this.openLandingScreen()
+    this.reloadUpdateStatuses()
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -205,7 +261,12 @@ export default defineComponent({
       searchToolbar,
       content,
       ionRouter,
-      goTo
+      goTo,
+      Navigation,
+      Pagination,
+      changelogIllustration,
+      newBaseIllustration,
+      newVersionIllustration
     }
   },
   methods: {
@@ -244,6 +305,23 @@ export default defineComponent({
     async loadTodayWord() {
       this.todayWord = await getTodayWord()
       this.todayWordDisabled = false
+    },
+    open(url: string) {
+      window.open(url)
+    },
+    async reloadUpdateStatuses() {
+      const status = await getOfflineDictionaryStatus()
+      const downloaded = status.downloaded
+      const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
+      if (downloaded) {
+        this.hasDictionaryUpdate = status.hash != specs.dictionnaires[status.slug].hash
+      }
+
+      const tag = await fetch("https://api.github.com/repos/camarm-dev/remede/tags").then(resp => resp.json()).then((resp: any) => resp[0].name)
+      const version = (await App.getInfo())
+      if (!version.startsWith(tag)) {
+        this.hasAppUpdate = true
+      }
     },
     async report() {
       const loader = await loadingController.create({
