@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     load() {
-      this.mot = this.$route.params.mot
+      this.mot = this.$route.params.mot as string
     }
   }
 }

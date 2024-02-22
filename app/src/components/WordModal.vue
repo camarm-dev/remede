@@ -48,7 +48,7 @@ import quoteOpen from "@/assets/openQuote.svg"
             Retour
           </ion-button>
         </ion-buttons>
-        <ion-title>Définition "{{ mot }}"</ion-title>
+        <ion-title>{{ mot }}</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
             <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
@@ -77,7 +77,7 @@ import quoteOpen from "@/assets/openQuote.svg"
           </ion-buttons>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value; refreshListeners()">
+          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value as string; refreshListeners()">
             <ion-segment-button value="def">Définition</ion-segment-button>
             <ion-segment-button value="syn">Synonymes</ion-segment-button>
             <ion-segment-button value="ant">Antonymes</ion-segment-button>
@@ -312,7 +312,7 @@ export default defineComponent({
       currentTemps: "",
       id: {
         modal: generateId(),
-        examples: []
+        examples: [] as string[]
       },
       modeTemps: [] as string[],
       currentSujets: [] as string[],

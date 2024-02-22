@@ -14,7 +14,7 @@
           <ion-title size="large">Fiches</ion-title>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value)" placeholder="Rechercher une fiche"></ion-searchbar>
+          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" placeholder="Rechercher une fiche"></ion-searchbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
             <ion-chip id="open-filters">
               <ion-icon :icon="filterCircleOutline"></ion-icon>
@@ -77,6 +77,7 @@ import {close, filterCircleOutline} from "ionicons/icons"
 
 <script lang="ts">
 import {RemedeSheet} from "@/functions/types/remede"
+import {RefresherCustomEvent} from "@ionic/vue"
 
 export default {
   data() {
@@ -124,9 +125,9 @@ export default {
           return "grey"
       }
     },
-    handleRefresh(event: CustomEvent) {
+    handleRefresh(event: RefresherCustomEvent) {
       this.loadSheets().then(() => {
-        event.target.complete()
+        event.target?.complete()
       })
     },
     searchInSheets() {

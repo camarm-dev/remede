@@ -8,7 +8,7 @@
       </ion-toolbar>
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
-                       @ionInput="handleSearchbarInput($event.detail.value)"
+                       @ionInput="handleSearchbarInput($event.detail.value as string)"
                        placeholder="Rechercher un mot"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
@@ -65,6 +65,38 @@
         </ion-item>
       </ion-list>
 
+      <div class="list-title">
+        Pour vous
+      </div>
+      <ion-list inset>
+        <swiper :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
+          <swiper-slide v-if="hasDictionaryUpdate" @click="goTo('/parametres')">
+            <img :src="newBaseIllustration" alt="Mettez à jour votre dictionnaire !"/>
+          </swiper-slide>
+          <swiper-slide v-if="hasAppUpdate" @click="open('https://remede.camarm.fr/download')">
+            <img :src="newVersionIllustration" alt="Mettez à jour votre app !"/>
+          </swiper-slide>
+          <swiper-slide id="open-changelog">
+            <img :src="changelogIllustration" alt="Illustration changelog"/>
+          </swiper-slide>
+        </swiper>
+      </ion-list>
+      <ion-modal trigger="open-changelog" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+        <ion-content class="ion-padding">
+          <h1 class="remede-font">Notes de changement</h1>
+          <p>
+            La version sur laquelle vous naviguez est la version <code>1.1.1</code>, nom de code <i>Goofy Jellyfish, revision 1</i>.<br><br>
+            Elle apporte les nouveautés et patch suivants:
+            <ul>
+              <li>Les mot recherchés ne sont plus "case sensitive"</li>
+              <li>Téléchargement du dictionnaire amélioré</li>
+              <li>Écran d'accueil</li>
+              <li>Section "pour vous"</li>
+            </ul>
+          </p>
+        </ion-content>
+      </ion-modal>
+
     </ion-content>
   </ion-page>
 </template>
@@ -90,15 +122,33 @@ import {
   IonList,
   IonProgressBar,
   loadingController,
-  toastController, AnimationDirection, useIonRouter, useBackButton
+  toastController,
+  AnimationDirection,
+  useIonRouter,
+  useBackButton,
+  modalController,
+  IonModal,
 } from "@ionic/vue"
-import {defineComponent, onMounted, ref} from "vue"
+import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
-
+import LandingScreen from "@/components/LandingScreen.vue"
+import {Swiper, SwiperSlide} from "swiper/vue"
+import {Navigation, Pagination} from "swiper/modules"
+import changelogIllustration from  "@/assets/changelog.png"
+import newBaseIllustration from  "@/assets/newBase.png"
+import newVersionIllustration from  "@/assets/newVersion.png"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import "@ionic/vue/css/ionic-swiper.css"
+import {getOfflineDictionaryStatus} from "@/functions/offline"
+import {InformationsResponse} from "@/functions/types/api_responses"
+import {App} from "@capacitor/app"
 
 export default defineComponent({
   components: {
+    IonModal,
     IonButtons,
     IonContent,
     IonHeader,
@@ -112,6 +162,8 @@ export default defineComponent({
     IonItem,
     IonList,
     IonProgressBar,
+    Swiper,
+    SwiperSlide
   },
   data() {
     return {
@@ -126,17 +178,23 @@ export default defineComponent({
       loading: false,
       randomWordDisabled: true,
       todayWord: "",
-      todayWordDisabled: true
+      todayWordDisabled: true,
+      el: null as any,
+      hasDictionaryUpdate: false,
+      hasAppUpdate: false,
     }
   },
   mounted() {
     this.loadRandomWord()
     this.loadTodayWord()
+    this.el = ref(this.$el)
+    this.openLandingScreen()
+    this.reloadUpdateStatuses()
   },
   setup() {
-    const mainToolbar = ref(null)
-    const searchToolbar = ref(null)
-    const content = ref(null)
+    const mainToolbar = ref(null) as any as Ref
+    const searchToolbar = ref(null) as any as Ref
+    const content = ref(null) as any as Ref
 
     let mainToolbarAnimation: Animation
     let searchToolbarAnimation: Animation
@@ -144,17 +202,17 @@ export default defineComponent({
 
     onMounted(() => {
       mainToolbarAnimation = createAnimation()
-          .addElement(mainToolbar.value.$el)
+          .addElement(mainToolbar.value?.$el)
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-100%)")
           .fromTo("opacity", "1", "0")
       searchToolbarAnimation = createAnimation()
-          .addElement(searchToolbar.value.$el)
+          .addElement(searchToolbar.value?.$el)
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-50%)")
           .fromTo("scale", "1", "1.01")
       contentAnimation = createAnimation()
-          .addElement(content.value.$el)
+          .addElement(content.value?.$el)
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-10%)")
 
@@ -201,7 +259,12 @@ export default defineComponent({
       searchToolbar,
       content,
       ionRouter,
-      goTo
+      goTo,
+      Navigation,
+      Pagination,
+      changelogIllustration,
+      newBaseIllustration,
+      newVersionIllustration
     }
   },
   methods: {
@@ -241,6 +304,23 @@ export default defineComponent({
       this.todayWord = await getTodayWord()
       this.todayWordDisabled = false
     },
+    open(url: string) {
+      window.open(url)
+    },
+    async reloadUpdateStatuses() {
+      const status = await getOfflineDictionaryStatus()
+      const downloaded = status.downloaded
+      const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
+      if (downloaded) {
+        this.hasDictionaryUpdate = status.hash != specs.dictionnaires[status.slug].hash
+      }
+
+      const tag = await fetch("https://api.github.com/repos/camarm-dev/remede/tags").then(resp => resp.json()).then((resp: any) => resp[0].name)
+      const version = (await App.getInfo()).version
+      if (!version.startsWith(tag)) {
+        this.hasAppUpdate = true
+      }
+    },
     async report() {
       const loader = await loadingController.create({
         message: "Chargement"
@@ -256,6 +336,21 @@ export default defineComponent({
       await loader.dismiss()
       await toast.present()
     },
+    async openLandingScreen() {
+      const hasOpenedLandingScreen = localStorage.getItem("landingScreen") || "false"
+      if (hasOpenedLandingScreen === "false") {
+        const modal = await modalController.create({
+          component: LandingScreen,
+          presentingElement: this.el,
+          handle: true
+        })
+        await modal.present()
+        window.addEventListener("landingScreenClosed", () => {
+          modal.dismiss()
+        })
+        localStorage.setItem("landingScreen", "true")
+      }
+    }
   }
 })
 </script>

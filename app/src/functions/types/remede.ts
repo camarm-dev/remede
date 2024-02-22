@@ -12,7 +12,7 @@ interface RemedeExample {
 
 
 interface RemedeExplication {
-    [key: string]: string[] | string[][]
+    [key: string]: string | string[]
 }
 
 interface RemedeWordDefinition {

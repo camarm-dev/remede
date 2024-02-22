@@ -83,6 +83,17 @@
         </ion-note>
       </ion-list>
 
+      <ion-list inset v-if="downloaded">
+        <ion-note v-if="working" class="ion-padding" color="success">
+          <ion-icon :icon="checkmarkCircle"/>
+          Tout semble fonctionner parfaitement. Vous pouvez commencer à chercher des mots hors-ligne !
+        </ion-note>
+        <ion-note v-else class="ion-padding" color="danger">
+          <ion-icon :icon="closeCircle"/>
+          Un problème a été détecté, veuillez réinstaller le dictionnaire ou contacter le support.
+        </ion-note>
+      </ion-list>
+
     </ion-content>
   </ion-page>
 </template>
@@ -105,15 +116,19 @@ import {
   IonNote,
   IonList
 } from "@ionic/vue"
-import {refreshOutline, trashBinOutline} from "ionicons/icons"
+import {checkmarkCircle, closeCircle, refreshOutline, trashBinOutline} from "ionicons/icons"
 import {deleteDictionary} from "@/functions/offline"
 </script>
 
 <script lang="ts">
 
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline"
-import {toastController} from "@ionic/vue"
+import {alertController, toastController} from "@ionic/vue"
 import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses"
+import {App} from "@capacitor/app"
+import {Capacitor} from "@capacitor/core"
+import {getWordDocument} from "@/functions/dictionnary"
+import {RemedeWordDocument} from "@/functions/types/remede"
 
 export default {
   data() {
@@ -130,10 +145,23 @@ export default {
       },
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
+      working: true
     }
   },
   mounted() {
-    this.reloadDictionaryStatus()
+    this.reloadDictionaryStatus().then(async () => {
+      if (this.downloaded) {
+        try {
+          const word = await getWordDocument("remède") as RemedeWordDocument
+          if (word.ipa != "/ʁəmɛd/") {
+            throw "Database is wrong"
+          }
+          this.working = true
+        } catch {
+          this.working = false
+        }
+      }
+    })
   },
   methods: {
     handleThemeChangement(theme: string) {
@@ -165,15 +193,30 @@ export default {
         this.hasUpdate = false
       }
     },
+    async closeApp() {
+      if (!Capacitor.isNativePlatform() || Capacitor.getPlatform() === "electron") {
+        location.reload()
+        return
+      }
+      await App.exitApp()
+    },
     async download() {
       this.loading = true
       try {
         await downloadDictionary(this.availableDictionaries[this.dictionaryToDownload])
-        const successMessage = await toastController.create({
+        const successMessage = await alertController.create({
           header: "Téléchargement réussi",
-          message: "Le dictionnaire hors-ligne a été téléchargé",
-          duration: 5000,
-          color: "success"
+          subHeader: "Le dictionnaire hors-ligne a été téléchargé",
+          message: "Pour finaliser son installation, veuillez relancer l'application !",
+          buttons: [
+            {
+              text: "C'est compris !",
+              role: "confirm",
+              handler: async () => {
+                await this.closeApp()
+              },
+            },
+          ]
         })
 
         await successMessage.present()
@@ -197,6 +240,10 @@ export default {
 <style scoped>
 ion-label ion-progress-bar {
   margin-top: 8px;
+}
+
+ion-note.ion-padding {
+  display: block;
 }
 </style>
 

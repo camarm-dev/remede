@@ -32,7 +32,7 @@ import quoteOpen from "@/assets/openQuote.svg"
           </ion-label>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value;">
+          <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value as string;">
             <ion-segment-button value="def">Définition</ion-segment-button>
             <ion-segment-button value="syn">Synonymes</ion-segment-button>
             <ion-segment-button value="ant">Antonymes</ion-segment-button>
@@ -141,7 +141,7 @@ export default {
       notFound: false,
       tab: "def" as string,
       id: {
-        examples: []
+        examples: [] as string[]
       }
     }
   },
