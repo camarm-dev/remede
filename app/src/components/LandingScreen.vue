@@ -101,44 +101,30 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonLabel,
-  IonNote,
   IonPage,
-  IonPopover,
-  IonSegment,
-  IonSegmentButton,
-  IonTitle,
-  IonToolbar,
   IonButton
-} from "@ionic/vue";
-import {Swiper, SwiperSlide} from "swiper/vue";
-import {Pagination, Parallax} from "swiper/modules";
+} from "@ionic/vue"
+import {Swiper, SwiperSlide} from "swiper/vue"
+import {Pagination, Parallax} from "swiper/modules"
 import "swiper/css"
 import "swiper/css/navigation"
-import '@ionic/vue/css/ionic-swiper.css'
+import "@ionic/vue/css/ionic-swiper.css"
 import Icon from "@/assets/remede3d.png"
 import Quote from "@/assets/quote3d.png"
 import Ellipse from "@/assets/ellipse3d.png"
 import FunctionalitiesIllustration from "@/assets/functionalities.png"
 import RocketIcon from "@/assets/rocket.png"
 import OpenSourceIcon from "@/assets/osi.png"
-import LandingScreenNextButton from "@/components/LandingScreenNextButton.vue";
-import {arrowForward} from "ionicons/icons";
+import LandingScreenNextButton from "@/components/LandingScreenNextButton.vue"
+import {arrowForward} from "ionicons/icons"
 
 export default {
   components: {
     LandingScreenNextButton,
     IonPage,
     IonHeader,
-    IonToolbar,
     IonIcon,
-    IonPopover,
-    IonNote,
     IonContent,
-    IonLabel,
-    IonSegmentButton,
-    IonSegment,
-    IonTitle,
     Swiper,
     SwiperSlide,
     IonButton
@@ -154,11 +140,11 @@ export default {
       RocketIcon,
       OpenSourceIcon,
       arrowForward
-    };
+    }
   },
   methods: {
     close() {
-      const event = new Event('landingScreenClosed')
+      const event = new Event("landingScreenClosed")
       window.dispatchEvent(event)
     },
   }

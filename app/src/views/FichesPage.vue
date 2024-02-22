@@ -77,7 +77,7 @@ import {close, filterCircleOutline} from "ionicons/icons"
 
 <script lang="ts">
 import {RemedeSheet} from "@/functions/types/remede"
-import {RefresherCustomEvent} from "@ionic/vue";
+import {RefresherCustomEvent} from "@ionic/vue"
 
 export default {
   data() {

@@ -7,9 +7,9 @@
 <script lang="ts">
 import {
   IonButton, IonIcon
-} from "@ionic/vue";
-import {useSwiper} from "swiper/vue";
-import {chevronForward} from "ionicons/icons";
+} from "@ionic/vue"
+import {useSwiper} from "swiper/vue"
+import {chevronForward} from "ionicons/icons"
 
 export default {
   props: [
@@ -24,7 +24,7 @@ export default {
     return {
       swiper,
       chevronForward
-    };
+    }
   },
 }
 </script>

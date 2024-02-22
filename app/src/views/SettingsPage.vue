@@ -125,10 +125,10 @@ import {deleteDictionary} from "@/functions/offline"
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline"
 import {alertController, toastController} from "@ionic/vue"
 import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses"
-import {App} from "@capacitor/app";
-import {Capacitor} from "@capacitor/core";
-import {getWordDocument} from "@/functions/dictionnary";
-import {RemedeWordDocument} from "@/functions/types/remede";
+import {App} from "@capacitor/app"
+import {Capacitor} from "@capacitor/core"
+import {getWordDocument} from "@/functions/dictionnary"
+import {RemedeWordDocument} from "@/functions/types/remede"
 
 export default {
   data() {
@@ -152,8 +152,8 @@ export default {
     this.reloadDictionaryStatus().then(async () => {
       if (this.downloaded) {
         try {
-          const word = await getWordDocument('remède') as RemedeWordDocument
-          if (word.ipa != '/ʁəmɛd/') {
+          const word = await getWordDocument("remède") as RemedeWordDocument
+          if (word.ipa != "/ʁəmɛd/") {
             throw "Database is wrong"
           }
           this.working = true
@@ -210,8 +210,8 @@ export default {
           message: "Pour finaliser son installation, veuillez relancer l'application !",
           buttons: [
             {
-              text: 'C\'est compris !',
-              role: 'confirm',
+              text: "C'est compris !",
+              role: "confirm",
               handler: async () => {
                 await this.closeApp()
               },

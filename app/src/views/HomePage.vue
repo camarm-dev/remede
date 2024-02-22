@@ -127,15 +127,13 @@ import {
   useIonRouter,
   useBackButton,
   modalController,
-  IonAccordion,
   IonModal,
-  IonAccordionGroup
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
-import LandingScreen from "@/components/LandingScreen.vue";
-import {Swiper, SwiperSlide} from "swiper/vue";
+import LandingScreen from "@/components/LandingScreen.vue"
+import {Swiper, SwiperSlide} from "swiper/vue"
 import {Navigation, Pagination} from "swiper/modules"
 import changelogIllustration from  "@/assets/changelog.png"
 import newBaseIllustration from  "@/assets/newBase.png"
@@ -143,14 +141,14 @@ import newVersionIllustration from  "@/assets/newVersion.png"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
-import '@ionic/vue/css/ionic-swiper.css'
-import {getOfflineDictionaryStatus} from "@/functions/offline";
-import {InformationsResponse} from "@/functions/types/api_responses";
-import {App} from "@capacitor/app";
+import "@ionic/vue/css/ionic-swiper.css"
+import {getOfflineDictionaryStatus} from "@/functions/offline"
+import {InformationsResponse} from "@/functions/types/api_responses"
+import {App} from "@capacitor/app"
 
 export default defineComponent({
   components: {
-    IonAccordionGroup, IonModal, IonAccordion,
+    IonModal,
     IonButtons,
     IonContent,
     IonHeader,
@@ -347,7 +345,7 @@ export default defineComponent({
           handle: true
         })
         await modal.present()
-        window.addEventListener('landingScreenClosed', () => {
+        window.addEventListener("landingScreenClosed", () => {
           modal.dismiss()
         })
         localStorage.setItem("landingScreen", "true")
