@@ -1,7 +1,9 @@
+import datetime
 import json
 import math
 import os
 import random
+import sqlite3
 import time
 from enum import Enum
 from hashlib import md5
@@ -14,9 +16,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
-from data.utils import transformLetter
-
-version = "1.0.0"
+version = "1.2.1"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
 app.add_middleware(
     CORSMiddleware,
@@ -25,6 +25,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+ACCENT_INSENSITIVE_QUERY = "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
 
 
 class BinariesVariant(str, Enum):
@@ -36,45 +39,34 @@ class BinariesVariant(str, Enum):
     nupkg = "nupkg"
 
 
-def get_remede_json(letter: str):
-    return json.loads(open(f'data/REMEDE_{letter}.json').read())
+def in_json(response: str | list):
+    return json.loads(json.dumps(response))
 
 
-def get_first_letter(word: str):
-    first_letter = word[0]
-    if first_letter not in transformLetter.keys():
-        return first_letter
-    return transformLetter[first_letter]
+def fetch_random_word():
+    return cursor.execute("SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1").fetchone()[0]
 
 
-def get_random_word():
-    random_letter = random.choice(list(REMEDE.keys()))
-    random_word = random.choice(list(REMEDE[random_letter].keys()))
-    return random_word
+def fetch_remede_word_of_day():
+    global WORD_OF_DAY
+    today = datetime.datetime.now().strftime("%d/%m/%Y")
+    if today != WORD_OF_DAY['date']:
+        WORD_OF_DAY['date'] = today
+        WORD_OF_DAY['word'] = fetch_random_word()
+    return WORD_OF_DAY['word']
 
 
-def get_remede_word_of_day():
-    """
-    This function return a random word based on today timestamp.
-    1. Det today timestamp
-    2. Generate a random number with today timestamp
-    3. Get a random word using this random number
-    :return: word string
-    """
-    today = math.floor(time.time() / 1000)
-    random_number = random.Random(today).random()
-
-    all_letters = list(REMEDE.keys())
-    letter = all_letters[math.floor(random_number * len(all_letters))]
-
-    all_words = list(REMEDE[letter].keys())
-    word = all_words[math.floor(random_number * len(all_words))]
-
-    return word
+def fetch_remede_doc(word: str):
+    response = cursor.execute(f"SELECT document FROM dictionary WHERE word = '{word}'").fetchone()
+    return response[0] if response else {'message': 'Mot non trouvé'}
 
 
-def get_remede_doc(word: str):
-    return REMEDE[get_first_letter(word)].get(word, {'message': 'Mot non trouvé'})
+def fetch_autocomplete(query: str, limit: bool = False):
+    if limit:
+        response = cursor.execute(f"SELECT word FROM dictionary WHERE {ACCENT_INSENSITIVE_QUERY} LIKE '{query}%' LIMIT 5").fetchall()
+    else:
+        response = cursor.execute(f"SELECT word FROM dictionary WHERE {ACCENT_INSENSITIVE_QUERY} LIKE '{query}%'").fetchall()
+    return list(map(lambda row: row[0], response))
 
 
 def get_sheets():
@@ -130,12 +122,14 @@ def root():
     - Sa version
     - L'identifiant du dataset API (`dataset`)
     - Le hash du dataset de la base Sqlite (`hash`)
+    - Le nombre de mots dans la base (`total`)
     """
     return {
         "version": version,
         "message": "Check /docs for documentation",
         "dataset": DATASET,
-        "hash": HASH,
+        "hash": DATASET,
+        "total": entities,
         "dictionnaires": {
             "remede": {
                 "nom": "Remède complet  ~290Mb",
@@ -156,7 +150,7 @@ def get_word_document(word: str):
     """
     Renvoie le document Remède du mot `word`
     """
-    return get_remede_doc(word.lower())
+    return in_json(fetch_remede_doc(word.lower()))
 
 
 @app.get('/random')
@@ -164,7 +158,7 @@ def get_random_word_document():
     """
     Renvoie un mot au hasard
     """
-    return get_random_word()
+    return in_json(fetch_random_word())
 
 
 @app.get('/word-of-day')
@@ -172,7 +166,7 @@ def get_word_of_day():
     """
     Renvoie le mot du jour
     """
-    return get_remede_word_of_day()
+    return in_json(fetch_remede_word_of_day())
 
 
 @app.get('/autocomplete/{query}')
@@ -180,21 +174,15 @@ def get_autocomplete(query: str):
     """
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    query = query.lower()
-    json_object = get_remede_json(get_first_letter(query))
-    keys: list = json_object.keys()
-    return list(filter(lambda word: word.startswith(query), keys))[0:6]
+    return in_json(fetch_autocomplete(query, True))
 
 
-@app.get('/autocomplete/{query}')
+@app.get('/search/{query}')
 def get_search_results(query: str):
     """
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    query = query.lower()
-    json_object = get_remede_json(get_first_letter(query))
-    keys: list = json_object.keys()
-    return list(filter(lambda word: word.startswith(query), keys))
+    return in_json(fetch_autocomplete(query))
 
 
 @app.get('/ask-new-word/{query}')
@@ -207,7 +195,7 @@ def send_new_word(query: str):
         return {
             "message": "Successfully added word to words to add."
         }
-    return  {
+    return {
         "message": "Failed to add word to list..."
     }
 
@@ -271,37 +259,19 @@ def download_binary(variant: BinariesVariant):
 
 
 if __name__ == '__main__':
-    REMEDE = {
-        'a': get_remede_json('a'),
-        'b': get_remede_json('b'),
-        'c': get_remede_json('c'),
-        'd': get_remede_json('d'),
-        'e': get_remede_json('e'),
-        'f': get_remede_json('f'),
-        'g': get_remede_json('g'),
-        'h': get_remede_json('h'),
-        'i': get_remede_json('i'),
-        'j': get_remede_json('j'),
-        'k': get_remede_json('k'),
-        'l': get_remede_json('l'),
-        'm': get_remede_json('m'),
-        'n': get_remede_json('n'),
-        'o': get_remede_json('o'),
-        'p': get_remede_json('p'),
-        'q': get_remede_json('q'),
-        'r': get_remede_json('r'),
-        's': get_remede_json('s'),
-        't': get_remede_json('t'),
-        'u': get_remede_json('u'),
-        'v': get_remede_json('v'),
-        'w': get_remede_json('w'),
-        'x': get_remede_json('x'),
-        'y': get_remede_json('y'),
-        'z': get_remede_json('z')
+    database = sqlite3.connect('data/remede.db', check_same_thread=False)
+    cursor = database.cursor()
+    entities = cursor.execute("SELECT COUNT(*) FROM dictionary").fetchone()[0]
+
+    WORD_OF_DAY = {
+        "date": "",
+        "word": ""
     }
+
     DATASET = md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
     DATASET_LESS = md5(open('data/remede-less.db', 'rb').read()).hexdigest()[0:7]
-    HASH = str(md5(str(REMEDE).encode()).hexdigest())[0:7]
+
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
+
     uvicorn.run(app, host='0.0.0.0')
