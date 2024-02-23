@@ -48,7 +48,7 @@ import quoteOpen from "@/assets/openQuote.svg"
             Retour
           </ion-button>
         </ion-buttons>
-        <ion-title>{{ mot }}</ion-title>
+        <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
             <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
@@ -149,7 +149,7 @@ import quoteOpen from "@/assets/openQuote.svg"
           </header>
           <div class="content">
             <ul>
-              <li v-for="content in document.etymologies" :key="content" v-html="content"/>
+              <li v-for="content in document.etymologies" :key="content" v-html="parseMeaning(content)"/>
             </ul>
           </div>
         </div>
@@ -163,7 +163,7 @@ import quoteOpen from "@/assets/openQuote.svg"
         </div>
         <ul>
           <li :key="syn" v-for="syn in document.synonymes">
-            <a @click="openPreviewModal(syn)">
+            <a @click="goTo(`/dictionnaire/${syn}`)">
               {{ syn }}
             </a>
           </li>
@@ -179,7 +179,7 @@ import quoteOpen from "@/assets/openQuote.svg"
         </div>
         <ul>
           <li :key="ant" v-for="ant in document.antonymes">
-            <a @click="openPreviewModal(ant)">
+            <a @click="goTo(`/dictionnaire/${ant}`)">
               {{ ant }}
             </a>
           </li>
@@ -293,9 +293,8 @@ import {Share} from "@capacitor/share"
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede"
 import {defineComponent, ref} from "vue"
 import {navigateBackFunction} from "@/functions/types/utils"
-import {loadingController, modalController, toastController, useIonRouter} from "@ionic/vue"
+import {toastController, useIonRouter} from "@ionic/vue"
 import { iosTransitionAnimation } from "@ionic/core"
-import WordPreview from "@/components/WordPreview.vue"
 
 import "swiper/css"
 import "swiper/css/pagination"
@@ -448,30 +447,13 @@ export default defineComponent({
       window.dispatchEvent(new Event("reset"))
       this.listenSpecialTags()
     },
-    async openPreviewModal(word: string) {
-      const loading = await loadingController.create({
-        message: "Chargement"
-      })
-      await loading.present()
-      const modal = await modalController.create({
-        component: WordPreview,
-        componentProps: {
-          mot: word
-        },
-        presentingElement: this.el,
-        handle: true
-      })
-      await loading.dismiss()
-      await modal.present()
-    },
     async listenSpecialTags() {
       document.querySelectorAll("reference").forEach(el => {
         const listener = async () => {
           const href = el.getAttribute("href") || ""
-          const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "")
+          const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "").replaceAll('/wiki/', '')
           if (await wordExists(word)) {
-            // TODO works once, why ?
-            await this.openPreviewModal(word)
+            this.goTo(`/dictionnaire/${word}`)
           } else {
             window.open(href)
           }
