@@ -4,13 +4,24 @@
 <img alt="Remede icon" src=".github/icon.png" height="100" width="100">
 
 # Remède
-Open Source and free alternative to Antidote.
+Open Source and free alternative to Antidote dictionary.
 
 [<kbd>Open application</kbd>](https://remede-app.camarm.fr)
 
 [Data credits](https://remede.camarm.fr/FR#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr/download)** • **[API](https://api-remede.camarm.fr/docs)**
 
 </div>
+
+## Why Remède ?
+
+Remède is a dictionary, which can replace any proprietary dictionary, with these advantages:
+- Simple UI
+- Nice UX
+- Free
+- Cross-platform
+- Self-hostable
+- Open source
+- Off-line
 
 ## Table of content
 - [Next](#next-110)
