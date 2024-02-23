@@ -35,6 +35,10 @@ class RemedeDatabase {
         this.db = await openDatabase()
     }
 
+    private getAccentInsensitiveWordQuery() {
+        return `replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')`
+    }
+
     async getWord(word: string) {
         const statement = `SELECT document FROM dictionary WHERE word = '${word}'`
         const response = await this.query(statement)
@@ -42,12 +46,12 @@ class RemedeDatabase {
     }
 
     async getAutocomplete(query: string) {
-        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%' LIMIT 6`
+        const statement = `SELECT word FROM dictionary WHERE ${this.getAccentInsensitiveWordQuery()} LIKE '${query}%' LIMIT 5`
         return await this.query(statement)
     }
 
     async search(query: string) {
-        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%'`
+        const statement = `SELECT word FROM dictionary WHERE ${this.getAccentInsensitiveWordQuery()} LIKE '${query}%'`
         return await this.query(statement)
     }
 
