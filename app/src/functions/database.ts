@@ -46,6 +46,11 @@ class RemedeDatabase {
         return await this.query(statement)
     }
 
+    async search(query: string) {
+        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%'`
+        return await this.query(statement)
+    }
+
     async getRandomWord() {
         const statement = "SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1"
         const response = await this.query(statement)
