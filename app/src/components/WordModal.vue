@@ -451,7 +451,7 @@ export default defineComponent({
       document.querySelectorAll("reference").forEach(el => {
         const listener = async () => {
           const href = el.getAttribute("href") || ""
-          const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "").replaceAll('/wiki/', '')
+          const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "").replaceAll("/wiki/", "")
           if (await wordExists(word)) {
             this.goTo(`/dictionnaire/${word}`)
           } else {

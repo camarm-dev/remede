@@ -44,9 +44,9 @@ import {chevronBackOutline} from "ionicons/icons"
 <script lang="ts">
 import {getSearchResults} from "@/functions/dictionnary"
 import {defineComponent} from "vue"
-import {useIonRouter} from "@ionic/vue";
-import {iosTransitionAnimation} from "@ionic/core";
-import {navigateBackFunction} from "@/functions/types/utils";
+import {useIonRouter} from "@ionic/vue"
+import {iosTransitionAnimation} from "@ionic/core"
+import {navigateBackFunction} from "@/functions/types/utils"
 
 
 export default defineComponent({
@@ -58,6 +58,7 @@ export default defineComponent({
         return false
       } as navigateBackFunction,
       goTo: function (path: string): void {
+        console.log(path)
         return
       }
     }
