@@ -20,6 +20,11 @@
               {{ result }}
             </ion-label>
           </ion-item>
+          <ion-item v-if="!loading && query != ''" @click="goTo(`/search/${query}`)" :detail-icon="arrowForward" class="ion-no-padding" button>
+            <ion-label>
+              Tout voir
+            </ion-label>
+          </ion-item>
         </ion-list>
       </ion-toolbar>
       <ion-toolbar v-if="results.length == 0 && query !== '' && !loading">
@@ -85,13 +90,14 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.1.1</code>, nom de code <i>Goofy Jellyfish, revision 1</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.1.2</code>, nom de code <i>Goofy Jellyfish, revision 2</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
-              <li>Les mot recherchés ne sont plus "case sensitive"</li>
-              <li>Téléchargement du dictionnaire amélioré</li>
-              <li>Écran d'accueil</li>
-              <li>Section "pour vous"</li>
+              <li>Les mots recherchés ne sont plus "case sensitive" et "accent sensitive".</li>
+              <li>Possibilité d'ouvrir la page de recherche en plein écran.</li>
+              <li>Vous pouvez naviguer dans les pages définition à l'infini !</li>
+              <li>L'API est désormais plus stable.</li>
+              <li>Le mot du jour fonctionne correctement.</li>
             </ul>
           </p>
         </ion-content>
@@ -103,7 +109,7 @@
 
 <script lang="ts">
 import WordModal from "@/components/WordModal.vue"
-import {bookmark, calendarOutline, shuffle} from "ionicons/icons"
+import {bookmark, calendarOutline, shuffle, arrowForward} from "ionicons/icons"
 import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
 import {
@@ -262,6 +268,7 @@ export default defineComponent({
       goTo,
       Navigation,
       Pagination,
+      arrowForward,
       changelogIllustration,
       newBaseIllustration,
       newVersionIllustration
@@ -354,7 +361,7 @@ export default defineComponent({
   }
 })
 </script>
-<style scoped>
+<style>
 .results-wrapper {
   transition: .5s ease-in-out;
   height: 270px;
