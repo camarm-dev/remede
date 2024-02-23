@@ -28,6 +28,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import ("../components/WordModal.vue")
       },
       {
+        path: "search/:mot",
+        component: () => import ("../components/SearchModal.vue")
+      },
+      {
         path: "a-propos",
         component: () => import ("../views/AboutPage.vue")
       },
