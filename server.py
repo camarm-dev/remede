@@ -178,12 +178,23 @@ def get_word_of_day():
 @app.get('/autocomplete/{query}')
 def get_autocomplete(query: str):
     """
-    Renvoie les 6 premiers mots commençant par `query`
+    Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
     query = query.lower()
     json_object = get_remede_json(get_first_letter(query))
     keys: list = json_object.keys()
     return list(filter(lambda word: word.startswith(query), keys))[0:6]
+
+
+@app.get('/autocomplete/{query}')
+def get_search_results(query: str):
+    """
+    Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
+    """
+    query = query.lower()
+    json_object = get_remede_json(get_first_letter(query))
+    keys: list = json_object.keys()
+    return list(filter(lambda word: word.startswith(query), keys))
 
 
 @app.get('/ask-new-word/{query}')
