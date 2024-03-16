@@ -24,7 +24,6 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 - Off-line
 
 ## Table of content
-- [Next](#next-110)
 - [Télécharger](#télécharger)
 - [Générer la base](#générer-les-bases-de-données)
 - [Documentation](#documentation)
