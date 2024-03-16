@@ -1,16 +1,14 @@
 import datetime
 import json
-import math
 import os
-import random
 import sqlite3
-import time
 from enum import Enum
 from hashlib import md5
 
 import frontmatter
 import markdown
 import requests
+import unidecode
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -174,7 +172,8 @@ def get_autocomplete(query: str):
     """
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    return in_json(fetch_autocomplete(query, True))
+    safe_query = unidecode.unidecode(query.lower())
+    return in_json(fetch_autocomplete(safe_query, True))
 
 
 @app.get('/search/{query}')
@@ -182,7 +181,8 @@ def get_search_results(query: str):
     """
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    return in_json(fetch_autocomplete(query))
+    safe_query = unidecode.unidecode(query.lower())
+    return in_json(fetch_autocomplete(safe_query))
 
 
 @app.get('/ask-new-word/{query}')
