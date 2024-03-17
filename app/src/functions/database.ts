@@ -36,7 +36,7 @@ class RemedeDatabase {
     }
 
     private getAccentInsensitiveWordQuery() {
-        return "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
+        return "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), '-', ' '), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
     }
 
     async getWord(word: string) {

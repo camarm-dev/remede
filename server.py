@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 
-ACCENT_INSENSITIVE_QUERY = "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
+ACCENT_INSENSITIVE_QUERY = "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), '-', ' '), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
 
 
 class BinariesVariant(str, Enum):
@@ -172,7 +172,8 @@ def get_autocomplete(query: str):
     """
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    safe_query = unidecode.unidecode(query.lower())
+    print(query)
+    safe_query = unidecode.unidecode(query.lower().replace('-', ' '))
     return in_json(fetch_autocomplete(safe_query, True))
 
 
@@ -181,7 +182,7 @@ def get_search_results(query: str):
     """
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    safe_query = unidecode.unidecode(query.lower())
+    safe_query = unidecode.unidecode(query.lower().replace('-', ' '))
     return in_json(fetch_autocomplete(safe_query))
 
 
