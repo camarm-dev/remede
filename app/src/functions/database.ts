@@ -36,7 +36,7 @@ class RemedeDatabase {
     }
 
     async getWord(word: string) {
-        const statement = `SELECT document FROM dictionary WHERE word = '${word}'`
+        const statement = `SELECT document FROM dictionary WHERE word = '${word.replaceAll("'", "''")}'`
         const response = await this.query(statement)
         return JSON.parse(response[0])
     }
