@@ -29,9 +29,9 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 - [Documentation](#documentation)
 - [Screenshots](#screenshots)
 
-## Current: 1.1.4 — Goofy Jellyfish, revision 4
+## Current: 1.1.5 — Goofy Jellyfish, revision 5
 
-La version `1.1.4`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionnalités suivantes :
+La version `1.1.5`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionnalités suivantes :
 - [x] **Examples** sur les définitions
 - [x] **Nouvelle interface** sur la page de définitions
 - [x] Possibilité de télécharger une base de donnée **light**.

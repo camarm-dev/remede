@@ -90,11 +90,12 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.1.4</code>, nom de code <i>Goofy Jellyfish, revision 4</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.1.5</code>, nom de code <i>Goofy Jellyfish, revision 5</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Résolution de problèmes à propos de la recherche.</li>
               <li>Performances de recherche améliorées grâce à la création d'un index.</li>
+              <li>Patch du problème lié aux page des mots contenant des caractères spéciaux.</li>
             </ul>
           </p>
         </ion-content>
