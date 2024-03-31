@@ -2,7 +2,7 @@ import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
 
 function removeAccents(value: string) {
-    return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll('-', ' ').replaceAll('\'', ' ')
+    return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
 }
 
 async function useApi() {
