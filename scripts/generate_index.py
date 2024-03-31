@@ -1,7 +1,10 @@
 import datetime
 import sqlite3
-
 import unidecode
+
+
+def sanitize_word(w: str):
+    return unidecode.unidecode(w.lower().replace("-", " ").replace("'", " "))
 
 
 def insert(word: str, indexed: str):
@@ -13,7 +16,7 @@ def create_index():
     total = len(rows)
     for row in rows:
         word = row[0]
-        safe_word = unidecode.unidecode((word.lower()))
+        safe_word = sanitize_word(word)
         insert(word, safe_word)
         print(f"\033[A\033[KLigne {rows.index(row)}/{total} | Mot \"{word}\"")
 
