@@ -25,9 +25,6 @@ app.add_middleware(
 )
 
 
-ACCENT_INSENSITIVE_QUERY = "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), '-', ' '), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
-
-
 class BinariesVariant(str, Enum):
     dmg = "dmg"
     apk = "apk"
@@ -61,9 +58,9 @@ def fetch_remede_doc(word: str):
 
 def fetch_autocomplete(query: str, limit: bool = False):
     if limit:
-        response = cursor.execute(f"SELECT word FROM dictionary WHERE {ACCENT_INSENSITIVE_QUERY} LIKE '{query}%' LIMIT 5").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' LIMIT 5").fetchall()
     else:
-        response = cursor.execute(f"SELECT word FROM dictionary WHERE {ACCENT_INSENSITIVE_QUERY} LIKE '{query}%'").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%'").fetchall()
     return list(map(lambda row: row[0], response))
 
 
@@ -111,6 +108,10 @@ def register_new_word_idea(word: str):
         return response.status_code == 201
     except:
         return False
+
+
+def sanitize_query(q: str):
+    return unidecode.unidecode(q.lower().replace('-', ' ').replace("'", " "))
 
 
 @app.get('/')
@@ -173,7 +174,7 @@ def get_autocomplete(query: str):
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
     print(query)
-    safe_query = unidecode.unidecode(query.lower().replace('-', ' '))
+    safe_query = sanitize_query(query)
     return in_json(fetch_autocomplete(safe_query, True))
 
 
@@ -182,7 +183,7 @@ def get_search_results(query: str):
     """
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    safe_query = unidecode.unidecode(query.lower().replace('-', ' '))
+    safe_query = sanitize_query(query)
     return in_json(fetch_autocomplete(safe_query))
 
 
