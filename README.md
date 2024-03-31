@@ -24,15 +24,14 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 - Off-line
 
 ## Table of content
-- [Next](#next-110)
 - [Télécharger](#télécharger)
 - [Générer la base](#générer-les-bases-de-données)
 - [Documentation](#documentation)
 - [Screenshots](#screenshots)
 
-## Current: 1.1.2 — Goofy Jellyfish, revision 2
+## Current: 1.1.4 — Goofy Jellyfish, revision 4
 
-La version `1.1.2`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionnalités suivantes :
+La version `1.1.4`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionnalités suivantes :
 - [x] **Examples** sur les définitions
 - [x] **Nouvelle interface** sur la page de définitions
 - [x] Possibilité de télécharger une base de donnée **light**.
@@ -41,6 +40,7 @@ La version `1.1.2`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionn
 - [x] **Nouvelle base** (base de données révisée)
 - [x] **Service de correction** open source et autohébergé !
 - [x] Recherche **simplifiée** et plus **agréable**.
+- [x] Recherche plus **performante**.
 - [x] Serveur plus **stable**.
 - [x] Navigation **sans limite** dans les définitions !
 - [ ] Rhymes dictionary (arrive en `1.2.0`)

@@ -90,14 +90,11 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.1.2</code>, nom de code <i>Goofy Jellyfish, revision 2</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.1.4</code>, nom de code <i>Goofy Jellyfish, revision 4</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
-              <li>Les mots recherchés ne sont plus "case sensitive" et "accent sensitive".</li>
-              <li>Possibilité d'ouvrir la page de recherche en plein écran.</li>
-              <li>Vous pouvez naviguer dans les pages définition à l'infini !</li>
-              <li>L'API est désormais plus stable.</li>
-              <li>Le mot du jour fonctionne correctement.</li>
+              <li>Résolution de problèmes à propos de la recherche.</li>
+              <li>Performances de recherche améliorées grâce à la création d'un index.</li>
             </ul>
           </p>
         </ion-content>

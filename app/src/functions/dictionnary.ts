@@ -1,6 +1,10 @@
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
 
+function removeAccents(value: string) {
+    return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
+}
+
 async function useApi() {
     return !(await getOfflineDictionaryStatus()).downloaded
 }
@@ -10,7 +14,7 @@ async function getAutocompleteWithAPI(word: string) {
 }
 
 async function getAutocompleteFromDatabase(word: string) {
-    return await database?.getAutocomplete(word) as any[]
+    return await database?.getAutocomplete(removeAccents(word)) as any[]
 }
 
 async function getSearchResultsWithAPI(query: string) {
@@ -18,7 +22,7 @@ async function getSearchResultsWithAPI(query: string) {
 }
 
 async function getSearchResultsFromDatabase(query: string) {
-    return await database?.search(query) as any[]
+    return await database?.search(removeAccents(query)) as any[]
 }
 
 async function getWordWithAPI(word: string) {

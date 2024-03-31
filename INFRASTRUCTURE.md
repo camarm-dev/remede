@@ -2,6 +2,7 @@
 
 This file is updated when the infrastructure changes. It shows a schema of the current infrastructure.
 
+**Global infrastructure schema**
 ```mermaid
 graph LR
     subgraph "`fa:fa-user User side`"
@@ -30,6 +31,25 @@ graph LR
     end
 ```
 
-## Image on mermaid.live
+**Local database schema**
 
-[![](https://mermaid.ink/img/pako:eNqFk-9ugjAUxV-l6SdMZA9AliUquml0M-K2ZIXE0l5mI1BTYJEY330X2PwTcbsfoLn9cc_Jod1ToSVQh34avl2T6cJPCVZWhE3Dp6uIOxG3iwwMea0emZKw8mkDVjVhlstzHvIMOgG5t-_sB9KzrArudBoMUnlrMFJfONVrXlfDjx80tFBGxGCnaDojc6N35Qmt6qhLbHTRt9hUc0n6POapABN0TvTRUotKAok2JXFBKsFzkORtdinTr8cPWG8-Dtp2XDbWqRLkHcLgP0mpxQYMOwYS6t2Zslvv_sSDybTKPbLl0iNVkkpAK_HEBtoYELk2t7nqx03ZQiWYbePtGv0rtkjHEr2OVAxZmeWQXCoMaifD89NyCQxrYMQm3stzmyQuaJcmYBKuJJ7ZfdX2ab6GBHzq4FJys6lOzwE5XuTaK1NBndwU0KXFVmKiruJoOfltYs4Yyay5A_VV6NItTz-0RiTicQaHb8ro6jI?type=png)](https://mermaid.live/edit#pako:eNqFk-9ugjAUxV-l6SdMZA9AliUquml0M-K2ZIXE0l5mI1BTYJEY330X2PwTcbsfoLn9cc_Jod1ToSVQh34avl2T6cJPCVZWhE3Dp6uIOxG3iwwMea0emZKw8mkDVjVhlstzHvIMOgG5t-_sB9KzrArudBoMUnlrMFJfONVrXlfDjx80tFBGxGCnaDojc6N35Qmt6qhLbHTRt9hUc0n6POapABN0TvTRUotKAok2JXFBKsFzkORtdinTr8cPWG8-Dtp2XDbWqRLkHcLgP0mpxQYMOwYS6t2Zslvv_sSDybTKPbLl0iNVkkpAK_HEBtoYELk2t7nqx03ZQiWYbePtGv0rtkjHEr2OVAxZmeWQXCoMaifD89NyCQxrYMQm3stzmyQuaJcmYBKuJJ7ZfdX2ab6GBHzq4FJys6lOzwE5XuTaK1NBndwU0KXFVmKiruJoOfltYs4Yyay5A_VV6NItTz-0RiTicQaHb8ro6jI)
+```mermaid
+graph LR
+    subgraph "Application Side"
+        subgraph "Database"
+            DB[(Database)] --> Index
+            DB --> Main
+            subgraph Index["Search index\n(wordlist)"]
+
+            end
+            subgraph Main["Default table\n(dictionary)"]
+
+            end
+        end
+        Main <-.-> A[WebView]
+        Index <-.-> A[WebView]
+    end
+    subgraph "Filesystem" 
+        DFB[[DatabaseFile]] --> DB
+    end
+```

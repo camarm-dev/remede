@@ -1,16 +1,14 @@
 import datetime
 import json
-import math
 import os
-import random
 import sqlite3
-import time
 from enum import Enum
 from hashlib import md5
 
 import frontmatter
 import markdown
 import requests
+import unidecode
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -25,9 +23,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-ACCENT_INSENSITIVE_QUERY = "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(word), 'â','a'), 'æ','a'), 'à','a'), 'ç','c'), 'î','i'), 'ï','i'), 'ù','u'),'û','u') ,'ü','u') ,'é','e'),'ë','e'), 'è','e'), 'ê','e'), 'ô','o'), 'ö','o'), 'œ','o')"
 
 
 class BinariesVariant(str, Enum):
@@ -63,9 +58,9 @@ def fetch_remede_doc(word: str):
 
 def fetch_autocomplete(query: str, limit: bool = False):
     if limit:
-        response = cursor.execute(f"SELECT word FROM dictionary WHERE {ACCENT_INSENSITIVE_QUERY} LIKE '{query}%' LIMIT 5").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' LIMIT 5").fetchall()
     else:
-        response = cursor.execute(f"SELECT word FROM dictionary WHERE {ACCENT_INSENSITIVE_QUERY} LIKE '{query}%'").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%'").fetchall()
     return list(map(lambda row: row[0], response))
 
 
@@ -115,6 +110,10 @@ def register_new_word_idea(word: str):
         return False
 
 
+def sanitize_query(q: str):
+    return unidecode.unidecode(q.lower().replace('-', ' ').replace("'", " "))
+
+
 @app.get('/')
 def root():
     """
@@ -132,7 +131,7 @@ def root():
         "total": entities,
         "dictionnaires": {
             "remede": {
-                "nom": "Remède complet  ~290Mb",
+                "nom": "Remède complet  ~310Mb",
                 "slug": "remede",
                 "hash": DATASET
             },
@@ -174,7 +173,8 @@ def get_autocomplete(query: str):
     """
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    return in_json(fetch_autocomplete(query, True))
+    safe_query = sanitize_query(query)
+    return in_json(fetch_autocomplete(safe_query, True))
 
 
 @app.get('/search/{query}')
@@ -182,7 +182,8 @@ def get_search_results(query: str):
     """
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    return in_json(fetch_autocomplete(query))
+    safe_query = sanitize_query(query)
+    return in_json(fetch_autocomplete(safe_query))
 
 
 @app.get('/ask-new-word/{query}')
