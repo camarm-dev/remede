@@ -131,7 +131,7 @@ def root():
         "total": entities,
         "dictionnaires": {
             "remede": {
-                "nom": "Remède complet  ~290Mb",
+                "nom": "Remède complet  ~310Mb",
                 "slug": "remede",
                 "hash": DATASET
             },
@@ -173,7 +173,6 @@ def get_autocomplete(query: str):
     """
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
-    print(query)
     safe_query = sanitize_query(query)
     return in_json(fetch_autocomplete(safe_query, True))
 
