@@ -194,6 +194,10 @@ Elle s'organise ainsi
 - Les champs
     - word (`string`: le mot)
     - document (`string`: le document Remède en format JSON)
+  
+Une table `wordlist` existe aussi pour rendre la recherche plus performante:
+- Un champ `word` contient le mot
+- Un champ `indexed` contient le mot; sans accents, sans majuscules, sans tirets et sans apostrophe
 
 Un questionnement se pose: se schéma n'étant pas propre (stocker du JSON dans une base sql), faut-il retranscrire complètement le schéma de document Remède en plusieurs tables dnas une base ?
 
