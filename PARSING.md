@@ -9,6 +9,8 @@ Générer les données Remède consiste à générer **les fichiers JSON**, pour
 0. `pre_generate_ressources.py` génère les ressources nécessaires (`mots.txt` et `ipa.json`, depuis `IPA.txt`)
 1. `parse.py` génère un fichier JSON par lettre (plusieurs heures)
 2. `generate_sqlite.py` génère la base Sqlite, depuis les fichiers JSON (plusieurs dizaines de minutes)
+3. `generate_index.py` génère un index de recherche
+4. `build_rimes` ajoute les rimes au dictionnaire
 
 > [!IMPORTANT]
 > Tous les programmes contenus dans le dossier `scripts` doivent être executés **à la racine du project** (eg. `python3 scripts/parse.py`)
@@ -20,6 +22,7 @@ Générer les données Remède consiste à générer **les fichiers JSON**, pour
 2. Pour chaque mot, il trouve sa définition avec [`api-definition`](#api-définition) et des services tiers
 3. Il génère le document Remède
 4. Il enregistre sous format `JSON`
+5. La base de données "Drimes" est réorganisée et ajoutée à la base Remède.
 
 ```mermaid
 flowchart TB
@@ -34,6 +37,7 @@ flowchart TB
   ant --> doc
   doc --> json[[Remède\nJSON]]
   json --> db[(Remède\nDatabase)]
+  drime[(Drime database)] -- Reorganised and added to --> db
 ```
 
 ### Lancer le parsing
