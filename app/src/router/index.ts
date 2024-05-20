@@ -48,6 +48,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import ("../views/RimesPage.vue")
       },
       {
+        path: "rimes/:mot",
+        component: () => import ("../views/RimeQueryPage.vue")
+      },
+      {
         path: "parametres",
         component: () => import ("../views/SettingsPage.vue")
       },
