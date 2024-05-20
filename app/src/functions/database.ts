@@ -58,18 +58,40 @@ class RemedeDatabase {
     }
 
 
-    async getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: number, elide: boolean = false) {
-        // TODO
-        const statement = `SELECT * FROM rimes WHERE (word = ${word}) AND (phon = ? OR ?) ORDER BY freq DESC`
-        const response = await this.query(statement)
-        const document = response[0]
-
-        const phonEnd = document[7]
-        const wordEnd = document[6]
-        const query = `SELECT word, phon, feminine FROM rimes WHERE (phon_end = ${phonEnd} OR word_end = ${wordEnd})
-             AND ((${maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
-             AND (${minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))`
+    async getRimesAutocomplete(query: string) {
+        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' LIMIT 5`
         return await this.query(statement)
+    }
+
+    async getWordRimes(word: string, maxSyllabes: number = 0, minSyllabes: number = 0, elide: boolean = false, page: number = 0) {
+        const statement = `SELECT phon_end, word_end FROM rimes WHERE word = \'${word}\'`
+        const response = await this.rawQuery(statement) as any[]
+        const document = response[0]
+        const phonEnd = document[0]
+        const wordEnd = document[1]
+        const query = `SELECT word, phon, feminine FROM rimes WHERE (phon_end = '${phonEnd}' OR word_end = '${wordEnd}')
+             AND ((${maxSyllabes === 0} OR max_nsyl >= ${minSyllabes})
+             AND (${minSyllabes === 0} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))
+             ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
+        return await this.query(query)
+    }
+
+    async rawQuery(statement: string) {
+        if (!this.db) {
+            return await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(this.rawQuery(statement))
+                }, 500)
+            })
+        }
+
+        const parsed = []
+        const results = this.db.exec(statement)
+        for (const document of results) {
+            parsed.push(document.values[0])
+        }
+
+        return parsed
     }
 
     async query(statement: string): Promise<Array<string>> {
