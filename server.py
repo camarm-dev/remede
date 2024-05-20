@@ -131,7 +131,7 @@ def root():
         "total": entities,
         "dictionnaires": {
             "remede": {
-                "nom": "Remède ~310Mb",
+                "nom": "Remède (FR) ~302Mb",
                 "slug": "remede",
                 "hash": DATASET
             }
