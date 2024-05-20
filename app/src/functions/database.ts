@@ -57,6 +57,21 @@ class RemedeDatabase {
         return response[0]
     }
 
+
+    async getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: number, elide: boolean = false) {
+        // TODO
+        const statement = `SELECT * FROM rimes WHERE (word = ${word}) AND (phon = ? OR ?) ORDER BY freq DESC`
+        const response = await this.query(statement)
+        const document = response[0]
+
+        const phonEnd = document[7]
+        const wordEnd = document[6]
+        const query = `SELECT word, phon, feminine FROM rimes WHERE (phon_end = ${phonEnd} OR word_end = ${wordEnd})
+             AND ((${maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
+             AND (${minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))`
+        return await this.query(statement)
+    }
+
     async query(statement: string): Promise<Array<string>> {
         if (!this.db) {
             return await new Promise((resolve) => {
