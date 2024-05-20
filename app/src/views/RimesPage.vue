@@ -11,7 +11,7 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Dictionnaire des rimes</ion-title>
+          <ion-title size="large">Rimes</ion-title>
         </ion-toolbar>
         <ion-toolbar>
           <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" placeholder="Entrez un mot"></ion-searchbar>
@@ -21,15 +21,15 @@
 
 
       <div class="ion-padding" v-if="!failed && rhymes.length === 0">
-        <ion-note>Commencez à chercher un mot si-dessus !</ion-note>
+        <ion-note>Aucune rimes trouvées dans notre base avec ce mot. Utilisez la barre de recherche ci-dessus.</ion-note>
       </div>
 
       <div class="ion-padding" v-if="failed">
-        <ion-note>Fonctionne seulement avec une connexion internet !</ion-note>
+        <ion-note>La recherche dans le dictionnaire des rimes a échouée.</ion-note>
       </div>
       <ion-content v-else>
         <ul>
-          <li :key="r.toString()" v-for="r in rhymes">{{r}}</li>
+          <li :key="r[0].toString()" v-for="r in rhymes">{{r}}</li>
         </ul>
       </ion-content>
     </ion-content>
@@ -51,7 +51,7 @@ import {
 </script>
 
 <script lang="ts">
-import {RemedeRhymeRow} from "@/functions/types/remede"
+import {getWordRimes} from "@/functions/dictionnary";
 
 export default {
   props: ["queryWord"],
@@ -59,11 +59,14 @@ export default {
     return {
       loading: false,
       failed: false,
-      rhymes: [] as RemedeRhymeRow[],
+      rhymes: [] as any[],
       query: "",
       // Ignoring linter error about empty function (@typescript-eslint/no-empty-function)
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       searchTimeout: window.setTimeout(() => {}, 500),
+      maxSyllabes: 0,
+      minSyllabes: 0,
+      elide: false
     }
   },
   mounted() {
@@ -76,9 +79,12 @@ export default {
     async searchRhymes() {
       this.loading = true
       try {
-        this.rhymes = await fetch(`https://rimes-remede.camarm.fr/${this.query}`).then(resp => resp.json())
-        this.failed = false
-      } catch {
+        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide)
+        this.rhymes = rhymes
+        console.log(rhymes)
+        this.failed = !success
+      } catch (e) {
+        console.error(e)
         this.failed = true
       }
       this.loading = false
