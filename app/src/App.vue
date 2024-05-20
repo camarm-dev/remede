@@ -34,7 +34,7 @@
                 </ion-item>
               </ion-menu-toggle>
               <ion-menu-toggle :auto-hide="false">
-                <ion-item disabled @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="path === '/rimes' ? 'selected': ''">
+                <ion-item :disabled="!downloaded" @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="path === '/rimes' ? 'selected': ''">
                   <ion-icon aria-hidden="true" slot="start" :icon="swapHorizontalOutline"></ion-icon>
                   <ion-label>Rimes</ion-label>
                 </ion-item>
@@ -87,15 +87,20 @@ import {
 
 <script lang="ts">
 import {useRouter} from "vue-router"
+import {getOfflineDictionaryStatus} from "@/functions/offline";
 
 export default {
   mounted() {
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
+    getOfflineDictionaryStatus().then(status => {
+      this.downloaded = status.downloaded
+    })
   },
   data() {
     return {
       router: useRouter(),
-      path: location.pathname
+      path: location.pathname,
+      downloaded: false
     }
   },
   methods: {
