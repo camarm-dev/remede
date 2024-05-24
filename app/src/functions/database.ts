@@ -63,8 +63,8 @@ class RemedeDatabase {
         return await this.query(statement)
     }
 
-    async getWordRimes(word: string, maxSyllabes: number = 0, minSyllabes: number = 0, elide: boolean = false, page: number = 0) {
-        const statement = `SELECT phon_end, word_end FROM rimes WHERE word = \'${word}\'`
+    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, page = 0) {
+        const statement = `SELECT phon_end, word_end FROM rimes WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
         const phonEnd = document[0]

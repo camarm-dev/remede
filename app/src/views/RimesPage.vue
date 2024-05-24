@@ -51,7 +51,7 @@ import {
 </script>
 
 <script lang="ts">
-import {getWordRimes} from "@/functions/dictionnary";
+import {getWordRimes} from "@/functions/dictionnary"
 
 export default {
   props: ["queryWord"],

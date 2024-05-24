@@ -87,7 +87,7 @@ import {
 
 <script lang="ts">
 import {useRouter} from "vue-router"
-import {getOfflineDictionaryStatus} from "@/functions/offline";
+import {getOfflineDictionaryStatus} from "@/functions/offline"
 
 export default {
   mounted() {
