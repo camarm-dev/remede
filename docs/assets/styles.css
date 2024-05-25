@@ -1,4 +1,33 @@
 
+@font-face {
+    font-family: "Amiko";
+    src: url("./Amiko-Bold.ttf");
+}
+
+@font-face {
+    font-family: "IBMPlex";
+    font-weight: normal;
+    src: url("./IBMPlexSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "IBMPlex";
+    font-weight: bold;
+    src: url("./IBMPlexSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "IBMPlexSerif";
+    font-weight: normal;
+    src: url("./IBMPlexSerif-Regular.ttf");
+}
+
+@font-face {
+    font-family: "IBMPlexSerif";
+    font-weight: bold;
+    src: url("./IBMPlexSerif-Bold.ttf");
+}
+
 :root {
     --text: #000000;
     --bg: #FFFFFF;
@@ -22,6 +51,10 @@ body {
     font-family: "IBMPlex", sans-serif;
 }
 
+h4 {
+    font-family: "IBMPlexSerif", serif;
+}
+
 .has-text-primary {
     color: var(--primary) !important;
 }
@@ -43,9 +76,13 @@ a.has-text-secondary:hover {
 }
 
 h1, h3 {
-    font-family: "Amiko", sans-serif;
+    font-family: "IBMPlex", sans-serif;
     font-weight: bolder;
     color: var(--text) !important;
+}
+
+.is-family-secondary {
+    font-family: "IBMPlexSerif", serif !important;
 }
 
 a {
