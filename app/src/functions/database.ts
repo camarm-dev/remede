@@ -70,8 +70,8 @@ class RemedeDatabase {
         const phonEnd = document[0]
         const wordEnd = document[1]
         const query = `SELECT word, phon, feminine FROM rimes WHERE (phon_end = '${phonEnd}' OR word_end = '${wordEnd}')
-             AND ((${maxSyllabes === 0} OR max_nsyl >= ${minSyllabes})
-             AND (${minSyllabes === 0} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))
+             AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
+             AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))
              ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
         return await this.query(query)
     }
