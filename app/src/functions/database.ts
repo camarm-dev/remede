@@ -62,7 +62,7 @@ class RemedeDatabase {
         return await this.query(statement) as any as Promise<string[]>
     }
 
-    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, quality: number = 0, nature: string[], page = 0) {
+    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, quality = 0, nature: string[], page = 0) {
         const statement = `SELECT phon_end, phon FROM rimes WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
@@ -79,7 +79,7 @@ class RemedeDatabase {
         for (const string of nature) {
             natureFilter += ` OR orgi LIKE '%${string}:%' OR orgi LIKE '%${string}|%'`
         }
-        natureFilter += ')'
+        natureFilter += ")"
 
         const query = `SELECT word, phon, feminine, elidable FROM rimes WHERE (phon_end = '${phonEnd}')
              AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
@@ -133,15 +133,15 @@ class RemedeDatabase {
 }
 
 export enum wordsNature {
-    verbe = 'VER',
-    nom = 'NOM',
-    aux = 'AUX',
-    adverbe = 'ADV',
-    adjectif = 'ADJ',
-    preposition = 'PRE',
-    conjonction = 'CON',
-    pronom = 'PRO',
-    onomatopee = 'ONO'
+    verbe = "VER",
+    nom = "NOM",
+    aux = "AUX",
+    adverbe = "ADV",
+    adjectif = "ADJ",
+    preposition = "PRE",
+    conjonction = "CON",
+    pronom = "PRO",
+    onomatopee = "ONO"
 }
 
 export {

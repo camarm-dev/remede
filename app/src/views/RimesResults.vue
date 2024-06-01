@@ -171,7 +171,7 @@ import {
   chevronUpOutline
 } from "ionicons/icons"
 import {defineComponent} from "vue"
-import {wordsNature} from "@/functions/database";
+import {wordsNature} from "@/functions/database"
 
 export default defineComponent({
   computed: {
