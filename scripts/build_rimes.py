@@ -2,15 +2,6 @@
 import datetime
 import sqlite3
 
-import requests
-from bs4 import BeautifulSoup
-
-
-# The database is built as following:
-
-# Node 1, Node 2, Weight (number of syllables, from 1 to 3)
-# manger, parler, 1
-# manger, ranger, 2
 
 def execute(command: str):
     try:
