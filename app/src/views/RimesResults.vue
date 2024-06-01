@@ -12,15 +12,20 @@
         </ion-buttons>
         <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
         <ion-title v-else>Rimes</ion-title>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar :value="query" disabled placeholder="Entrez un mot"></ion-searchbar>
-        <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
+        <ion-buttons slot="end" collapse>
+          <ion-button>
+            <ion-icon slot="icon-only" :icon="chevronUpOutline" @click="scrollToTop()"/>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" ref="content">
       <ion-header collapse="condense">
         <ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar :value="query" disabled placeholder="Entrez un mot"></ion-searchbar>
+            <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
+          </ion-toolbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
             <ion-chip class="transparent">
               <ion-icon :icon="filterCircleOutline"></ion-icon>
@@ -138,7 +143,8 @@ import {
   radioButtonOffOutline,
   radioButtonOnOutline,
   chevronBackOutline,
-  chevronExpandOutline
+  chevronExpandOutline,
+  chevronUpOutline
 } from "ionicons/icons"
 import {defineComponent} from "vue"
 
@@ -254,6 +260,7 @@ export default defineComponent({
       radioButtonOnOutline,
       chevronBackOutline,
       chevronExpandOutline,
+      chevronUpOutline,
       ionRouter,
       navigateBack
     }
@@ -293,7 +300,10 @@ export default defineComponent({
       this.searchRhymes().then(() => {
         event.target.complete()
       })
-    }
+    },
+    scrollToTop() {
+      this.$refs.content.$el.scrollToTop(500);
+    },
   },
   components: {
     IonButton,
