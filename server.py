@@ -144,7 +144,7 @@ def get_word_document(word: str):
     """
     Renvoie le document Remède du mot `word`
     """
-    return in_json(fetch_remede_doc(word.replace("'", "''")))
+    return json.loads(fetch_remede_doc(word.replace("'", "''")))
 
 
 @app.get('/random')
