@@ -14,6 +14,11 @@
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
         <ion-list class="search-results">
+          <ion-item v-if="!results.includes(query)" @click="goTo(`/rimes/${query}`)" class="ion-no-padding" button>
+            <ion-label>
+              {{ query }}
+            </ion-label>
+          </ion-item>
           <ion-item :key="result" v-for="result in results" @click="goTo(`/rimes/${result}`)" class="ion-no-padding" button>
             <ion-label>
               {{ result }}
