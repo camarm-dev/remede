@@ -22,6 +22,10 @@
         <p>
           Remède est un dictionnaire français libre, construit sur plusieurs services tiers.
         </p>
+        <p>
+          Pour plus d'informations concernant la provenance des données de nos dictionnaires et leur construction, visitez la documentation sur notre
+          <a href="https://github.com/camarm-dev/remede/blob/main/docs/FR.md#donn%C3%A9es" target="_blank">dépôt Github</a>.
+        </p>
         <ion-list class="border-radius">
           <ion-item color="light" button href="https://github.com/camarm-dev/remede" target="_blank">
             <ion-icon color="medium" slot="start" :icon="logoGithub"/>
