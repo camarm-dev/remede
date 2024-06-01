@@ -57,9 +57,8 @@ class RemedeDatabase {
         return response[0]
     }
 
-
     async getRimesAutocomplete(query: string) {
-        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' LIMIT 5`
+        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' ORDER BY freq DESC LIMIT 5`
         return await this.query(statement) as any as Promise<string[]>
     }
 
