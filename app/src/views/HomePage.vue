@@ -291,7 +291,7 @@ export default defineComponent({
         } catch (e) {
           const message = await toastController.create({
             header: "Erreur",
-            message: `La recherche dans le dictionnaire à échouée: ${e}`,
+            message: `La recherche dans le dictionnaire a échouée: ${e}`,
             duration: 5000,
             color: "danger"
           })
