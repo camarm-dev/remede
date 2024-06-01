@@ -1,24 +1,24 @@
 <template>
-  <ion-header :translucent="true">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-nav-link router-direction="back">
-          <ion-button @click="navigateBack()">
-            <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
-            Retour
-          </ion-button>
-        </ion-nav-link>
-      </ion-buttons>
-      <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
-      <ion-title v-else>Rimes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar :value="query" disabled placeholder="Entrez un mot"></ion-searchbar>
-      <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content :fullscreen="true">
+  <ion-page>
+    <ion-header :translucent="true">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-nav-link router-direction="back">
+            <ion-button @click="navigateBack()">
+              <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
+              Retour
+            </ion-button>
+          </ion-nav-link>
+        </ion-buttons>
+        <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
+        <ion-title v-else>Rimes</ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar :value="query" disabled placeholder="Entrez un mot"></ion-searchbar>
+        <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
@@ -26,13 +26,22 @@
               <ion-icon :icon="filterCircleOutline"></ion-icon>
               <ion-label>Filtres</ion-label>
             </ion-chip>
-            <ion-chip v-if="minSyllabes != 0 || maxSyllabes != 0">
+            <ion-chip v-if="minSyllabes != 0 || maxSyllabes != 0"  id="open-syllabes-selector">
               <ion-label>de {{ minSyllabes }} {{ maxSyllabes > 0 ? ` à ${maxSyllabes}`: '' }} syllabe(s)</ion-label>
               <ion-icon :icon="closeOutline" @click="minSyllabes = 0; maxSyllabes = 0; search()"/>
             </ion-chip>
+            <ion-chip class="outline" id="open-syllabes-selector" v-else>
+              <ion-label>Nb. syllabes</ion-label>
+              <ion-icon :icon="chevronExpandOutline"/>
+            </ion-chip>
+            <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
             <ion-chip v-if="elide">
-              <ion-label>Elidables</ion-label>
+              <ion-label>Avec élide</ion-label>
               <ion-icon :icon="closeOutline" @click="elide = false; search()"/>
+            </ion-chip>
+            <ion-chip v-if="feminine">
+              <ion-label>Féminines seulement</ion-label>
+              <ion-icon :icon="closeOutline" @click="feminine = false; search()"/>
             </ion-chip>
             <ion-chip class="outline" id="open-filters">
               <ion-label>Ajouter un filtre</ion-label>
@@ -40,15 +49,12 @@
             </ion-chip>
             <ion-popover trigger="open-filters">
               <ion-item lines="none">
-                <ion-label>Nombre de syllabes</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-input :value="minSyllabes" @input="minSyllabes = $event.target.value; search()" label-placement="stacked" placeholder="0" type="number" label="Minimum"></ion-input>
-                <ion-input :value="maxSyllabes" @input="maxSyllabes = $event.target.value; search()" label-placement="stacked" placeholder="0" type="number" label="Maximum"></ion-input>
+                <ion-label>Élides</ion-label>
+                <ion-checkbox :checked="elide" @ionChange="elide = $event.detail.checked"/>
               </ion-item>
               <ion-item lines="none">
-                <ion-label>Rimes elidables</ion-label>
-                <ion-checkbox :checked="elide" @ionChange="elide = $event.detail.checked"/>
+                <ion-label>Féminines</ion-label>
+                <ion-checkbox :checked="feminine" @ionChange="feminine = $event.detail.checked"/>
               </ion-item>
             </ion-popover>
           </ion-item>
@@ -83,6 +89,7 @@
         </ion-item-group>
       </ion-list>
     </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
@@ -103,11 +110,13 @@ import {
   IonList,
   IonNavLink,
   IonNote,
+  IonPicker,
   IonPopover,
   IonProgressBar,
   IonSearchbar,
   IonTitle,
   IonToolbar,
+  IonPage,
   useIonRouter
 } from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
@@ -117,12 +126,84 @@ import {
   filterCircleOutline,
   radioButtonOffOutline,
   radioButtonOnOutline,
-  chevronBackOutline
+  chevronBackOutline,
+  settingsOutline, chevronExpandOutline
 } from "ionicons/icons"
 import {defineComponent} from "vue"
 
 export default defineComponent({
   data() {
+    const syllabesPickerColumns = [
+      {
+        name: 'minSyllabes',
+        options: [
+          {
+            text: 'Syllabes min.',
+            value: 0
+          },
+          {
+            text: '1',
+            value: 1
+          },
+          {
+            text: '2',
+            value: 2
+          },
+          {
+            text: '3',
+            value: 3
+          },
+          {
+            text: '4',
+            value: 4
+          },
+        ],
+      },
+      {
+        name: 'maxSyllabes',
+        options: [
+          {
+            text: 'Syllabes max.',
+            value: 0
+          },
+          {
+            text: '1',
+            value: 1
+          },
+          {
+            text: '2',
+            value: 2
+          },
+          {
+            text: '3',
+            value: 3
+          },
+          {
+            text: '4',
+            value: 4
+          },
+          {
+            text: '5',
+            value: 5
+          },
+        ],
+      },
+    ]
+
+    const syllabesPickerButtons = [
+      {
+        text: 'Annuler',
+        role: 'cancel',
+      },
+      {
+        text: 'Appliquer',
+        handler: (value: any) => {
+          this.setMinMax(value.minSyllabes.value, value.maxSyllabes.value)
+          this.search()
+        },
+      },
+    ]
+
     return {
       loading: false,
       failed: false,
@@ -131,7 +212,10 @@ export default defineComponent({
       maxSyllabes: 0,
       minSyllabes: 0,
       elide: false,
-      page: 0
+      feminine: false,
+      page: 0,
+      syllabesPickerColumns,
+      syllabesPickerButtons
     }
   },
   setup() {
@@ -142,13 +226,32 @@ export default defineComponent({
 
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
-        ionRouter.navigate("/fiches", "back", "replace")
+        ionRouter.navigate("/rimes", "back", "replace")
         return true
       }
       return false
     }
 
     const navigateBack = navigateBackIfNoHistory
+
+    const filtersButtons = ['Appliquer'];
+    const filtersInputs = [
+      {
+        label: 'Rimes féminines seulement',
+        type: 'radio',
+        value: 'feminine',
+      },
+      {
+        label: 'Rimes élidables',
+        type: 'radio',
+        value: 'elide',
+      },
+      {
+        label: 'Green',
+        type: 'radio',
+        value: 'green',
+      },
+    ];
 
     return {
       goTo,
@@ -158,6 +261,7 @@ export default defineComponent({
       radioButtonOffOutline,
       radioButtonOnOutline,
       chevronBackOutline,
+      chevronExpandOutline,
       ionRouter,
       navigateBack
     }
@@ -188,6 +292,10 @@ export default defineComponent({
       this.page = 0
       this.searchRhymes()
     },
+    setMinMax(min: number, max: number) {
+      this.minSyllabes = min
+      this.maxSyllabes = max
+    }
   },
   components: {
     IonButton,
@@ -209,7 +317,9 @@ export default defineComponent({
     IonInput,
     IonList,
     IonItemGroup,
-    IonItemDivider
+    IonItemDivider,
+    IonPicker,
+    IonPage
   }
 })
 </script>
@@ -224,8 +334,12 @@ ion-chip.outline {
 }
 
 .item-carousel {
-  min-width: max-content;
+  max-width: 100%;
   overflow-x: scroll;
+}
+
+.item-carousel ion-chip, .item-carousel div {
+  min-width: max-content;
 }
 
 </style>
