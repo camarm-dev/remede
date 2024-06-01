@@ -114,7 +114,7 @@
           </div>
           <ion-item @click="goTo(`/dictionnaire/${word[0]}`)" v-for="word in rhymes" :key="word.toString()" button v-else>
             <ion-label>
-              {{ word[0] }}
+              {{ word[0].replaceAll('\\', '') }}
               <p>\{{ word[1] }}\</p>
             </ion-label>
 
@@ -348,7 +348,7 @@ export default defineComponent({
     async searchRhymes() {
       this.loading = true
       try {
-        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide, this.feminine, this.quality, this.page)
+        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide, this.feminine, this.quality, this.nature, this.page)
         for (const element of rhymes) {
           this.rhymes.push(element)
         }
