@@ -98,7 +98,7 @@ async function wordExists(word: string) {
     return doesWordExistsWithDatabase(word)
 }
 
-async function getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: number, elide?: boolean, feminine?: boolean, page = 0) {
+async function getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: number, elide?: boolean, feminine?: boolean, quality: number = 0, page = 0) {
     if (await useApi()) {
         return {
             rhymes: [],
@@ -106,7 +106,7 @@ async function getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: nu
         }
     }
     return {
-        rhymes: await database?.getWordRimes(word, maxSyllabes, minSyllabes, elide, feminine, page) as any[],
+        rhymes: await database?.getWordRimes(word, maxSyllabes, minSyllabes, elide, feminine, quality, page) as any[],
         success: true
     }
 }
