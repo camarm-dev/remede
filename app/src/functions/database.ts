@@ -62,7 +62,7 @@ class RemedeDatabase {
         return await this.query(statement) as any as Promise<string[]>
     }
 
-    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, page = 0) {
+    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, page = 0) {
         const statement = `SELECT phon_end, word_end FROM rimes WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
@@ -71,7 +71,8 @@ class RemedeDatabase {
         const wordEnd = document[1]
         const query = `SELECT word, phon, feminine FROM rimes WHERE (phon_end = '${phonEnd}' OR word_end = '${wordEnd}')
              AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
-             AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))
+             AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide}))
+             AND (feminine AND ${feminine}))
              ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
         return await this.rawQuery(query)
     }
