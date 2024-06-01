@@ -67,6 +67,7 @@ class RemedeDatabase {
         const statement = `SELECT phon_end, word_end FROM rimes WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
+        if (!document) return []
         const phonEnd = document[0]
         const wordEnd = document[1]
         const query = `SELECT word, phon, feminine FROM rimes WHERE (phon_end = '${phonEnd}' OR word_end = '${wordEnd}')
