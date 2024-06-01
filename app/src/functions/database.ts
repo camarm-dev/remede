@@ -63,13 +63,12 @@ class RemedeDatabase {
     }
 
     async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, page = 0) {
-        const statement = `SELECT phon_end, word_end FROM rimes WHERE word = '${word}'`
+        const statement = `SELECT phon_end FROM rimes WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
         if (!document) return []
         const phonEnd = document[0]
-        const wordEnd = document[1]
-        const query = `SELECT word, phon, feminine, elidable FROM rimes WHERE (phon_end = '${phonEnd}' OR word_end = '${wordEnd}')
+        const query = `SELECT word, phon, feminine, elidable FROM rimes WHERE (phon_end = '${phonEnd}')
              AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
              AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide}))
              AND (feminine OR ${!feminine}))
