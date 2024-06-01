@@ -36,6 +36,11 @@ import { Swiper, SwiperSlide } from "swiper/vue"
 import { Pagination } from "swiper/modules"
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
+
+
+const detailsModal = ref();
+
+const closeModal = () => modal.value.$el.dismiss(null, 'cancel');
 </script>
 
 <template>
@@ -224,13 +229,13 @@ import quoteOpen from "@/assets/openQuote.svg"
       </div>
       <br>
       <br>
-      <ion-modal :trigger="id.modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+      <ion-modal ref="detailsModal" :trigger="id.modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
         <ion-content class="ion-padding">
           <div class="list-title no-margin ion-padding-bottom">
             Dictionnaire
           </div>
           <ion-list class="border-radius">
-            <ion-item button color="primary" lines="none" disabled>
+            <ion-item button color="primary" lines="none" @click="goTo(`/rimes/${mot}`); closeModal()">
               Ouvrir le dictionnaire des rimes
             </ion-item>
           </ion-list>
