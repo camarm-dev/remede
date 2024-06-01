@@ -145,7 +145,6 @@ export default defineComponent({
         this.loading = true
         try {
           this.results = await getRimesAutocomplete(query)
-          console.log(this.results)
         } catch (e) {
           const message = await toastController.create({
             header: "Erreur",
