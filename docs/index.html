@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="icon" href="/assets/icon.png">
-  <script src="https://kit.fontawesome.com/2828f7885a.js" integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
   <title>Remède | Le dictionnaire mobile</title>
   <meta property="og:title" content="Remède | Le dictionnaire" />
   <meta property="og:url" content="https://remede.camarm.fr" />
@@ -39,7 +39,7 @@
         Nous créons le
         <span class="has-text-secondary">meilleur</span>
         <span class="has-text-primary">dictionnaire<br>mobile</span>
-        <span class="is-italic is-underlined is-family-secondary">français</span>
+        <span class="is-family-secondary">français</span>
         !
       </h1>
     </div>
@@ -52,9 +52,10 @@
   <div class="container center">
     <div class="mb-6 columns is-multiline">
       <p class="buttons">
-        <div class="dropdown mr-5" onclick="this.classList.toggle('is-active')">
+<!--        <div class="dropdown mr-5" onclick="this.classList.toggle('is-active')">-->
+        <div class="dropdown mr-5">
           <div class="dropdown-trigger">
-            <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu2">
+            <button onclick="location.href = '/download'" class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu2">
               <span class="icon is-small mt-0">
                 <i class="fas fa-download has-text-link" aria-hidden="true"></i>
               </span>
@@ -64,63 +65,63 @@
               </span>
             </button>
           </div>
-          <div class="dropdown-menu" id="dropdown-menu2" role="menu">
-            <div class="dropdown-content">
-              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">
-                <h4 class="subtitle mb-0 is-inline-flex">
-                  <i class="image is-20x20"><img src="assets/windows.png" alt="Deb icon"/></i>&nbsp;Windows
-                </h4>
-                <p class="content has-text-grey mt-0">
-                  .exe application
-                </p>
-              </div>
-              <hr class="dropdown-divider">
-              <div class="dropdown-item pt-2" onclick="location.href = '/download'">
-                <h4 class="subtitle mb-0 is-inline-flex">
-                  <i class="image is-20x20"><img src="assets/linux.png" alt="Deb icon"/></i>&nbsp;Linux
-                </h4>
-                <p class="content has-text-grey mt-0">
-                  Paquet .deb ou .rpm
-                </p>
-              </div>
-              <hr class="dropdown-divider">
-              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">
-                <h4 class="subtitle mb-0 is-inline-flex">
-                  <i class="image is-20x20"><img src="assets/macos.png" alt="Deb icon"/></i>&nbsp;MacOS
-                </h4>
-                <p class="content has-text-grey mt-0">
-                  Paquet .dmg
-                </p>
-              </div>
-              <hr class="dropdown-divider">
-              <div class="dropdown-item" style="width: max-content" onclick="window.open('https://github.com/camarm-dev/remede/releases')">
-                <h4 class="subtitle mb-0">
-                  <i class="fab fa-github has-text-dark"></i>&nbsp;Github
-                </h4>
-                <p class="content has-text-grey mt-0">
-                  Depuis la page releases
-                </p>
-              </div>
-              <hr class="dropdown-divider">
-              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">
-                <h4 class="subtitle mb-0 is-inline-flex">
-                  <i class="image is-20x20"><img src="assets/gplay.webp" alt="Google Play Ion"/></i>&nbsp;Play Store
-                </h4>
-                <p class="content has-text-grey mt-0">
-                  Depuis votre mobile.
-                </p>
-              </div>
-              <hr class="dropdown-divider">
-              <div class="dropdown-item pt-2" onclick="window.open('https://media.githubusercontent.com/media/camarm-dev/remede/main/data/remede.db?download=true')">
-                <h4 class="subtitle mb-0">
-                  <i class="fas fa-database mr-1 has-text-link"></i>&nbsp;remede.db
-                </h4>
-                <p class="content has-text-grey mt-0">
-                  Téléchargez notre base de données.
-                </p>
-              </div>
-            </div>
-          </div>
+<!--          <div class="dropdown-menu" id="dropdown-menu2" role="menu">-->
+<!--            <div class="dropdown-content">-->
+<!--              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">-->
+<!--                <h4 class="subtitle mb-0 is-inline-flex">-->
+<!--                  <i class="image is-20x20"><img src="assets/windows.png" alt="Deb icon"/></i>&nbsp;Windows-->
+<!--                </h4>-->
+<!--                <p class="content has-text-grey mt-0">-->
+<!--                  .exe application-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <hr class="dropdown-divider">-->
+<!--              <div class="dropdown-item pt-2" onclick="location.href = '/download'">-->
+<!--                <h4 class="subtitle mb-0 is-inline-flex">-->
+<!--                  <i class="image is-20x20"><img src="assets/linux.png" alt="Deb icon"/></i>&nbsp;Linux-->
+<!--                </h4>-->
+<!--                <p class="content has-text-grey mt-0">-->
+<!--                  Paquet .deb ou .rpm-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <hr class="dropdown-divider">-->
+<!--              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">-->
+<!--                <h4 class="subtitle mb-0 is-inline-flex">-->
+<!--                  <i class="image is-20x20"><img src="assets/macos.png" alt="Deb icon"/></i>&nbsp;MacOS-->
+<!--                </h4>-->
+<!--                <p class="content has-text-grey mt-0">-->
+<!--                  Paquet .dmg-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <hr class="dropdown-divider">-->
+<!--              <div class="dropdown-item" style="width: max-content" onclick="window.open('https://github.com/camarm-dev/remede/releases')">-->
+<!--                <h4 class="subtitle mb-0">-->
+<!--                  <i class="fab fa-github has-text-dark"></i>&nbsp;Github-->
+<!--                </h4>-->
+<!--                <p class="content has-text-grey mt-0">-->
+<!--                  Depuis la page releases-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <hr class="dropdown-divider">-->
+<!--              <div class="dropdown-item pt-2" onclick="alert('Pas encore disponible !')">-->
+<!--                <h4 class="subtitle mb-0 is-inline-flex">-->
+<!--                  <i class="image is-20x20"><img src="assets/gplay.webp" alt="Google Play Ion"/></i>&nbsp;Play Store-->
+<!--                </h4>-->
+<!--                <p class="content has-text-grey mt-0">-->
+<!--                  Depuis votre mobile.-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <hr class="dropdown-divider">-->
+<!--              <div class="dropdown-item pt-2" onclick="window.open('https://media.githubusercontent.com/media/camarm-dev/remede/main/data/remede.db?download=true')">-->
+<!--                <h4 class="subtitle mb-0">-->
+<!--                  <i class="fas fa-database mr-1 has-text-link"></i>&nbsp;remede.db-->
+<!--                </h4>-->
+<!--                <p class="content has-text-grey mt-0">-->
+<!--                  Téléchargez notre base de données.-->
+<!--                </p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <button onclick="location.href = '/FR'" class="button is-focused is-success mr-5">
           <span class="icon mt-0">
@@ -138,6 +139,119 @@
     </div>
   </div>
 </section>
+<section class="section">
+  <div class="container center">
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="box">
+          <div>
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Le meilleur dictionnaire</h4>
+            <p class="subtitle has-text-grey">Remède c'est +240 000 mots et expressions françaises !</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box img">
+          <img class="float1" src="assets/remede.png" alt="Remède">
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box img">
+          <img class="float2" src="assets/book.png" alt="Plus qu'un dictionnaire">
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box">
+          <div>
+            <h4 class="is-size-4 has-text-weight-bold mb-1">Mais bien plus</h4>
+            <p class="subtitle has-text-grey">Remède c'est aussi des exemples, des fiches de grammaire, des rimes... C'est ton guide numérique du français !</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-two-third">
+        <div class="box">
+          <div>
+            <h4 class="is-size-4 has-text-weight-bold mb-1">Open source</h4>
+            <p class="subtitle has-text-grey">Et oui ! Ce projet est aussi 100% open source et grandi avec sa communauté !</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box img">
+          <img class="float3" src="assets/opensource.png" alt="Open Source">
+        </div>
+      </div>
+      <div class="column is-full">
+        <div class="box has-background-primary">
+          <h2 class="mb-3 is-size-1 is-size-3-mobile has-text-weight-bold"><i onclick="window.open('mailto:software@camarm.dev'); window.open('https://www.camarm.dev')" class="fas fa-external-link-square-alt icon-hover"></i> Aide-nous</h2>
+          <p style="font-size: 1.1em">
+            N'hésite pas à passer sur notre dépôt Github, à y laisse une <em>star</em>, voire à y contribuer ! Merci !
+          </p>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box img">
+          <img class="float3" src="assets/quote.png" alt="Quote">
+        </div>
+      </div>
+      <div class="column is-two-third">
+        <div class="box">
+          <div>
+            <h4 class="is-size-4 has-text-weight-bold mb-1">Moderne</h4>
+            <p class="subtitle has-text-grey">Remède est facile d'utilisation, car il dispose d'une interface simple et agréable.</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box">
+          <div>
+            <h4 class="is-size-4 has-text-weight-bold mb-1">Sur tous tes appareils</h4>
+            <p class="subtitle has-text-grey">Remède s'installe n'importe où dans ta vie numérique ! Téléphone, tablette ou ordinateur, rien ne t'empêchera de profiter de la meilleure expérience de dictionnaire.</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box img">
+          <img class="float2" src="assets/arrows.png" alt="Cross platform"/>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box img">
+          <img class="float3" src="assets/rocket.png" alt="Rocket"/>
+        </div>
+      </div>
+      <div class="column is-two-third">
+        <div class="box">
+          <div>
+            <h4 class="is-size-4 has-text-weight-bold mb-1">Modulable</h4>
+            <p class="subtitle has-text-grey">Remède est en français, mais la base logicielle solide pourra permettre d'accueillir <em>Remedy</em> ou <em>Remedio</em> pour l'anglais et l'espagnol dans le futur !</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-full">
+        <hr>
+      </div>
+      <div class="column is-full">
+        <div class="box has-background-secondary">
+          <h2 class="mb-3 is-size-1 is-size-3-mobile has-text-weight-bold"><i onclick="window.open('https://playstr')" class="fas fa-external-link-square-alt icon-hover"></i> Prêt.e à entrer dans l'aventure ?</h2>
+          <p style="font-size: 1.1em">
+            Tu n'est plus qu'à un seul clique de devenir un druide du français !
+          </p>
+        </div>
+      </div>
+      <div class="column is-full" id="help">
+        <div class="box is-flex-direction-row is-justify-content-center">
+          <a class="mr-4 is-inline-block" href="/download"><i class="fas fa-dot-circle"></i> Télécharger</a>
+          <a class="mr-4">•</a>
+          <a class="mr-4 is-inline-block" href="mailto:software@camarm.dev" target="_blank"><i class="fas fa-envelope"></i> Nous contacter</a>
+          <a class="mr-4">•</a>
+          <a class="is-inline-block" href="https://github.com/camarm-dev/remede" target="_blank"><i class="fab fa-github"></i> Github</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section">
   <div class="columns is-multiline">
     {% for post in site.posts %}
@@ -160,7 +274,7 @@
         <footer class="card-footer">
           <p class="card-footer-item">
             <span>
-              <a href="{{ post.url }}">Read post</a>
+              <a href="{{ post.url }}">Lire</a>
             </span>
           </p>
         </footer>
@@ -191,5 +305,135 @@
     </div>
   </div>
 </footer>
+<style>
+.box {
+    background-color: transparent;
+    border: none;
+}
+
+hr {
+    width: 65%;
+    margin: auto;
+    height: .55px;
+    border-radius: 5px;
+    margin-top: 2em;
+}
+
+.has-background-primary {
+    background: var(--primary) !important;
+    color: #fff !important
+}
+
+.has-background-secondary {
+    background: #31bb67 !important;
+    color: #fff !important
+}
+
+hr {
+    background-color: var(--grey)
+}
+
+.box.img {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+
+.box.img img {
+    max-height: 12em;
+    max-width: 6em;
+    width: auto;
+    object-fit: contain;
+}
+
+.box.img img:hover {
+    animation-play-state: paused;
+    position: absolute;
+    scale: 1.06 !important;
+    transition: .2s ease-in-out;
+}
+
+.float1 {
+    animation: float1 10s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.float2 {
+    animation: float2 20s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.float3 {
+    animation: float3 10s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+
+@keyframes float1 {
+    0% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    50% {
+        transform: translate(0%, -8%);
+    }
+    60% {
+        transform: translate(0%, -8%);
+        scale: 1.05;
+    }
+    90% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    100% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+}
+
+
+@keyframes float2 {
+    0% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    50% {
+        transform: translate(-2%, -8%);
+        scale: 1;
+    }
+    60% {
+        transform: translate(-2%, -8%);
+        scale: 1.02;
+    }
+    90% {
+        transform: translate(0%, 0%);
+        scale: 1.02;
+    }
+    100% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+}
+
+@keyframes float3 {
+    0% {
+        scale: 1;
+    }
+    50% {
+        scale: 1;
+    }
+    60% {
+        scale: 1.03;
+    }
+    90% {
+        scale: 1.03;
+    }
+    100% {
+        scale: 1;
+    }
+}
+</style>
 </body>
 </html>

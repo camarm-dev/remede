@@ -57,6 +57,46 @@ class RemedeDatabase {
         return response[0]
     }
 
+    async getRimesAutocomplete(query: string) {
+        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' ORDER BY freq DESC LIMIT 5`
+        return await this.query(statement) as any as Promise<string[]>
+    }
+
+    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, page = 0) {
+        const statement = `SELECT phon_end, word_end FROM rimes WHERE word = '${word}'`
+        const response = await this.rawQuery(statement) as any[]
+        const document = response[0]
+        if (!document) return []
+        const phonEnd = document[0]
+        const wordEnd = document[1]
+        const query = `SELECT word, phon, feminine, elidable FROM rimes WHERE (phon_end = '${phonEnd}' OR word_end = '${wordEnd}')
+             AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
+             AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide}))
+             AND (feminine OR ${!feminine}))
+             ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
+        return await this.rawQuery(query)
+    }
+
+    async rawQuery(statement: string) {
+        if (!this.db) {
+            return await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(this.rawQuery(statement))
+                }, 500)
+            })
+        }
+
+        const parsed = []
+        const results = this.db.exec(statement)
+        for (const document of results) {
+            for (const value of document.values) {
+                parsed.push(value)
+            }
+        }
+
+        return parsed
+    }
+
     async query(statement: string): Promise<Array<string>> {
         if (!this.db) {
             return await new Promise((resolve) => {

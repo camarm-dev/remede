@@ -98,6 +98,26 @@ async function wordExists(word: string) {
     return doesWordExistsWithDatabase(word)
 }
 
+async function getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: number, elide?: boolean, feminine?: boolean, page = 0) {
+    if (await useApi()) {
+        return {
+            rhymes: [],
+            success: false
+        }
+    }
+    return {
+        rhymes: await database?.getWordRimes(word, maxSyllabes, minSyllabes, elide, feminine, page) as any[],
+        success: true
+    }
+}
+
+async function getRimesAutocomplete(query: string) {
+    if (await useApi()) {
+        return []
+    }
+    return await database?.getRimesAutocomplete(query) as any as Promise<string[]>
+}
+
 const database = await useApi() ? null: new RemedeDatabase()
 
 export {
@@ -106,5 +126,7 @@ export {
     getSearchResults,
     getRandomWord,
     getTodayWord,
-    wordExists
+    wordExists,
+    getWordRimes,
+    getRimesAutocomplete
 }

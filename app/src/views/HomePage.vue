@@ -90,12 +90,12 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.1.5</code>, nom de code <i>Goofy Jellyfish, revision 5</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.2.0-beta</code>, nom de code <i>Brown Sheep, beta</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
-              <li>Résolution de problèmes à propos de la recherche.</li>
-              <li>Performances de recherche améliorées grâce à la création d'un index.</li>
-              <li>Patch du problème lié aux page des mots contenant des caractères spéciaux.</li>
+              <li>Dictionnaire de rimes.</li>
+              <li>Nouvelle base de données, et suppression des anciennes versions.</li>
+              <li>Création d'un site web à <a href="https://remede.camarm.fr" target="_blank">remede.camarm.fr</a>.</li>
             </ul>
           </p>
         </ion-content>
@@ -291,7 +291,7 @@ export default defineComponent({
         } catch (e) {
           const message = await toastController.create({
             header: "Erreur",
-            message: `La recherche dans le dictionnaire à échouée: ${e}`,
+            message: `La recherche dans le dictionnaire a échouée: ${e}`,
             duration: 5000,
             color: "danger"
           })
@@ -359,36 +359,3 @@ export default defineComponent({
   }
 })
 </script>
-<style>
-.results-wrapper {
-  transition: .5s ease-in-out;
-  height: 270px;
-}
-
-.results-wrapper.empty {
-  height: 0;
-}
-
-.search-results {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  padding-inline-start: 10px;
-  padding-inline-end: 10px;
-}
-
-.search-results ion-item {
-  --border-width: 0;
-  padding-bottom: .55px !important;
-  background: linear-gradient(to right, var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc))) 70%, rgba(64, 64, 64, 0));
-}
-
-.search-results ion-item .item-bottom {
-  --border-color: transparent;
-}
-
-.search-results ion-item::part(native) {
-  --border-width: 0;
-  --inner-border-width: 0;
-  position: relative;
-}
-</style>

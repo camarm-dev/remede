@@ -131,14 +131,9 @@ def root():
         "total": entities,
         "dictionnaires": {
             "remede": {
-                "nom": "Remède complet  ~310Mb",
+                "nom": "Remède (FR) ~302Mb",
                 "slug": "remede",
                 "hash": DATASET
-            },
-            "remede-less": {
-                "nom": "Remède mini  ~220Mb",
-                "slug": "remede-less",
-                "hash": DATASET_LESS
             }
         }
     }
@@ -149,7 +144,7 @@ def get_word_document(word: str):
     """
     Renvoie le document Remède du mot `word`
     """
-    return in_json(fetch_remede_doc(word.replace("'", "''")))
+    return json.loads(fetch_remede_doc(word.replace("'", "''")))
 
 
 @app.get('/random')
@@ -270,7 +265,6 @@ if __name__ == '__main__':
     }
 
     DATASET = md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
-    DATASET_LESS = md5(open('data/remede-less.db', 'rb').read()).hexdigest()[0:7]
 
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}

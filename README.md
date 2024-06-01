@@ -29,21 +29,11 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 - [Documentation](#documentation)
 - [Screenshots](#screenshots)
 
-## Current: 1.1.5 — Goofy Jellyfish, revision 5
+## Current: 1.2.0-beta — Brown Sheep
 
-La version `1.1.5`, nom de code `Goofy Jellyfish` inclue les nouvelles fonctionnalités suivantes :
-- [x] **Examples** sur les définitions
-- [x] **Nouvelle interface** sur la page de définitions
-- [x] Possibilité de télécharger une base de donnée **light**.
-- [x] Applications **Linux et Windows** (expérimentales)
-- [x] Service de **prononciation** open source et auto-hébergé !
-- [x] **Nouvelle base** (base de données révisée)
-- [x] **Service de correction** open source et autohébergé !
-- [x] Recherche **simplifiée** et plus **agréable**.
-- [x] Recherche plus **performante**.
-- [x] Serveur plus **stable**.
-- [x] Navigation **sans limite** dans les définitions !
-- [ ] Rhymes dictionary (arrive en `1.2.0`)
+La version `1.2.0`, nom de code `Brown Sheep` inclue les nouvelles fonctionnalités suivantes :
+- [ ] Dictionnaire de **rimes**
+- [ ] Téléchargeable sur le **Play Store** !
 
 ## Télécharger
 
