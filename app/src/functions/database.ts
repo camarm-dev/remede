@@ -58,20 +58,24 @@ class RemedeDatabase {
     }
 
     async getRimesAutocomplete(query: string) {
-        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' ORDER BY freq DESC LIMIT 5`
+        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY freq DESC LIMIT 5`
         return await this.query(statement) as any as Promise<string[]>
     }
 
-    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, page = 0) {
-        const statement = `SELECT phon_end FROM rimes WHERE word = '${word}'`
+    async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, quality: number = 0, page = 0) {
+        const statement = `SELECT phon_end, phon FROM rimes WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
         if (!document) return []
         const phonEnd = document[0]
+        const phon = document[1]
+        const splicedPhon = phon.slice(phon.length - quality)
+        const qualityFilter = `(${quality === 0} OR phon LIKE '%${splicedPhon}')`
         const query = `SELECT word, phon, feminine, elidable FROM rimes WHERE (phon_end = '${phonEnd}')
              AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
              AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide}))
-             AND (feminine OR ${!feminine}))
+             AND (feminine OR ${!feminine})
+             AND ${qualityFilter})
              ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
         return await this.rawQuery(query)
     }
@@ -115,6 +119,18 @@ class RemedeDatabase {
 
         return parsed as string[]
     }
+}
+
+export enum wordsNature {
+    verbe = 'VER',
+    nom = 'NOM',
+    aux = 'AUX',
+    adverbe = 'ADV',
+    adjectif = 'ADJ',
+    preposition = 'PRE',
+    conjonction = 'CON',
+    pronom = 'PRO',
+    onomatopee = 'ONO'
 }
 
 export {
