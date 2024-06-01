@@ -109,6 +109,7 @@ Remède creates is own base of french words, synonyms, antonyms with extern serv
 - Antonyms from [antonyme.org](http://www.antonyme.org)
 - Conjugations from [conjuguons.fr](http://www.conjuguons.fr)
 - IPA from [Open Dict Data](https://github.com/open-dict-data/ipa-dict)<sup>[MIT](https://github.com/open-dict-data/ipa-dict/blob/master/LICENSE)</sup>
+- Rimes are data from [Open Lexicon](http://www.lexique.org/?page_id=91)<sup>[CC BY-SA 4.0 Deed](https://github.com/chrplr/openlexicon/blob/master/LICENSE.txt)</sup>, parsed by the [Drime](https://a3nm.net/git/drime/files.html)<sup>[GPLv3](https://a3nm.net/git/drime/file/COPYING.html)</sup> project to be added to Remède database.
 - The TTS service from [nanotts](https://github.com/gmn/nanotts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, implemented in the API [opentts](https://github.com/synesthesiam/opentts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, hosted by us
 - The corrector service by [languagetool.org](https://languagetool.org)<sup>[LGPL 2.1](https://github.com/languagetool-org/languagetool/blob/master/COPYING.txt)</sup>, hosted by us
 
@@ -142,6 +143,12 @@ JSON schema of an indexed word by Remède.
   "antonymes": [
     ""
   ],
+  "etymologies": [
+    ""
+  ],
+  "exemples": [
+    ""
+  ],
   "definitions": [
     {
       "genre": "",
@@ -172,6 +179,8 @@ JSON schema of an indexed word by Remède.
 
 - `synonymes` (`[]string`): List of synonyms
 - `antonymes` (`[]string`): List of antonyms
+- `etymologies` (`[]string`): List of etymologies
+- `exemples` (`[]string`): List of examples
 - `definitions` (`[]{}`): List of objects containing a word definition
     - `genre` (`string`): The 'genre' of defined word
     - `classe` (`string`): The grammar class of defined word

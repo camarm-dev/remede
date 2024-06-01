@@ -108,6 +108,7 @@ Remède créé sa propre base de mots, synonymes, antonymes français à partir 
 - Les antonymes via [antonyme.org](http://www.antonyme.org)
 - Les conjugaisons via [conjuguons.fr](http://www.conjuguons.fr)
 - Les IPA de [Open Dict Data](https://github.com/open-dict-data/ipa-dict)<sup>[MIT](https://github.com/open-dict-data/ipa-dict/blob/master/LICENSE)</sup>
+- Les rimes utilisent les données [Open Lexicon](http://www.lexique.org/?page_id=91)<sup>[CC BY-SA 4.0 Deed](https://github.com/chrplr/openlexicon/blob/master/LICENSE.txt)</sup>, extraite par le projet [Drime](https://a3nm.net/git/drime/files.html)<sup>[GPLv3](https://a3nm.net/git/drime/file/COPYING.html)</sup>
 - Le service de TTS par [nanotts](https://github.com/gmn/nanotts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, via l'API [opentts](https://github.com/synesthesiam/opentts)<sup>[Apache 2.0](https://github.com/gmn/nanotts/blob/master/LICENSE)</sup>, hébergée par nos soins
 - Le service de correction par [languagetool.org](https://languagetool.org)<sup>[LGPL 2.1](https://github.com/languagetool-org/languagetool/blob/master/COPYING.txt)</sup>, hébergé par nos soins
 
@@ -140,6 +141,12 @@ Schéma JSON d'un document de mot indexé par Remède
   "antonymes": [
     ""
   ],
+  "etymologies": [
+    ""
+  ],
+  "exemples": [
+    ""
+  ],
   "definitions": [
     {
       "genre": "",
@@ -170,6 +177,8 @@ Schéma JSON d'un document de mot indexé par Remède
 
 - `synonymes` (`[]string`): Liste des mots synonymes
 - `antonymes` (`[]string`): Liste des mots antonymes
+- `etymologies` (`[]string`): Liste d'étymologies
+- `exemples` (`[]string`): Liste d'exemples
 - `definitions` (`[]{}`): Liste d'objets contenants une définition du mot
     - `genre` (`string`): Genre du mot qui est défini
     - `classe` (`string`): Classe grammaticale du mot défini
