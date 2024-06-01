@@ -26,15 +26,20 @@
               <ion-icon :icon="filterCircleOutline"></ion-icon>
               <ion-label>Filtres</ion-label>
             </ion-chip>
-            <ion-chip v-if="minSyllabes != 0 || maxSyllabes != 0"  id="open-syllabes-selector">
-              <ion-label>de {{ minSyllabes }} {{ maxSyllabes > 0 ? ` à ${maxSyllabes}`: '' }} syllabe(s)</ion-label>
-              <ion-icon :icon="closeOutline" @click="minSyllabes = 0; maxSyllabes = 0; search()"/>
-            </ion-chip>
-            <ion-chip class="outline" id="open-syllabes-selector" v-else>
-              <ion-label>Nb. syllabes</ion-label>
-              <ion-icon :icon="chevronExpandOutline"/>
-            </ion-chip>
-            <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
+            <div v-if="minSyllabes != 0 || maxSyllabes != 0">
+              <ion-chip id="open-syllabes-selector">
+                <ion-label>de {{ minSyllabes }} {{ maxSyllabes > 0 ? ` à ${maxSyllabes}`: '' }} syllabe(s)</ion-label>
+                <ion-icon :icon="closeOutline" @click="minSyllabes = 0; maxSyllabes = 0; search()"/>
+              </ion-chip>
+              <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
+            </div>
+            <div v-else>
+              <ion-chip class="outline" id="open-syllabes-selector">
+                <ion-label>Nb. syllabes</ion-label>
+                <ion-icon :icon="chevronExpandOutline"/>
+              </ion-chip>
+              <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
+            </div>
             <ion-chip v-if="elide">
               <ion-label>Avec élide</ion-label>
               <ion-icon :icon="closeOutline" @click="elide = false; search()"/>
