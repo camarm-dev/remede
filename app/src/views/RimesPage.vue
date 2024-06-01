@@ -41,10 +41,8 @@ import {getRimesAutocomplete} from "@/functions/dictionnary"
 import {
   type Animation, AnimationDirection, createAnimation,
   IonButtons,
-  IonChip,
   IonContent,
   IonHeader,
-  IonIcon,
   IonItem,
   IonLabel,
   IonMenuButton,
@@ -57,16 +55,16 @@ import {
   toastController,
   IonList,
   useIonRouter
-} from "@ionic/vue";
-import {iosTransitionAnimation} from "@ionic/core";
+} from "@ionic/vue"
+import {iosTransitionAnimation} from "@ionic/core"
 import {
   addOutline,
   closeOutline,
   filterCircleOutline,
   radioButtonOffOutline,
   radioButtonOnOutline
-} from "ionicons/icons";
-import {defineComponent, onMounted, Ref, ref} from "vue";
+} from "ionicons/icons"
+import {defineComponent, onMounted, Ref, ref} from "vue"
 
 export default defineComponent({
   data() {
@@ -179,8 +177,6 @@ export default defineComponent({
     IonProgressBar,
     IonSearchbar,
     IonItem,
-    IonIcon,
-    IonChip,
     IonLabel,
     IonNote,
     IonList

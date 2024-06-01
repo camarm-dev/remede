@@ -101,18 +101,16 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
-  IonMenuButton,
   IonNavLink,
   IonNote,
-  IonPage,
   IonPopover,
   IonProgressBar,
   IonSearchbar,
   IonTitle,
   IonToolbar,
   useIonRouter
-} from "@ionic/vue";
-import {iosTransitionAnimation} from "@ionic/core";
+} from "@ionic/vue"
+import {iosTransitionAnimation} from "@ionic/core"
 import {
   addOutline,
   closeOutline,
@@ -120,8 +118,8 @@ import {
   radioButtonOffOutline,
   radioButtonOnOutline,
   chevronBackOutline
-} from "ionicons/icons";
-import {defineComponent} from "vue";
+} from "ionicons/icons"
+import {defineComponent} from "vue"
 
 export default defineComponent({
   data() {
@@ -197,8 +195,6 @@ export default defineComponent({
     IonButtons,
     IonContent,
     IonHeader,
-    IonMenuButton,
-    IonPage,
     IonTitle,
     IonToolbar,
     IonProgressBar,
