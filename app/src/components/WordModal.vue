@@ -360,6 +360,8 @@ export default defineComponent({
   created() {
     this.loadData(null).then(() => {
       this.listenSpecialTags()
+    }).catch(() => {
+      this.notFound = true
     })
   },
   methods: {

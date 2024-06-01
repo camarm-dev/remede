@@ -13,8 +13,8 @@
         <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
         <ion-title v-else>Rimes</ion-title>
         <ion-buttons slot="end" collapse>
-          <ion-button>
-            <ion-icon slot="icon-only" :icon="chevronUpOutline" @click="scrollToTop()"/>
+          <ion-button @click="scrollToTop()">
+            <ion-icon slot="icon-only" :icon="chevronUpOutline"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -31,6 +31,24 @@
               <ion-icon :icon="filterCircleOutline"></ion-icon>
               <ion-label>Filtres</ion-label>
             </ion-chip>
+            <ion-chip v-if="quality != 0">
+              <ion-label v-if="quality == 1">Rimes pauvres</ion-label>
+              <ion-label v-if="quality == 2">Rimes suffisantes</ion-label>
+              <ion-label v-if="quality == 3">Rimes riches</ion-label>
+              <ion-icon :icon="closeOutline" @click="quality = 0; search()"/>
+            </ion-chip>
+            <ion-chip v-if="nature.length > 0">
+              <ion-label><span :key="type" v-for="type in nature">{{ type.toLowerCase() }}. {{ nature.indexOf(type) + 1 < nature.length ? ',': '' }}</span></ion-label>
+              <ion-icon :icon="closeOutline" @click="nature = []; search()"/>
+            </ion-chip>
+            <ion-chip v-if="elide">
+              <ion-label>Avec élide</ion-label>
+              <ion-icon :icon="closeOutline" @click="elide = false; search()"/>
+            </ion-chip>
+            <ion-chip v-if="feminine">
+              <ion-label>Féminines seulement</ion-label>
+              <ion-icon :icon="closeOutline" @click="feminine = false; search()"/>
+            </ion-chip>
             <div v-if="minSyllabes != 0 || maxSyllabes != 0">
               <ion-chip id="open-syllabes-selector">
                 <ion-label>de {{ minSyllabes }} {{ maxSyllabes > 0 ? ` à ${maxSyllabes}`: '' }} syllabe(s)</ion-label>
@@ -45,14 +63,6 @@
               </ion-chip>
               <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
             </div>
-            <ion-chip v-if="elide">
-              <ion-label>Avec élide</ion-label>
-              <ion-icon :icon="closeOutline" @click="elide = false; search()"/>
-            </ion-chip>
-            <ion-chip v-if="feminine">
-              <ion-label>Féminines seulement</ion-label>
-              <ion-icon :icon="closeOutline" @click="feminine = false; search()"/>
-            </ion-chip>
             <ion-chip class="outline" id="open-filters">
               <ion-label>Ajouter un filtre</ion-label>
               <ion-icon :icon="addOutline"/>
@@ -66,6 +76,21 @@
                 <ion-label>Féminines</ion-label>
                 <ion-checkbox :checked="feminine" @ionChange="feminine = $event.detail.checked; search()"/>
               </ion-item>
+              <ion-item lines="none">
+                <ion-select @ionChange="nature = $event.detail.value; search()" multiple label="Nature des rimes">
+                  <ion-select-option :value="wordsNature.nom">Nom</ion-select-option>
+                  <ion-select-option :value="wordsNature.verbe">Verbe</ion-select-option>
+                  <ion-select-option :value="wordsNature.adverbe">Adverbe</ion-select-option>
+                  <ion-select-option :value="wordsNature.adjectif">Adjectif</ion-select-option>
+                  <ion-select-option :value="wordsNature.pronom">Pronom</ion-select-option>
+                  <ion-select-option :value="wordsNature.aux">Auxiliaire</ion-select-option>
+                  <ion-select-option :value="wordsNature.onomatopee">Onomatopée</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item lines="none" id="open-quality-selector">
+                <ion-label>Qualité des rimes</ion-label>
+              </ion-item>
+              <ion-picker trigger="open-quality-selector" :columns="rimeQualityPickerColumns" :buttons="rimeQualityPickerButtons"></ion-picker>
             </ion-popover>
           </ion-item>
         </ion-toolbar>
@@ -89,7 +114,7 @@
           </div>
           <ion-item @click="goTo(`/dictionnaire/${word[0]}`)" v-for="word in rhymes" :key="word.toString()" button v-else>
             <ion-label>
-              {{ word[0] }}
+              {{ word[0].replaceAll('\\', '') }}
               <p>\{{ word[1] }}\</p>
             </ion-label>
 
@@ -132,7 +157,7 @@ import {
   IonTitle,
   IonToolbar,
   IonPage,
-  useIonRouter, IonInfiniteScroll, IonInfiniteScrollContent, InfiniteScrollCustomEvent
+  useIonRouter, IonInfiniteScroll, IonInfiniteScrollContent, InfiniteScrollCustomEvent, IonSelect, IonSelectOption
 } from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 import {
@@ -146,8 +171,14 @@ import {
   chevronUpOutline
 } from "ionicons/icons"
 import {defineComponent} from "vue"
+import {wordsNature} from "@/functions/database"
 
 export default defineComponent({
+  computed: {
+    wordsNature() {
+      return wordsNature
+    }
+  },
   data() {
     const syllabesPickerColumns = [
       {
@@ -220,6 +251,44 @@ export default defineComponent({
       },
     ]
 
+    const rimeQualityPickerColumns = [
+      {
+        name: "quality",
+        options: [
+          {
+            text: "Toutes",
+            value: 0
+          },
+          {
+            text: "Rimes pauvres",
+            value: 1
+          },
+          {
+            text: "Rimes suffisantes",
+            value: 2
+          },
+          {
+            text: "Rimes riches",
+            value: 3
+          }
+        ],
+      },
+    ]
+
+    const rimeQualityPickerButtons = [
+      {
+        text: "Annuler",
+        role: "cancel",
+      },
+      {
+        text: "Appliquer",
+        handler: (value: any) => {
+          this.setQuality(value.quality.value)
+          this.search()
+        },
+      },
+    ]
+
     return {
       loading: false,
       failed: false,
@@ -231,7 +300,11 @@ export default defineComponent({
       feminine: false,
       page: 0,
       syllabesPickerColumns,
-      syllabesPickerButtons
+      syllabesPickerButtons,
+      rimeQualityPickerColumns,
+      rimeQualityPickerButtons,
+      quality: 0,
+      nature: [] as string[]
     }
   },
   setup() {
@@ -242,9 +315,10 @@ export default defineComponent({
 
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
-        ionRouter.navigate("/rimes", "back", "replace")
+        ionRouter.navigate("/rimes", "back", "replace", iosTransitionAnimation)
         return true
       }
+      ionRouter.back(iosTransitionAnimation)
       return false
     }
 
@@ -274,13 +348,12 @@ export default defineComponent({
     async searchRhymes() {
       this.loading = true
       try {
-        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide, this.feminine)
+        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide, this.feminine, this.quality, this.nature, this.page)
         for (const element of rhymes) {
           this.rhymes.push(element)
         }
         this.failed = !success
       } catch (e) {
-        console.error(e)
         this.failed = true
       }
       this.loading = false
@@ -293,6 +366,9 @@ export default defineComponent({
     setMinMax(min: number, max: number) {
       this.minSyllabes = min
       this.maxSyllabes = max
+    },
+    setQuality(quality: number) {
+      this.quality = quality
     },
     loadMore(event: InfiniteScrollCustomEvent) {
       this.page += 1
@@ -327,7 +403,9 @@ export default defineComponent({
     IonPicker,
     IonPage,
     IonInfiniteScroll,
-    IonInfiniteScrollContent
+    IonInfiniteScrollContent,
+    IonSelect,
+    IonSelectOption
   }
 })
 </script>
