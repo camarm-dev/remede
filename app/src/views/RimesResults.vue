@@ -242,9 +242,10 @@ export default defineComponent({
 
     function navigateBackIfNoHistory() {
       if (!ionRouter.canGoBack()) {
-        ionRouter.navigate("/rimes", "back", "replace")
+        ionRouter.navigate("/rimes", "back", "replace", iosTransitionAnimation)
         return true
       }
+      ionRouter.back(iosTransitionAnimation)
       return false
     }
 
