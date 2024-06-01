@@ -115,7 +115,7 @@ async function getRimesAutocomplete(query: string) {
     if (await useApi()) {
         return []
     }
-    return await database?.getRimesAutocomplete(query)
+    return await database?.getRimesAutocomplete(query) as any as Promise<string[]>
 }
 
 const database = await useApi() ? null: new RemedeDatabase()
