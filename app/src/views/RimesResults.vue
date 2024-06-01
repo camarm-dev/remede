@@ -50,11 +50,11 @@
             <ion-popover trigger="open-filters">
               <ion-item lines="none">
                 <ion-label>Élides</ion-label>
-                <ion-checkbox :checked="elide" @ionChange="elide = $event.detail.checked"/>
+                <ion-checkbox :checked="elide" @ionChange="elide = $event.detail.checked; search()"/>
               </ion-item>
               <ion-item lines="none">
                 <ion-label>Féminines</ion-label>
-                <ion-checkbox :checked="feminine" @ionChange="feminine = $event.detail.checked"/>
+                <ion-checkbox :checked="feminine" @ionChange="feminine = $event.detail.checked; search()"/>
               </ion-item>
             </ion-popover>
           </ion-item>
@@ -64,10 +64,10 @@
         <ion-item-group>
           <ion-item-divider>
             <ion-label slot="start">
-              Mot
+              Rime
             </ion-label>
             <ion-label slot="end">
-              Féminine
+              Féminine / Élidable
             </ion-label>
           </ion-item-divider>
           <div class="ion-padding" v-if="!failed && rhymes.length === 0">
@@ -83,8 +83,11 @@
               <p>\{{ word[1] }}\</p>
             </ion-label>
 
-            <ion-icon slot="end" :icon="radioButtonOnOutline" v-if="word[3] == 1" color="success"/>
-            <ion-icon slot="end" :icon="radioButtonOffOutline" v-else color="danger"/>
+            <ion-icon :icon="radioButtonOnOutline" v-if="word[2] == 1" color="primary"/>
+            <ion-icon :icon="radioButtonOffOutline" v-else color="medium"/>
+
+            <ion-icon slot="end" :icon="radioButtonOnOutline" v-if="word[3] == 1" color="primary"/>
+            <ion-icon slot="end" :icon="radioButtonOffOutline" v-else color="medium"/>
           </ion-item>
         </ion-item-group>
       </ion-list>
@@ -127,7 +130,7 @@ import {
   radioButtonOffOutline,
   radioButtonOnOutline,
   chevronBackOutline,
-  settingsOutline, chevronExpandOutline
+  chevronExpandOutline
 } from "ionicons/icons"
 import {defineComponent} from "vue"
 
@@ -276,7 +279,7 @@ export default defineComponent({
     async searchRhymes() {
       this.loading = true
       try {
-        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide)
+        const {rhymes, success} = await getWordRimes(this.query, this.maxSyllabes == 0 ? undefined: this.maxSyllabes, this.minSyllabes == 0 ? undefined: this.minSyllabes, this.elide, this.feminine)
         for (const element of rhymes) {
           this.rhymes.push(element)
         }
