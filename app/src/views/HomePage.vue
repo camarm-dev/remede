@@ -90,12 +90,12 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.1.5</code>, nom de code <i>Goofy Jellyfish, revision 5</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.2.0-beta</code>, nom de code <i>Brown Sheep, beta</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
-              <li>Résolution de problèmes à propos de la recherche.</li>
-              <li>Performances de recherche améliorées grâce à la création d'un index.</li>
-              <li>Patch du problème lié aux page des mots contenant des caractères spéciaux.</li>
+              <li>Dictionnaire de rimes.</li>
+              <li>Nouvelle base de données, et suppression des anciennes versions.</li>
+              <li>Création d'un site web à <a href="https://remede.camarm.fr" target="_blank">remede.camarm.fr</a>.</li>
             </ul>
           </p>
         </ion-content>
