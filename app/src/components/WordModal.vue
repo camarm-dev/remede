@@ -38,9 +38,9 @@ import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
 
 
-const detailsModal = ref();
+const detailsModal = ref()
 
-const closeModal = () => modal.value.$el.dismiss(null, 'cancel');
+const closeModal = () => modal.value.$el.dismiss(null, "cancel")
 </script>
 
 <template>

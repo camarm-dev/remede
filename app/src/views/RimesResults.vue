@@ -118,7 +118,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInput,
   IonItem,
   IonItemDivider,
   IonItemGroup,
@@ -152,55 +151,55 @@ export default defineComponent({
   data() {
     const syllabesPickerColumns = [
       {
-        name: 'minSyllabes',
+        name: "minSyllabes",
         options: [
           {
-            text: 'Syllabes min.',
+            text: "Syllabes min.",
             value: 0
           },
           {
-            text: '1',
+            text: "1",
             value: 1
           },
           {
-            text: '2',
+            text: "2",
             value: 2
           },
           {
-            text: '3',
+            text: "3",
             value: 3
           },
           {
-            text: '4',
+            text: "4",
             value: 4
           },
         ],
       },
       {
-        name: 'maxSyllabes',
+        name: "maxSyllabes",
         options: [
           {
-            text: 'Syllabes max.',
+            text: "Syllabes max.",
             value: 0
           },
           {
-            text: '1',
+            text: "1",
             value: 1
           },
           {
-            text: '2',
+            text: "2",
             value: 2
           },
           {
-            text: '3',
+            text: "3",
             value: 3
           },
           {
-            text: '4',
+            text: "4",
             value: 4
           },
           {
-            text: '5',
+            text: "5",
             value: 5
           },
         ],
@@ -209,11 +208,11 @@ export default defineComponent({
 
     const syllabesPickerButtons = [
       {
-        text: 'Annuler',
-        role: 'cancel',
+        text: "Annuler",
+        role: "cancel",
       },
       {
-        text: 'Appliquer',
+        text: "Appliquer",
         handler: (value: any) => {
           this.setMinMax(value.minSyllabes.value, value.maxSyllabes.value)
           this.search()
@@ -302,7 +301,7 @@ export default defineComponent({
       })
     },
     scrollToTop() {
-      this.$refs.content.$el.scrollToTop(500);
+      this.$refs.content.$el.scrollToTop(500)
     },
   },
   components: {
@@ -322,7 +321,6 @@ export default defineComponent({
     IonNote,
     IonCheckbox,
     IonPopover,
-    IonInput,
     IonList,
     IonItemGroup,
     IonItemDivider,
