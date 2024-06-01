@@ -13,8 +13,8 @@
         <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
         <ion-title v-else>Rimes</ion-title>
         <ion-buttons slot="end" collapse>
-          <ion-button>
-            <ion-icon slot="icon-only" :icon="chevronUpOutline" @click="scrollToTop()"/>
+          <ion-button @click="scrollToTop()">
+            <ion-icon slot="icon-only" :icon="chevronUpOutline"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
