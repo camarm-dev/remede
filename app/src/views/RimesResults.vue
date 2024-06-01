@@ -354,7 +354,6 @@ export default defineComponent({
         }
         this.failed = !success
       } catch (e) {
-        console.error(e)
         this.failed = true
       }
       this.loading = false
