@@ -111,6 +111,13 @@ async function getWordRimes(word: string, maxSyllabes?: number, minSyllabes?: nu
     }
 }
 
+async function getRimesAutocomplete(query: string) {
+    if (await useApi()) {
+        return []
+    }
+    return await database?.getRimesAutocomplete(query)
+}
+
 const database = await useApi() ? null: new RemedeDatabase()
 
 export {
@@ -120,5 +127,6 @@ export {
     getRandomWord,
     getTodayWord,
     wordExists,
-    getWordRimes
+    getWordRimes,
+    getRimesAutocomplete
 }
