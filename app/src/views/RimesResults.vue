@@ -65,7 +65,7 @@
           </ion-item>
         </ion-toolbar>
       </ion-header>
-      <ion-list class="ion-margin-top ion-margin-bottom">
+      <ion-list class="ion-margin-top">
         <ion-item-group>
           <ion-item-divider>
             <ion-label slot="start">
@@ -96,6 +96,9 @@
           </ion-item>
         </ion-item-group>
       </ion-list>
+      <ion-infinite-scroll v-if="rhymes.length > 0" @ionInfinite="loadMore">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-content>
   </ion-page>
 </template>
@@ -125,7 +128,7 @@ import {
   IonTitle,
   IonToolbar,
   IonPage,
-  useIonRouter
+  useIonRouter, IonInfiniteScroll, IonInfiniteScrollContent, InfiniteScrollCustomEvent
 } from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 import {
@@ -242,25 +245,6 @@ export default defineComponent({
 
     const navigateBack = navigateBackIfNoHistory
 
-    const filtersButtons = ['Appliquer'];
-    const filtersInputs = [
-      {
-        label: 'Rimes féminines seulement',
-        type: 'radio',
-        value: 'feminine',
-      },
-      {
-        label: 'Rimes élidables',
-        type: 'radio',
-        value: 'elide',
-      },
-      {
-        label: 'Green',
-        type: 'radio',
-        value: 'green',
-      },
-    ];
-
     return {
       goTo,
       addOutline,
@@ -303,6 +287,12 @@ export default defineComponent({
     setMinMax(min: number, max: number) {
       this.minSyllabes = min
       this.maxSyllabes = max
+    },
+    loadMore(event: InfiniteScrollCustomEvent) {
+      this.page += 1
+      this.searchRhymes().then(() => {
+        event.target.complete()
+      })
     }
   },
   components: {
@@ -327,7 +317,9 @@ export default defineComponent({
     IonItemGroup,
     IonItemDivider,
     IonPicker,
-    IonPage
+    IonPage,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent
   }
 })
 </script>
