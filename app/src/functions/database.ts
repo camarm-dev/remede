@@ -73,7 +73,7 @@ class RemedeDatabase {
              AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
              AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide})))
              ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
-        return await this.query(query)
+        return await this.rawQuery(query)
     }
 
     async rawQuery(statement: string) {
@@ -88,7 +88,9 @@ class RemedeDatabase {
         const parsed = []
         const results = this.db.exec(statement)
         for (const document of results) {
-            parsed.push(document.values[0])
+            for (const value of document.values) {
+                parsed.push(value)
+            }
         }
 
         return parsed
