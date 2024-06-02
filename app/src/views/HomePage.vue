@@ -106,7 +106,6 @@
 </template>
 
 <script lang="ts">
-import WordModal from "@/components/WordModal.vue"
 import {bookmark, calendarOutline, shuffle, arrowForward} from "ionicons/icons"
 import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
@@ -256,7 +255,6 @@ export default defineComponent({
       bookmark,
       calendarOutline,
       shuffle,
-      WordModal,
       onFocus,
       onLeave,
       mainToolbar,
