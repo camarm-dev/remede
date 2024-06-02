@@ -3,12 +3,7 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-nav-link router-direction="back">
-            <ion-button @click="navigateBack()">
-              <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
-              Retour
-            </ion-button>
-          </ion-nav-link>
+          <ion-back-button text="Retour" default-href="/rimes"></ion-back-button>
         </ion-buttons>
         <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
         <ion-title v-else>Rimes</ion-title>
@@ -148,7 +143,6 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
-  IonNavLink,
   IonNote,
   IonPicker,
   IonPopover,
@@ -157,7 +151,12 @@ import {
   IonTitle,
   IonToolbar,
   IonPage,
-  useIonRouter, IonInfiniteScroll, IonInfiniteScrollContent, InfiniteScrollCustomEvent, IonSelect, IonSelectOption
+  useIonRouter,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  InfiniteScrollCustomEvent,
+  IonSelect,
+  IonSelectOption, IonBackButton
 } from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 import {
@@ -313,17 +312,6 @@ export default defineComponent({
       ionRouter.push(path, iosTransitionAnimation)
     }
 
-    function navigateBackIfNoHistory() {
-      if (!ionRouter.canGoBack()) {
-        ionRouter.navigate("/rimes", "back", "replace", iosTransitionAnimation)
-        return true
-      }
-      ionRouter.back(iosTransitionAnimation)
-      return false
-    }
-
-    const navigateBack = navigateBackIfNoHistory
-
     return {
       goTo,
       addOutline,
@@ -334,8 +322,7 @@ export default defineComponent({
       chevronBackOutline,
       chevronExpandOutline,
       chevronUpOutline,
-      ionRouter,
-      navigateBack
+      ionRouter
     }
   },
   mounted() {
@@ -382,7 +369,6 @@ export default defineComponent({
   },
   components: {
     IonButton,
-    IonNavLink,
     IonButtons,
     IonContent,
     IonHeader,
@@ -405,7 +391,8 @@ export default defineComponent({
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     IonSelect,
-    IonSelectOption
+    IonSelectOption,
+    IonBackButton
   }
 })
 </script>
