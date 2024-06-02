@@ -126,8 +126,9 @@ export default {
   },
   mounted() {
     const url = new URLSearchParams(location.search)
-    if (url.data) {
-      const content = url.data.replaceAll('?data=', '')
+    const data = url.get('data')
+    if (data) {
+      const content = data.replaceAll('?data=', '')
       this.content = content
       if (content != '') {
         this.correct()
