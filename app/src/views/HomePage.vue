@@ -128,7 +128,6 @@ import {
   toastController,
   AnimationDirection,
   useIonRouter,
-  useBackButton,
   modalController,
   IonModal,
 } from "@ionic/vue"
@@ -238,14 +237,6 @@ export default defineComponent({
     }
 
     const ionRouter = useIonRouter()
-
-    useBackButton(110, () => {
-      if (ionRouter.canGoBack()) {
-        ionRouter.back(iosTransitionAnimation)
-        return
-      }
-      ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
-    })
 
     const goTo = (path: string) => {
       ionRouter.push(path, iosTransitionAnimation)
