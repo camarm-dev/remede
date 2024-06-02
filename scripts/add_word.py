@@ -19,14 +19,15 @@ def add_to_wordlist(word: str, phoneme: str):
     with open('data/IPA.txt', 'w') as file:
         insert = f"{word}\t{phoneme}"
         if insert in content:
-            print("Word exists. Exiting.")
-            exit()
+            print(f"Word \"{word}\" was found in the database. Skipping.")
+            return False
         words = content.split('\n')
         words.append(insert)
         words.sort(key=lambda val: sanitize_word(val))
         new_content = "\n".join(words)
         new_content = new_content.replace("\n", "", 1)
         file.write(new_content)
+    return True
 
 
 def add_to_json(word: str, document: dict):
@@ -101,13 +102,15 @@ if __name__ == '__main__':
             word, phoneme = element
 
             if not phoneme.startswith("/"):
-                print("Phoneme must be formated like \"/ʁəmɛd/\"")
-                exit()
+                print(f"Phoneme must be formated like \"/ʁəmɛd/\", skipping {word}.")
+                continue
 
             print(f"Ajout du mot \"{word}\"...")
 
             print("- Ajout dans la liste de mots...")
-            add_to_wordlist(word, phoneme)
+            exists = add_to_wordlist(word, phoneme)
+            if exists:
+                continue
             print("Fait.")
 
             print("- Construction du document Remède...")
