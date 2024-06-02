@@ -80,3 +80,15 @@ Il :
 ```shell
 python3 scripts/add_word.py <word> <phoneme>
 ```
+
+Pour ajouter plusieurs mots:
+
+`wordlist.txt` (tabulation entre mot et ipa: `mot\t/ipa/`)
+```
+acupuncture /a.ky.pɔ̃k.tyʁ/
+remède  /ʁəmɛd/
+```
+et exécuter
+```shell
+python3 scripts/add_word.py -f wordlist.txt
+```
