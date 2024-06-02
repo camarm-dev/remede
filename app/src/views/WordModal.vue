@@ -391,7 +391,7 @@ export default defineComponent({
           dialogTitle: "Partager la définition",
         })
       } catch {
-        alert("Fonctionnalité non supportée par votre navigateur")
+        console.error('Failed to share.')
       }
     },
     getModes() {
