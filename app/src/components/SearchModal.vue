@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import {
-  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonItem,
   IonPage,
   IonSearchbar,
   IonToolbar,
-  IonLabel, IonBackButton
+  IonLabel,
+  IonBackButton
 } from "@ionic/vue"
-import {chevronBackOutline} from "ionicons/icons"
 </script>
 
 <template>
