@@ -32,7 +32,8 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 ## Current: 1.2.0-beta — Brown Sheep
 
 La version `1.2.0`, nom de code `Brown Sheep` inclue les nouvelles fonctionnalités suivantes :
-- [ ] Dictionnaire de **rimes**
+- [x] Dictionnaire de **rimes**
+- [x] Nouvelle navigation **encore plus agréable**.
 - [ ] Téléchargeable sur le **Play Store** !
 
 ## Télécharger
