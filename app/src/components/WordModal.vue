@@ -40,7 +40,7 @@ import quoteOpen from "@/assets/openQuote.svg"
 
 const detailsModal = ref()
 
-const closeModal = () => modal.value.$el.dismiss(null, "cancel")
+const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
 </script>
 
 <template>
