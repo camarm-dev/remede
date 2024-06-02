@@ -4,5 +4,5 @@
     <string name="title_activity_main">Remède</string>
     <string name="package_name">com.camarm.remede</string>
     <string name="custom_url_scheme">remede</string>
-    <string name="active_remede_label">Définition (Remède)</string>
+    <string name="active_remede_label">Ouvrir Remède</string>
 </resources>

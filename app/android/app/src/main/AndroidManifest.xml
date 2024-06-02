@@ -16,7 +16,7 @@
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
-                <data android:scheme="remede" android:host="remede-app.camarm.fr"/>
+                <data android:scheme="remede" android:host="remede-app.camarm.fr" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -47,6 +47,6 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
