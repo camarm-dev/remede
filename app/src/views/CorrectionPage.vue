@@ -91,7 +91,8 @@
 import {
   IonButtons,
   IonContent,
-  IonHeader, IonIcon,
+  IonHeader,
+  IonIcon,
   IonMenuButton,
   IonPage,
   IonTitle,
@@ -103,7 +104,8 @@ import {
   IonLabel,
   IonPopover,
   IonList,
-  IonNote
+  IonNote,
+  IonSpinner
 } from "@ionic/vue"
 import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons"
 </script>
@@ -120,6 +122,16 @@ export default {
       locked: false,
       loading: false,
       explainSegments: [] as ExplainSegment[]
+    }
+  },
+  mounted() {
+    const url = new URLSearchParams(location.search)
+    if (url.data) {
+      const content = url.data.replaceAll('?data=', '')
+      this.content = content
+      if (content != '') {
+        this.correct()
+      }
     }
   },
   methods: {
