@@ -96,6 +96,7 @@
               <li>Dictionnaire de rimes.</li>
               <li>Nouvelle base de données, et suppression des anciennes versions.</li>
               <li>Création d'un site web à <a href="https://remede.camarm.fr" target="_blank">remede.camarm.fr</a>.</li>
+              <li>Refonte de la navigation. Plus aucunes erreurs de navigation ne devraient apparaître.</li>
             </ul>
           </p>
         </ion-content>
