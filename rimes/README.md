@@ -12,13 +12,12 @@ réorganise cette base grâce au script `scripts/build_rimes.py`.
 
 ## Base de données
 
-Grâce à `scripts/generate_rime_graph.py`, une base `data/rimes.db` est générée. Elle suit le schéma si-dessous:
+La table que nous utilisons contient les champs suivants : 
 
 | word   | phon   | orgi   | freq  | min_nsyl | max_nsyl | word_end | phon_end | elidable | feminine |
 |--------|--------|--------|-------|----------|----------|----------|----------|----------|----------|
 | string | string | string | float | int      | int      | string   | string   | boolean  | boolean  |
 
-`word1` est un mot qui rime avec `word2`; c'est une rime `type` = **`1` pauvre**, **`2` suffisante**, **`3` riches**
 
 ### Construire la base
 
@@ -29,6 +28,6 @@ Pour construire la base de données, il faut exécuter `scripts/build_rimes.py`.
 
 ## Service de rimes
 
-La base de rimes est intégrée dans la base `data/remede.db` avec le script `scripts/build_rimes.py`.
+La base de rimes est intégrée dans la base `data/remede.db` (sous une table appelée `rimes`) avec le script `scripts/build_rimes.py`.
 
 Quand cette base est téléchargée, l'onglet "rimes" se débloque.
