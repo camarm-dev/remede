@@ -16,10 +16,24 @@
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
+                <data android:scheme="remede" android:host="remede-app.camarm.fr"/>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ActiveRemedeActivity"
+            android:exported="true"
+            android:label="@string/active_remede_label"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
