@@ -10,7 +10,6 @@ import {
   IonLabel,
   IonBadge,
   IonAlert,
-  useIonRouter,
   IonBackButton
 } from "@ionic/vue"
 import {
@@ -18,9 +17,6 @@ import {
   informationCircleOutline,
   shareOutline
 } from "ionicons/icons"
-
-const ionRouter = useIonRouter()
-
 </script>
 
 <template>
