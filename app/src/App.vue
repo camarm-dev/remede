@@ -94,6 +94,7 @@ import {
 import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
+import {Capacitor} from "@capacitor/core";
 
 export default {
   mounted() {
@@ -103,10 +104,12 @@ export default {
 
     })
 
-    App.addListener('appUrlOpen', (object) => {
-      const url = object.url.replaceAll("remede:/", "")
-      this.router.push(url);
-    })
+    if (Capacitor.addListener) {
+      Capacitor.addListener('App', 'appUrlOpen', (object) => {
+        const url = object.url.replaceAll("remede:/", "")
+        this.router.push(url);
+      })
+    }
 
     App.getLaunchUrl().then(object => {
       const url = object ? object.url: ''
