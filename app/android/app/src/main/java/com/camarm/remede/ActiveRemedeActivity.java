@@ -11,8 +11,16 @@ public class ActiveRemedeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         CharSequence text = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
+
+        Uri page;
+        if (text.toString().contains(" ") && text.charAt(0) != 'à') {
+            page = Uri.parse(getResources().getString(R.string.custom_url_scheme) + "://correction?data=" + text);
+        } else {
+            page = Uri.parse(getResources().getString(R.string.custom_url_scheme) + "://dictionnaire/" + text);
+        }
+
         Intent definitionIntent = new Intent(this, MainActivity.class)
-                .setData(Uri.parse(getResources().getString(R.string.custom_url_scheme) + "://dictionnaire/" + text))
+                .setData(page)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         startActivity(definitionIntent);
     }
