@@ -20,14 +20,16 @@ import {
   IonAccordionGroup,
   IonPopover,
   IonPage,
-  IonSpinner
+  IonSpinner,
+  IonBackButton
 } from "@ionic/vue"
 import {
   bookmark,
   bookmarkOutline,
-  chevronBackOutline,
-  chevronDownOutline, documentAttachOutline,
-  ellipsisVertical, fingerPrintOutline,
+  chevronDownOutline,
+  documentAttachOutline,
+  ellipsisVertical,
+  fingerPrintOutline,
   link,
   play,
   shareOutline
@@ -48,10 +50,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button @click="navigateBack()">
-            <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
-            Retour
-          </ion-button>
+          <ion-back-button text="Retour" default-href="/dictionnaire"></ion-back-button>
         </ion-buttons>
         <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
@@ -337,25 +336,21 @@ export default defineComponent({
       notFound: false,
       stared: false,
       audioLoading: false,
-      navigateBack: function () {
-        return false
-      } as navigateBackFunction,
+      goTo: function(path: string) {
+        console.log(path)
+      } as (path: string) => void,
       el: null as any
     }
   },
   mounted() {
     const ionRouter = useIonRouter()
-    function navigateBackIfNoHistory() {
-      if (!ionRouter.canGoBack()) {
-        ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
-        return true
-      }
-      ionRouter.back(iosTransitionAnimation)
-      return false
+
+    function goTo(path: string) {
+      ionRouter.push(path)
     }
 
-    this.navigateBack = navigateBackIfNoHistory
     this.el = ref(this.$el)
+    this.goTo = goTo as (path: string) => void
   },
   created() {
     this.loadData(null).then(() => {
@@ -400,9 +395,6 @@ export default defineComponent({
       } catch {
         alert("Fonctionnalité non supportée par votre navigateur")
       }
-    },
-    goTo(path: string) {
-      this.$router.push(path)
     },
     getModes() {
       return Object.keys(this.document.conjugaisons) as string[]
