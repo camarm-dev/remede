@@ -84,30 +84,43 @@ if __name__ == '__main__':
     database = sqlite3.connect('data/remede.db')
     cursor = database.cursor()
 
+    _, arg1, arg2 = sys.argv
+
+    words_to_add = []
+
+    if arg1 == '-f':
+        with open(arg2, 'r') as file:
+            for line in file.readlines():
+                if line != '':
+                    word, phoneme = line.split("\t")
+                    words_to_add.append((word, phoneme))
+    else:
+        words_to_add.append((arg1, arg2))
     try:
-        _, word, phoneme = sys.argv
+        for element in words_to_add:
+            word, phoneme = element
 
-        if not phoneme.startswith("/"):
-            print("Phoneme must be formated like \"/ʁəmɛd/\"")
-            exit()
+            if not phoneme.startswith("/"):
+                print("Phoneme must be formated like \"/ʁəmɛd/\"")
+                exit()
 
-        print(f"Ajout du mot \"{word}\"...")
+            print(f"Ajout du mot \"{word}\"...")
 
-        print("- Ajout dans la liste de mots...")
-        add_to_wordlist(word, phoneme)
-        print("Fait.")
+            print("- Ajout dans la liste de mots...")
+            add_to_wordlist(word, phoneme)
+            print("Fait.")
 
-        print("- Construction du document Remède...")
-        document = get_word_document(word, phoneme)
-        print("Fait.")
+            print("- Construction du document Remède...")
+            document = get_word_document(word, phoneme)
+            print("Fait.")
 
-        print("- Ajout du document aux bases JSON")
-        add_to_json(word, document)
-        print("Fait.")
+            print("- Ajout du document aux bases JSON")
+            add_to_json(word, document)
+            print("Fait.")
 
-        print("- Ajout du document à la base Sqlite")
-        insert_document(document, word)
-        print("Fait.")
+            print("- Ajout du document à la base Sqlite")
+            insert_document(document, word)
+            print("Fait.")
 
         post_setup()
 
