@@ -41,8 +41,6 @@ import {getSearchResults} from "@/functions/dictionnary"
 import {defineComponent} from "vue"
 import {useIonRouter} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
-import {navigateBackFunction} from "@/functions/types/utils"
-
 
 export default defineComponent({
   data() {
