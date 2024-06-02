@@ -133,6 +133,8 @@ Remède fetches words from the Wictionary but sometimes, words are not in our li
 3. Before making a PR, rebuild ressources (so your word will be added next time database is built)
    1. Run `python3 scripts/pre_generate_ressources.py`, if it outputs an error, check the previous steps...
 
+Check also [`PARSING.md` - Add a word](/PARSING.md#ajouter-un-mot-rapidement)
+
 ### Parsing
 
 A complete Guide about parsing and database generation is written in french at [`PARSING.md`](https://github.com/camarm-dev/remede/blob/main/PARSING.md)
