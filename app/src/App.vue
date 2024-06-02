@@ -88,19 +88,33 @@ import {
   informationCircleOutline,
   cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
 } from "ionicons/icons"
-
 </script>
 
 <script lang="ts">
 import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
+import { App } from "@capacitor/app"
 
 export default {
   mounted() {
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
     getOfflineDictionaryStatus().then(status => {
       this.downloaded = status.downloaded
+
     })
+
+    App.addListener('appUrlOpen', (object) => {
+      const url = object.url.replaceAll("remede:/", "")
+      this.router.push(url);
+    })
+
+    App.getLaunchUrl().then(object => {
+      const url = object ? object.url: ''
+      if (url.startsWith('remede://')) {
+        this.router.push(url.replaceAll("remede:/", ""))
+      }
+    })
+
   },
   data() {
     return {
