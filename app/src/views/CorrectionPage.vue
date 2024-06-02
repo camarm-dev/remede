@@ -126,11 +126,11 @@ export default {
   },
   mounted() {
     const url = new URLSearchParams(location.search)
-    const data = url.get('data')
+    const data = url.get("data")
     if (data) {
-      const content = data.replaceAll('?data=', '')
+      const content = data.replaceAll("?data=", "")
       this.content = content
-      if (content != '') {
+      if (content != "") {
         this.correct()
       }
     }
