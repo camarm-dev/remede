@@ -125,14 +125,14 @@ if __name__ == '__main__':
             insert_document(document, word)
             print("Fait.")
 
+            print("- Mise à jour de l'index...")
+            cursor.execute("INSERT INTO wordlist VALUES (?,?)", (word, sanitize_word(word)))
+            print("Fait.")
+
         post_setup()
 
         print("- Génération des ressources...")
         runpy.run_module('pre_generate_ressources', run_name='__main__')
-        print("Fait.")
-
-        print("- Génération de l'index...")
-        runpy.run_module('generate_index', run_name='__main__')
         print("Fait.")
 
     except Exception as e:
