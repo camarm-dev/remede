@@ -53,7 +53,7 @@
     <div class="mb-6 columns is-multiline">
       <p class="buttons">
 <!--        <div class="dropdown mr-5" onclick="this.classList.toggle('is-active')">-->
-        <div class="dropdown mr-5">
+        <div class="dropdown mr-5 mb-2">
           <div class="dropdown-trigger">
             <button onclick="location.href = '/download'" class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu2">
               <span class="icon is-small mt-0">
@@ -123,13 +123,13 @@
 <!--            </div>-->
 <!--          </div>-->
         </div>
-        <button onclick="window.open('https://docs.remede.camarm.fr')" class="button is-focused is-success mr-5">
+        <button onclick="window.open('https://docs.remede.camarm.fr')" class="button is-focused is-success mr-5 mb-2">
           <span class="icon mt-0">
             <i class="fas fa-book has-text-white" aria-hidden="true"></i>
           </span>
           <span>Documentation</span>
         </button>
-        <button onclick="window.open('https://remede-app.camarm.fr')" class="button is-outlined is-link">
+        <button onclick="window.open('https://remede-app.camarm.fr')" class="button is-outlined is-link mb-2">
           <span class="icon mt-0">
             <i class="fas fa-external-link-square has-text-link" aria-hidden="true"></i>
           </span>
@@ -142,17 +142,17 @@
 <section class="section">
   <div class="container center">
     <div class="columns is-multiline">
-      <div class="column is-half">
+      <div class="column is-one-third">
+        <div class="box img main">
+          <img class="float1" src="assets/remede.png" alt="Remède">
+        </div>
+      </div>
+      <div class="column is-two-third">
         <div class="box">
           <div>
             <h4 class="is-size-4 has-text-weight-bold mb-2">Le meilleur dictionnaire</h4>
             <p class="subtitle has-text-grey">Remède c'est +240 000 mots et expressions françaises !</p>
           </div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <div class="box img">
-          <img class="float1" src="assets/remede.png" alt="Remède">
         </div>
       </div>
       <div class="column is-half">
@@ -348,11 +348,13 @@ hr {
     object-fit: contain;
 }
 
-.box.img img:hover {
-    animation-play-state: paused;
-    position: absolute;
-    scale: 1.06 !important;
-    transition: .2s ease-in-out;
+@media (min-width: 1024px) {
+    .box.img img:hover {
+        animation-play-state: paused;
+        position: absolute;
+        scale: 1.06 !important;
+        transition: .2s ease-in-out;
+    }
 }
 
 .float1 {
@@ -432,6 +434,24 @@ hr {
     }
     100% {
         scale: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .box div {
+        margin-left: 0 !important;
+    }
+
+    .column {
+        padding: 0 !important;
+    }
+
+    .box.img:not(.main) {
+        display: none;
+    }
+
+    .card {
+        margin-bottom: .5em;
     }
 }
 </style>
