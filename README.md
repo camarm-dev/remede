@@ -8,7 +8,7 @@ Open Source and free alternative to Antidote dictionary.
 
 [<kbd>Open application</kbd>](https://remede-app.camarm.fr)
 
-[Data credits](https://remede.camarm.fr/FR#données-remède) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr/download)** • **[API](https://api-remede.camarm.fr/docs)**
+[Data credits](https://docs.remede.camarm.fr/docs/database/credits) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr/download)** • **[API](https://api-remede.camarm.fr/docs)**
 
 </div>
 
@@ -54,7 +54,7 @@ SOON: Disponible sur Play Store
 
 ## Documentation
 
-La documentation est disponible sur [remede.camarm.fr](https://remede.camarm.fr)
+La documentation est disponible sur [docs.remede.camarm.fr](https://docs.remede.camarm.fr)
 - Guide de contribution: [`CONTRIBUTING.md`](https://github.com/camarm-dev/remede/blob/main/CONTRIBUTING.md)
 
 ## Screenshots
