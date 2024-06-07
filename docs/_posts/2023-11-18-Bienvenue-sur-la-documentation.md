@@ -6,7 +6,7 @@ readable_date: 18 Novembre 2023
 author: Équipe Remède
 tags: 
   - Welcome
-  - Documentation
+  - Blog
 ---
 
 Découvrez Remède et ses fonctionnalités ici !
