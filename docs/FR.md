@@ -1,8 +1,6 @@
 
 # Documentation
 
-This page is also available in [english](/EN). 
-
 Bienvenue sur la page de documentation de Remède. Naviguez à travers les contenus si-dessous
 
 ### Table des matières
