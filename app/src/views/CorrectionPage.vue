@@ -110,7 +110,7 @@
             <ion-item v-for="error in ignoredErrors" color="light" :key="error.text">
               <ion-label>
                 <h2>"{{ error.text }}"</h2>
-                <p>Erreur {{ error.error }}</p>
+                <p class="ion-color-base">{{ error.error }} - {{ error.summary }}</p>
               </ion-label>
               <ion-icon @click="removeException(error.text, { rule: { id: error.error } })" slot="end" color="danger" :icon="trashOutline"/>
             </ion-item>
@@ -196,7 +196,8 @@ export default {
     ignoreError(text: string, correction: LanguageToolCorrection) {
       this.ignoredErrors.push({
         text: text,
-        error: correction.rule.id
+        error: correction.rule.id,
+        summary: correction.rule.description
       })
       this.saveExceptions()
     },
