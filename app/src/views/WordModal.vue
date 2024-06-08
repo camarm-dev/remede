@@ -21,7 +21,8 @@ import {
   IonPopover,
   IonPage,
   IonSpinner,
-  IonBackButton
+  IonBackButton,
+  IonSkeletonText
 } from "@ionic/vue"
 import {
   bookmark,
@@ -71,7 +72,8 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <ion-toolbar>
           <ion-label>
             <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
-            <p class="ion-padding-start">{{ document.ipa }}</p>
+            <ion-skeleton-text class="ion-margin-start" style="width: 65px; border-radius: 2px" v-if="loading"/>
+            <p class="ion-padding-start" v-else>{{ document.ipa }}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button @click="readWord()" :disabled="notFound">
@@ -89,6 +91,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </ion-toolbar>
       </ion-header>
       <br>
+      <div v-if="loading" class="ion-padding ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
       <div v-if="notFound" class="ion-padding">
         <ion-note>
           Ce mot n'a pas été trouvé dans le dictionnaire Remède...
@@ -337,7 +342,8 @@ export default defineComponent({
       goTo: function(path: string) {
         console.log(path)
       } as (path: string) => void,
-      el: null as any
+      el: null as any,
+      loading: false
     }
   },
   mounted() {
@@ -351,10 +357,13 @@ export default defineComponent({
     this.goTo = goTo as (path: string) => void
   },
   created() {
+    this.loading = true
     this.loadData(null).then(() => {
       this.listenSpecialTags()
+      this.loading = false
     }).catch(() => {
       this.notFound = true
+      this.loading = false
     })
   },
   methods: {
