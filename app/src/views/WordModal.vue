@@ -253,7 +253,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
                 Licence
               </ion-label>
             </ion-item>
-            <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
+            <ion-item lines="none" color="light" button href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
               <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
               <ion-label>
                 Données Remède
