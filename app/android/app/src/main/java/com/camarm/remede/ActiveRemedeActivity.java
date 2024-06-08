@@ -21,7 +21,7 @@ public class ActiveRemedeActivity extends Activity {
 
         Intent definitionIntent = new Intent(this, MainActivity.class)
                 .setData(page)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(definitionIntent);
     }
 
