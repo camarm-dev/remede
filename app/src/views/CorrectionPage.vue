@@ -39,9 +39,9 @@
           <div v-else class="content ion-padding-bottom pd-t">
             <span :key="`segment-${explainSegments.indexOf(segment)}`" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
-                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id}`">{{ segment.text }}</ion-text>
+                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id} ${segment.ignored ? 'ignored': ''}`">{{ segment.text }}</ion-text>
                 <ion-popover :ref="(el) => { popoversOpenStates[`correction-${corrections.indexOf(segment.correction)}`] = el }" :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
-                  <ion-content class="ion-padding">
+                  <ion-content class="ion-padding" v-if="!segment.ignored">
                     <ion-label v-if="segment.correction.shortMessage != ''">
                       <p class="ion-text-uppercase">{{ segment.correction.rule.category.id }}</p>
                       <h2>{{ segment.correction.shortMessage }}</h2>
@@ -56,7 +56,14 @@
                     </ion-label>
                     <br>
                     <ion-button size="small" color="primary" @click="setSegmentAsText(segment, suggested.value); closePopover(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-button>
-                    <ion-button size="small" @click="setSegmentAsText(segment, segment.text); closePopover(`correction-${corrections.indexOf(segment.correction)}`)" color="light">Ignorer <ion-icon :icon="closeOutline"/></ion-button>
+                    <ion-button size="small" @click="ignoreError(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closePopover(`correction-${corrections.indexOf(segment.correction)}`)" color="light">Ignorer <ion-icon :icon="closeOutline"/></ion-button>
+                  </ion-content>
+                  <ion-content class="ion-padding" v-else>
+                    <ion-label>
+                      <p>Erreur ignorée.</p>
+                    </ion-label>
+                    <br>
+                    <ion-button @click="removeException(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closePopover(`correction-${corrections.indexOf(segment.correction)}`)" color="danger" class="ion-no-margin" size="small">Enlever l'exception <ion-icon :icon="closeOutline"/></ion-button>
                   </ion-content>
                 </ion-popover>
               </span>
@@ -119,10 +126,12 @@ export default {
       locked: false,
       loading: false,
       explainSegments: [] as ExplainSegment[],
-      popoversOpenStates: {} as { [key: string]: any }
+      popoversOpenStates: {} as { [key: string]: any },
+      ignoredErrors: [] as any[]
     }
   },
   mounted() {
+    this.loadExceptions()
     const url = new URLSearchParams(location.search)
     const data = url.get("data")
     if (data) {
@@ -142,6 +151,33 @@ export default {
     },
     getWordDictionary() {
       // TODO, dict remede
+    },
+    ignoreError(text: string, correction: LanguageToolCorrection) {
+      this.ignoredErrors.push({
+        text: text,
+        error: correction.rule.id
+      })
+      this.saveExceptions()
+    },
+    isErrorIgnored(text: string, correction: LanguageToolCorrection) {
+      return this.ignoredErrors.some(element => {
+        return element.text == text && element.error == correction.rule.id
+      })
+    },
+    removeException(text: string, correction: LanguageToolCorrection) {
+      this.ignoredErrors = this.ignoredErrors.map(element => {
+          if (element.text == text && element.error == correction.rule.id) {
+            return false
+          }
+          return true
+      })
+      this.saveExceptions()
+    },
+    loadExceptions() {
+      this.ignoredErrors = JSON.parse(localStorage.getItem('correctionExceptions') || "[]")
+    },
+    saveExceptions() {
+      localStorage.setItem("correctionExceptions", JSON.stringify(this.ignoredErrors))
     },
     correct() {
       this.loading = true
@@ -172,18 +208,22 @@ export default {
           correction.replacements = correction.replacements.slice(0, 4)
           segmentedText.push({
             correction: false as any as LanguageToolCorrection,
-            text: originalText.slice(lastIndex, startIndex)
+            text: originalText.slice(lastIndex, startIndex),
+            ignored: false
           })
+          const text = correction.context.text.slice(correction.context.offset, correction.context.offset + correction.context.length)
           segmentedText.push({
             correction: correction,
-            text: correction.context.text.slice(correction.context.offset, correction.context.offset + correction.context.length)
+            text: text,
+            ignored: this.isErrorIgnored(text, correction)
           })
           lastIndex = endIndex
         }
 
         segmentedText.push({
           correction: false as any as LanguageToolCorrection,
-          text: originalText.slice(lastIndex, originalText.length)
+          text: originalText.slice(lastIndex, originalText.length),
+          ignored: false
         })
 
         this.explainSegments = segmentedText
@@ -202,7 +242,7 @@ export default {
       }).join("")
     },
     setSegmentAsText(segment: ExplainSegment, text: string) {
-      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false as any as LanguageToolCorrection, text: text }
+      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false as any as LanguageToolCorrection, text: text, ignored: false }
     },
     closePopover(refName: string) {
       this.popoversOpenStates[refName].$el.dismiss()
@@ -227,6 +267,10 @@ export default {
 
 .error.CAT_PONCTUATION {
   text-decoration: underline wavy var(--ion-color-success-shade);
+}
+
+.error.ignored {
+  text-decoration: underline wavy var(--ion-color-medium-shade) !important;
 }
 
 .correction + .correction {

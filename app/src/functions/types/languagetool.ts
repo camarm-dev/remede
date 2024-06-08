@@ -31,6 +31,7 @@ interface LanguageToolCorrection {
 
 interface ExplainSegment {
     text: string
+    ignored: boolean
     correction: LanguageToolCorrection
 }
 
