@@ -61,9 +61,7 @@
                   </ion-content>
                 </ion-popover>
               </span>
-              <span v-else>
-                {{ segment.text }}
-              </span>
+              <span v-else v-html="segment.text.replaceAll('\n', '<br>')"/>
             </span>
           </div>
         </ion-item>
@@ -187,6 +185,7 @@ export default {
         this.explainSegments = segmentedText
         this.locked = true
         this.loading = false
+        console.log(this.explainSegments)
       })
     },
     copy(text: string) {
