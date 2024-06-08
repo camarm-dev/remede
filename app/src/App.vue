@@ -104,13 +104,6 @@ export default {
 
     })
 
-    if (Capacitor.addListener) {
-      Capacitor.addListener("App", "appUrlOpen", (object) => {
-        const url = object.url.replaceAll("remede:/", "")
-        this.router.push(url)
-      })
-    }
-
     App.getLaunchUrl().then(object => {
       const url = object ? object.url: ""
       if (url.startsWith("remede://")) {
