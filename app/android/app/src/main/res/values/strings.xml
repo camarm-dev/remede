@@ -5,4 +5,7 @@
     <string name="package_name">com.camarm.remede</string>
     <string name="custom_url_scheme">remede</string>
     <string name="active_remede_label">Ouvrir Remède</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">"Ouvrir Remède depuis votre écran d'accueil."</string>
+    <string name="searchbar">Searchbar</string>
 </resources>

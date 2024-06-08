@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    buildFeatures {
+        viewBinding true
+    }
     namespace "com.camarm.remede"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
