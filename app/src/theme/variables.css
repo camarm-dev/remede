@@ -15,6 +15,10 @@ http://ionicframework.com/docs/theming/ */
   src: url("./font/IBMPlexSerif-Bold.ttf");
 }
 
+.ion-color-base {
+  color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.4) !important;
+}
+
 reference, a {
   cursor: pointer;
   color: var(--ion-color-primary);
