@@ -16,7 +16,7 @@ public class ActiveRemedeActivity extends Activity {
         if (text.toString().contains(" ") && text.charAt(0) != 'à') {
             page = Uri.parse(getResources().getString(R.string.custom_url_scheme) + "://correction?data=" + text);
         } else {
-            page = Uri.parse(getResources().getString(R.string.custom_url_scheme) + "://dictionnaire/" + text);
+            page = Uri.parse(getResources().getString(R.string.custom_url_scheme) + "://dictionnaire/" + text.toString().toLowerCase());
         }
 
         Intent definitionIntent = new Intent(this, MainActivity.class)
