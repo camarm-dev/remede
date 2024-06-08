@@ -7,3 +7,5 @@
 /builds/latest/remede.dmg
 /docs/.jekyll-cache/
 /docs/_site/
+/data/remede.db
+/data/remede-less.db
