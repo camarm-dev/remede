@@ -1,8 +1,9 @@
-import { createApp } from "vue"
+import {createApp} from "vue"
 import App from "./App.vue"
+import {App as CapacitorApp, URLOpenListenerEvent} from '@capacitor/app';
 import router from "./router"
 
-import { IonicVue } from "@ionic/vue"
+import {IonicVue} from "@ionic/vue"
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css"
@@ -24,12 +25,12 @@ import "@ionic/vue/css/display.css"
 import "./theme/variables.css"
 
 const app = createApp(App)
-  .use(IonicVue, {
-    mode: "ios",
-    innerHTMLTemplatesEnabled: true
-  })
-  .use(router)
-  
+    .use(IonicVue, {
+        mode: "ios",
+        innerHTMLTemplatesEnabled: true
+    })
+    .use(router)
+
 router.isReady().then(() => {
-  app.mount("#app")
+    app.mount("#app")
 })
