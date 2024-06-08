@@ -40,10 +40,11 @@
             <span :key="`segment-${explainSegments.indexOf(segment)}`" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
                 <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id}`">{{ segment.text }}</ion-text>
-                <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
+                <ion-popover :ref="(el) => { popoversOpenStates[`correction-${corrections.indexOf(segment.correction)}`] = el }" :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
                   <ion-content class="ion-padding">
                     <ion-label v-if="segment.correction.shortMessage != ''">
-                      <h2>{{ segment.correction.shortMessage  }}</h2>
+                      <p class="ion-text-uppercase">{{ segment.correction.rule.category.id }}</p>
+                      <h2>{{ segment.correction.shortMessage }}</h2>
                       <p>{{ segment.correction.message }}</p>
                     </ion-label>
                     <ion-label v-else>
@@ -52,12 +53,10 @@
                     <br>
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
-                      <br>
-                      <ion-text @click="setSegmentAsText(segment, suggested.value)" color="primary" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-text>
                     </ion-label>
-                    <ion-label>
-                      <ion-text @click="setSegmentAsText(segment, segment.text)" color="primary">Ne pas remplacer "{{ segment.text }}"</ion-text>
-                    </ion-label>
+                    <br>
+                    <ion-button size="small" color="primary" @click="setSegmentAsText(segment, suggested.value); closePopover(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-button>
+                    <ion-button size="small" @click="setSegmentAsText(segment, segment.text); closePopover(`correction-${corrections.indexOf(segment.correction)}`)" color="light">Ignorer <ion-icon :icon="closeOutline"/></ion-button>
                   </ion-content>
                 </ion-popover>
               </span>
@@ -105,7 +104,7 @@ import {
   IonNote,
   IonSpinner
 } from "@ionic/vue"
-import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons"
+import {chevronForwardOutline, copyOutline, pencilOutline, sparkles, closeOutline} from "ionicons/icons"
 </script>
 
 <script lang="ts">
@@ -119,7 +118,8 @@ export default {
       corrections: [] as LanguageToolCorrection[],
       locked: false,
       loading: false,
-      explainSegments: [] as ExplainSegment[]
+      explainSegments: [] as ExplainSegment[],
+      popoversOpenStates: {} as { [key: string]: any }
     }
   },
   mounted() {
@@ -145,12 +145,15 @@ export default {
     },
     correct() {
       this.loading = true
+      this.popoversOpenStates = {}
 
       const url = "https://remede-corrector.camarm.fr/v2/check"
       const body = new FormData()
       body.set("text", this.content)
       body.set("language", "fr")
       body.set("motherTongue", "fr")
+      body.set("allowIncompleteResults", "false")
+      body.set("mode", "allButTextLevelOnly")
 
       fetch(url, {
         method: "POST",
@@ -166,6 +169,7 @@ export default {
         for (const correction of this.corrections) {
           const startIndex = correction.offset
           const endIndex = correction.offset + correction.length
+          correction.replacements = correction.replacements.slice(0, 4)
           segmentedText.push({
             correction: false as any as LanguageToolCorrection,
             text: originalText.slice(lastIndex, startIndex)
@@ -185,7 +189,6 @@ export default {
         this.explainSegments = segmentedText
         this.locked = true
         this.loading = false
-        console.log(this.explainSegments)
       })
     },
     copy(text: string) {
@@ -200,6 +203,9 @@ export default {
     },
     setSegmentAsText(segment: ExplainSegment, text: string) {
       this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false as any as LanguageToolCorrection, text: text }
+    },
+    closePopover(refName: string) {
+      this.popoversOpenStates[refName].$el.dismiss()
     }
   }
 }
@@ -215,7 +221,7 @@ export default {
   text-decoration: underline wavy var(--ion-color-danger);
 }
 
-.error.CAT_GRAMMAIRE {
+.error.CAT_GRAMMAIRE, .error.TYPOS {
   text-decoration: underline wavy var(--ion-color-warning);
 }
 
