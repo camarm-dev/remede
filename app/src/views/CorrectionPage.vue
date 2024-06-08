@@ -214,7 +214,7 @@ export default {
       this.saveExceptions()
     },
     loadExceptions() {
-      this.ignoredErrors = JSON.parse(localStorage.getItem('correctionExceptions') || "[]")
+      this.ignoredErrors = JSON.parse(localStorage.getItem("correctionExceptions") || "[]")
     },
     saveExceptions() {
       localStorage.setItem("correctionExceptions", JSON.stringify(this.ignoredErrors))

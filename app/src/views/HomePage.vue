@@ -185,8 +185,7 @@ export default defineComponent({
       todayWordDisabled: true,
       el: null as any,
       hasDictionaryUpdate: false,
-      hasAppUpdate: false,
-      searchbar: null as any
+      hasAppUpdate: false
     }
   },
   mounted() {
@@ -197,7 +196,7 @@ export default defineComponent({
     this.reloadUpdateStatuses()
     onIonViewDidEnter(() => {
       requestAnimationFrame(() => {
-        if (location.href.includes('#searchbar')) {
+        if (location.href.includes("#searchbar")) {
           this.searchbar.value.$el.setFocus()
         }
       })

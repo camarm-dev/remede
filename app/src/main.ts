@@ -1,6 +1,5 @@
 import {createApp} from "vue"
 import App from "./App.vue"
-import {App as CapacitorApp, URLOpenListenerEvent} from '@capacitor/app';
 import router from "./router"
 
 import {IonicVue} from "@ionic/vue"
