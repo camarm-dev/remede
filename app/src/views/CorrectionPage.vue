@@ -48,11 +48,12 @@
                 <ion-popover :ref="(el) => { modalsOpenStates[`correction-${corrections.indexOf(segment.correction)}`] = el }" :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
                   <ion-content class="ion-padding" v-if="!segment.ignored">
                     <ion-label v-if="segment.correction.shortMessage != ''">
-                      <p class="ion-text-uppercase">{{ segment.correction.rule.category.id }}</p>
+                      <p class="ion-text-uppercase">{{ segment.correction.rule.category.name }}</p>
                       <h2>{{ segment.correction.shortMessage }}</h2>
                       <p>{{ segment.correction.message }}</p>
                     </ion-label>
                     <ion-label v-else>
+                      <p class="ion-text-uppercase">{{ segment.correction.rule.category.name }}</p>
                       <h3>{{ segment.correction.message }}</h3>
                     </ion-label>
                     <br>
