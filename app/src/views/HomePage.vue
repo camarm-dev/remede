@@ -9,7 +9,7 @@
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
                        @ionInput="handleSearchbarInput($event.detail.value as string)"
-                       placeholder="Rechercher un mot"></ion-searchbar>
+                       placeholder="Rechercher un mot" ref="searchbar"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
@@ -131,7 +131,7 @@ import {
   AnimationDirection,
   useIonRouter,
   modalController,
-  IonModal,
+  IonModal, onIonViewDidEnter,
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
@@ -186,6 +186,7 @@ export default defineComponent({
       el: null as any,
       hasDictionaryUpdate: false,
       hasAppUpdate: false,
+      searchbar: null as any
     }
   },
   mounted() {
@@ -194,6 +195,13 @@ export default defineComponent({
     this.el = ref(this.$el)
     this.openLandingScreen()
     this.reloadUpdateStatuses()
+    onIonViewDidEnter(() => {
+      requestAnimationFrame(() => {
+        if (location.href.includes('#searchbar')) {
+          this.searchbar.value.$el.setFocus()
+        }
+      })
+    })
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -244,6 +252,8 @@ export default defineComponent({
       ionRouter.push(path, iosTransitionAnimation)
     }
 
+    const searchbar = ref()
+
     return {
       bookmark,
       calendarOutline,
@@ -260,7 +270,8 @@ export default defineComponent({
       arrowForward,
       changelogIllustration,
       newBaseIllustration,
-      newVersionIllustration
+      newVersionIllustration,
+      searchbar
     }
   },
   methods: {
