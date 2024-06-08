@@ -7,7 +7,7 @@
         </ion-buttons>
         <ion-buttons slot="end">
           <ion-button id="open-exceptions-modal">
-            <ion-icon slot="icon-only" :icon="bookOutline"/>
+            <ion-icon slot="icon-only" :icon="languageOutline"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -149,7 +149,7 @@ import {
   sparkles,
   closeOutline,
   bookOutline,
-  trashOutline
+  trashOutline, languageOutline
 } from "ionicons/icons"
 </script>
 
