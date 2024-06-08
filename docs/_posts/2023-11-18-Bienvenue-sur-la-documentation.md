@@ -1,16 +1,16 @@
 ---
 layout: post
-title: "Bienvenue sur la documentation !"
+title: "Bienvenue sur le blog !"
 date: 2023-11-18
 readable_date: 18 Novembre 2023
-author: Team Remède
-categories: Disscussions
-tags: Welcome Documentation
+author: Équipe Remède
+tags: 
+  - Welcome
+  - Blog
 ---
 
 Découvrez Remède et ses fonctionnalités ici !
 
-## Articles utiles
+## Liens utiles
 
-- [Documentation française](/FR)
-- [English documentation](/EN)
+- [Documentation](https://docs.remede.camarm.fr)

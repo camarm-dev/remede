@@ -20,14 +20,17 @@ import {
   IonAccordionGroup,
   IonPopover,
   IonPage,
-  IonSpinner
+  IonSpinner,
+  IonBackButton,
+  IonSkeletonText
 } from "@ionic/vue"
 import {
   bookmark,
   bookmarkOutline,
-  chevronBackOutline,
-  chevronDownOutline, documentAttachOutline,
-  ellipsisVertical, fingerPrintOutline,
+  chevronDownOutline,
+  documentAttachOutline,
+  ellipsisVertical,
+  fingerPrintOutline,
   link,
   play,
   shareOutline
@@ -40,7 +43,7 @@ import quoteOpen from "@/assets/openQuote.svg"
 
 const detailsModal = ref()
 
-const closeModal = () => modal.value.$el.dismiss(null, "cancel")
+const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
 </script>
 
 <template>
@@ -48,10 +51,7 @@ const closeModal = () => modal.value.$el.dismiss(null, "cancel")
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button @click="navigateBack()">
-            <ion-icon class="ion-no-margin" :icon="chevronBackOutline" slot="start"/>
-            Retour
-          </ion-button>
+          <ion-back-button text="Retour" default-href="/dictionnaire"></ion-back-button>
         </ion-buttons>
         <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
@@ -72,7 +72,8 @@ const closeModal = () => modal.value.$el.dismiss(null, "cancel")
         <ion-toolbar>
           <ion-label>
             <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
-            <p class="ion-padding-start">{{ document.ipa }}</p>
+            <ion-skeleton-text class="ion-margin-start" style="width: 65px; border-radius: 2px" v-if="loading"/>
+            <p class="ion-padding-start" v-else>{{ document.ipa }}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button @click="readWord()" :disabled="notFound">
@@ -90,6 +91,9 @@ const closeModal = () => modal.value.$el.dismiss(null, "cancel")
         </ion-toolbar>
       </ion-header>
       <br>
+      <div v-if="loading" class="ion-padding ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
       <div v-if="notFound" class="ion-padding">
         <ion-note>
           Ce mot n'a pas été trouvé dans le dictionnaire Remède...
@@ -249,7 +253,7 @@ const closeModal = () => modal.value.$el.dismiss(null, "cancel")
                 Licence
               </ion-label>
             </ion-item>
-            <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
+            <ion-item lines="none" color="light" button href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
               <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
               <ion-label>
                 Données Remède
@@ -297,9 +301,7 @@ import {isWordStarred, starWord} from "@/functions/favorites"
 import {Share} from "@capacitor/share"
 import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede"
 import {defineComponent, ref} from "vue"
-import {navigateBackFunction} from "@/functions/types/utils"
 import {toastController, useIonRouter} from "@ionic/vue"
-import { iosTransitionAnimation } from "@ionic/core"
 
 import "swiper/css"
 import "swiper/css/pagination"
@@ -337,31 +339,31 @@ export default defineComponent({
       notFound: false,
       stared: false,
       audioLoading: false,
-      navigateBack: function () {
-        return false
-      } as navigateBackFunction,
-      el: null as any
+      goTo: function(path: string) {
+        console.log(path)
+      } as (path: string) => void,
+      el: null as any,
+      loading: false
     }
   },
   mounted() {
     const ionRouter = useIonRouter()
-    function navigateBackIfNoHistory() {
-      if (!ionRouter.canGoBack()) {
-        ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
-        return true
-      }
-      ionRouter.back(iosTransitionAnimation)
-      return false
+
+    function goTo(path: string) {
+      ionRouter.push(path)
     }
 
-    this.navigateBack = navigateBackIfNoHistory
     this.el = ref(this.$el)
+    this.goTo = goTo as (path: string) => void
   },
   created() {
+    this.loading = true
     this.loadData(null).then(() => {
       this.listenSpecialTags()
+      this.loading = false
     }).catch(() => {
       this.notFound = true
+      this.loading = false
     })
   },
   methods: {
@@ -398,11 +400,8 @@ export default defineComponent({
           dialogTitle: "Partager la définition",
         })
       } catch {
-        alert("Fonctionnalité non supportée par votre navigateur")
+        console.error("Failed to share.")
       }
-    },
-    goTo(path: string) {
-      this.$router.push(path)
     },
     getModes() {
       return Object.keys(this.document.conjugaisons) as string[]

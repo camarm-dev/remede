@@ -39,15 +39,20 @@ graph LR
         subgraph "Database"
             DB[(Database)] --> Index
             DB --> Main
+            DB --> Rimes
             subgraph Index["Search index\n(wordlist)"]
 
             end
             subgraph Main["Default table\n(dictionary)"]
 
             end
+            subgraph Rimes["Rimes table\n(rimes)"]
+
+            end
         end
         Main <-.-> A[WebView]
         Index <-.-> A[WebView]
+        Rimes <-.-> A[WebView]
     end
     subgraph "Filesystem" 
         DFB[[DatabaseFile]] --> DB

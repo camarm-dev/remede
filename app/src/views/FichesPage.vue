@@ -40,17 +40,15 @@
       </ion-refresher>
 
       <ion-note class="ion-padding ion-float-end" v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
-      <ion-nav-link router-direction="forward" :key="sheet.nom" :component="FicheModal" :component-props="sheet" v-for="sheet in sheets">
-        <ion-list inset>
-          <ion-item button color="light" lines="none">
-            <ion-label>
-              <h1>{{ sheet.nom }}</h1>
-              <p>{{ sheet.description }}</p>
-              <ion-badge class="ion-margin-end" :color="getTagColor(tag)" :key="tag" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-nav-link>
+      <ion-list inset v-for="sheet in sheets" :key="sheet.slug">
+        <ion-item @click="goTo(`/fiches/${sheet.slug}`)" button color="light" lines="none">
+          <ion-label>
+            <h1>{{ sheet.nom }}</h1>
+            <p>{{ sheet.description }}</p>
+            <ion-badge class="ion-margin-end" :color="getTagColor(tag)" :key="tag" v-for="tag in sheet.tags">{{ tag }}</ion-badge>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-page>
 </template>
@@ -69,10 +67,22 @@ import {
   IonLabel,
   IonList,
   IonChip,
-  IonBadge, IonNavLink, IonProgressBar, IonSearchbar
+  IonBadge,
+  IonProgressBar,
+  IonSearchbar,
+  IonRefresher,
+  IonNote,
+  IonRefresherContent,
+  IonPopover,
+  useIonRouter
 } from "@ionic/vue"
-import FicheModal from "@/components/FicheModal.vue"
 import {close, filterCircleOutline} from "ionicons/icons"
+
+const router = useIonRouter()
+
+const goTo = (path: string) => {
+  router.push(path)
+}
 </script>
 
 <script lang="ts">

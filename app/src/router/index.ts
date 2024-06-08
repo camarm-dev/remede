@@ -4,10 +4,6 @@ import Outlet from "@/AppOutlet.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/fiches/:slug",
-    component: () => import ("../views/FichePage.vue")
-  },
-  {
     path: "/",
     component: Outlet,
     children: [
@@ -17,11 +13,11 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "dictionnaire",
-        component: () => import ("../views/HomePage.vue")
+        component: () => import ("../views/HomePage.vue"),
       },
       {
         path: "dictionnaire/:mot",
-        component: () => import ("../components/WordModal.vue")
+        component: () => import ("../views/WordModal.vue")
       },
       {
         path: "search/:mot",
@@ -38,6 +34,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "fiches",
         component: () => import ("../views/FichesPage.vue")
+      },
+      {
+        path: "fiches/:slug",
+        component: () => import ("../views/FichePage.vue")
       },
       {
         path: "rimes",

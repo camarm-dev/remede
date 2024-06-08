@@ -9,7 +9,7 @@
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
                        @ionInput="handleSearchbarInput($event.detail.value as string)"
-                       placeholder="Rechercher un mot"></ion-searchbar>
+                       placeholder="Rechercher un mot" ref="searchbar"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
@@ -96,6 +96,8 @@
               <li>Dictionnaire de rimes.</li>
               <li>Nouvelle base de données, et suppression des anciennes versions.</li>
               <li>Création d'un site web à <a href="https://remede.camarm.fr" target="_blank">remede.camarm.fr</a>.</li>
+              <li>Refonte de la navigation. Plus aucunes erreurs de navigation ne devraient apparaître.</li>
+              <li>Intégrations natives: actions sur les textes sélectionnés et widgets.</li>
             </ul>
           </p>
         </ion-content>
@@ -106,7 +108,6 @@
 </template>
 
 <script lang="ts">
-import WordModal from "@/components/WordModal.vue"
 import {bookmark, calendarOutline, shuffle, arrowForward} from "ionicons/icons"
 import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
@@ -129,9 +130,8 @@ import {
   toastController,
   AnimationDirection,
   useIonRouter,
-  useBackButton,
   modalController,
-  IonModal,
+  IonModal, onIonViewDidEnter,
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
@@ -185,7 +185,7 @@ export default defineComponent({
       todayWordDisabled: true,
       el: null as any,
       hasDictionaryUpdate: false,
-      hasAppUpdate: false,
+      hasAppUpdate: false
     }
   },
   mounted() {
@@ -194,6 +194,13 @@ export default defineComponent({
     this.el = ref(this.$el)
     this.openLandingScreen()
     this.reloadUpdateStatuses()
+    onIonViewDidEnter(() => {
+      requestAnimationFrame(() => {
+        if (location.href.includes("#searchbar")) {
+          this.searchbar.value.$el.setFocus()
+        }
+      })
+    })
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -240,23 +247,16 @@ export default defineComponent({
 
     const ionRouter = useIonRouter()
 
-    useBackButton(110, () => {
-      if (ionRouter.canGoBack()) {
-        ionRouter.back(iosTransitionAnimation)
-        return
-      }
-      ionRouter.navigate("/dictionnaire", "back", "replace", iosTransitionAnimation)
-    })
-
     const goTo = (path: string) => {
       ionRouter.push(path, iosTransitionAnimation)
     }
+
+    const searchbar = ref()
 
     return {
       bookmark,
       calendarOutline,
       shuffle,
-      WordModal,
       onFocus,
       onLeave,
       mainToolbar,
@@ -269,7 +269,8 @@ export default defineComponent({
       arrowForward,
       changelogIllustration,
       newBaseIllustration,
-      newVersionIllustration
+      newVersionIllustration,
+      searchbar
     }
   },
   methods: {

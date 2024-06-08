@@ -113,7 +113,7 @@ def get_conjugaisons(verb: str):
         return {}
 
 
-def get_word_document(word: str):
+def get_word_document(word: str, ipa: str = None):
     result, success = get_wictionary_doc(word)
     if not success:
         return False
@@ -137,7 +137,7 @@ def get_word_document(word: str):
             "name": "page Wiktionnaire",
             "url": result['direct_link']
         },
-        "ipa": get_ipa(word),
+        "ipa": ipa if ipa else get_ipa(word),
         "conjugaisons": conjugaisons
     }
 

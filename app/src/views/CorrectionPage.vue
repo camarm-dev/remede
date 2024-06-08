@@ -1,9 +1,14 @@
 <template>
-  <ion-page>
+  <ion-page ref="page">
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button id="open-exceptions-modal">
+            <ion-icon slot="icon-only" :icon="languageOutline"/>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -39,31 +44,36 @@
           <div v-else class="content ion-padding-bottom pd-t">
             <span :key="`segment-${explainSegments.indexOf(segment)}`" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
-                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id}`">{{ segment.text }}</ion-text>
-                <ion-popover :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
-                  <ion-content class="ion-padding">
+                <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id} ${segment.ignored ? 'ignored': ''}`">{{ segment.text }}</ion-text>
+                <ion-popover :ref="(el) => { modalsOpenStates[`correction-${corrections.indexOf(segment.correction)}`] = el }" :trigger="`correction-${corrections.indexOf(segment.correction)}`" trigger-action="click">
+                  <ion-content class="ion-padding" v-if="!segment.ignored">
                     <ion-label v-if="segment.correction.shortMessage != ''">
-                      <h2>{{ segment.correction.shortMessage  }}</h2>
+                      <p class="ion-text-uppercase">{{ segment.correction.rule.category.name }}</p>
+                      <h2>{{ segment.correction.shortMessage }}</h2>
                       <p>{{ segment.correction.message }}</p>
                     </ion-label>
                     <ion-label v-else>
+                      <p class="ion-text-uppercase">{{ segment.correction.rule.category.name }}</p>
                       <h3>{{ segment.correction.message }}</h3>
                     </ion-label>
                     <br>
                     <ion-label>
                       <ion-text color="medium">Remplacer par</ion-text>
-                      <br>
-                      <ion-text @click="setSegmentAsText(segment, suggested.value)" color="primary" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-text>
                     </ion-label>
+                    <br>
+                    <ion-button size="small" color="primary" @click="setSegmentAsText(segment, suggested.value); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-button>
+                    <ion-button size="small" @click="ignoreError(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="light">Ignorer <ion-icon :icon="closeOutline"/></ion-button>
+                  </ion-content>
+                  <ion-content class="ion-padding" v-else>
                     <ion-label>
-                      <ion-text @click="setSegmentAsText(segment, segment.text)" color="primary">Ne pas remplacer "{{ segment.text }}"</ion-text>
+                      <p>Erreur ignorée.</p>
                     </ion-label>
+                    <br>
+                    <ion-button @click="removeException(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="danger" class="ion-no-margin" size="small">Enlever l'exception <ion-icon :icon="closeOutline"/></ion-button>
                   </ion-content>
                 </ion-popover>
               </span>
-              <span v-else>
-                {{ segment.text }}
-              </span>
+              <span v-else v-html="segment.text.replaceAll('\n', '<br>')"/>
             </span>
           </div>
         </ion-item>
@@ -83,6 +93,31 @@
           Correction grâce à <a href="https://languagetool.org" target="_blank">Languagetool</a>, <i>hébergé par Remède</i>.
         </ion-note>
       </div>
+
+      <ion-modal :ref="(el) => { modalsOpenStates['exceptionsModal'] = el }" trigger="open-exceptions-modal" :presenting-element="pageElement">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Exceptions</ion-title>
+            <ion-buttons slot="end">
+              <ion-button @click="closeModal('exceptionsModal')">Fermer</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-note v-if="ignoredErrors.length == 0">
+            Aucunes exceptions ajoutées.
+          </ion-note>
+          <ion-list inset>
+            <ion-item v-for="error in ignoredErrors" color="light" :key="error.text">
+              <ion-label>
+                <h2>"{{ error.text }}"</h2>
+                <p class="ion-color-base">{{ error.error }} - {{ error.summary }}</p>
+              </ion-label>
+              <ion-icon @click="removeException(error.text, { rule: { id: error.error } })" slot="end" color="danger" :icon="trashOutline"/>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-modal>
     </ion-content>
   </ion-page>
 </template>
@@ -91,7 +126,8 @@
 import {
   IonButtons,
   IonContent,
-  IonHeader, IonIcon,
+  IonHeader,
+  IonIcon,
   IonMenuButton,
   IonPage,
   IonTitle,
@@ -103,9 +139,18 @@ import {
   IonLabel,
   IonPopover,
   IonList,
-  IonNote
+  IonNote,
+  IonSpinner,
+  IonModal
 } from "@ionic/vue"
-import {chevronForwardOutline, copyOutline, pencilOutline, sparkles} from "ionicons/icons"
+import {
+  chevronForwardOutline,
+  copyOutline,
+  pencilOutline,
+  sparkles,
+  closeOutline,
+  trashOutline, languageOutline
+} from "ionicons/icons"
 </script>
 
 <script lang="ts">
@@ -119,7 +164,23 @@ export default {
       corrections: [] as LanguageToolCorrection[],
       locked: false,
       loading: false,
-      explainSegments: [] as ExplainSegment[]
+      explainSegments: [] as ExplainSegment[],
+      modalsOpenStates: {} as { [key: string]: any },
+      ignoredErrors: [] as any[],
+      pageElement: null as any
+    }
+  },
+  mounted() {
+    this.loadExceptions()
+    this.pageElement = this.$refs.page.$el
+    const url = new URLSearchParams(location.search)
+    const data = url.get("data")
+    if (data) {
+      const content = data.replaceAll("?data=", "")
+      this.content = content
+      if (content != "") {
+        this.correct()
+      }
     }
   },
   methods: {
@@ -132,14 +193,43 @@ export default {
     getWordDictionary() {
       // TODO, dict remede
     },
+    ignoreError(text: string, correction: LanguageToolCorrection) {
+      this.ignoredErrors.push({
+        text: text,
+        error: correction.rule.id,
+        summary: correction.rule.description
+      })
+      this.saveExceptions()
+    },
+    isErrorIgnored(text: string, correction: LanguageToolCorrection) {
+      return this.ignoredErrors.some(element => {
+        return element.text == text && element.error == correction.rule.id
+      })
+    },
+    removeException(text: string, correction: LanguageToolCorrection) {
+      this.ignoredErrors = this.ignoredErrors.filter(element => {
+          return !(element.text == text && element.error == correction.rule.id)
+
+      })
+      this.saveExceptions()
+    },
+    loadExceptions() {
+      this.ignoredErrors = JSON.parse(localStorage.getItem("correctionExceptions") || "[]")
+    },
+    saveExceptions() {
+      localStorage.setItem("correctionExceptions", JSON.stringify(this.ignoredErrors))
+    },
     correct() {
       this.loading = true
+      this.modalsOpenStates = {}
 
       const url = "https://remede-corrector.camarm.fr/v2/check"
       const body = new FormData()
       body.set("text", this.content)
       body.set("language", "fr")
       body.set("motherTongue", "fr")
+      body.set("allowIncompleteResults", "false")
+      body.set("mode", "allButTextLevelOnly")
 
       fetch(url, {
         method: "POST",
@@ -155,20 +245,25 @@ export default {
         for (const correction of this.corrections) {
           const startIndex = correction.offset
           const endIndex = correction.offset + correction.length
+          correction.replacements = correction.replacements.slice(0, 4)
           segmentedText.push({
             correction: false as any as LanguageToolCorrection,
-            text: originalText.slice(lastIndex, startIndex)
+            text: originalText.slice(lastIndex, startIndex),
+            ignored: false
           })
+          const text = correction.context.text.slice(correction.context.offset, correction.context.offset + correction.context.length)
           segmentedText.push({
             correction: correction,
-            text: correction.context.text.slice(correction.context.offset, correction.context.offset + correction.context.length)
+            text: text,
+            ignored: this.isErrorIgnored(text, correction)
           })
           lastIndex = endIndex
         }
 
         segmentedText.push({
           correction: false as any as LanguageToolCorrection,
-          text: originalText.slice(lastIndex, originalText.length)
+          text: originalText.slice(lastIndex, originalText.length),
+          ignored: false
         })
 
         this.explainSegments = segmentedText
@@ -187,7 +282,10 @@ export default {
       }).join("")
     },
     setSegmentAsText(segment: ExplainSegment, text: string) {
-      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false as any as LanguageToolCorrection, text: text }
+      this.explainSegments[this.explainSegments.indexOf(segment)] = { correction: false as any as LanguageToolCorrection, text: text, ignored: false }
+    },
+    closeModal(refName: string) {
+      this.modalsOpenStates[refName].$el.dismiss()
     }
   }
 }
@@ -203,12 +301,16 @@ export default {
   text-decoration: underline wavy var(--ion-color-danger);
 }
 
-.error.CAT_GRAMMAIRE {
+.error.CAT_GRAMMAIRE, .error.TYPOS {
   text-decoration: underline wavy var(--ion-color-warning);
 }
 
 .error.CAT_PONCTUATION {
   text-decoration: underline wavy var(--ion-color-success-shade);
+}
+
+.error.ignored {
+  text-decoration: underline wavy var(--ion-color-medium-shade) !important;
 }
 
 .correction + .correction {

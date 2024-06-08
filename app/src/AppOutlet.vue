@@ -1,10 +1,9 @@
 <template>
-  <ion-app>
-    <ion-nav :root="Root"></ion-nav>
-  </ion-app>
+  <ion-page>
+    <ion-router-outlet/>
+  </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonApp, IonNav } from "@ionic/vue"
-import Root from "@/AppRoot.vue"
+import {IonPage, IonRouterOutlet} from "@ionic/vue"
 </script>

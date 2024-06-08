@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Utiliser les données Remède"
-date: 2023-11-18
+date: 2023-11-19
 readable_date: 19 Novembre 2023
-author: Team Remède
-categories: Tutoriels
-tags: Documentation
+cover: /assets/blog_useremede.png
+author: Armand, maintainer of Remède
+tags: 
+  - Documentation
 ---
 
 Ce poste est destiné à vous apprendre comment intégrer notre dictionnaire dans vos applications...

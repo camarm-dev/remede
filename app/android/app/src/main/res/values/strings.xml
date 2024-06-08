@@ -3,5 +3,9 @@
     <string name="app_name">Remède</string>
     <string name="title_activity_main">Remède</string>
     <string name="package_name">com.camarm.remede</string>
-    <string name="custom_url_scheme">com.camarm.remede</string>
+    <string name="custom_url_scheme">remede</string>
+    <string name="active_remede_label">Ouvrir Remède</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">"Ouvrir Remède depuis votre écran d'accueil."</string>
+    <string name="searchbar">Searchbar</string>
 </resources>

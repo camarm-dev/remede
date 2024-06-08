@@ -16,14 +16,12 @@
       </ion-header>
 
       <ion-list inset>
-        <ion-nav-link :key="word" v-for="word in starredWords" :component="WordModal" router-direction="forward" :component-props="{ motRemede: word }">
-          <ion-item color="light">
-            <ion-icon color="primary" :icon="bookmark" @click="starWord(word); refresh()" slot="start"/>
-            <ion-label>
-              <h2 class="ion-text-capitalize">{{ word }}</h2>
-            </ion-label>
-          </ion-item>
-        </ion-nav-link>
+        <ion-item :key="word" color="light" v-for="word in starredWords" @click="goTo(`/dictionnaire/${word}`)">
+          <ion-icon color="primary" :icon="bookmark" @click="starWord(word); refresh()" slot="start"/>
+          <ion-label>
+            <h2 class="ion-text-capitalize">{{ word }}</h2>
+          </ion-label>
+        </ion-item>
       </ion-list>
 
       <ion-note v-if="starredWords.length === 0" class="ion-padding">Ajoutez des mots à vos marques pages</ion-note>
@@ -41,16 +39,20 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonNavLink,
   IonIcon,
   IonList,
   IonNote,
   IonLabel,
-  IonItem
+  IonItem, useIonRouter
 } from "@ionic/vue"
-import WordModal from "@/components/WordModal.vue"
 import {bookmark} from "ionicons/icons"
 import {starWord} from "@/functions/favorites"
+
+const router = useIonRouter()
+
+const goTo = (path: string) => {
+  router.push(path)
+}
 </script>
 
 <script lang="ts">

@@ -10,7 +10,7 @@ Générer les données Remède consiste à générer **les fichiers JSON**, pour
 1. `parse.py` génère un fichier JSON par lettre (plusieurs heures)
 2. `generate_sqlite.py` génère la base Sqlite, depuis les fichiers JSON (plusieurs dizaines de minutes)
 3. `generate_index.py` génère un index de recherche
-4. `build_rimes` ajoute les rimes au dictionnaire
+4. `build_rimes.py` ajoute les rimes au dictionnaire
 
 > [!IMPORTANT]
 > Tous les programmes contenus dans le dossier `scripts` doivent être executés **à la racine du project** (eg. `python3 scripts/parse.py`)
@@ -65,4 +65,30 @@ Le code de cette API est contenu dans `api-definition` (c'est un submodule git).
 Dans `api-definition`
 ```shell
 docker build -t remede-definition-api . && docker run -p 8089:80 remede-definition-api
+```
+
+## Ajouter un mot rapidement
+
+Le script `scripts/add_word.py` permet d'ajouter un mot rapidement à la base sans la reconstruire...
+
+Il :
+- Ajoute votre mot dans `data/mots.txt`
+- Ajoute votre mot dans le JSON
+- Ajoute votre mot dans `data/remede.db`
+- Re-génère l'index de `data/remede.db`
+
+```shell
+python3 scripts/add_word.py <word> <phoneme>
+```
+
+Pour ajouter plusieurs mots:
+
+`wordlist.txt` (tabulation entre mot et ipa: `mot\t/ipa/`)
+```
+acupuncture /a.ky.pɔ̃k.tyʁ/
+remède  /ʁəmɛd/
+```
+et exécuter
+```shell
+python3 scripts/add_word.py -f wordlist.txt
 ```

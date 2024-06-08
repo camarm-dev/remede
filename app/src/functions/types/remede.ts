@@ -3,6 +3,7 @@ interface RemedeSheet {
     description: string
     contenu: string
     tags: string[]
+    slug: string
 }
 
 interface RemedeExample {

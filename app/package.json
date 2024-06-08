@@ -1,7 +1,7 @@
 {
   "name": "remede",
   "private": true,
-  "version": "1.2.0-beta.1",
+  "version": "1.2.0-beta.2",
   "type": "module",
   "license": "Cecill V2.1",
   "author": {
@@ -43,6 +43,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "5.5.1",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-vue": "^4.0.0",
