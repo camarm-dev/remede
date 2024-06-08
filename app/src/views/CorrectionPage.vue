@@ -148,7 +148,6 @@ import {
   pencilOutline,
   sparkles,
   closeOutline,
-  bookOutline,
   trashOutline, languageOutline
 } from "ionicons/icons"
 </script>
