@@ -5,3 +5,5 @@
 /builds/latest/remede.exe
 /builds/latest/remede.nupkg
 /builds/latest/remede.dmg
+/docs/.jekyll-cache/
+/docs/_site/
