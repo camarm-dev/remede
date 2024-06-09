@@ -35,10 +35,10 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginBottom="0dp"
                 android:contentDescription="@string/wodwidget_label"
-                android:paddingBottom="2dp"
+                android:paddingBottom="0dp"
                 android:paddingTop="3dp"
                 android:text="@string/wodwidget_label"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
