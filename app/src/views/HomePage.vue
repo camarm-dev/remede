@@ -131,7 +131,7 @@ import {
   AnimationDirection,
   useIonRouter,
   modalController,
-  IonModal, onIonViewDidEnter,
+  IonModal
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
@@ -149,7 +149,7 @@ import "@ionic/vue/css/ionic-swiper.css"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {InformationsResponse} from "@/functions/types/api_responses"
 import {App} from "@capacitor/app"
-import {Keyboard} from "@capacitor/keyboard";
+import {Keyboard} from "@capacitor/keyboard"
 
 export default defineComponent({
   components: {
@@ -199,7 +199,7 @@ export default defineComponent({
       Keyboard.show()
       this.searchbar.$el.setFocus()
     }
-    window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener("keydown", this.handleKeyDown)
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -277,7 +277,7 @@ export default defineComponent({
       if (!this.searchbar.$el.focused) {
         this.searchbar.$el.setFocus().then(() => {
           if (!this.searchbar.$el.focused) {
-            if (event.key == 'backspace') {
+            if (event.key == "backspace") {
               this.query = this.query.slice(0, this.query.length - 1)
               return
             }
