@@ -90,7 +90,7 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.2.0-beta</code>, nom de code <i>Brown Sheep, beta</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.2.0</code>, nom de code <i>Brown Sheep</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Dictionnaire de rimes.</li>
