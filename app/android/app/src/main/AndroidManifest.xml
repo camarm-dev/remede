@@ -15,6 +15,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <receiver
+            android:name=".RemedeWordOfDayWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.camarm.remede.action.OPEN_WORD_OF_DAY" />
+            </intent-filter>
+
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/remede_word_of_day_widget_info" />
+        </receiver>
+        <receiver
             android:name=".RemedeSearchbarWidget"
             android:exported="false">
             <intent-filter>
@@ -23,6 +38,7 @@
             <intent-filter>
                 <action android:name="com.camarm.remede.action.OPEN_SEARCHBAR" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/remede_searchbar_info" />

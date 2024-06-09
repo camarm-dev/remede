@@ -3,8 +3,8 @@
     <color name="light_blue_200">#FF81D4FA</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
-    <color name="background">#FFF</color>
-    <color name="text">#000000</color>
-    <color name="textSecondary">#565656</color>
-    <color name="textGrey">#898989</color>
+    <color name="background">#000000</color>
+    <color name="text">#FFF</color>
+    <color name="textSecondary">#B9B9B9</color>
+    <color name="textGrey">#7F7F7F</color>
 </resources>
