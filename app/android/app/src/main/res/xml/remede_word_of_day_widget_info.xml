@@ -5,7 +5,7 @@
     android:initialLayout="@layout/remede_word_of_day_widget"
     android:minWidth="250dp"
     android:minHeight="110dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/wodwidget_preview"
     android:previewLayout="@layout/remede_word_of_day_widget"
     android:resizeMode="horizontal"
     android:targetCellWidth="4"
