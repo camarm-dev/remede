@@ -36,6 +36,7 @@ La version `1.2.0`, nom de code `Brown Sheep` inclue les nouvelles fonctionnalit
 - [x] Nouvelle navigation **encore plus agréable**.
 - [x] Actions natives quand **un mot est sélectionné** n'importe où dans votre téléphone !
 - [x] Widget pour un accès **plus rapide**.
+- [x] **Base révisée** avec +300 000 mots !
 - [ ] Téléchargeable sur le **Play Store** !
 
 ## Télécharger
