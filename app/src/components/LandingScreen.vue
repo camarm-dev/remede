@@ -41,7 +41,7 @@
               <h1 class="remede-font no-capitalize">Une application, tous vos <span class="contrast">mots</span> !</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              + 240 000 mots, mais aussi des rimes, des exemples, un correcteur et plus encore... Remède est bien plus qu'un dictionnaire !
+              + 300 000 mots, mais aussi des rimes, des exemples, un correcteur et plus encore... Remède est bien plus qu'un dictionnaire !
             </div>
           </div>
           <div
