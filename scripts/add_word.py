@@ -20,14 +20,14 @@ def add_to_wordlist(word: str, phoneme: str):
         insert = f"{word}\t{phoneme}"
         if insert in content:
             print(f"Word \"{word}\" was found in the database. Skipping.")
-            return False
+            return True
         words = content.split('\n')
         words.append(insert)
         words.sort(key=lambda val: sanitize_word(val))
         new_content = "\n".join(words)
         new_content = new_content.replace("\n", "", 1)
         file.write(new_content)
-    return True
+    return False
 
 
 def add_to_json(word: str, document: dict):
