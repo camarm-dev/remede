@@ -93,7 +93,10 @@ if __name__ == '__main__':
         with open(arg2, 'r') as file:
             for line in file.readlines():
                 if line != '':
-                    word, phoneme = line.split("\t")
+                    try:
+                        word, phoneme = line.split("\t")
+                    except:
+                        print(line)
                     words_to_add.append((word, phoneme))
     else:
         words_to_add.append((arg1, arg2))
