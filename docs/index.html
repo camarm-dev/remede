@@ -35,6 +35,8 @@
   </div>
   <div class="level-right">
     <div class="level-item is-justify-content-right also-mobile">
+      <a href="/blog" class="mr-3">Blog</a>
+      <a href="/download" class="mr-3">Download</a>
       <a class="has-font-weight-bold">contact@camarm.dev</a>
     </div>
   </div>
@@ -256,38 +258,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="columns is-multiline">
-    {% for post in site.posts %}
-    <div class="column is-half">
-      <div class="card">
-        <div class="card-content">
-          <p class="title">
-            {{ post.title }}
-          </p>
-          <p class="subtitle">
-            {{ post.author }}, {{ post.readable_date }}
-          </p>
-          {% for tag in post.tags %}
-          <span class="tag is-rounded">{{ tag }}</span>
-          {% endfor %}
-          {% for category in post.categories %}
-          <span class="tag mt-2">{{ category }}</span>
-          {% endfor %}
-        </div>
-        <footer class="card-footer">
-          <p class="card-footer-item">
-            <span>
-              <a href="{{ post.url }}">Lire</a>
-            </span>
-          </p>
-        </footer>
-      </div>
-    </div>
-    {% endfor %}
   </div>
 </section>
 <footer class="section">
