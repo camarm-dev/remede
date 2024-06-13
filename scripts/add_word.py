@@ -32,7 +32,7 @@ def add_to_wordlist(wordlist: list):
 
 
 def add_to_json(word: str, document: dict):
-    letter = reverse_accepted_char.get(word[0], word[0])
+    letter = reverse_accepted_char.get(word[0], word[0]).lower()
     REMEDE[letter][word] = document
     saveRemede(letter, REMEDE[letter])
 
