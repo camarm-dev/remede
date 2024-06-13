@@ -137,6 +137,7 @@ if __name__ == '__main__':
         print("Fait.")
 
     except Exception as e:
+        post_setup()
         print(f"Échec. Assurez vous d'avoir bien fourni les arguments nécessaires. \"{e}\"")
 
     after = datetime.datetime.now()
