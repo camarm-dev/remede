@@ -4,6 +4,7 @@ title: "Bienvenue sur le blog !"
 date: 2023-11-18
 readable_date: 18 Novembre 2023
 author: Équipe Remède
+cover: /assets/blog_welcome.png
 tags: 
   - Welcome
   - Blog
