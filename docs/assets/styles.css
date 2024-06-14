@@ -73,7 +73,7 @@ a.has-text-primary:hover {
     background-color: var(--primary);
 }
 
-.button.is-primary:hover {
+.button.is-primary:hover, .button.is-primary:active, .button.is-primary:focus {
     background-color: var(--active);
 }
 
