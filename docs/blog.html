@@ -25,27 +25,95 @@
   <meta name="twitter:image" content="https://remede.camarm.fr/og.png">
 </head>
 <body>
-<nav class="level is-mobile">
-  <div class="level-left">
-    <div class="level-item is-justify-content-left">
-      <a href="/">
-        <img src="assets/blog.png" class="image is-h is-small" style="height: 40px; margin-bottom: 7px;" alt="Remède icon"/>
-      </a>
-    </div>
+<nav class="navbar is-fixed" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item mr-5 mb-1" href="/">
+      <img src="assets/blog.png" class="image is-h is-small" alt="Remède icon"/>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
   </div>
-  <div class="level-right">
-    <div class="level-item is-justify-content-right also-mobile">
-      <a href="/blog" class="mr-3">Blog</a>
-      <a href="/download" class="mr-3">Download</a>
-      <a class="has-font-weight-bold">contact@camarm.dev</a>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Home
+      </a>
+
+      <a class="navbar-item" href="/blog">
+        Blog
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/blog" target="_blank">
+            About
+          </a>
+          <a class="navbar-item" href="https://support.camarm.fr" target="_blank">
+            Support
+          </a>
+          <a class="navbar-item" href="mailto:software@camarm.dev">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://github.com/camarm-dev/remede/issues/new/choose" target="_blank">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary">
+            <strong>Download</strong>
+          </a>
+          <a class="button is-light" href="https://docs.remede.camarm.fr" target="_blank">
+            Documentation
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
-<section class="section">
-  <h1 class="title is-1">Remède Blog</h1>
+<section class="section mt-6 mb-6 is-medium is-full">
+  <div class="columns is-centered is-align-items-center is-justify-content-center">
+    <div class="column is-half">
+      <h1 class="title no-mg is-large has-text-dark">
+        Remède
+        <span class="is-family-secondary">blog</span><br>
+        <i class="fas fa-arrow-right has-text-primary"></i>
+        <span class="has-text-primary">Toutes nos actualités !</span>
+      </h1>
+      <p class="has-text-grey">Sur <span class="is-family-secondary"><b>Remède Blog</b></span>, découvre toutes les actualités du meilleur dictionnaire mobile !</p>
+      <br>
+      <a href="/" class="button is-primary">Découvrir Remède</a>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <h1 class="title">Nos derniers articles</h1>
   <div class="columns is-multiline">
     {% for post in site.posts %}
     <div class="column is-one-third">
+      <div class="card-image">
+        <figure class="image">
+          <img
+              src="{{ post.cover }}"
+              alt="Cover de l'article"
+          />
+        </figure>
+      </div>
       <div class="card">
         <div class="card-content">
           <p class="title">
