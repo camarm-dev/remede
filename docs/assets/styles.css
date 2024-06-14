@@ -422,4 +422,31 @@ footer p {
     .is-justify-content-right:not(.also-mobile) {
         justify-content: center !important;
     }
+
+    .column {
+        margin-bottom: 1em;
+    }
+
+    .box .image:not(.stacked) {
+        margin-left: 2em !important;
+    }
+
+    .box.p-5, .box.p-6 {
+        padding: 1em !important;
+    }
+
+    .columns.is-mobile {
+        max-width: 100%;
+    }
+
+    .image.stacked.multiple {
+        justify-content: center;
+        align-items: baseline;
+        width: 90% !important;
+        margin: auto !important;
+    }
+
+    .box.p-5.is-flex-direction-row {
+        flex-wrap: wrap;
+    }
 }
