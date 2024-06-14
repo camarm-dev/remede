@@ -335,6 +335,10 @@ a:not(.button):hover {
     margin-right: auto;
 }
 
+.columns.inline {
+    max-width: 100%;
+}
+
 .columns.is-5 {
     gap: 1rem;
 }
