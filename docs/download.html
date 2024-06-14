@@ -18,33 +18,83 @@
   <meta property="og:image" content="https://remede.camarm.fr/og.png" />
 </head>
 <body>
-<nav class="level is-mobile">
-  <div class="level-left">
-    <div class="level-item is-justify-content-left">
-      <a href="/">
-        <img src="assets/icon.png" class="image is-h is-small" alt="Remède icon"/>
-      </a>
-    </div>
+<nav class="navbar is-fixed" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item mr-5 mb-1" href="/">
+      <img src="assets/logo.png" class="image is-h is-small" alt="Remède icon"/>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
   </div>
-  <div class="level-right">
-    <div class="level-item is-justify-content-right also-mobile">
-      <a href="/blog" class="mr-3">Blog</a>
-      <a href="/download" class="mr-3">Download</a>
-      <a class="has-font-weight-bold">contact@camarm.dev</a>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/">
+        Home
+      </a>
+
+      <a class="navbar-item" href="/blog">
+        Blog
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/blog" target="_blank">
+            About
+          </a>
+          <a class="navbar-item" href="https://support.camarm.fr" target="_blank">
+            Support
+          </a>
+          <a class="navbar-item" href="mailto:software@camarm.dev">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://github.com/camarm-dev/remede/issues/new/choose" target="_blank">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="/download">
+            <strong>Download</strong>
+          </a>
+          <a class="button is-light" href="https://docs.remede.camarm.fr" target="_blank">
+            Documentation
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
-<section class="section is-medium">
+<section class="section mt-6 mb-6 is-medium is-full">
   <div class="columns is-centered is-align-items-center is-justify-content-center">
-    <div class="column">
-      <h1 class="title is-large has-text-grey">
-        Télécharger <span class="is-family-secondary has-text-primary">Remède</span>, pour <span class="has-text-secondary"><i>toutes</i> les plateformes</span> !
+    <div class="column is-half">
+      <h1 class="title no-mg is-large has-text-dark">
+        Télécharger
+        <span class="is-family-secondary">Remède</span><br>
+        <i class="fas fa-arrow-right has-text-primary"></i>
+        <span class="has-text-primary">Le meilleur dictionnaire mobile</span>
       </h1>
+      <p class="has-text-grey">Choisis ta platforme ci-dessous et profite du meilleur dictionnaire mobile dès maintenant !</p>
+      <br>
+      <a href="/" class="button is-primary">Découvrir Remède</a>
     </div>
   </div>
-  <br/>
-  <br/>
-  <br/>
+</section>
+<section class="section is-medium">
   <div style="overflow-y: scroll; max-width: 100vw;">
     <table class="table is-fullwidth">
       <thead>
@@ -148,5 +198,28 @@
     </div>
   </div>
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+</script>
 </body>
 </html>
