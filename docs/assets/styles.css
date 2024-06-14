@@ -337,6 +337,7 @@ a:not(.button):hover {
 
 .columns.inline {
     max-width: 100%;
+    padding-left: 1em;
 }
 
 .columns.is-5 {
@@ -431,7 +432,7 @@ footer p {
         margin-bottom: 1em;
     }
 
-    .box .image:not(.stacked) {
+    .box .image:not(.stacked):not(.is-32x32) {
         margin-left: 2em !important;
     }
 
@@ -452,5 +453,9 @@ footer p {
 
     .box.p-5.is-flex-direction-row {
         flex-wrap: wrap;
+    }
+
+    .columns.inline.is-mobile .column.is-one-third {
+        width: 45%;
     }
 }
