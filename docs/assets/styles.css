@@ -39,6 +39,14 @@ body {
     font-family: "Amiko", sans-serif;
 }
 
+progress::-moz-progress-bar, progress::-webkit-progress-bar {
+    transition: .2s ease-in-out;
+}
+
+.progress.is-primary::-moz-progress-bar, .progress.is-primary::-webkit-progress-bar {
+    background-color: var(--primary) !important;
+}
+
 h4 {
     font-family: "IBMPlexSerif", serif;
 }
@@ -244,7 +252,7 @@ a:not(.button):hover {
     margin-left: .4em;
 }
 
-.box img {
+.box img, .box video {
     border-radius: 6px;
     max-height: 250px;
     object-fit: cover;
@@ -262,6 +270,10 @@ a:not(.button):hover {
     justify-content: end;
 }
 
+.box .image.hidden {
+    overflow: hidden;
+}
+
 .box .image.stacked.center {
     width: 100%;
     padding: 0;
@@ -270,7 +282,15 @@ a:not(.button):hover {
     justify-content: center;
 }
 
-.box .image.stacked img {
+.box .image.vertical.left {
+    margin-left: auto;
+}
+
+.box .image.stacked.small img {
+    max-width: 40%;
+}
+
+.box .image.stacked img, .box .image.stacked video {
     max-width: 75%;
     max-height: 100%;
     object-fit: cover;
@@ -278,6 +298,24 @@ a:not(.button):hover {
     width: auto;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+.box .image.stacked video {
+    transition: .2s ease-in-out;
+    transform: translateY(40%);
+    filter: grayscale(.8);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.box .image.stacked video + video {
+    transform: translateY(75%);
+}
+
+.box .image.stacked video:hover {
+    cursor: progress;
+    transform: translateY(0%);
+    filter: grayscale(0);
 }
 
 .box .image.stacked.anim {
@@ -305,12 +343,20 @@ a:not(.button):hover {
     margin-right: auto;
 }
 
-.box .image.stacked.multiple img {
+.box .image.stacked.multiple.left {
+    justify-content: start;
+}
+
+.box .image.stacked.multiple img, .box .image.stacked.multiple video {
     flex: .5;
     width: 50%;
     max-height: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.box .image.stacked.multiple.video {
+    width: 70%;
 }
 
 .box .image {
