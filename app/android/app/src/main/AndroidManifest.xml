@@ -16,7 +16,9 @@
         android:usesCleartextTraffic="true">
         <receiver
             android:name=".RemedeWordOfDayWidget"
-            android:exported="false">
+            android:label="@string/wodwidget_label"
+            android:icon="@mipmap/ic_launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -31,7 +33,9 @@
         </receiver>
         <receiver
             android:name=".RemedeSearchbarWidget"
-            android:exported="false">
+            android:label="@string/app_widget_description"
+            android:icon="@mipmap/ic_launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
