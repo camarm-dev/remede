@@ -82,13 +82,13 @@ a.has-text-primary:hover {
     color: var(--primary);
 }
 
-.button.is-outlined.is-primary:hover, .button.is-outlined.is-primary:focus {
+.button.is-outlined.is-primary:hover, .button.is-outlined.is-primary:focus, .button.is-outlined.is-primary:active {
     background-color: var(--primary);
     border-color: var(--active);
     box-shadow: 0 0 0 .125em rgba(56, 128, 255, 0.25) !important;
 }
 
-.button.is-outlined.is-primary:hover .has-text-primary {
+.button.is-outlined.is-primary:hover .has-text-primary, .button.is-outlined.is-primary:active .has-text-primary, .button.is-outlined.is-primary:focus .has-text-primary {
     color: #FFFFFF !important;
 }
 
