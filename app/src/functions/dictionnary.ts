@@ -2,7 +2,7 @@ import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
 
 const fetchOptions = {
-    mode: 'no-cors'
+    mode: "no-cors"
 } as RequestInit
 
 function removeAccents(value: string) {
