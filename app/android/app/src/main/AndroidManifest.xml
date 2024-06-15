@@ -17,6 +17,7 @@
         <receiver
             android:name=".RemedeWordOfDayWidget"
             android:label="@string/wodwidget_label"
+            android:icon="@mipmap/ic_launcher"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -33,6 +34,7 @@
         <receiver
             android:name=".RemedeSearchbarWidget"
             android:label="@string/app_widget_description"
+            android:icon="@mipmap/ic_launcher"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
