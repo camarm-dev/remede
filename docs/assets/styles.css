@@ -404,6 +404,12 @@ a:not(.button):hover {
 .box .image.vertical {
     width: 30%;
     height: auto;
+    transition: .5s ease-in-out;
+}
+
+.box:hover .image.vertical {
+    scale: 1.02;
+    transform: translateY(-5%);
 }
 
 .icon-hover {
