@@ -58,9 +58,9 @@ def fetch_remede_doc(word: str):
 
 def fetch_autocomplete(query: str, limit: bool = False):
     if limit:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' LIMIT 5").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
     else:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%'").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC").fetchall()
     return list(map(lambda row: row[0], response))
 
 
