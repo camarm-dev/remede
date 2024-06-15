@@ -280,6 +280,25 @@ a:not(.button):hover {
     border-bottom-right-radius: 0;
 }
 
+.box .image.stacked.anim {
+    overflow: hidden;
+}
+
+.box:hover .image.stacked.anim:not(.center) img {
+    transform: translateX(-12.5%);
+}
+
+.box .image.stacked.anim img {
+    transform: translateY(20%);
+    scale: 0.95;
+    transition: .5s ease-in-out;
+}
+
+.box:hover .image.stacked.anim img {
+    transform: translateY(0%);
+    scale: 1;
+}
+
 .box .image.stacked.multiple {
     width: 80%;
     margin-left: auto;
@@ -359,6 +378,21 @@ a:not(.button):hover {
     border-radius: 5px;
     box-shadow: none;
     margin: 0 !important;
+    transition: .2s ease-in-out;
+}
+
+.column.card img, .column.card .tag {
+    transition: .5s ease-in-out;
+}
+
+.column.card:hover {
+    transform: translateY(-5%);
+    scale: 1.02;
+}
+
+.column.card:hover img, .column.card:hover .tag {
+    transform: translateY(-10%);
+    scale: 1.06;
 }
 
 .is-32x32 {
@@ -392,6 +426,10 @@ footer p {
 
 .columns.is-multiline {
     margin: auto;
+}
+
+.gap-1 {
+    gap: 2em
 }
 
 @media (min-width: 1024px) {
