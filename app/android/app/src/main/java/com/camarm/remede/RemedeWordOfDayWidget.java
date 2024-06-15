@@ -106,7 +106,7 @@ public class RemedeWordOfDayWidget extends AppWidgetProvider {
 
         // Handle clicks
         Intent intent = new Intent(context, RemedeWordOfDayWidget.class).setAction(CLICK_ACTION).setData(Uri.parse(context.getResources().getString(R.string.custom_url_scheme) + "://dictionnaire/" + word));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.container, pendingIntent);
 
         // Instruct the widget manager to update the widget

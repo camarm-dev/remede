@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="3dp"
                 android:contentDescription="@string/wodwidget_phoneme"
                 android:fontFamily="@font/ibm_plex_serif_bold"
                 android:text="@string/wodwidget_phoneme"

@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 import sqlite3
+import threading
 from enum import Enum
 from hashlib import md5
 
@@ -14,7 +15,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
-version = "1.2.1"
+lock = threading.Lock()
+version = "1.2.3"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
 app.add_middleware(
     CORSMiddleware,
@@ -40,6 +42,7 @@ def in_json(response: str | list):
 
 
 def fetch_random_word():
+    lock.acquire(True)
     return cursor.execute("SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1").fetchone()[0]
 
 
@@ -49,15 +52,18 @@ def fetch_remede_word_of_day():
     if today != WORD_OF_DAY['date']:
         WORD_OF_DAY['date'] = today
         WORD_OF_DAY['word'] = fetch_random_word()
+        lock.release()
     return WORD_OF_DAY['word']
 
 
 def fetch_remede_doc(word: str):
+    lock.acquire(True)
     response = cursor.execute(f"SELECT document FROM dictionary WHERE word = '{word}'").fetchone()
     return response[0] if response else {'message': 'Mot non trouvé'}
 
 
 def fetch_autocomplete(query: str, limit: bool = False):
+    lock.acquire(True)
     if limit:
         response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
     else:
@@ -145,7 +151,9 @@ def get_word_document(word: str):
     """
     Renvoie le document Remède du mot `word`
     """
-    return json.loads(fetch_remede_doc(word.replace("'", "''")))
+    document = fetch_remede_doc(word.replace("'", "''"))
+    lock.release()
+    return json.loads(document)
 
 
 @app.get('/random')
@@ -153,7 +161,9 @@ def get_random_word_document():
     """
     Renvoie un mot au hasard
     """
-    return in_json(fetch_random_word())
+    word = fetch_random_word()
+    lock.release()
+    return in_json(word)
 
 
 @app.get('/word-of-day')
@@ -170,7 +180,9 @@ def get_autocomplete(query: str):
     Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
     safe_query = sanitize_query(query)
-    return in_json(fetch_autocomplete(safe_query, True))
+    results = fetch_autocomplete(safe_query, True)
+    lock.release()
+    return in_json(results)
 
 
 @app.get('/search/{query}')
@@ -179,7 +191,9 @@ def get_search_results(query: str):
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
     safe_query = sanitize_query(query)
-    return in_json(fetch_autocomplete(safe_query))
+    results = fetch_autocomplete(safe_query)
+    lock.release()
+    return in_json(results)
 
 
 @app.get('/ask-new-word/{query}')
