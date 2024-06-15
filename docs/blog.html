@@ -1,0 +1,339 @@
+---
+# front matter tells Jekyll to process Liquid
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Le dictionnaire mobile en français !">
+  <meta name="author" content="camarm">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="/assets/icon.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+  <title>Remède | Blog</title>
+  <meta property="og:title" content="Remède | Le dictionnaire" />
+  <meta property="og:url" content="https://remede.camarm.fr" />
+  <meta property="og:image" content="https://remede.camarm.fr/og.png" />
+  <meta name="description" content="Le dictionnaire mobile en français !">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="remede.camarm.fr">
+  <meta property="twitter:url" content="https://remede.camarm.fr">
+  <meta name="twitter:title" content="Remède | Le dictionnaire">
+  <meta name="twitter:description" content="Le dictionnaire mobile en français !">
+  <meta name="twitter:image" content="https://remede.camarm.fr/og.png">
+</head>
+<body>
+<nav class="navbar is-fixed" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item mr-5 mb-1" href="/">
+      <img src="assets/blog.png" class="image is-h is-small" alt="Remède icon"/>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/">
+        Home
+      </a>
+
+      <a class="navbar-item" href="/blog">
+        Blog
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/blog" target="_blank">
+            About
+          </a>
+          <a class="navbar-item" href="https://support.camarm.fr" target="_blank">
+            Support
+          </a>
+          <a class="navbar-item" href="mailto:software@camarm.dev">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://github.com/camarm-dev/remede/issues/new/choose" target="_blank">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="/download">
+            <strong>Download</strong>
+          </a>
+          <a class="button is-light" href="https://docs.remede.camarm.fr" target="_blank">
+            Documentation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="section mt-6 mb-6 is-medium is-full">
+  <div class="columns is-centered is-align-items-center is-justify-content-center">
+    <div class="column is-half">
+      <h1 class="title no-mg is-large has-text-dark">
+        Remède
+        <span class="is-family-secondary">blog</span><br>
+        <i class="fas fa-arrow-right has-text-primary"></i>
+        <span class="has-text-primary">Toutes nos actualités !</span>
+      </h1>
+      <p class="has-text-grey">Sur <span class="is-family-secondary"><b>Remède Blog</b></span>, découvre toutes les actualités du meilleur dictionnaire mobile !</p>
+      <br>
+      <a href="/" class="button is-primary">Découvrir Remède</a>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <h1 class="title">Nos derniers articles</h1>
+  <div class="columns is-multiline">
+    {% for post in site.posts %}
+    <div class="column is-one-third">
+      <div class="card-image">
+        <figure class="image">
+          <img
+              src="{{ post.cover }}"
+              alt="Cover de l'article"
+          />
+        </figure>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <p class="title">
+            {{ post.title }}
+          </p>
+          <p class="subtitle">
+            {{ post.author }}, {{ post.readable_date }}
+          </p>
+          {% for tag in post.tags %}
+          <span class="tag is-rounded">{{ tag }}</span>
+          {% endfor %}
+          {% for category in post.categories %}
+          <span class="tag mt-2">{{ category }}</span>
+          {% endfor %}
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <span>
+              <a href="{{ post.url }}">Lire</a>
+            </span>
+          </p>
+        </footer>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<footer class="section">
+  <div class="container">
+    <div class="pb-2 is-flex is-flex-wrap-wrap is-justify-content-between is-align-items-center">
+      <div class="mr-auto mb-1">
+        <a class="is-inline-block" href="#">
+          <img class="image" src="assets/footer.png" alt="Logo Remède" style="height: 3em"></a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="is-flex-tablet is-justify-content-between is-align-items-center">
+      <p class="has-text-weight-normal has-text-grey">Copyright © Remède 2023 - 2024, <a style="color: #7a7a7a !important;" class="has-text-gray is-underlined" target="_blank" href="https://github.com/camarm-dev/remede/blob/main/LICENSE">CECILL-2.1</a></p>
+      <div class="py-2 is-hidden-tablet"></div>
+      <div class="ml-auto">
+        <a class="mr-4 is-inline-block" href="https://play.google.com/dev" target="_blank"><i class="fab fa-google-play"></i> Play Store</a>
+        <a class="mr-4 is-inline-block" href="mailto:software@camarm.dev"><i class="fas fa-envelope"></i> Email</a>
+        <a class="mr-4 is-inline-block" href="https://github.com/camarm-dev/remede"><i class="fab fa-github"></i> Github</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<style>
+.box {
+    background-color: transparent;
+    border: none;
+}
+
+hr {
+    width: 65%;
+    margin: auto;
+    height: .55px;
+    border-radius: 5px;
+    margin-top: 2em;
+}
+
+.has-background-primary {
+    background: var(--primary) !important;
+    color: #fff !important
+}
+
+.has-background-secondary {
+    background: #31bb67 !important;
+    color: #fff !important
+}
+
+hr {
+    background-color: var(--grey)
+}
+
+.box.img {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+
+.box.img img {
+    max-height: 12em;
+    max-width: 6em;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+    .box.img img:hover {
+        animation-play-state: paused;
+        position: absolute;
+        scale: 1.06 !important;
+        transition: .2s ease-in-out;
+    }
+}
+
+.float1 {
+    animation: float1 10s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.float2 {
+    animation: float2 20s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.float3 {
+    animation: float3 10s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+
+@keyframes float1 {
+    0% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    50% {
+        transform: translate(0%, -8%);
+    }
+    60% {
+        transform: translate(0%, -8%);
+        scale: 1.05;
+    }
+    90% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    100% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+}
+
+
+@keyframes float2 {
+    0% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    50% {
+        transform: translate(-2%, -8%);
+        scale: 1;
+    }
+    60% {
+        transform: translate(-2%, -8%);
+        scale: 1.02;
+    }
+    90% {
+        transform: translate(0%, 0%);
+        scale: 1.02;
+    }
+    100% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+}
+
+@keyframes float3 {
+    0% {
+        scale: 1;
+    }
+    50% {
+        scale: 1;
+    }
+    60% {
+        scale: 1.03;
+    }
+    90% {
+        scale: 1.03;
+    }
+    100% {
+        scale: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .box div {
+        margin-left: 0 !important;
+    }
+
+    .column {
+        padding: 0 !important;
+    }
+
+    .box.img:not(.main) {
+        display: none;
+    }
+
+    .card {
+        margin-bottom: .5em;
+    }
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

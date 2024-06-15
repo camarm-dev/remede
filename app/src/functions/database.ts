@@ -42,12 +42,12 @@ class RemedeDatabase {
     }
 
     async getAutocomplete(query: string) {
-        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' LIMIT 5`
+        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC LIMIT 5`
         return await this.query(statement)
     }
 
     async search(query: string) {
-        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%'`
+        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC`
         return await this.query(statement)
     }
 

@@ -13,25 +13,26 @@ def insert_document(word_document: dict, word: str):
     cursor.execute("INSERT INTO dictionary VALUES (?,?)", (word, json.dumps(word_document)))
 
 
-def add_to_wordlist(word: str, phoneme: str):
+def add_to_wordlist(wordlist: list):
     with open('data/IPA.txt', 'r') as file:
         content = file.read()
-    with open('data/IPA.txt', 'w') as file:
-        insert = f"{word}\t{phoneme}"
-        if insert in content:
-            print(f"Word \"{word}\" was found in the database. Skipping.")
-            return False
         words = content.split('\n')
-        words.append(insert)
+    with open('data/IPA.txt', 'w') as file:
+        for element in wordlist:
+            word, phoneme = element
+            insert = f"{word}\t{phoneme}"
+            if insert in content:
+                print(f"Word \"{word}\" was found in the database. Skipping.")
+                continue
+            words.append(insert)
         words.sort(key=lambda val: sanitize_word(val))
         new_content = "\n".join(words)
         new_content = new_content.replace("\n", "", 1)
         file.write(new_content)
-    return True
 
 
 def add_to_json(word: str, document: dict):
-    letter = reverse_accepted_char.get(word[0], word[0])
+    letter = reverse_accepted_char.get(word[0], word[0]).lower()
     REMEDE[letter][word] = document
     saveRemede(letter, REMEDE[letter])
 
@@ -93,11 +94,17 @@ if __name__ == '__main__':
         with open(arg2, 'r') as file:
             for line in file.readlines():
                 if line != '':
-                    word, phoneme = line.split("\t")
+                    try:
+                        word, phoneme = line.split("\t")
+                    except:
+                        print(line)
                     words_to_add.append((word, phoneme))
     else:
         words_to_add.append((arg1, arg2))
     try:
+        print("- Ajout des mots à la liste de mots...")
+        add_to_wordlist(words_to_add)
+        print("Fait.")
         for element in words_to_add:
             word, phoneme = element
 
@@ -106,12 +113,6 @@ if __name__ == '__main__':
                 continue
 
             print(f"Ajout du mot \"{word}\"...")
-
-            print("- Ajout dans la liste de mots...")
-            exists = add_to_wordlist(word, phoneme)
-            if exists:
-                continue
-            print("Fait.")
 
             print("- Construction du document Remède...")
             document = get_word_document(word, phoneme)
@@ -136,6 +137,7 @@ if __name__ == '__main__':
         print("Fait.")
 
     except Exception as e:
+        post_setup()
         print(f"Échec. Assurez vous d'avoir bien fourni les arguments nécessaires. \"{e}\"")
 
     after = datetime.datetime.now()

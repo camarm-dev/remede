@@ -27,4 +27,21 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="Widget.Android.AppWidget.InnerView" parent="android:Widget">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Widget.Android.AppWidget.Text" parent="android:Widget">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Widget.Android.AppWidget.TextSecondary" parent="android:Widget">
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="Widget.Android.AppWidget.TextTertiary" parent="android:Widget">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
 </resources>

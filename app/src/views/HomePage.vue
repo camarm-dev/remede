@@ -90,7 +90,7 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.2.0-beta</code>, nom de code <i>Brown Sheep, beta</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.2.0</code>, nom de code <i>Brown Sheep</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Dictionnaire de rimes.</li>
@@ -131,7 +131,7 @@ import {
   AnimationDirection,
   useIonRouter,
   modalController,
-  IonModal, onIonViewDidEnter,
+  IonModal
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import type {Animation} from "@ionic/vue"
@@ -149,6 +149,7 @@ import "@ionic/vue/css/ionic-swiper.css"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {InformationsResponse} from "@/functions/types/api_responses"
 import {App} from "@capacitor/app"
+import {Keyboard} from "@capacitor/keyboard"
 
 export default defineComponent({
   components: {
@@ -194,13 +195,11 @@ export default defineComponent({
     this.el = ref(this.$el)
     this.openLandingScreen()
     this.reloadUpdateStatuses()
-    onIonViewDidEnter(() => {
-      requestAnimationFrame(() => {
-        if (location.href.includes("#searchbar")) {
-          this.searchbar.value.$el.setFocus()
-        }
-      })
-    })
+    if (location.href.includes("#searchbar")) {
+      Keyboard.show()
+      this.searchbar.$el.setFocus()
+    }
+    window.addEventListener("keydown", this.handleKeyDown)
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -274,6 +273,19 @@ export default defineComponent({
     }
   },
   methods: {
+    handleKeyDown(event: KeyboardEvent) {
+      if (!this.searchbar.$el.focused) {
+        this.searchbar.$el.setFocus().then(() => {
+          if (!this.searchbar.$el.focused) {
+            if (event.key == "backspace") {
+              this.query = this.query.slice(0, this.query.length - 1)
+              return
+            }
+            this.query += event.key
+          }
+        })
+      }
+    },
     async handleSearchbarInput(input: string) {
       this.query = input
       if (input != "") {

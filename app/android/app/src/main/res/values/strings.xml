@@ -8,4 +8,11 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">"Ouvrir Remède depuis votre écran d'accueil."</string>
     <string name="searchbar">Searchbar</string>
+    <string name="wodwidget_label">"Mot du jour"</string>
+    <string name="wodwidget_description">"Le mot du jour sur votre écran d'accueil"</string>
+    <string name="wodwidget_word">Remède</string>
+    <string name="wodwidget_phoneme">/ʁəmɛd/</string>
+    <string name="wodwidget_desc">"(Informatique) Dictionnaire français, open source et gratuit qui a pour objectif de remplacer Antidote."</string>
+    <string name="wodwidget_nature">Nom propre</string>
+    <string name="wodwidget_serif">""IBM Plex Serif", sans"</string>
 </resources>

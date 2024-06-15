@@ -38,7 +38,7 @@
           </ion-buttons>
         </ion-item>
         <ion-item color="light" class="no-border pd-t">
-          <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="1000" counter :value="content"
+          <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="5000" counter :value="content"
                         @ionInput="content = $event.detail.value as string"
                         placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
           <div v-else class="content ion-padding-bottom pd-t">
@@ -61,7 +61,7 @@
                       <ion-text color="medium">Remplacer par</ion-text>
                     </ion-label>
                     <br>
-                    <ion-button size="small" color="primary" @click="setSegmentAsText(segment, suggested.value); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value }}<br></ion-button>
+                    <ion-button size="small" :color="suggested.value == '' ? 'danger': 'primary'" @click="setSegmentAsText(segment, suggested.value); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value == '' ? 'Supprimer': suggested.value }}<br></ion-button>
                     <ion-button size="small" @click="ignoreError(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="light">Ignorer <ion-icon :icon="closeOutline"/></ion-button>
                   </ion-content>
                   <ion-content class="ion-padding" v-else>
@@ -111,7 +111,7 @@
             <ion-item v-for="error in ignoredErrors" color="light" :key="error.text">
               <ion-label>
                 <h2>"{{ error.text }}"</h2>
-                <p class="ion-color-base">{{ error.error }} - {{ error.summary }}</p>
+                <p class="ion-color-base">{{ error.summary }}</p>
               </ion-label>
               <ion-icon @click="removeException(error.text, { rule: { id: error.error } })" slot="end" color="danger" :icon="trashOutline"/>
             </ion-item>
@@ -209,7 +209,6 @@ export default {
     removeException(text: string, correction: LanguageToolCorrection) {
       this.ignoredErrors = this.ignoredErrors.filter(element => {
           return !(element.text == text && element.error == correction.rule.id)
-
       })
       this.saveExceptions()
     },
