@@ -23,7 +23,7 @@ public class RemedeSearchbarWidget extends AppWidgetProvider {
 
 //        // Handle widget clicks
         Intent intent = new Intent(context, RemedeSearchbarWidget.class).setAction(CLICK_ACTION);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.imageView, pendingIntent);
 
         // Instruct the widget manager to update the widget
