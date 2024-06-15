@@ -11,7 +11,7 @@ android {
         applicationId "com.camarm.remede"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 120
+        versionCode 121
         versionName '1.2.1 — Brown Sheep, revison 1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
