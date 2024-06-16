@@ -201,7 +201,7 @@ export default {
     const data = url.get("data")
     const readonly = url.get("readonly")
     if (data) {
-      const content = data.replaceAll("?data=", "")
+      const content = data
       this.content = content
       if (content != "") {
         this.openedFromSelection = true
