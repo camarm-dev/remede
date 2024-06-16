@@ -202,7 +202,7 @@ export default {
     const readonly = url.get("readonly")
     if (data) {
       const content = data
-      this.content = content
+      this.content = content.replaceAll("<newline>", "\n")
       if (content != "") {
         this.openedFromSelection = true
         this.textSelectionReadOnly = readonly ? readonly == "true": false
