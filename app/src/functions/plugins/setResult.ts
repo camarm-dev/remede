@@ -1,9 +1,9 @@
-import { registerPlugin } from '@capacitor/core';
+import { registerPlugin } from "@capacitor/core"
 
 export interface SetResultPlugin {
     sendActiveRemedeResult(options: { value: string }): Promise<void>;
 }
 
-const SetResult = registerPlugin<SetResultPlugin>('SetResult');
+const SetResult = registerPlugin<SetResultPlugin>("SetResult")
 
-export default SetResult;
+export default SetResult

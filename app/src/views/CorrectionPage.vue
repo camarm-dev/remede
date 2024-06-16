@@ -177,7 +177,7 @@ import {
 <script lang="ts">
 import { Clipboard } from "@capacitor/clipboard"
 import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
-import SetResult from "@/functions/plugins/setResult";
+import SetResult from "@/functions/plugins/setResult"
 
 export default {
   data() {
@@ -205,7 +205,7 @@ export default {
       this.content = content
       if (content != "") {
         this.openedFromSelection = true
-        this.textSelectionReadOnly = readonly ? readonly == 'true': false
+        this.textSelectionReadOnly = readonly ? readonly == "true": false
         this.correct()
       }
     }

@@ -311,7 +311,7 @@ import "swiper/css"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {generateId} from "@/functions/id"
-import {App} from "@capacitor/app";
+import {App} from "@capacitor/app"
 
 
 export default defineComponent({
@@ -364,7 +364,7 @@ export default defineComponent({
 
     const url = new URLSearchParams(location.search)
     const data = url.get("close")
-    this.closeApp = data ? data == 'true': false
+    this.closeApp = data ? data == "true": false
   },
   created() {
     this.loading = true
