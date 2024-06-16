@@ -26,7 +26,7 @@ import {
 } from "@ionic/vue"
 import {
   bookmark,
-  bookmarkOutline,
+  bookmarkOutline, chevronBackOutline,
   chevronDownOutline,
   documentAttachOutline,
   ellipsisVertical,
@@ -51,7 +51,11 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button text="Retour" default-href="/dictionnaire"></ion-back-button>
+          <ion-button @click="quitApp()" v-if="closeApp" size="small">
+            <ion-icon :icon="chevronBackOutline"/>
+            Retour à l'application
+          </ion-button>
+          <ion-back-button v-else text="Retour" default-href="/dictionnaire"></ion-back-button>
         </ion-buttons>
         <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
@@ -307,6 +311,7 @@ import "swiper/css"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {generateId} from "@/functions/id"
+import {App} from "@capacitor/app";
 
 
 export default defineComponent({
@@ -343,7 +348,8 @@ export default defineComponent({
         console.log(path)
       } as (path: string) => void,
       el: null as any,
-      loading: false
+      loading: false,
+      closeApp: false
     }
   },
   mounted() {
@@ -355,6 +361,10 @@ export default defineComponent({
 
     this.el = ref(this.$el)
     this.goTo = goTo as (path: string) => void
+
+    const url = new URLSearchParams(location.search)
+    const data = url.get("close")
+    this.closeApp = data ? data == 'true': false
   },
   created() {
     this.loading = true
@@ -367,6 +377,9 @@ export default defineComponent({
     })
   },
   methods: {
+    quitApp() {
+      App.exitApp()
+    },
     async loadData(mot: null | string) {
       this.mot = mot || this.motRemede
       if (!this.mot) {
