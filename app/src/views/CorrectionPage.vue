@@ -83,7 +83,7 @@
               Copier&nbsp;<ion-icon :icon="copyOutline"/>
             </ion-button>
             <ion-button color="success" @click="content = getPartiallyCorrectedContent(); locked = false">
-              Réutiliser&nbsp;<ion-icon :icon="chevronForwardOutline"/>
+              Recorriger&nbsp;<ion-icon :icon="chevronForwardOutline"/>
             </ion-button>
           </ion-buttons>
         </ion-item>
