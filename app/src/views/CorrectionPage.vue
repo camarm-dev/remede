@@ -88,6 +88,27 @@
           </ion-buttons>
         </ion-item>
       </ion-list>
+
+      <div v-if="openedFromSelection && !loading && explainSegments.length > 0">
+        <div class="ion-padding">
+          <ion-button expand="block" @click="getBackToSelection()" color="primary">
+            <ion-icon :icon="returnUpBackOutline" class="ion-margin-end"/>
+            <span v-if="textSelectionReadOnly">Copier et retourner à l'application</span>
+            <span v-else>Retourner à l'application</span>
+          </ion-button>
+        </div>
+        <div class="ion-padding">
+          <ion-note v-if="textSelectionReadOnly">
+            <ion-icon :icon="informationCircleOutline"/>
+            Copie le texte corrigé et retourne à l'application précédente. Vous n'aurez plus qu'a coller le texte !
+          </ion-note>
+          <ion-note v-else>
+            <ion-icon :icon="informationCircleOutline"/>
+            Retourner à l'application utilisera le texte corrigé.
+          </ion-note>
+        </div>
+      </div>
+
       <div class="ion-padding">
         <ion-note>
           Correction grâce à <a href="https://languagetool.org" target="_blank">Languagetool</a>, <i>hébergé par Remède</i>.
@@ -149,13 +170,14 @@ import {
   pencilOutline,
   sparkles,
   closeOutline,
-  trashOutline, languageOutline
+  trashOutline, languageOutline, informationCircleOutline, returnUpBackOutline
 } from "ionicons/icons"
 </script>
 
 <script lang="ts">
 import { Clipboard } from "@capacitor/clipboard"
 import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
+import SetResult from "@/functions/plugins/setResult";
 
 export default {
   data() {
@@ -167,7 +189,9 @@ export default {
       explainSegments: [] as ExplainSegment[],
       modalsOpenStates: {} as { [key: string]: any },
       ignoredErrors: [] as any[],
-      pageElement: null as any
+      pageElement: null as any,
+      openedFromSelection: false,
+      textSelectionReadOnly: false
     }
   },
   mounted() {
@@ -175,10 +199,13 @@ export default {
     this.pageElement = this.$refs.page.$el
     const url = new URLSearchParams(location.search)
     const data = url.get("data")
+    const readonly = url.get("readonly")
     if (data) {
       const content = data.replaceAll("?data=", "")
       this.content = content
       if (content != "") {
+        this.openedFromSelection = true
+        this.textSelectionReadOnly = readonly ? readonly == 'true': false
         this.correct()
       }
     }
@@ -217,6 +244,13 @@ export default {
     },
     saveExceptions() {
       localStorage.setItem("correctionExceptions", JSON.stringify(this.ignoredErrors))
+    },
+    getBackToSelection() {
+      const result = this.getPartiallyCorrectedContent()
+      if (this.textSelectionReadOnly) {
+        this.copy(result)
+      }
+      SetResult.sendActiveRemedeResult({ value: result })
     },
     correct() {
       this.loading = true
