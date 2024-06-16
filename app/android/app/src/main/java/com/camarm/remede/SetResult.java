@@ -15,7 +15,7 @@ public class SetResult extends Plugin {
     public void sendActiveRemedeResult(PluginCall call) {
         String value = call.getString("value");
 
-        Intent returnIntent = new Intent().putExtra("com.camarm.remede.ACTIVE_REMEDE_RESULT", value);
+        Intent returnIntent = new Intent().putExtra("com.camarm.remede.ACTIVE_REMEDE_RESULT", value).putExtra(Intent.EXTRA_PROCESS_TEXT, value);
         getActivity().setResult(Activity.RESULT_OK, returnIntent);
         getActivity().finish();
     }
