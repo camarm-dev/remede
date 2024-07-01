@@ -162,6 +162,10 @@ export default defineComponent({
   width: max-content;
 }
 
+ion-menu-toggle {
+  cursor: pointer;
+}
+
 ion-menu {
   width: max-content;
   z-index: 1000000;
