@@ -79,7 +79,8 @@ import {
   IonRouterOutlet,
   IonSplitPane,
   IonApp,
-  IonPage
+  IonPage,
+  IonSearchbar
 } from "@ionic/vue"
 import {
   bookOutline,
@@ -92,8 +93,7 @@ import {
 import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
-import {defineComponent, Ref} from "vue";
-import {IonSearchbar} from "@ionic/vue";
+import {defineComponent} from "vue";
 
 export default defineComponent({
   mounted() {
@@ -119,24 +119,23 @@ export default defineComponent({
     }
   },
   methods: {
-    handleKeyDown(event: KeyboardEvent) {
+    async handleKeyDown(event: KeyboardEvent) {
       switch (event.key) {
         case "Escape":
           this.$router.back()
           return
       }
-      const searchbar = (this.$refs.searchbar as Ref<typeof IonSearchbar>).value
+      const searchbar = (this.$refs.searchbar as any).$el
       if (!searchbar?.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
-        searchbar.setFocus().then(() => {
-          if (!searchbar.focused) {
-            if (event.key == "backspace") {
-              this.query = this.query.slice(0, this.query.length - 1)
-              return
-            }
-            this.query += event.key.length == 1 ? event.key: ''
+        await searchbar.setFocus()
+        if (!searchbar.focused) {
+          if (event.key == "backspace") {
+            this.query = this.query.slice(0, this.query.length - 1)
             return
           }
-        })
+          this.query += event.key.length == 1 ? event.key: ''
+          return
+        }
       }
     },
     isPage(path: string) {
@@ -146,15 +145,16 @@ export default defineComponent({
       this.router.push(path)
       this.path = path
     }
-  },
-  components: { IonSearchbar }
+  }
 })
 </script>
 
 <style scoped>
 .main-logo {
   max-height: 1.2em;
+  object-fit: contain;
   width: max-content;
+  object-position: left;
 }
 
 ion-menu-toggle {
