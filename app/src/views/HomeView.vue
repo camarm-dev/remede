@@ -91,14 +91,11 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">Notes de changement</h1>
           <p>
-            La version sur laquelle vous naviguez est la version <code>1.2.0</code>, nom de code <i>Brown Sheep</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.3.0</code>, nom de code <i>Phenomenal Feather</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
-              <li>Dictionnaire de rimes.</li>
-              <li>Nouvelle base de données, et suppression des anciennes versions.</li>
-              <li>Création d'un site web à <a href="https://remede.camarm.fr" target="_blank">remede.camarm.fr</a>.</li>
-              <li>Refonte de la navigation. Plus aucunes erreurs de navigation ne devraient apparaître.</li>
-              <li>Intégrations natives: actions sur les textes sélectionnés et widgets.</li>
+              <li>Application de bureau.</li>
+              <li>Mise à jour sur l'interface</li>
             </ul>
           </p>
         </ion-content>
