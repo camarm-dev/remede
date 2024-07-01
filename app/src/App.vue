@@ -122,17 +122,15 @@ export default defineComponent({
   methods: {
     handleKeyDown(event: KeyboardEvent) {
       const searchbar = this.$refs.searchbar?.$el as HTMLIonSearchbarElement
-      if (!searchbar.focused) {
+      if (!searchbar.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         searchbar.setFocus().then(() => {
           if (!searchbar.focused) {
             if (event.key == "backspace") {
               this.query = this.query.slice(0, this.query.length - 1)
               return
             }
-            if (this.$route.name != 'dictionnaire') {
-              this.query += event.key.length == 1 ? event.key: ''
-              return
-            }
+            this.query += event.key.length == 1 ? event.key: ''
+            return
           }
         })
       }
