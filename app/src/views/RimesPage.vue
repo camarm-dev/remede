@@ -100,6 +100,9 @@ export default defineComponent({
           .fromTo("opacity", "1", "0")
       searchToolbarAnimation = createAnimation()
           .addElement(searchToolbar.value?.$el)
+          .beforeStyles({
+            'margin-top': '2.5em'
+          })
           .duration(250)
           .fromTo("transform", "translateY(0)", "translateY(-50%)")
           .fromTo("scale", "1", "1.01")
