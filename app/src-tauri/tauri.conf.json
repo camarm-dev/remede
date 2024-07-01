@@ -29,8 +29,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
-      "longDescription": "",
+      "identifier": "com.camarm.remede",
+      "longDescription": "Le dictionnaire français libre.",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -39,7 +39,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "Le dictionnaire.",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -56,10 +56,14 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "maxHeight": 1000,
+        "maxWidth": 1800,
+        "minHeight": 700,
+        "minWidth": 1100,
+        "height": 800,
         "resizable": true,
         "title": "Remède | Dictionnaire",
-        "width": 800
+        "width": 1300
       }
     ]
   }
