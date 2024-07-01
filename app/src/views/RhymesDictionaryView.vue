@@ -70,6 +70,11 @@ import {
   radioButtonOnOutline
 } from "ionicons/icons"
 import {defineComponent, onMounted, Ref, ref} from "vue"
+import {
+  defaultRemedeContentAnimation,
+  defaultRemedeMainToolbarAnimation,
+  defaultRemedeSearchToolbarAnimation
+} from "@/functions/animations";
 
 export default defineComponent({
   data() {
@@ -93,24 +98,9 @@ export default defineComponent({
     let contentAnimation: Animation
 
     onMounted(() => {
-      mainToolbarAnimation = createAnimation()
-          .addElement(mainToolbar.value?.$el)
-          .duration(250)
-          .fromTo("transform", "translateY(0)", "translateY(-100%)")
-          .fromTo("opacity", "1", "0")
-      searchToolbarAnimation = createAnimation()
-          .addElement(searchToolbar.value?.$el)
-          .beforeStyles({
-            'margin-top': '2.5em'
-          })
-          .duration(250)
-          .fromTo("transform", "translateY(0)", "translateY(-50%)")
-          .fromTo("scale", "1", "1.01")
-      contentAnimation = createAnimation()
-          .addElement(content.value?.$el)
-          .duration(250)
-          .fromTo("transform", "translateY(0)", "translateY(-10%)")
-
+      mainToolbarAnimation = defaultRemedeMainToolbarAnimation(mainToolbar.value?.$el)
+      searchToolbarAnimation = defaultRemedeSearchToolbarAnimation(searchToolbar.value?.$el)
+      contentAnimation = defaultRemedeContentAnimation(content.value?.$el)
     })
 
     const animateMain = (direction: AnimationDirection = "normal") => mainToolbarAnimation.direction(direction).play()

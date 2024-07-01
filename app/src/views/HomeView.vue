@@ -151,6 +151,11 @@ import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {InformationsResponse} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Keyboard} from "@capacitor/keyboard"
+import {
+  defaultRemedeContentAnimation,
+  defaultRemedeMainToolbarAnimation,
+  defaultRemedeSearchToolbarAnimation
+} from "@/functions/animations";
 
 export default defineComponent({
   components: {
@@ -212,24 +217,9 @@ export default defineComponent({
     let contentAnimation: Animation
 
     onMounted(() => {
-      mainToolbarAnimation = createAnimation()
-          .addElement(mainToolbar.value?.$el)
-          .duration(250)
-          .fromTo("transform", "translateY(0)", "translateY(-100%)")
-          .fromTo("opacity", "1", "0")
-      searchToolbarAnimation = createAnimation()
-          .addElement(searchToolbar.value?.$el)
-          .beforeStyles({
-            'margin-top': '2.5em'
-          })
-          .duration(250)
-          .fromTo("transform", "translateY(0)", "translateY(-50%)")
-          .fromTo("scale", "1", "1.01")
-      contentAnimation = createAnimation()
-          .addElement(content.value?.$el)
-          .duration(250)
-          .fromTo("transform", "translateY(0)", "translateY(-10%)")
-
+      mainToolbarAnimation = defaultRemedeMainToolbarAnimation(mainToolbar.value?.$el)
+      searchToolbarAnimation = defaultRemedeSearchToolbarAnimation(searchToolbar.value?.$el)
+      contentAnimation = defaultRemedeContentAnimation(content.value?.$el)
     })
 
     const animateMain = (direction: AnimationDirection = "normal") => mainToolbarAnimation.direction(direction).play()
