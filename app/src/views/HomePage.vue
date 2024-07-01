@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-header :translucent="true">
-      <ion-toolbar ref="mainToolbar">
+      <ion-toolbar ref="mainToolbar" class="hidden-desktop">
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
@@ -281,7 +281,9 @@ export default defineComponent({
               this.query = this.query.slice(0, this.query.length - 1)
               return
             }
-            this.query += event.key
+            if (this.$route.name == 'dictionnaire') {
+              this.query += event.key.length == 1 ? event.key: ''
+            }
           }
         })
       }
