@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="icon" href="/assets/icon.png">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
-  <title>Remède | Télécharger</title>
+  <title>Remède | Applications de bureau</title>
   <meta property="og:title" content="Remède | Le dictionnaire" />
   <meta property="og:url" content="https://remede.camarm.fr" />
   <meta property="og:image" content="https://remede.camarm.fr/og.png" />
@@ -86,17 +86,17 @@
   <div class="columns is-centered is-align-items-center is-justify-content-center">
     <div class="column is-half">
       <h1 class="title no-mg is-large has-text-dark">
-        Télécharger
-        <span class="is-family-secondary">Remède</span><br>
+        Applications de
+        <span class="is-family-secondary">bureau</span>;<br>
         <i class="fas fa-arrow-right has-text-primary"></i>
-        <span class="has-text-primary">Le meilleur dictionnaire mobile</span>
+        <span class="has-text-primary">Remède, sur ton ordinateur</span>
       </h1>
-      <p class="has-text-grey">Choisis ta plateforme ci-dessous et profite du meilleur dictionnaire mobile dès maintenant !</p>
+      <p class="has-text-grey">Choisis ta plateforme ci-dessous et profite du meilleur dictionnaire de bureau dès maintenant !</p>
       <br>
       <a href="/" class="button is-primary">Découvrir Remède</a>
     </div>
-    <div class="column is-half">
-      <img class="image is-small m-auto" src="/assets/android.png" alt="Remède phone"/>
+    <div class="column is-half pl-6">
+      <img class="image ml-6 is-large" src="/assets/desktop.png" alt="Remède phone"/>
     </div>
   </div>
 </section>
@@ -106,39 +106,59 @@
       <div class="column is-one-third">
         <div class="box gapless p-3">
           <div class="mb-2 is-flex is-justify-content-space-between">
-            <span class="tag is-primary">Android</span>
+            <span class="tag is-primary">Linux</span>
             <figure class="image is-32x32 m-0">
-              <img src="assets/icon-android.png" alt="Icon android">
+              <img src="assets/icon-linux.png" alt="Icon linux">
             </figure>
           </div>
           <div class="mb-2">
-            <h2 class="title mb-0"><span class="is-family-secondary">Android</span> <span class="tag">1.3.0</span></h2>
+            <h2 class="title mb-0"><span class="is-family-secondary">Linux</span> <span class="tag">1.3.0</span></h2>
             <p class="has-text-grey">
-              Télécharge l'APK ci-dessous et profite dès maintenant de Remède sur ton smartphone !
+              Choisi ta plateforme et installe Remède sur ton ordinateur !
             </p>
           </div>
-          <div>
-            <a href="https://api-remede.camarm.fr/release/apk?cache=no" download="remede.apk" class="button is-primary">Télécharger pour Android</a>
+          <div class="buttons">
+            <a href="https://api-remede.camarm.fr/release/deb?cache=no" download="remede.deb" class="button is-primary">DEB</a>
+            <a href="https://api-remede.camarm.fr/release/appimage?cache=no" download="remede.appimage" class="button is-primary">APPIMAGE</a>
           </div>
         </div>
       </div>
       <div class="column is-one-third">
         <div class="box gapless p-3">
           <div class="mb-2 is-flex is-justify-content-space-between">
-            <span class="tag is-primary">iOS</span>
+            <span class="tag is-primary">Windows</span>
+            <figure class="image is-32x32 m-0">
+              <img src="assets/icon-win.png" alt="Icon windows">
+            </figure>
+          </div>
+          <div class="mb-2">
+            <h2 class="title mb-0"><span class="is-family-secondary">Windows</span> <span class="tag">1.3.0</span></h2>
+            <p class="has-text-grey">
+              Choisi ton format et profite de Remède sur Windows !
+            </p>
+          </div>
+          <div class="buttons">
+            <a href="https://api-remede.camarm.fr/release/msi?cache=no" download="remede.msi" class="button is-primary">MSI</a>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gapless p-3">
+          <div class="mb-2 is-flex is-justify-content-space-between">
+            <span class="tag is-primary">MacOS</span>
             <figure class="image is-32x32 m-0">
               <img src="assets/icon-ios.png" alt="Icon ios">
             </figure>
           </div>
           <div class="mb-2">
-            <h2 class="title mb-0"><span class="is-family-secondary">iOS</span> <span class="tag">1.x</span></h2>
+            <h2 class="title mb-0"><span class="is-family-secondary">MacOS</span> <span class="tag">1.x</span></h2>
             <p class="has-text-grey">
-              Installe Remède sur ton iPhone !<br>
+              Installe Remède sur ton Mac !<br>
               Ça arrive bientôt...
             </p>
           </div>
           <div>
-            <a disabled="" href="https://api-remede.camarm.fr/release/apk?cache=no" download="remede.apk" class="button is-primary">Arrive bientôt</a>
+            <a disabled="" href="https://api-remede.camarm.fr/release/dmg?cache=no" download="remede.apk" class="button is-primary">Arrive bientôt</a>
           </div>
         </div>
       </div>
@@ -153,56 +173,11 @@
           <div class="mb-2">
             <h2 class="title mb-0"><span class="is-family-secondary">Autres</span> <span class="tag">latest</span></h2>
             <p class="has-text-grey">
-              Découvre toutes les plateformes, ainsi que les versions beta dans les releases Github !
+              Découvre tous les builds disponibles, ainsi que les versions beta dans les releases Github !
             </p>
           </div>
           <div>
-            <a href="https://github.com/camarm-dev/remede/releases" class="button is-primary">
-              <span>Découvrir</span>
-              <span class="icon has-text-white">
-                <i class="fas fa-external-link"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="box gapless p-3">
-          <div class="mb-2 is-flex is-justify-content-space-between">
-            <span class="tag is-warning">Sqlite</span>
-            <figure class="image is-32x32 m-0">
-              <img src="assets/icon-db.png" alt="Icon github">
-            </figure>
-          </div>
-          <div class="mb-2">
-            <h2 class="title mb-0"><span class="is-family-secondary">BDD</span> <span class="tag">1.2.0</span></h2>
-            <p class="has-text-grey">
-              Télécharge la base de données Remède. Format Sqlite.
-            </p>
-          </div>
-          <div>
-            <a href="https://api-remede.camarm.fr/download?variant=remede" download="remede.db" class="button is-warning">
-              <span>Télécharger</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="box gapless p-3">
-          <div class="mb-2 is-flex is-justify-content-space-between">
-            <span class="tag is-dark">Bureau</span>
-            <figure class="image is-32x32 m-0">
-              <img src="assets/icon-desktop.png" alt="Icon github">
-            </figure>
-          </div>
-          <div class="mb-2">
-            <h2 class="title mb-0"><span class="is-family-secondary">Bureau</span> <span class="tag">nouveau</span></h2>
-            <p class="has-text-grey">
-              Découvre les applications de bureau Remède.
-            </p>
-          </div>
-          <div>
-            <a href="/desktop" class="button is-dark">
+            <a href="https://github.com/camarm-dev/remede/releases" download="remede.apk" class="button is-primary">
               <span>Découvrir</span>
               <span class="icon has-text-white">
                 <i class="fas fa-external-link"></i>

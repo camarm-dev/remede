@@ -85,6 +85,10 @@ a.has-text-primary:hover {
     background-color: var(--primary);
 }
 
+.button.is-primary[disabled] {
+    background-color: var(--active);
+}
+
 .button.is-primary:hover, .button.is-primary:active, .button.is-primary:focus {
     background-color: var(--active);
 }
@@ -176,6 +180,11 @@ a:not(.button):hover {
 
 .image.is-small {
     height: 28em;
+}
+
+.image.is-large {
+    height: auto;
+    min-width: 35em;
 }
 
 .image.is-h.is-small {

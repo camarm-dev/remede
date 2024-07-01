@@ -57,7 +57,6 @@
                 </div>
               </div>
             </ion-list>
-
           </ion-content>
         </ion-menu>
         <ion-router-outlet id="main-content"></ion-router-outlet>
@@ -80,7 +79,8 @@ import {
   IonSplitPane,
   IonApp,
   IonPage,
-  IonSearchbar
+  IonSearchbar,
+  IonGrid
 } from "@ionic/vue"
 import {
   bookOutline,
