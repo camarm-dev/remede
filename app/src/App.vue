@@ -127,7 +127,7 @@ export default defineComponent({
           return
       }
       const searchbar = this.$refs.searchbar?.$el as HTMLIonSearchbarElement
-      if (!searchbar.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
+      if (!searchbar?.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         searchbar.setFocus().then(() => {
           if (!searchbar.focused) {
             if (event.key == "backspace") {
@@ -162,7 +162,6 @@ ion-menu-toggle {
 }
 
 ion-menu {
-  width: max-content;
   z-index: 1000000;
 }
 

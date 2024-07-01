@@ -14,8 +14,16 @@ http://ionicframework.com/docs/theming/ */
     display: none;
   }
 
+  ion-menu {
+    width: max-content;
+  }
+
   ion-toolbar.hidden-desktop + ion-toolbar {
     margin-top: 1em;
+  }
+
+  .mt {
+    margin-top: 2.5em !important;
   }
 }
 
