@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "search/:mot",
-        component: () => import ("../components/SearchResultsView.vue")
+        component: () => import ("../views/SearchResultsView.vue")
       },
       {
         path: "a-propos",
