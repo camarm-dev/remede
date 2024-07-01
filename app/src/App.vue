@@ -79,8 +79,7 @@ import {
   IonRouterOutlet,
   IonSplitPane,
   IonApp,
-  IonPage,
-  IonSearchbar
+  IonPage
 } from "@ionic/vue"
 import {
   bookOutline,
@@ -94,13 +93,13 @@ import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
 import {defineComponent, Ref} from "vue";
+import {IonSearchbar} from "@ionic/vue";
 
 export default defineComponent({
   mounted() {
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
     getOfflineDictionaryStatus().then(status => {
       this.downloaded = status.downloaded
-
     })
 
     App.getLaunchUrl().then(object => {
@@ -126,7 +125,7 @@ export default defineComponent({
           this.$router.back()
           return
       }
-      const searchbar = this.$refs.searchbar?.$el as HTMLIonSearchbarElement
+      const searchbar = (this.$refs.searchbar as Ref<typeof IonSearchbar>).value
       if (!searchbar?.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         searchbar.setFocus().then(() => {
           if (!searchbar.focused) {
@@ -147,7 +146,8 @@ export default defineComponent({
       this.router.push(path)
       this.path = path
     }
-  }
+  },
+  components: { IonSearchbar }
 })
 </script>
 
