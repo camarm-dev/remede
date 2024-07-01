@@ -13,6 +13,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "dictionnaire",
+        name: "dictionnaire",
         component: () => import ("../views/HomePage.vue"),
       },
       {
