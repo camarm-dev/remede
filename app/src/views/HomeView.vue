@@ -148,7 +148,7 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
-import {InformationsResponse} from "@/functions/types/api_responses"
+import {InformationsResponse} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Keyboard} from "@capacitor/keyboard"
 

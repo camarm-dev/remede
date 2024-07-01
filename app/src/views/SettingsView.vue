@@ -124,7 +124,7 @@ import {deleteDictionary} from "@/functions/offline"
 
 import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline"
 import {alertController, toastController} from "@ionic/vue"
-import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/api_responses"
+import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
