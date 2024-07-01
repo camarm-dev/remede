@@ -121,6 +121,11 @@ export default defineComponent({
   },
   methods: {
     handleKeyDown(event: KeyboardEvent) {
+      switch (event.key) {
+        case "Escape":
+          this.$router.back()
+          return
+      }
       const searchbar = this.$refs.searchbar?.$el as HTMLIonSearchbarElement
       if (!searchbar.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         searchbar.setFocus().then(() => {
@@ -133,12 +138,6 @@ export default defineComponent({
             return
           }
         })
-      }
-      switch (event.key) {
-        case "Escape":
-          this.$router.back()
-        default:
-            return
       }
     },
     isPage(path: string) {
