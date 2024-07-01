@@ -3,6 +3,22 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 
+@media (max-width: 1000px) {
+  .hidden-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hidden-desktop {
+    display: none;
+  }
+
+  ion-toolbar.hidden-desktop + ion-toolbar {
+    margin-top: 1em;
+  }
+}
+
 @font-face {
   font-family: "IMBPlexSerif";
   font-weight: normal;
