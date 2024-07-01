@@ -5,22 +5,15 @@
         <ion-menu content-id="main-content" type="overlay">
           <ion-content>
             <ion-list>
-              <img class="ion-margin-start" width="50" alt="Remède icon" src="/favicon.png" height="50"/>
-              <ion-list-header>Remède</ion-list-header>
-              <ion-note>Retrouvez vos mots en toute simplicité</ion-note>
-
+              <img class="ion-margin-start main-logo" height="50" src="/logo.png" alt="">
+              <ion-note>Le dictionnaire.</ion-note>
+              <ion-searchbar :value="query" @ionChange="query = $event.detail.value" ref="searchbar" @keydown="handleInput($event)" v-if="path != '/dictionnaire'" class="hidden-mobile" placeholder="Rechercher un mot..."></ion-searchbar>
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">
                     <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="path === '/dictionnaire' ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
                       <ion-label>Dictionnaire</ion-label>
-                    </ion-item>
-                  </ion-menu-toggle>
-                  <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="path === '/marques-page' ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
-                      <ion-label>Marques Pages</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
@@ -43,6 +36,12 @@
                   </ion-menu-toggle>
                 </div>
                 <div class="end">
+                  <ion-menu-toggle :auto-hide="false">
+                    <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="path === '/marques-page' ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
+                      <ion-label>Marques Pages</ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
                     <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="path === '/parametres' ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
@@ -74,14 +73,14 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonListHeader,
   IonMenu,
   IonMenuToggle,
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
   IonApp,
-  IonPage
+  IonPage,
+  IonSearchbar
 } from "@ionic/vue"
 import {
   bookOutline,
@@ -94,8 +93,9 @@ import {
 import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
+import {defineComponent, Ref} from "vue";
 
-export default {
+export default defineComponent({
   mounted() {
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
     getOfflineDictionaryStatus().then(status => {
@@ -109,28 +109,66 @@ export default {
         this.router.push(url.replaceAll("remede:/", ""))
       }
     })
-
+    window.addEventListener("keydown", this.handleKeyDown)
   },
   data() {
     return {
       router: useRouter(),
       path: location.pathname,
-      downloaded: false
+      downloaded: false,
+      query: ''
     }
   },
   methods: {
+    handleKeyDown(event: KeyboardEvent) {
+      const searchbar = this.$refs.searchbar?.$el as HTMLIonSearchbarElement
+      if (!searchbar.focused) {
+        searchbar.setFocus().then(() => {
+          if (!searchbar.focused) {
+            if (event.key == "backspace") {
+              this.query = this.query.slice(0, this.query.length - 1)
+              return
+            }
+            if (this.$route.name != 'dictionnaire') {
+              this.query += event.key.length == 1 ? event.key: ''
+              return
+            }
+          }
+        })
+      }
+      switch (event.key) {
+        case "Escape":
+          this.$router.back()
+        default:
+            return
+      }
+    },
     isPage(path: string) {
       return location.pathname === path
     },
     goTo(path: string) {
       this.router.push(path)
       this.path = path
+    },
+    handleInput(event: KeyboardEvent) {
+      const input = event.target as HTMLInputElement
+      if(event.key == 'Enter') this.goTo(`/search/${input.value}`)
     }
   }
-}
+})
 </script>
 
 <style scoped>
+.main-logo {
+  max-height: 1.2em;
+  width: max-content;
+}
+
+ion-menu {
+  width: max-content;
+  z-index: 1000000;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }
