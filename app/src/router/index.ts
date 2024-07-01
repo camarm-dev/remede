@@ -30,10 +30,12 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "correction",
+        name: "correction",
         component: () => import ("../views/CorrectionPage.vue")
       },
       {
         path: "fiches",
+        name: "fiches",
         component: () => import ("../views/FichesPage.vue")
       },
       {
@@ -42,6 +44,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "rimes",
+        name: "rimes",
         component: () => import ("../views/RimesPage.vue")
       },
       {
