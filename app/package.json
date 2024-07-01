@@ -18,7 +18,8 @@
     "preview": "vite preview",
     "test": "cypress run",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "tauri": "tauri"
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.1",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "5.5.1",
+    "@tauri-apps/cli": "^1.5.14",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
