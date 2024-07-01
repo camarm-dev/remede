@@ -113,7 +113,6 @@ import {bookmark, calendarOutline, shuffle, arrowForward} from "ionicons/icons"
 import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
 import {
-  createAnimation,
   IonButtons,
   IonContent,
   IonHeader,
