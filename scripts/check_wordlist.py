@@ -3,6 +3,8 @@ import sys
 from bs4 import BeautifulSoup
 import requests
 
+from generate_index import sanitize_word
+
 
 def get_phoneme(word: str):
     result = requests.get(f'https://fr.wiktionary.org/wiki/{word}').content
@@ -12,7 +14,7 @@ def get_phoneme(word: str):
 
 
 def iterate():
-    result = ""
+    result = []
     total = len(TO_CHECK)
     for word in TO_CHECK:
         print(f"\033[A\033[KMot {TO_CHECK.index(word)}/{total} | Mot \"{word}\"")
@@ -20,14 +22,17 @@ def iterate():
             continue
         try:
             phoneme = get_phoneme(word)
-            result += f"{word}\t{phoneme}\n"
+            result.append(f"{word}\t{phoneme}")
         except KeyboardInterrupt:
             print("Exiting")
             exit()
         except:
             continue
     with open('.words_to_add', 'w+') as file:
-        file.write(result)
+        print(f"Sorting in alphabetic order...")
+        result.sort(key=lambda val: sanitize_word(val))
+        print(f"Saving {len(result)} new entries...")
+        file.write("\n".join(result))
 
 
 def getTimeDetails(time_object):
