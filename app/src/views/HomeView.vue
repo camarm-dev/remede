@@ -292,9 +292,7 @@ export default defineComponent({
       }
     },
     handleSubmit() {
-      if (this.results.includes(this.query)) {
-        this.goTo(`/dictionnaire/${this.query}`)
-      } else if(this.results[0]) {
+      if(this.results[0]) {
         this.goTo(`/dictionnaire/${this.results[0]}`)
       }
     },
