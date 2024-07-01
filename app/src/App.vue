@@ -7,7 +7,7 @@
             <ion-list>
               <img class="ion-margin-start main-logo" height="50" src="/logo.png" alt="">
               <ion-note>Le dictionnaire.</ion-note>
-              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown="handleInput($event)" v-if="path != '/dictionnaire'" class="hidden-mobile" placeholder="Rechercher un mot..."></ion-searchbar>
+              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="goTo(`/search/${$event.target.value}`)" v-if="path != '/dictionnaire'" class="hidden-mobile" placeholder="Rechercher un mot..."></ion-searchbar>
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">
@@ -146,10 +146,6 @@ export default defineComponent({
     goTo(path: string) {
       this.router.push(path)
       this.path = path
-    },
-    handleInput(event: KeyboardEvent) {
-      const input = event.target as HTMLInputElement
-      if(event.key == 'Enter') this.goTo(`/search/${input.value}`)
     }
   }
 })
