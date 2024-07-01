@@ -9,6 +9,7 @@
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
                        @ionInput="handleSearchbarInput($event.detail.value as string)"
+                       @keydown.enter="handleSubmit()"
                        placeholder="Rechercher un mot" ref="searchbar"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
@@ -298,6 +299,13 @@ export default defineComponent({
       } else {
         window.clearTimeout(this.autocompleteTimeout)
         this.results = []
+      }
+    },
+    handleSubmit() {
+      if (this.results.includes(this.query)) {
+        this.goTo(`/dictionnaire/${this.query}`)
+      } else if(this.results[0]) {
+        this.goTo(`/dictionnaire/${this.results[0]}`)
       }
     },
     startAutocompleteSearch(input: string) {
