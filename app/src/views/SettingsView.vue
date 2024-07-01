@@ -23,7 +23,7 @@
           <ion-label>
             <h3>Thème</h3>
           </ion-label>
-          <ion-select :value="getCurrentTheme()" placeholder="Clair" @ionChange="handleThemeChangement($event.detail.value)" cancel-text="Annuler" ok-text="Confirmer" interface="action-sheet">
+          <ion-select label="Thème" :value="getCurrentTheme()" placeholder="Clair" @ionChange="handleThemeChangement($event.detail.value)" cancel-text="Annuler" ok-text="Confirmer" interface="action-sheet">
             <ion-select-option value="light">Clair</ion-select-option>
             <ion-select-option value="dark">Sombre</ion-select-option>
           </ion-select>
