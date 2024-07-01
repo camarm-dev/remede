@@ -14,50 +14,50 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "dictionnaire",
         name: "dictionnaire",
-        component: () => import ("../views/HomePage.vue"),
+        component: () => import ("../views/HomeView.vue"),
       },
       {
         path: "dictionnaire/:mot",
-        component: () => import ("../views/WordModal.vue")
+        component: () => import ("../views/DefinitionView.vue")
       },
       {
         path: "search/:mot",
-        component: () => import ("../components/SearchModal.vue")
+        component: () => import ("../components/SearchResultsView.vue")
       },
       {
         path: "a-propos",
-        component: () => import ("../views/AboutPage.vue")
+        component: () => import ("../views/AboutView.vue")
       },
       {
         path: "correction",
         name: "correction",
-        component: () => import ("../views/CorrectionPage.vue")
+        component: () => import ("../views/CorrectionView.vue")
       },
       {
         path: "fiches",
         name: "fiches",
-        component: () => import ("../views/FichesPage.vue")
+        component: () => import ("../views/SheetsView.vue")
       },
       {
         path: "fiches/:slug",
-        component: () => import ("../views/FichePage.vue")
+        component: () => import ("../views/ReadSheetView.vue")
       },
       {
         path: "rimes",
         name: "rimes",
-        component: () => import ("../views/RimesPage.vue")
+        component: () => import ("../views/RhymesDictionaryView.vue")
       },
       {
         path: "rimes/:mot",
-        component: () => import ("../views/RimesResults.vue")
+        component: () => import ("../views/RhymesDictionarySearchResultsView.vue")
       },
       {
         path: "parametres",
-        component: () => import ("../views/SettingsPage.vue")
+        component: () => import ("../views/SettingsView.vue")
       },
       {
         path: "marques-page",
-        component: () => import ("../views/FavoritesPage.vue")
+        component: () => import ("../views/BookmarksView.vue")
       }
     ]
   }
