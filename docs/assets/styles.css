@@ -73,6 +73,10 @@ h4 {
     color: var(--primary) !important;
 }
 
+.tag.is-primary {
+    background-color: var(--primary) !important;
+}
+
 a.has-text-primary:hover {
     color: var(--active) !important;
 }
@@ -260,6 +264,10 @@ a:not(.button):hover {
 
 .box img.is-small {
     height: 3em;
+}
+
+.box img.is-inline {
+    height: 1em;
 }
 
 .box .image.stacked {
