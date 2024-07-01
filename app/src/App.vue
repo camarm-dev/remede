@@ -97,6 +97,9 @@ import {defineComponent} from "vue";
 
 export default defineComponent({
   mounted() {
+    this.router.afterEach(() => {
+      this.path = location.pathname
+    })
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
     getOfflineDictionaryStatus().then(status => {
       this.downloaded = status.downloaded
@@ -143,7 +146,6 @@ export default defineComponent({
     },
     goTo(path: string) {
       this.router.push(path)
-      this.path = path
     }
   }
 })
