@@ -16,10 +16,14 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+      "appimage": {
+        "bundleMediaFramework": true
+      },
       "deb": {
-        "depends": []
+        "depends": [],
+        "files": {
+          "/usr/share/README.md": "../../README.md"
+        }
       },
       "externalBin": [],
       "icon": [
@@ -30,23 +34,31 @@
         "icons/icon.ico"
       ],
       "identifier": "com.camarm.remede",
-      "longDescription": "Le dictionnaire français libre.",
+      "shortDescription": "Le dictionnaire libre",
+      "longDescription": "Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +500 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.",
+      "copyright": "Remède and its contributors.",
+      "category": "Productivity",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
         "frameworks": [],
         "providerShortName": null,
-        "signingIdentity": null
+        "signingIdentity": null,
+        "license": "../../LICENSE"
       },
       "resources": [],
-      "shortDescription": "Le dictionnaire.",
-      "targets": "all",
+      "targets": ["deb", "nsis", "msi", "dmg", "app", "updater"],
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
         "timestampUrl": "",
         "webviewInstallMode": {
           "type": "offlineInstaller"
+        },
+        "nsis": {
+          "installerIcon": "icons/icon.ico",
+          "headerImage": "src/header.png",
+          "license": "../../LICENSE"
         }
       }
     },
