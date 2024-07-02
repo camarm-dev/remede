@@ -51,6 +51,16 @@ h4 {
     font-family: "IBMPlexSerif", serif;
 }
 
+.icon.remede {
+    margin: 0;
+}
+
+.icon.remede img {
+    height: .7em;
+    width: max-content !important;
+    max-width: max-content !important;
+}
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(12px);
