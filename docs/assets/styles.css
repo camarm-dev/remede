@@ -24,6 +24,8 @@
     --grey: #9995A4;
     --border: #DCDCDD;
     --primary: #3880ff;
+    --yellow: #daaa2d;
+    --yellow-active: #dcb248;
     --active: #4c8dff;
     --secondary: #2dd36f;
     --secondary-active: #42d77d;
@@ -113,12 +115,40 @@ a.has-text-primary:hover {
     box-shadow: 0 0 0 .125em rgba(56, 128, 255, 0.25) !important;
 }
 
+.button.is-warning {
+    background-color: var(--yellow);
+}
+
+.button.is-warning:not(.is-outlined) {
+    color: var(--bg) !important;
+}
+
+.button.is-warning[disabled] {
+    background-color: var(--yellow-active);
+}
+
+.button.is-warning:hover, .button.is-warning:active, .button.is-warning:focus {
+    background-color: var(--yellow-active);
+    color: var(--bg) !important;
+}
+
+.button.is-outlined.is-warning {
+    border-color: var(--yellow);
+    color: var(--yellow);
+}
+
+.button.is-outlined.is-warning:hover, .button.is-outlined.is-warning:focus, .button.is-outlined.is-warning:active {
+    background-color: var(--yellow);
+    border-color: var(--yellow-active);
+    box-shadow: 0 0 0 .125em rgb(220, 178, 72) !important;
+}
+
 .button.is-outlined.is-primary:hover .has-text-primary, .button.is-outlined.is-primary:active .has-text-primary, .button.is-outlined.is-primary:focus .has-text-primary {
     color: #FFFFFF !important;
 }
 
 .has-text-warning {
-    color: #dcb248 !important;
+    color: var(--yellow) !important;
 }
 
 .columns.centered {
