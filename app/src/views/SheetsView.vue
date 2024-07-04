@@ -16,11 +16,11 @@
         <ion-toolbar>
           <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" placeholder="Rechercher une fiche"></ion-searchbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
-            <ion-chip id="open-filters">
+            <ion-chip id="open-sheets-filters">
               <ion-icon :icon="filterCircleOutline"></ion-icon>
               <ion-label>Filtres</ion-label>
             </ion-chip>
-            <ion-popover alignment="center" trigger="open-filters" trigger-action="click">
+            <ion-popover alignment="center" trigger="open-sheets-filters" trigger-action="click">
               <ion-chip :key="filter" class="filter" @click="addFilter(filter)" :color="getTagColor(filter)" v-for="filter in availableFilters">
                 {{ filter }}
               </ion-chip>
@@ -188,18 +188,18 @@ export default {
 }
 
 ion-popover {
-  --background: #e0e0e0;
+  --background: var(--ion-background-color);
   --border: 0;
   --width: max-content;
 }
 
 ion-popover .popover-content, ion-popover ion-content {
-  --background: #e0e0e0;
+  --background: var(--ion-background-color);
   width: max-content !important;
 }
 
 ion-popover .popover-viewport {
-  --background: #e0e0e0;
+  --background: var(--ion-background-color);
   display: flex;
   flex-direction: column;
   width: max-content;
