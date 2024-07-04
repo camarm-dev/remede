@@ -11,30 +11,30 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Paramètres</ion-title>
+          <ion-title size="large">{{ $t('settings') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <div class="list-title">
-        Personnalisation
+        {{ $t('settingsPage.personalization') }}
       </div>
       <ion-list inset>
         <ion-item color="light">
           <ion-label>
-            <h3>Thème</h3>
+            <h3>{{ $t('settingsPage.theme') }}</h3>
           </ion-label>
-          <ion-select label="Thème" :value="getCurrentTheme()" placeholder="Clair" @ionChange="handleThemeChangement($event.detail.value)" cancel-text="Annuler" ok-text="Confirmer" interface="action-sheet">
-            <ion-select-option value="light">Clair</ion-select-option>
-            <ion-select-option value="dark">Sombre</ion-select-option>
+          <ion-select label="Thème" :value="getCurrentTheme()" :placeholder="$t('settingsPage.lightTheme')" @ionChange="handleThemeChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
+            <ion-select-option value="light">{{ $t('settingsPage.lightTheme') }}</ion-select-option>
+            <ion-select-option value="dark">{{ $t('settingsPage.darkTheme') }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
       <ion-list inset>
         <ion-item color="light">
           <ion-label>
-            <h3>Langue</h3>
+            <h3>{{ $t('settingsPage.tongue') }}</h3>
           </ion-label>
-          <ion-select label="Langue" :value="getCurrentLang()" placeholder="System" @ionChange="handleLangChangement($event.detail.value)" cancel-text="Annuler" ok-text="Confirmer" interface="action-sheet">
+          <ion-select :label="$t('settingsPage.tongue')" :value="getCurrentLang()" placeholder="System" @ionChange="handleLangChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
             <ion-select-option v-for="locale in availableLocales" :value="locale" :key="locale">{{ locale }}</ion-select-option>
             <ion-select-option value="system">System</ion-select-option>
           </ion-select>
@@ -44,37 +44,37 @@
       <br>
 
       <div class="list-title">
-        Dictionnaire hors ligne
+        {{ $t('settingsPage.offlineDictionary') }}
       </div>
 
       <ion-list inset v-if="downloaded">
         <ion-item color="light">
-          Dictionnaire "{{ dictionary.hash }}" téléchargé.
+          {{ $t('dictionary') }} "{{ dictionary.hash }}" {{ $t('settingsPage.downloaded') }}.
         </ion-item>
         <ion-item button color="danger" @click="deleteDictionary().then(() => { reloadDictionaryStatus(); canDownload = true })">
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
-          <ion-label>Supprimer</ion-label>
+          <ion-label>{{ $t('delete') }}</ion-label>
         </ion-item>
         <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; canDownload = true; deleteDictionary().then(() => { reloadDictionaryStatus().then(() => { download() }) })">
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
-          <ion-label>Mettre à jour vers "{{ latestDictionary }}"</ion-label>
+          <ion-label>{{ $t('settingsPage.updateTo') }} "{{ latestDictionary }}"</ion-label>
         </ion-item>
       </ion-list>
 
       <ion-list inset v-else-if="canDownload">
         <ion-item :disabled="loading" color="light" button @click="download()">
           <ion-label>
-            Télécharger
+            {{ $t('settingsPage.download') }}
           </ion-label>
         </ion-item>
         <ion-item color="light">
-          <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="popover" label="Dictionnaire" value="remede" name="Dictionnaire">
+          <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="popover" :label="$t('dictionary')" value="remede" :name="$t('dictionary')">
             <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].nom }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item color="light" v-if="loading">
           <ion-label>
-            <p>Téléchargement en cours...</p>
+            <p>{{ $t('settingsPage.downloading') }}</p>
             <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
           </ion-label>
         </ion-item>
@@ -82,26 +82,24 @@
 
       <ion-list inset v-else>
         <ion-item>
-          Vous ne pouvez pas télécharger le dictionnaire...
+          {{ $t('settingsPage.cannotDownload') }}
         </ion-item>
       </ion-list>
 
       <ion-list inset>
         <ion-note class="ion-padding" v-if="loading">
-          Veuillez ne pas quitter cette page pendant le téléchargement.
-
-          Il est conseillé de redémarrer l'application après le téléchargement.
+          {{ $t('settingsPage.downloadingDisclaimer') }}
         </ion-note>
       </ion-list>
 
       <ion-list inset v-if="downloaded">
         <ion-note v-if="working" class="ion-padding" color="success">
           <ion-icon :icon="checkmarkCircle"/>
-          Tout semble fonctionner parfaitement. Vous pouvez commencer à chercher des mots hors-ligne !
+          {{ $t('settingsPage.workingNormally') }}
         </ion-note>
         <ion-note v-else class="ion-padding" color="danger">
           <ion-icon :icon="closeCircle"/>
-          Un problème a été détecté, veuillez réinstaller le dictionnaire ou contacter le support.
+          {{ $t('settingsPage.problemDetected') }}
         </ion-note>
       </ion-list>
 
@@ -230,9 +228,9 @@ export default {
       try {
         await downloadDictionary(this.availableDictionaries[this.dictionaryToDownload])
         const successMessage = await alertController.create({
-          header: "Téléchargement réussi",
-          subHeader: "Le dictionnaire hors-ligne a été téléchargé",
-          message: "Pour finaliser son installation, veuillez relancer l'application !",
+          header: this.$t('settingsPage.downloadSuccess'),
+          subHeader: this.$t('settingsPage.downloadDescription'),
+          message: this.$t('settingsPage.downloadLongDescription'),
           buttons: [
             {
               text: "C'est compris !",
@@ -247,8 +245,8 @@ export default {
         await successMessage.present()
       } catch (e) {
         const message = await toastController.create({
-          header: "Échec de téléchargement",
-          message: `Le dictionnaire hors-ligne n'a pas pu être téléchargé: ${e}`,
+          header: this.$t('settingsPage.downloadFailed'),
+          message: this.$t('settingsPage.downloadFailedDescription', { error: e }),
           duration: 5000,
           color: "danger"
         })
