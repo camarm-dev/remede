@@ -67,6 +67,7 @@
 
 <script setup lang="ts">
 import {
+  IonApp,
   IonContent,
   IonIcon,
   IonItem,
@@ -75,16 +76,19 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
-  IonRouterOutlet,
-  IonSplitPane,
-  IonApp,
   IonPage,
-  IonSearchbar
+  IonRouterOutlet,
+  IonSearchbar,
+  IonSplitPane
 } from "@ionic/vue"
 import {
+  bookmarkOutline,
   bookOutline,
+  cogOutline,
+  documentOutline,
   informationCircleOutline,
-  cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
+  medicalOutline,
+  swapHorizontalOutline
 } from "ionicons/icons"
 import RemedeLogo from "@/components/RemedeLogo.vue"
 </script>
@@ -95,6 +99,7 @@ import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
 import {defineComponent} from "vue";
 import {wordExists} from "@/functions/dictionnary"
+import {getDeviceLocale} from "@/functions/device";
 
 export default defineComponent({
   mounted() {
@@ -125,12 +130,7 @@ export default defineComponent({
   },
   methods: {
     async setLocale() {
-      const locale = localStorage.getItem("interfaceLanguage") || await this.getDeviceLocale()
-      this.$i18n.locale = locale;
-    },
-    async getDeviceLocale() {
-      const locale = await Device.getLanguageCode()
-      return locale.value.includes('-') ? locale.value.split('-')[0]: locale.value
+      this.$i18n.locale = localStorage.getItem("interfaceLanguage") || await getDeviceLocale();
     },
     async handleFastSearch(query: string) {
       if (await wordExists(query)) {

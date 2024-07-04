@@ -140,7 +140,7 @@ import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
 import {RemedeWordDocument} from "@/functions/types/remede"
-import {Device} from "@capacitor/device";
+import {getDeviceLocale} from "@/functions/device";
 
 export default {
   data() {
@@ -189,15 +189,11 @@ export default {
     async handleLangChangement(lang: string) {
       if (lang == "system") {
         localStorage.deleteItem("interfaceLanguage")
-        this.$i18n.locale = await this.getDeviceLocale()
+        this.$i18n.locale = await getDeviceLocale()
         return
       }
       localStorage.setItem("interfaceLanguage", lang)
       this.$i18n.locale = lang
-    },
-    async getDeviceLocale() {
-      const locale = await Device.getLanguageCode()
-      return locale.value.includes('-') ? locale.value.split('-')[0]: locale.value
     },
     getCurrentLang() {
       return localStorage.getItem("interfaceLanguage") || "system"
