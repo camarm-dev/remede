@@ -23,12 +23,16 @@ import "@ionic/vue/css/display.css"
 /* Theme variables */
 import "./theme/variables.css"
 
+/* For translations */
+import i18n from "./i18n"
+
 const app = createApp(App)
     .use(IonicVue, {
         mode: "ios",
         innerHTMLTemplatesEnabled: true
     })
     .use(router)
+    .use(i18n)
 
 router.isReady().then(() => {
     app.mount("#app")
