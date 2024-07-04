@@ -38,10 +38,10 @@
     "askToAddAWord": "Demander à ajouter un mot",
     "report": "Reporter",
     "searchWord": "Rechercher un mot...",
-    "changelog": "Notes de changement",
-    "etymologies": "Étymologies"
+    "changelog": "Notes de changement"
   },
   "definition": {
+    "etymologies": "Étymologies",
     "backToApp": "Retour à l'application",
     "definition": "Définition",
     "synonyms": "Synonymes",
