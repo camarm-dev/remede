@@ -352,3 +352,16 @@ html {
   https://ionicframework.com/docs/layout/dynamic-font-scaling */
   --ion-dynamic-font: var(--ion-default-dynamic-font);
 }
+
+
+body.dark .new-version {
+  content: url("@/assets/newVersionDark.png");
+}
+
+body.dark .new-base {
+  content: url("@/assets/newBaseDark.png");
+}
+
+body.dark .changelog {
+  content: url("@/assets/changelogDark.png");
+}
