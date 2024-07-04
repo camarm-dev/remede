@@ -7,7 +7,7 @@
             <ion-list>
               <RemedeLogo class="ion-margin-start"/>
               <ion-note>Le dictionnaire.</ion-note>
-              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="goTo(`/search/${$event.target.value}`)" :class="`hidden-mobile ${isPage('/dictionnaire') ? 'hidden': ''}`" placeholder="Rechercher un mot..."></ion-searchbar>
+              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="handleFastSearch($event.target.value)" :class="`hidden-mobile ${isPage('/dictionnaire') ? 'hidden': ''}`" placeholder="Rechercher un mot..."></ion-searchbar>
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">
@@ -94,6 +94,7 @@ import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
 import {defineComponent} from "vue";
+import {wordExists} from "@/functions/dictionnary"
 
 export default defineComponent({
   mounted() {
@@ -122,6 +123,13 @@ export default defineComponent({
     }
   },
   methods: {
+    async handleFastSearch(query: string) {
+      if (await wordExists(query)) {
+        this.goTo(`/dictionnaire/${query}`)
+      } else {
+        this.goTo(`/search/${query}`)
+      }
+    },
     async handleKeyDown(event: KeyboardEvent) {
       switch (event.key) {
         case "Escape":
