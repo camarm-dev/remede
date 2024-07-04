@@ -9,6 +9,8 @@
   "settings": "Paramètres",
   "about": "À propos",
   "back": "Retour",
+  "cancel": "Annuler",
+  "apply": "Appliquer",
   "confirm": "Confirmer",
   "close": "Fermer",
   "credits": "Crédits",
@@ -17,6 +19,8 @@
   "sources": "Sources",
   "error": "Erreur",
   "repository": "dépôt Github",
+  "filters": "Filtres",
+  "feminineAll": "Toutes",
   "errors": {
     "cannotReadWord": "Impossible de lire le mot: {error}"
   },
@@ -90,5 +94,36 @@
     "attributionsTo": "Attributions à",
     "sheetNotFound": "La fiche n'a pas été trouvée !",
     "noSheet": "Pas de fiche"
+  },
+  "rhymesPage": {
+    "rhyme": "Rime",
+    "placeholder": "Entrez un mot",
+    "quality": "Qualité des rimes",
+    "qualityPoor": "Rimes pauvres",
+    "qualitySufficient": "Rimes suffisantes",
+    "qualityRich": "Rimes riches",
+    "withElide": "Avec élide",
+    "elides": "Élides",
+    "femininesOnly": "Féminines seulement",
+    "feminines": "Féminines",
+    "femininesElidableLabel": "Féminine / Élidable",
+    "syllables": "syllabe(s)",
+    "toSyllables": "à",
+    "fromSyllables": "de",
+    "syllablesNumber": "Nb. syllabes",
+    "addFilter": "Ajouter un filtre",
+    "noRhymeFound": "Aucune rimes trouvées dans notre base avec ce mot. Utilisez la barre de recherche ci-dessus.",
+    "searchErrored" : "La recherche dans le dictionnaire des rimes a échouée.",
+    "syllablesMinimumAbbr": "Syllabes min.",
+    "syllablesMaximumAbbr": "Syllabes max."
+  },
+  "nature": {
+    "name": "Nom",
+    "verb": "Verbe",
+    "adverb": "Adverbe",
+    "adjective": "Adjectif",
+    "pronoun": "Pronom",
+    "auxiliary": "Auxiliaire",
+    "onomatopoeia": "Onomatopée"
   }
 }

@@ -3,10 +3,10 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button text="Retour" default-href="/rimes"></ion-back-button>
+          <ion-back-button :text="$t('back')" default-href="/rimes"></ion-back-button>
         </ion-buttons>
-        <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
-        <ion-title v-else>Rimes</ion-title>
+        <ion-title v-if="!failed && query != ''">{{ $t('rhymes') }} "{{ query }}"</ion-title>
+        <ion-title v-else>{{ $t('rhymes') }}</ion-title>
         <ion-buttons slot="end" collapse>
           <ion-button @click="scrollToTop()">
             <ion-icon slot="icon-only" :icon="chevronUpOutline"/>
@@ -18,18 +18,18 @@
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-toolbar>
-            <ion-searchbar :value="query" disabled placeholder="Entrez un mot"></ion-searchbar>
+            <ion-searchbar :value="query" disabled :placeholder="$t('rhymesPage.placeholder')"></ion-searchbar>
             <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
           </ion-toolbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
             <ion-chip class="transparent">
               <ion-icon :icon="filterCircleOutline"></ion-icon>
-              <ion-label>Filtres</ion-label>
+              <ion-label>{{ $t('filters') }}</ion-label>
             </ion-chip>
             <ion-chip v-if="quality != 0">
-              <ion-label v-if="quality == 1">Rimes pauvres</ion-label>
-              <ion-label v-if="quality == 2">Rimes suffisantes</ion-label>
-              <ion-label v-if="quality == 3">Rimes riches</ion-label>
+              <ion-label v-if="quality == 1">{{ $t('rhymesPage.qualityPoor') }}</ion-label>
+              <ion-label v-if="quality == 2">{{ $t('rhymesPage.qualitySufficient') }}</ion-label>
+              <ion-label v-if="quality == 3">{{ $t('rhymesPage.qualityRich') }}</ion-label>
               <ion-icon :icon="closeOutline" @click="quality = 0; search()"/>
             </ion-chip>
             <ion-chip v-if="nature.length > 0">
@@ -37,53 +37,53 @@
               <ion-icon :icon="closeOutline" @click="nature = []; search()"/>
             </ion-chip>
             <ion-chip v-if="elide">
-              <ion-label>Avec élide</ion-label>
+              <ion-label>{{ $t('rhymesPage.withElide') }}</ion-label>
               <ion-icon :icon="closeOutline" @click="elide = false; search()"/>
             </ion-chip>
             <ion-chip v-if="feminine">
-              <ion-label>Féminines seulement</ion-label>
+              <ion-label>{{ $t('rhymesPage.femininesOnly') }}</ion-label>
               <ion-icon :icon="closeOutline" @click="feminine = false; search()"/>
             </ion-chip>
             <div v-if="minSyllabes != 0 || maxSyllabes != 0">
               <ion-chip id="open-syllabes-selector">
-                <ion-label>de {{ minSyllabes }} {{ maxSyllabes > 0 ? ` à ${maxSyllabes}`: '' }} syllabe(s)</ion-label>
+                <ion-label>{{ $t('rhymesPage.fromSyllables') }} {{ minSyllabes }} {{ maxSyllabes > 0 ? ` ${$t('rhymesPage.toSyllables')} ${maxSyllabes}`: '' }} {{ $t('rhymesPage.syllables') }}</ion-label>
                 <ion-icon :icon="closeOutline" @click="minSyllabes = 0; maxSyllabes = 0; search()"/>
               </ion-chip>
               <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
             </div>
             <div v-else>
               <ion-chip class="outline" id="open-syllabes-selector">
-                <ion-label>Nb. syllabes</ion-label>
+                <ion-label>{{ $t('rhymesPage.syllablesNumber') }}</ion-label>
                 <ion-icon :icon="chevronExpandOutline"/>
               </ion-chip>
               <ion-picker trigger="open-syllabes-selector" :columns="syllabesPickerColumns" :buttons="syllabesPickerButtons"></ion-picker>
             </div>
             <ion-chip class="outline" id="open-filters">
-              <ion-label>Ajouter un filtre</ion-label>
+              <ion-label>{{ $t('rhymesPage.addFilter') }}</ion-label>
               <ion-icon :icon="addOutline"/>
             </ion-chip>
             <ion-popover trigger="open-filters">
               <ion-item lines="none">
-                <ion-label>Élides</ion-label>
+                <ion-label>{{ $t('rhymesPage.elides') }}</ion-label>
                 <ion-checkbox :checked="elide" @ionChange="elide = $event.detail.checked; search()"/>
               </ion-item>
               <ion-item lines="none">
-                <ion-label>Féminines</ion-label>
+                <ion-label>{{ $t('rhymesPage.feminines') }}</ion-label>
                 <ion-checkbox :checked="feminine" @ionChange="feminine = $event.detail.checked; search()"/>
               </ion-item>
               <ion-item lines="none">
                 <ion-select @ionChange="nature = $event.detail.value; search()" multiple label="Nature des rimes">
-                  <ion-select-option :value="wordsNature.nom">Nom</ion-select-option>
-                  <ion-select-option :value="wordsNature.verbe">Verbe</ion-select-option>
-                  <ion-select-option :value="wordsNature.adverbe">Adverbe</ion-select-option>
-                  <ion-select-option :value="wordsNature.adjectif">Adjectif</ion-select-option>
-                  <ion-select-option :value="wordsNature.pronom">Pronom</ion-select-option>
-                  <ion-select-option :value="wordsNature.aux">Auxiliaire</ion-select-option>
-                  <ion-select-option :value="wordsNature.onomatopee">Onomatopée</ion-select-option>
+                  <ion-select-option :value="wordsNature.nom">{{ $t('nature.name') }}</ion-select-option>
+                  <ion-select-option :value="wordsNature.verbe">{{ $t('nature.verb') }}</ion-select-option>
+                  <ion-select-option :value="wordsNature.adverbe">{{ $t('nature.adverb') }}</ion-select-option>
+                  <ion-select-option :value="wordsNature.adjectif">{{ $t('nature.adjective') }}</ion-select-option>
+                  <ion-select-option :value="wordsNature.pronom">{{ $t('nature.pronoun') }}</ion-select-option>
+                  <ion-select-option :value="wordsNature.aux">{{ $t('nature.auxiliary') }}</ion-select-option>
+                  <ion-select-option :value="wordsNature.onomatopee">{{ $t('nature.onomatopoeia') }}</ion-select-option>
                 </ion-select>
               </ion-item>
               <ion-item lines="none" id="open-quality-selector">
-                <ion-label>Qualité des rimes</ion-label>
+                <ion-label>{{ $t('rhymesPage.quality') }}</ion-label>
               </ion-item>
               <ion-picker trigger="open-quality-selector" :columns="rimeQualityPickerColumns" :buttons="rimeQualityPickerButtons"></ion-picker>
             </ion-popover>
@@ -94,18 +94,18 @@
         <ion-item-group>
           <ion-item-divider>
             <ion-label slot="start">
-              Rime
+              {{ $t('rhymesPage.rhyme') }}
             </ion-label>
             <ion-label slot="end">
-              Féminine / Élidable
+              {{ $t('rhymesPage.femininesElidableLabel') }}
             </ion-label>
           </ion-item-divider>
           <div class="ion-padding" v-if="!failed && rhymes.length === 0">
-            <ion-note>Aucune rimes trouvées dans notre base avec ce mot. Utilisez la barre de recherche ci-dessus.</ion-note>
+            <ion-note>{{ $t('rhymesPage.noRhymeFound') }}</ion-note>
           </div>
 
           <div class="ion-padding" v-if="failed">
-            <ion-note>La recherche dans le dictionnaire des rimes a échouée.</ion-note>
+            <ion-note>{{ $t('rhymesPage.searchErrored') }}</ion-note>
           </div>
           <ion-item @click="goTo(`/dictionnaire/${word[0]}`)" v-for="word in rhymes" :key="word.toString()" button v-else>
             <ion-label>
@@ -184,7 +184,7 @@ export default defineComponent({
         name: "minSyllabes",
         options: [
           {
-            text: "Syllabes min.",
+            text: this.$t('rhymesPage.syllablesMinimumAbbr'),
             value: 0
           },
           {
@@ -209,7 +209,7 @@ export default defineComponent({
         name: "maxSyllabes",
         options: [
           {
-            text: "Syllabes max.",
+            text: this.$t('rhymesPage.syllablesMaximumAbbr'),
             value: 0
           },
           {
@@ -238,11 +238,11 @@ export default defineComponent({
 
     const syllabesPickerButtons = [
       {
-        text: "Annuler",
+        text: this.$t('cancel'),
         role: "cancel",
       },
       {
-        text: "Appliquer",
+        text: this.$t('apply'),
         handler: (value: any) => {
           this.setMinMax(value.minSyllabes.value, value.maxSyllabes.value)
           this.search()
@@ -255,19 +255,19 @@ export default defineComponent({
         name: "quality",
         options: [
           {
-            text: "Toutes",
+            text: this.$t('feminineAll'),
             value: 0
           },
           {
-            text: "Rimes pauvres",
+            text: this.$t('rhymesPage.qualityPoor'),
             value: 1
           },
           {
-            text: "Rimes suffisantes",
+            text: this.$t('rhymesPage.qualitySufficient'),
             value: 2
           },
           {
-            text: "Rimes riches",
+            text: this.$t('rhymesPage.qualityRich'),
             value: 3
           }
         ],
@@ -276,11 +276,11 @@ export default defineComponent({
 
     const rimeQualityPickerButtons = [
       {
-        text: "Annuler",
+        text: this.$t('cancel'),
         role: "cancel",
       },
       {
-        text: "Appliquer",
+        text: this.$t('apply'),
         handler: (value: any) => {
           this.setQuality(value.quality.value)
           this.search()
