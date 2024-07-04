@@ -16,21 +16,22 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Correcteur</ion-title>
+          <ion-title size="large">{{ $t('corrector') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-list inset class="ion-bg-light corrector">
         <ion-item color="light" class="no-border border-bottom">
           <ion-label slot="start">
-            <p>Texte <span v-if="locked">Corrigé</span></p>
+            <p v-if="locked">{{ $t('correctionPage.corrected')}}</p>
+            <p v-else>{{ $t('correctionPage.text')}}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button v-if="locked" @click="locked = false" color="primary">
-              Éditer&nbsp;<ion-icon :icon="pencilOutline"/>
+              {{ $t('correctionPage.edit') }}&nbsp;<ion-icon :icon="pencilOutline"/>
             </ion-button>
             <ion-button v-else-if="!locked && !loading" @click="correct()" color="success">
-              Corriger&nbsp;<ion-icon :icon="sparkles"/>
+              {{ $t('correctionPage.correct') }}&nbsp;<ion-icon :icon="sparkles"/>
             </ion-button>
             <ion-button v-else color="success">
               <ion-spinner name="dots" color="success"></ion-spinner>
@@ -40,7 +41,7 @@
         <ion-item color="light" class="no-border pd-t">
           <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="5000" counter :value="content"
                         @ionInput="content = $event.detail.value as string"
-                        placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
+                        :placeholder="$t('correctionPage.placeholder')"></ion-textarea>
           <div v-else class="content correction-content ion-padding-bottom pd-t">
             <span :key="`segment-${explainSegments.indexOf(segment)}`" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
@@ -58,7 +59,7 @@
                     </ion-label>
                     <br>
                     <ion-label>
-                      <ion-text color="medium">Remplacer par</ion-text>
+                      <ion-text color="medium">{{ $t('correctionPage.replaceBy') }}</ion-text>
                     </ion-label>
                     <br>
                     <ion-button :title="suggested.value" size="small" :color="suggested.value == '' ? 'danger': 'primary'" @click="setSegmentAsText(segment, suggested.value); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value == '' ? 'Supprimer': suggested.value }}<br></ion-button>
@@ -66,10 +67,10 @@
                   </ion-content>
                   <ion-content class="ion-padding" v-else>
                     <ion-label>
-                      <p>Erreur ignorée.</p>
+                      <p>{{ $t('correctionPage.ignoredError') }}</p>
                     </ion-label>
                     <br>
-                    <ion-button @click="removeException(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="danger" class="ion-no-margin" size="small">Enlever l'exception <ion-icon :icon="closeOutline"/></ion-button>
+                    <ion-button @click="removeException(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="danger" class="ion-no-margin" size="small">{{ $t('correctionPage.deleteException') }} <ion-icon :icon="closeOutline"/></ion-button>
                   </ion-content>
                 </ion-popover>
               </span>
@@ -80,10 +81,10 @@
         <ion-item v-if="locked" class="no-border" color="light">
           <ion-buttons slot="end">
             <ion-button @click="copy(getPartiallyCorrectedContent())" color="primary">
-              Copier&nbsp;<ion-icon :icon="copyOutline"/>
+              {{ $t('correctionPage.copy') }}&nbsp;<ion-icon :icon="copyOutline"/>
             </ion-button>
             <ion-button color="success" @click="content = getPartiallyCorrectedContent(); locked = false">
-              Recorriger&nbsp;<ion-icon :icon="chevronForwardOutline"/>
+              {{ $t('correctionPage.recorrect') }}&nbsp;<ion-icon :icon="chevronForwardOutline"/>
             </ion-button>
           </ion-buttons>
         </ion-item>
@@ -93,40 +94,40 @@
         <div class="ion-padding">
           <ion-button expand="block" @click="getBackToSelection()" color="primary">
             <ion-icon :icon="returnUpBackOutline" class="ion-margin-end"/>
-            <span v-if="textSelectionReadOnly">Copier et retourner à l'application</span>
-            <span v-else>Retourner à l'application</span>
+            <span v-if="textSelectionReadOnly">{{ $t('correctionPage.copyAndBackToApp') }}</span>
+            <span v-else>{{ $t('correctionPage.backToApp') }}</span>
           </ion-button>
         </div>
         <div class="ion-padding">
           <ion-note v-if="textSelectionReadOnly">
             <ion-icon :icon="informationCircleOutline"/>
-            Copie le texte corrigé et retourne à l'application précédente. Vous n'aurez plus qu'a coller le texte !
+            {{ $t('correctionPage.copyAndBackToAppDisclaimer') }}
           </ion-note>
           <ion-note v-else>
             <ion-icon :icon="informationCircleOutline"/>
-            Retourner à l'application utilisera le texte corrigé.
+            {{ $t('correctionPage.backToAppDisclaimer') }}
           </ion-note>
         </div>
       </div>
 
       <div class="ion-padding">
         <ion-note>
-          Correction grâce à <a href="https://languagetool.org" target="_blank">Languagetool</a>, <i>hébergé par Remède</i>.
+          {{ $t('correctionPage.correctionPoweredBy') }} <a href="https://languagetool.org" target="_blank">Languagetool</a>, <i>{{ $t('correctionPage.hostedByRemede') }}</i>.
         </ion-note>
       </div>
 
       <ion-modal :ref="(el) => { modalsOpenStates['exceptionsModal'] = el }" trigger="open-exceptions-modal" :presenting-element="pageElement">
         <ion-header>
           <ion-toolbar>
-            <ion-title>Exceptions</ion-title>
+            <ion-title>{{ $t('correctionPage.exceptions') }}</ion-title>
             <ion-buttons slot="end">
-              <ion-button @click="closeModal('exceptionsModal')">Fermer</ion-button>
+              <ion-button @click="closeModal('exceptionsModal')">{{ $t('close') }}</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
         <ion-content>
           <ion-note v-if="ignoredErrors.length == 0">
-            Aucunes exceptions ajoutées.
+            {{ $t('correctionPage.noExceptions') }}
           </ion-note>
           <ion-list class="fullwidth" inset>
             <ion-item v-for="error in ignoredErrors" color="light" :key="error.text">
@@ -259,8 +260,8 @@ export default {
       const url = "https://remede-corrector.camarm.fr/v2/check"
       const body = new FormData()
       body.set("text", this.content)
-      body.set("language", "fr")
-      body.set("motherTongue", "fr")
+      body.set("language", this.$i18n.locale)
+      body.set("motherTongue", this.$i18n.locale)
       body.set("allowIncompleteResults", "false")
       body.set("mode", "allButTextLevelOnly")
 
