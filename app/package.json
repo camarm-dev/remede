@@ -27,6 +27,7 @@
     "@capacitor/app": "^5.0.7",
     "@capacitor/clipboard": "^5.0.6",
     "@capacitor/core": "5.5.1",
+    "@capacitor/device": "^5.0.8",
     "@capacitor/filesystem": "^5.1.4",
     "@capacitor/haptics": "5.0.6",
     "@capacitor/keyboard": "^5.0.6",
@@ -41,6 +42,7 @@
     "sql.js": "^1.8.0",
     "swiper": "^11.0.5",
     "vue": "^3.2.45",
+    "vue-i18n": "^9.13.1",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
