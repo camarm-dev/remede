@@ -22,7 +22,8 @@
   "filters": "Filtres",
   "feminineAll": "Toutes",
   "errors": {
-    "cannotReadWord": "Impossible de lire le mot: {error}"
+    "cannotReadWord": "Impossible de lire le mot: {error}",
+    "rhymesSearchFailed": "La recherche dans le dictionnaire des rimes a échouée: {error}"
   },
   "bookmark": {
     "addWordsToBookmarks": "Ajoutez des mots à vos marques pages"
@@ -115,7 +116,8 @@
     "noRhymeFound": "Aucune rimes trouvées dans notre base avec ce mot. Utilisez la barre de recherche ci-dessus.",
     "searchErrored" : "La recherche dans le dictionnaire des rimes a échouée.",
     "syllablesMinimumAbbr": "Syllabes min.",
-    "syllablesMaximumAbbr": "Syllabes max."
+    "syllablesMaximumAbbr": "Syllabes max.",
+    "searchRhymesAbove": "Recherchez des rimes ci-dessus !"
   },
   "nature": {
     "name": "Nom",

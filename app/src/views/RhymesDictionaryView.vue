@@ -5,11 +5,11 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title v-if="!failed && query != ''">Rimes "{{ query }}"</ion-title>
-        <ion-title v-else>Rimes</ion-title>
+        <ion-title v-if="!failed && query != ''">{{ $t('rhymes') }} "{{ query }}"</ion-title>
+        <ion-title v-else>{{ $t('rhymes') }}</ion-title>
       </ion-toolbar>
       <ion-toolbar ref="searchToolbar">
-        <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" placeholder="Entrez un mot"></ion-searchbar>
+        <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" :placeholder="$t('rhymesPage.placeholder')"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
@@ -31,11 +31,11 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Rimes</ion-title>
+          <ion-title size="large">{{ $t('rhymes') }}</ion-title>
         </ion-toolbar>
       </ion-header>
       <div class="ion-padding">
-        <ion-note>Recherchez des rimes ci-dessus !</ion-note>
+        <ion-note>{{ $t('rhymesPage.searchRhymesAbove') }}</ion-note>
       </div>
     </ion-content>
   </ion-page>
@@ -143,8 +143,8 @@ export default defineComponent({
           this.results = await getRimesAutocomplete(query)
         } catch (e) {
           const message = await toastController.create({
-            header: "Erreur",
-            message: `La recherche dans le dictionnaire des rimes a échouée: ${e}`,
+            header: this.$t('error'),
+            message: this.$t('errors.rhymesSearchFailed', { error: e }),
             duration: 5000,
             color: "danger"
           })
