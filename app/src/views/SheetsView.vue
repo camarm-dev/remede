@@ -11,14 +11,14 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Fiches</ion-title>
+          <ion-title size="large">{{ $t('sheets') }}</ion-title>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" placeholder="Rechercher une fiche"></ion-searchbar>
+          <ion-searchbar :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" :placeholder="$t('sheetsPage.placeholder')"></ion-searchbar>
           <ion-item class="item-carousel ion-text-wrap" lines="none">
             <ion-chip id="open-sheets-filters">
               <ion-icon :icon="filterCircleOutline"></ion-icon>
-              <ion-label>Filtres</ion-label>
+              <ion-label>{{ $t('filters') }}</ion-label>
             </ion-chip>
             <ion-popover alignment="center" trigger="open-sheets-filters" trigger-action="click">
               <ion-chip :key="filter" class="filter" @click="addFilter(filter)" :color="getTagColor(filter)" v-for="filter in availableFilters">
@@ -39,7 +39,7 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <ion-note class="ion-padding ion-float-end" v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
+      <ion-note class="ion-padding ion-float-end" v-if="failed">{{ $t('sheetsPage.onlyWorkWithInternet') }}</ion-note>
       <ion-list class="fullwidth" inset v-for="sheet in sheets" :key="sheet.slug">
         <ion-item @click="goTo(`/fiches/${sheet.slug}`)" button color="light" lines="none">
           <ion-label>
