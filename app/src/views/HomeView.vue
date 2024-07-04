@@ -10,7 +10,7 @@
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
                        @ionInput="handleSearchbarInput($event.detail.value as string)"
                        @keydown.enter="handleSubmit()"
-                       placeholder="Rechercher un mot" ref="searchbar"></ion-searchbar>
+                       :placeholder="$t('home.searchWord')" ref="searchbar"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
@@ -23,7 +23,7 @@
           </ion-item>
           <ion-item v-if="!loading && query != ''" @click="goTo(`/search/${query}`)" :detail-icon="arrowForward" class="ion-no-padding" button>
             <ion-label>
-              Tout voir
+              {{ $('home.seeAll') }}
             </ion-label>
           </ion-item>
         </ion-list>
@@ -32,8 +32,8 @@
         <ion-list inset>
           <ion-item color="light" class="border-radius" lines="none" button @click="report()">
             <ion-label>
-              <p>Demander à ajouter un mot</p>
-              <h2>Reporter "{{ query }}"</h2>
+              <p>{{ $t('home.askToAddAWord') }}</p>
+              <h2>{{ $('home.report') }} "{{ query }}"</h2>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -43,7 +43,7 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Dictionnaire</ion-title>
+          <ion-title size="large">{{ $t('dictionary') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -51,13 +51,13 @@
         <ion-item @click="goTo(`/dictionnaire/${todayWord}`)" :disabled="todayWordDisabled" color="light" button>
           <ion-icon slot="start" :icon="calendarOutline"/>
           <ion-label>
-            <h2>Mot du jour</h2>
+            <h2>{{ $t('home.wordOfDay') }}</h2>
           </ion-label>
         </ion-item>
         <ion-item @click="goTo(`/dictionnaire/${randomWord}`)" :disabled="randomWordDisabled" color="light" button>
           <ion-icon :icon="shuffle" slot="start"/>
           <ion-label>
-            <h2>Mot au hasard</h2>
+            <h2>{{ $t('home.randomWord') }}</h2>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -66,13 +66,13 @@
         <ion-item @click="goTo('/marques-page')" button color="primary">
           <ion-icon slot="start" :icon="bookmark"/>
           <ion-label>
-            Mes marques page
+            {{ $t('home.myBookmarks') }}
           </ion-label>
         </ion-item>
       </ion-list>
 
       <div class="list-title">
-        Pour vous
+        {{ $t('home.forYou') }}
       </div>
       <ion-list class="radius-0 fullwidth" inset>
         <swiper class="no-desktop-swiper" :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
@@ -89,14 +89,17 @@
       </ion-list>
       <ion-modal trigger="open-changelog" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
         <ion-content class="ion-padding">
-          <h1 class="remede-font">Notes de changement</h1>
-          <p>
+          <h1 class="remede-font">{{ $t('home.changelog') }}</h1>
+          <p v-if="$i18n.locale == 'fr'">
             La version sur laquelle vous naviguez est la version <code>1.3.0</code>, nom de code <i>Phenomenal Feather</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Application de bureau.</li>
               <li>Mise à jour sur l'interface</li>
             </ul>
+          </p>
+          <p v-else>
+            <a href="https://github.com/camarm-dev/remede/releases" target="_blank">English changelog on Github</a>
           </p>
         </ion-content>
       </ion-modal>
