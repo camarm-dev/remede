@@ -72,7 +72,7 @@
                 <ion-checkbox :checked="feminine" @ionChange="feminine = $event.detail.checked; search()"/>
               </ion-item>
               <ion-item lines="none">
-                <ion-select @ionChange="nature = $event.detail.value; search()" multiple label="Nature des rimes">
+                <ion-select @ionChange="nature = $event.detail.value; search()" multiple :label="$t('rhymesPage.rhymeNature')">
                   <ion-select-option :value="wordsNature.nom">{{ $t('nature.name') }}</ion-select-option>
                   <ion-select-option :value="wordsNature.verbe">{{ $t('nature.verb') }}</ion-select-option>
                   <ion-select-option :value="wordsNature.adverbe">{{ $t('nature.adverb') }}</ion-select-option>
