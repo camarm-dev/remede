@@ -1,15 +1,20 @@
 {
   "dictionary": "Dictionnaire",
+  "theDictionary": "Le dictionnaire.",
   "rhymes": "Rimes",
   "correction": "Correction",
   "sheets": "Fiches",
-  "wordOfDay": "Mot du jour",
-  "randomWord": "Mot au hasard",
-  "myBookmarks": "Mes marques page",
   "bookmarks": "Marques page",
-  "forYou": "Pour vous",
-  "seeAll": "Tout voir",
-  "askToAddAWord": "Demander à ajouter un mot",
-  "report": "Reporter",
-  "searchWord": "Rechercher un mot..."
+  "settings": "Paramètres",
+  "about": "À propos",
+  "home": {
+    "wordOfDay": "Mot du jour",
+    "randomWord": "Mot au hasard",
+    "myBookmarks": "Mes marques page",
+    "forYou": "Pour vous",
+    "seeAll": "Tout voir",
+    "askToAddAWord": "Demander à ajouter un mot",
+    "report": "Reporter",
+    "searchWord": "Rechercher un mot..."
+  }
 }
