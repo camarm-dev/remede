@@ -95,7 +95,10 @@
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Application de bureau.</li>
-              <li>Mise à jour sur l'interface</li>
+              <li>Mise à jour sur l'interface.</li>
+              <li>Traduction de l'application.</li>
+              <li>Base de données Remède Next.</li>
+              <li>+ 900 000 mots !</li>
             </ul>
           </p>
           <p v-else>
