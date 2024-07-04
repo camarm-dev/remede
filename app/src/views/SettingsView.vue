@@ -29,6 +29,17 @@
           </ion-select>
         </ion-item>
       </ion-list>
+      <ion-list inset>
+        <ion-item color="light">
+          <ion-label>
+            <h3>Langue</h3>
+          </ion-label>
+          <ion-select label="Langue" :value="getCurrentLang()" placeholder="System" @ionChange="handleLangChangement($event.detail.value)" cancel-text="Annuler" ok-text="Confirmer" interface="action-sheet">
+            <ion-select-option v-for="locale in availableLocales" :value="locale" :key="locale">{{ locale }}</ion-select-option>
+            <ion-select-option value="system">System</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
 
       <br>
 
@@ -129,6 +140,7 @@ import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
 import {RemedeWordDocument} from "@/functions/types/remede"
+import {Device} from "@capacitor/device";
 
 export default {
   data() {
@@ -145,7 +157,8 @@ export default {
       },
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
-      working: true
+      working: true,
+      availableLocales: this.$i18n.availableLocales
     }
   },
   mounted() {
@@ -172,6 +185,22 @@ export default {
     },
     getCurrentTheme() {
       return localStorage.getItem("userTheme") || "light"
+    },
+    async handleLangChangement(lang: string) {
+      if (lang == "system") {
+        localStorage.deleteItem("interfaceLanguage")
+        this.$i18n.locale = await this.getDeviceLocale()
+        return
+      }
+      localStorage.setItem("interfaceLanguage", lang)
+      this.$i18n.locale = lang
+    },
+    async getDeviceLocale() {
+      const locale = await Device.getLanguageCode()
+      return locale.value.includes('-') ? locale.value.split('-')[0]: locale.value
+    },
+    getCurrentLang() {
+      return localStorage.getItem("interfaceLanguage") || "system"
     },
     async reloadDictionaryStatus() {
       const status = await getOfflineDictionaryStatus()
