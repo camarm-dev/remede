@@ -398,12 +398,12 @@ export default defineComponent({
 </script>
 <style>
 ion-chip.outline {
-  --background: #fff;
+  --background: var(--ion-item-background);
   border: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12) .55px solid;
 }
 
 .transparent {
-  background: #fff
+  background: var(--ion-item-background)
 }
 
 .item-carousel {
