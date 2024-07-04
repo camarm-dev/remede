@@ -77,13 +77,13 @@
       <ion-list inset>
         <swiper :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
           <swiper-slide v-if="hasDictionaryUpdate" @click="goTo('/parametres')">
-            <img :src="newBaseIllustration" alt="Mettez à jour votre dictionnaire !"/>
+            <img class="new-base" :src="newBaseIllustration" alt="Mettez à jour votre dictionnaire !"/>
           </swiper-slide>
           <swiper-slide v-if="hasAppUpdate" @click="open('https://remede.camarm.fr/download')">
-            <img :src="newVersionIllustration" alt="Mettez à jour votre app !"/>
+            <img class="new-version" :src="newVersionIllustration" alt="Mettez à jour votre app !"/>
           </swiper-slide>
           <swiper-slide id="open-changelog">
-            <img :src="changelogIllustration" alt="Illustration changelog"/>
+            <img class="changelog" :src="changelogIllustration" alt="Illustration changelog"/>
           </swiper-slide>
         </swiper>
       </ion-list>

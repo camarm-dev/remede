@@ -5,7 +5,7 @@
         <ion-menu content-id="main-content" type="overlay">
           <ion-content>
             <ion-list>
-              <img class="ion-margin-start main-logo" height="50" src="/logo.png" alt="">
+              <RemedeLogo class="ion-margin-start"/>
               <ion-note>Le dictionnaire.</ion-note>
               <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="goTo(`/search/${$event.target.value}`)" v-if="!isPage('/dictionnaire')" class="hidden-mobile" placeholder="Rechercher un mot..."></ion-searchbar>
               <div class="menu-links">
@@ -79,14 +79,14 @@ import {
   IonSplitPane,
   IonApp,
   IonPage,
-  IonSearchbar,
-  IonGrid
+  IonSearchbar
 } from "@ionic/vue"
 import {
   bookOutline,
   informationCircleOutline,
   cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
 } from "ionicons/icons"
+import RemedeLogo from "@/components/RemedeLogo.vue"
 </script>
 
 <script lang="ts">
@@ -152,13 +152,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.main-logo {
-  max-height: 1.2em;
-  object-fit: contain;
-  width: max-content;
-  object-position: left;
-}
-
 ion-menu-toggle {
   cursor: pointer;
 }
