@@ -40,7 +40,7 @@
       </ion-refresher>
 
       <ion-note class="ion-padding ion-float-end" v-if="failed">Fonctionne seulement avec une connexion internet !</ion-note>
-      <ion-list inset v-for="sheet in sheets" :key="sheet.slug">
+      <ion-list class="fullwidth" inset v-for="sheet in sheets" :key="sheet.slug">
         <ion-item @click="goTo(`/fiches/${sheet.slug}`)" button color="light" lines="none">
           <ion-label>
             <h1>{{ sheet.nom }}</h1>

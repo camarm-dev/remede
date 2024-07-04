@@ -20,7 +20,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-list inset class="ion-bg-light">
+      <ion-list inset class="ion-bg-light corrector">
         <ion-item color="light" class="no-border border-bottom">
           <ion-label slot="start">
             <p>Texte <span v-if="locked">Corrigé</span></p>
@@ -41,7 +41,7 @@
           <ion-textarea v-if="!locked" auto-grow class="no-border ion-padding-bottom" :maxlength="5000" counter :value="content"
                         @ionInput="content = $event.detail.value as string"
                         placeholder="Écrivez votre texte ici, nous le corrigerons."></ion-textarea>
-          <div v-else class="content ion-padding-bottom pd-t">
+          <div v-else class="content correction-content ion-padding-bottom pd-t">
             <span :key="`segment-${explainSegments.indexOf(segment)}`" v-for="segment in explainSegments" :class="segment.correction ? 'correction': 'sentencePart'">
               <span v-if="segment.correction">
                 <ion-text :id="`correction-${corrections.indexOf(segment.correction)}`" :class="`error ${segment.correction.rule.category.id} ${segment.ignored ? 'ignored': ''}`">{{ segment.text }}</ion-text>
@@ -128,7 +128,7 @@
           <ion-note v-if="ignoredErrors.length == 0">
             Aucunes exceptions ajoutées.
           </ion-note>
-          <ion-list inset>
+          <ion-list class="fullwidth" inset>
             <ion-item v-for="error in ignoredErrors" color="light" :key="error.text">
               <ion-label>
                 <h2>"{{ error.text }}"</h2>
