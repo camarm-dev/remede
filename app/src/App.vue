@@ -112,6 +112,7 @@ export default defineComponent({
         this.router.push(url.replaceAll("remede:/", ""))
       }
     })
+    this.setLocale()
     window.addEventListener("keydown", this.handleKeyDown)
   },
   data() {
@@ -123,6 +124,14 @@ export default defineComponent({
     }
   },
   methods: {
+    async setLocale() {
+      const locale = localStorage.getItem("interfaceLanguage") || await this.getDeviceLocale()
+      this.$i18n.locale = locale;
+    },
+    async getDeviceLocale() {
+      const locale = await Device.getLanguageCode()
+      return locale.value.includes('-') ? locale.value.split('-')[0]: locale.value
+    },
     async handleFastSearch(query: string) {
       if (await wordExists(query)) {
         this.goTo(`/dictionnaire/${query}`)
