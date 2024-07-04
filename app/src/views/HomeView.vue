@@ -23,7 +23,7 @@
           </ion-item>
           <ion-item v-if="!loading && query != ''" @click="goTo(`/search/${query}`)" :detail-icon="arrowForward" class="ion-no-padding" button>
             <ion-label>
-              {{ $('home.seeAll') }}
+              {{ $t('home.seeAll') }}
             </ion-label>
           </ion-item>
         </ion-list>
@@ -33,7 +33,7 @@
           <ion-item color="light" class="border-radius" lines="none" button @click="report()">
             <ion-label>
               <p>{{ $t('home.askToAddAWord') }}</p>
-              <h2>{{ $('home.report') }} "{{ query }}"</h2>
+              <h2>{{ $t('home.report') }} "{{ query }}"</h2>
             </ion-label>
           </ion-item>
         </ion-list>
