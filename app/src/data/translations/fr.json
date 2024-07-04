@@ -17,6 +17,9 @@
   "errors": {
     "cannotReadWord": "Impossible de lire le mot: {error}"
   },
+  "bookmark": {
+    "addWordsToBookmarks": "Ajoutez des mots à vos marques pages"
+  },
   "home": {
     "wordOfDay": "Mot du jour",
     "randomWord": "Mot au hasard",

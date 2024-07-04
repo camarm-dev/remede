@@ -11,7 +11,7 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Marques pages</ion-title>
+          <ion-title size="large">{{ $t('bookmarks') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -24,7 +24,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-note v-if="starredWords.length === 0" class="ion-padding">Ajoutez des mots à vos marques pages</ion-note>
+      <ion-note v-if="starredWords.length === 0" class="ion-padding">{{ $t('bookmark.addWordsToBookmarks') }}</ion-note>
 
     </ion-content>
   </ion-page>
