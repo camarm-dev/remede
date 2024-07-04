@@ -14,6 +14,7 @@
   "remedeData": "Données Remède",
   "sources": "Sources",
   "error": "Erreur",
+  "repository": "dépôt Github",
   "errors": {
     "cannotReadWord": "Impossible de lire le mot: {error}"
   },
@@ -51,5 +52,13 @@
     "definitionTitle": "Définition \"{word}\" sur Remède",
     "definitionDescription": "La définition du mot \"{word}\" est sur Remède !",
     "definitionDialogTitle": "Partager la définition"
+  },
+  "aboutPage": {
+    "description": "Remède est un dictionnaire français libre, construit sur plusieurs services tiers.",
+    "moreInformationCredits": "Pour plus d'informations concernant la provenance des données de nos dictionnaires et leur construction, visitez la documentation sur notre",
+    "contributors": "Contributeurs",
+    "donors": "Donateurs",
+    "contributorsAndDonors": "Contributeurs & donateurs",
+    "maintainer": "Mainteneur"
   }
 }

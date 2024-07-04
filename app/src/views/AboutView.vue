@@ -14,17 +14,17 @@
       <br>
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">À propos</ion-title>
+          <ion-title size="large">{{ $t('about') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content class="ion-padding">
         <p>
-          Remède est un dictionnaire français libre, construit sur plusieurs services tiers.
+          {{ $t('aboutPage.description') }}
         </p>
         <p>
-          Pour plus d'informations concernant la provenance des données de nos dictionnaires et leur construction, visitez la documentation sur notre
-          <a href="https://github.com/camarm-dev/remede/blob/main/docs/FR.md#donn%C3%A9es" target="_blank">dépôt Github</a>.
+          {{ $t('aboutPage.moreInformationCredits') }}
+          <a href="https://github.com/camarm-dev/remede/blob/main/docs/FR.md#donn%C3%A9es" target="_blank">{{ $t('repository') }}</a>.
         </p>
         <ion-list class="border-radius">
           <ion-item color="light" button href="https://github.com/camarm-dev/remede" target="_blank">
@@ -36,7 +36,7 @@
           <ion-item color="light" button id="open-contributors-screen">
             <ion-icon color="medium" slot="start" :icon="heartOutline"/>
             <ion-label>
-              Contributeurs & donateurs
+              {{ $t('aboutPage.contributorsAndDonors') }}
             </ion-label>
           </ion-item>
           <ion-item lines="none" button href="https://ko-fi.com/camarm" target="_blank" :detail="false" class="buy-me-a-coffee">
@@ -51,7 +51,7 @@
         <ion-modal trigger="open-contributors-screen" :initial-breakpoint="0.6" :breakpoints="[0, 0.6, 0.75, 0.99]">
           <ion-content class="ion-padding">
             <div class="list-title no-margin ion-padding-bottom">
-              Contributeurs
+              {{ $t('aboutPage.contributors') }}
             </div>
             <ion-list class="border-radius">
               <ion-item button :detail-icon="atOutline" href="https://github.com/camarm-dev" target="_blank" color="light">
@@ -60,7 +60,7 @@
                 </ion-avatar>
                 <ion-label>
                   <h2>camarm</h2>
-                  <p>Fondateur</p>
+                  <p>{{ $t('aboutPage.maintainer') }}</p>
                 </ion-label>
               </ion-item>
               <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/labsesoftware" target="_blank" color="light">
@@ -69,7 +69,7 @@
                 </ion-avatar>
                 <ion-label>
                   <h2>Labse Software</h2>
-                  <p>Contributeurs</p>
+                  <p>{{ $t('aboutPage.contributors') }}</p>
                 </ion-label>
               </ion-item>
             </ion-list>
@@ -78,19 +78,19 @@
 <!--            </div>-->
 <!--            <ion-note>Pas encore de donateurs, soyez le premier !</ion-note>-->
             <div class="list-title no-margin ion-padding-bottom">
-              Crédits
+              {{ $t('credits') }}
             </div>
             <ion-list class="border-radius">
               <ion-item color="light" button href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">
                 <ion-icon :icon="documentAttachOutline" slot="start" color="medium"/>
                 <ion-label>
-                  Licence
+                  {{ $t('license') }}
                 </ion-label>
               </ion-item>
               <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
                 <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
                 <ion-label>
-                  Données Remède
+                  {{ $t('remedeData') }}
                 </ion-label>
               </ion-item>
             </ion-list>
