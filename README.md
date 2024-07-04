@@ -32,6 +32,8 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 ## Current: 1.3.0-beta — Phenomenal Feather
 
 La version `1.3.0`, nom de code `Phenomenal Feather` inclue les nouvelles fonctionnalités suivantes :
+- [x] Application traduite en anglais
+- [ ] Nouvelle structure de données
 - [ ] Applications de bureau
 - [ ] **Base révisée** avec +900 000 mots !
 - [ ] Téléchargeable sur le **Play Store** !
