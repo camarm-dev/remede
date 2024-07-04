@@ -186,7 +186,7 @@ export default {
     },
     async handleLangChangement(lang: string) {
       if (lang == "system") {
-        localStorage.deleteItem("interfaceLanguage")
+        localStorage.removeItem("interfaceLanguage")
         this.$i18n.locale = await getDeviceLocale()
         return
       }
