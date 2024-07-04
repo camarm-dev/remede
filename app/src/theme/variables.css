@@ -34,6 +34,10 @@ http://ionicframework.com/docs/theming/ */
     animation: .5s ease-in-out spawn;
   }
 
+  .radius-0 {
+    border-radius: 0;
+  }
+
   ion-list.list-inset:not(.search-results,.corrector,.fullwidth) {
     scale: 1.02;
     margin-inline-start: calc(var(--margin-start, 16px) + 1em) !important;
