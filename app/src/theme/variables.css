@@ -25,6 +25,15 @@ http://ionicframework.com/docs/theming/ */
   .mt {
     margin-top: 2.5em !important;
   }
+
+  .no-desktop-swiper .swiper-slide {
+    max-width: 30% !important;
+    margin-right: 1em;
+  }
+
+  .no-desktop-swiper .swiper-pagination {
+    display: none;
+  }
 }
 
 @font-face {

@@ -75,7 +75,7 @@
         Pour vous
       </div>
       <ion-list inset>
-        <swiper :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
+        <swiper class="no-desktop-swiper" :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
           <swiper-slide v-if="hasDictionaryUpdate" @click="goTo('/parametres')">
             <img class="new-base" :src="newBaseIllustration" alt="Mettez à jour votre dictionnaire !"/>
           </swiper-slide>
