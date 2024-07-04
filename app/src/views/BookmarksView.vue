@@ -69,15 +69,6 @@ export default {
     this.refresh()
   },
   methods: {
-    handleThemeChangement(theme: string) {
-      localStorage.setItem("userTheme", theme)
-      document.body.classList.remove("dark")
-      document.body.classList.remove("light")
-      document.body.classList.add(theme)
-    },
-    getCurrentTheme() {
-      return localStorage.getItem("userTheme") || "light"
-    },
     refresh() {
       this.starredWords = getStarredWords()
     }
