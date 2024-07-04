@@ -8,7 +8,8 @@ import {
   IonSearchbar,
   IonToolbar,
   IonLabel,
-  IonBackButton
+  IonBackButton,
+  IonList
 } from "@ionic/vue"
 </script>
 
