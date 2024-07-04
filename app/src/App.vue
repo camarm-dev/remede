@@ -7,7 +7,7 @@
             <ion-list>
               <RemedeLogo class="ion-margin-start"/>
               <ion-note>Le dictionnaire.</ion-note>
-              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="goTo(`/search/${$event.target.value}`)" v-if="!isPage('/dictionnaire')" class="hidden-mobile" placeholder="Rechercher un mot..."></ion-searchbar>
+              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="goTo(`/search/${$event.target.value}`)" :class="`hidden-mobile ${isPage('/dictionnaire') ? 'hidden': ''}`" placeholder="Rechercher un mot..."></ion-searchbar>
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">

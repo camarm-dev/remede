@@ -3,6 +3,21 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 
+@keyframes spawn {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    height: auto;
+    opacity: 1;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
 @media (max-width: 1000px) {
   .hidden-mobile {
     display: none;
@@ -13,6 +28,12 @@ http://ionicframework.com/docs/theming/ */
   .hidden-desktop {
     display: none;
   }
+
+  .hidden-mobile {
+    transition: .5s ease-in-out;
+    animation: .5s ease-in-out spawn;
+  }
+
 
   ion-menu {
     width: max-content;
