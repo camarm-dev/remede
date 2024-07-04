@@ -10,13 +10,14 @@
   </svg>
 </template>
 <style scoped>
-.dark svg {
+svg {
   color: var(--ion-text-color)
 }
 .main-logo {
   max-height: 1.2em;
   object-fit: contain;
   width: max-content;
+  max-width: 5.51734375em;
   object-position: left;
 }
 </style>
