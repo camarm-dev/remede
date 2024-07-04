@@ -7,6 +7,16 @@
   "bookmarks": "Marques page",
   "settings": "Paramètres",
   "about": "À propos",
+  "back": "Retour",
+  "confirm": "Confirmer",
+  "credits": "Crédits",
+  "license": "Licence",
+  "remedeData": "Données Remède",
+  "sources": "Sources",
+  "error": "Erreur",
+  "errors": {
+    "cannotReadWord": "Impossible de lire le mot: {error}"
+  },
   "home": {
     "wordOfDay": "Mot du jour",
     "randomWord": "Mot au hasard",
@@ -16,6 +26,27 @@
     "askToAddAWord": "Demander à ajouter un mot",
     "report": "Reporter",
     "searchWord": "Rechercher un mot...",
-    "changelog": "Notes de changement"
+    "changelog": "Notes de changement",
+    "etymologies": "Étymologies"
+  },
+  "definition": {
+    "backToApp": "Retour à l'application",
+    "definition": "Définition",
+    "synonyms": "Synonymes",
+    "noSynonyms": "Pas de synonymes référencés",
+    "antonyms": "Antonymes",
+    "noAntonyms": "Pas d'antonymes référencés",
+    "conjugation": "Conjugaison",
+    "conjugationMode": "Mode",
+    "conjugationTense": "Temps",
+    "wordNotFound": "Ce mot n'a pas été trouvé dans le dictionnaire Remède...",
+    "examples": "Exemples",
+    "openConjugation": "Ouvrir la conjugaison",
+    "openRhymesDictionary": "Ouvrir le dictionnaire des rimes"
+  },
+  "share": {
+    "definitionTitle": "Définition \"{word}\" sur Remède",
+    "definitionDescription": "La définition du mot \"{word}\" est sur Remède !",
+    "definitionDialogTitle": "Partager la définition"
   }
 }

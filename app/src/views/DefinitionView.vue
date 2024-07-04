@@ -53,9 +53,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <ion-buttons slot="start">
           <ion-button @click="quitApp()" v-if="closeApp" size="small">
             <ion-icon :icon="chevronBackOutline"/>
-            Retour à l'application
+            {{ $t('definition.backToApp') }}
           </ion-button>
-          <ion-back-button v-else text="Retour" default-href="/dictionnaire"></ion-back-button>
+          <ion-back-button v-else :text="$t('back')" default-href="/dictionnaire"></ion-back-button>
         </ion-buttons>
         <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
@@ -88,9 +88,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </ion-toolbar>
         <ion-toolbar>
           <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value as string; refreshListeners()">
-            <ion-segment-button value="def">Définition</ion-segment-button>
-            <ion-segment-button value="syn">Synonymes</ion-segment-button>
-            <ion-segment-button value="ant">Antonymes</ion-segment-button>
+            <ion-segment-button value="def">{{ $t('definition.definition') }}</ion-segment-button>
+            <ion-segment-button value="syn">{{ $t('definition.synonyms') }}</ion-segment-button>
+            <ion-segment-button value="ant">{{ $t('definition.antonyms') }}</ion-segment-button>
           </ion-segment>
         </ion-toolbar>
       </ion-header>
@@ -100,7 +100,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       </div>
       <div v-if="notFound" class="ion-padding">
         <ion-note>
-          Ce mot n'a pas été trouvé dans le dictionnaire Remède...
+          {{ $t('definition.wordNotFound') }}
         </ion-note>
       </div>
       <div v-if="tab == 'def'" class="tab-content">
@@ -115,7 +115,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="id.examples[document.definitions.indexOf(def)]">
               <div class="ion-padding examples">
                 <h5>
-                  Exemples
+                  {{ $t('definition.examples') }}
                   <span class="ion-color-medium">{{ mot }}</span>,
                   <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
                   <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
@@ -141,7 +141,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </header>
           <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
             <ion-item lines="none" color="light" button @click="tab = 'conj'">
-              Ouvrir la conjugaison
+              {{ $t('definition.openConjugation') }}
             </ion-item>
           </ion-list>
           <div class="content">
@@ -157,7 +157,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </div>
         <div class="definition">
           <header v-if="document.etymologies.length > 0">
-            <h4>Étymologies</h4>
+            <h4>{{ $t('definition.etymologies') }}</h4>
             <hr>
           </header>
           <div class="content">
@@ -170,7 +170,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       <div v-if="tab == 'syn'" class="tab-content">
         <div class="definition">
           <header>
-            <h4>Synonymes</h4>
+            <h4>{{ $t('definition.synonyms') }}</h4>
             <hr>
           </header>
         </div>
@@ -181,12 +181,12 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </a>
           </li>
         </ul>
-        <ion-note v-if="document.synonymes.length == 0">Pas de synonymes référencés</ion-note>
+        <ion-note v-if="document.synonymes.length == 0">{{ $t('definition.noSynonyms') }}</ion-note>
       </div>
       <div v-if="tab == 'ant'" class="tab-content">
         <div class="definition">
           <header>
-            <h4>Antonymes</h4>
+            <h4>{{ $t('definition.antonyms') }}</h4>
             <hr>
           </header>
         </div>
@@ -197,12 +197,12 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </a>
           </li>
         </ul>
-        <ion-note v-if="document.antonymes.length == 0">Pas d'antonymes référencés</ion-note>
+        <ion-note v-if="document.antonymes.length == 0">{{ $t('definition.noAntonyms') }}</ion-note>
       </div>
       <div v-if="tab == 'conj'" class="tab-content">
         <div class="definition">
           <header>
-            <h4>Conjugaison</h4>
+            <h4>{{ $t('definition.conjugation') }}</h4>
             <hr>
           </header>
         </div>
@@ -210,10 +210,10 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <ion-list inset class="border-radius border">
           <ion-item color="light" lines="full">
             <ion-label slot="start">
-              <p>Mode</p>
+              <p>{{ $t('definition.conjugationMode') }}</p>
             </ion-label>
             <ion-label slot="end">
-              <p>Temps</p>
+              <p>{{ $t('definition.conjugationTense') }}</p>
             </ion-label>
           </ion-item>
           <ion-item color="light" lines="full">
@@ -240,51 +240,51 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       <ion-modal ref="detailsModal" :trigger="id.modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
         <ion-content class="ion-padding">
           <div class="list-title no-margin ion-padding-bottom">
-            Dictionnaire
+            {{ $t('dictionary') }}
           </div>
           <ion-list class="border-radius">
             <ion-item button color="primary" lines="none" @click="goTo(`/rimes/${mot}`); closeModal()">
-              Ouvrir le dictionnaire des rimes
+              {{ $t('definition.openRhymesDictionary') }}
             </ion-item>
           </ion-list>
           <div class="list-title no-margin ion-padding-bottom">
-            Crédits
+            {{ $t('credits') }}
           </div>
           <ion-list class="border-radius">
             <ion-item color="light" button href="https://github.com/camarm-dev/remede/blob/main/LICENSE" target="_blank">
               <ion-icon :icon="documentAttachOutline" slot="start" color="medium"/>
               <ion-label>
-                Licence
+                {{ $t('license') }}
               </ion-label>
             </ion-item>
             <ion-item lines="none" color="light" button href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
               <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
               <ion-label>
-                Données Remède
+                {{ $t('remedeData') }}
               </ion-label>
             </ion-item>
           </ion-list>
           <div class="list-title no-margin ion-padding-bottom">
-            Sources
+            {{ $t('sources') }}
           </div>
           <ion-list class="border-radius">
             <ion-accordion-group>
               <ion-accordion value="first">
                 <ion-item button :detail-icon="chevronDownOutline" color="light" slot="header">
-                  <ion-label>Sources</ion-label>
+                  <ion-label>{{ $t('sources') }}</ion-label>
                 </ion-item>
                 <div slot="content" class="accordion-content">
                   <ion-item @click="open(document.credits.url)" button lines="inset" :detail-icon="link">
                     {{ document.credits.name }}
                   </ion-item>
                   <ion-item v-if="document.synonymes.length > 0" @click="open(`http://synonymo.fr/synonyme/${mot}`)" button lines="inset" :detail-icon="link">
-                    Synonymes
+                    {{ $t('definition.synonyms') }}
                   </ion-item>
                   <ion-item v-if="document.antonymes.length > 0" @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button lines="inset" :detail-icon="link">
-                    Antonymes
+                    {{ $t('definition.antonyms') }}
                   </ion-item>
                   <ion-item v-if="Object.keys(document.conjugaisons).length > 0" @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button lines="none" :detail-icon="link">
-                    Conjugaison
+                    {{ $t('definition.conjugation') }}
                   </ion-item>
                 </div>
               </ion-accordion>
@@ -407,10 +407,10 @@ export default defineComponent({
     async shareDefinition() {
       try {
         await Share.share({
-          title: `Définition "${this.mot}" sur Remède`,
-          text: `La définition du mot "${this.mot}" est sur Remède !`,
+          title: this.$t('share.definitionTitle', { word: this.mot }),
+          text: this.$t('share.definitionDescription', { word: this.mot }),
           url: `https://remede-app.camarm.fr/dictionnaire/${this.mot}`,
-          dialogTitle: "Partager la définition",
+          dialogTitle: this.$t('share.definitionDialogTitle'),
         })
       } catch {
         console.error("Failed to share.")
@@ -441,8 +441,8 @@ export default defineComponent({
         this.audioLoading = false
       }).catch(async e => {
         const toast = await toastController.create({
-          header: "Erreur",
-          message: `Impossible de lire le mot: ${e}`,
+          header: this.$t('error'),
+          message: this.$t('errors.cannotReadWord', { error: e }),
           color: "danger",
           duration: 3000
         })
