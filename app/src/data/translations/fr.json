@@ -53,7 +53,10 @@
   "share": {
     "definitionTitle": "Définition \"{word}\" sur Remède",
     "definitionDescription": "La définition du mot \"{word}\" est sur Remède !",
-    "definitionDialogTitle": "Partager la définition"
+    "definitionDialogTitle": "Partager la définition",
+    "sheetTitle": "\"{name}\" sur Remède",
+    "sheetDescription": "La fiche de français \"{name}\" est sur Remède !",
+    "sheetDialogTitle": "Partager la fiche"
   },
   "aboutPage": {
     "description": "Remède est un dictionnaire français libre, construit sur plusieurs services tiers.",
@@ -82,5 +85,10 @@
     "noExceptions": "Aucunes exceptions ajoutées.",
     "correctionPoweredBy": "Correction grâce à",
     "hostedByRemede": "hébergé par Remède"
+  },
+  "sheetPage": {
+    "attributionsTo": "Attributions à",
+    "sheetNotFound": "La fiche n'a pas été trouvée !",
+    "noSheet": "Pas de fiche"
   }
 }

@@ -3,7 +3,7 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button text="Retour" default-href="/fiches"></ion-back-button>
+          <ion-back-button :text="$t('back')" default-href="/fiches"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ fiche.nom }}</ion-title>
         <ion-buttons slot="end">
@@ -32,8 +32,8 @@
       <ion-alert
           class="alert"
           trigger="present-credits"
-          header="Crédits"
-          :sub-header="`Attributions à ${fiche.credits.attributions}`"
+          :header="$t('credits')"
+          :sub-header="`${$t('sheetPage.attributionsTo')} ${fiche.credits.attributions}`"
           :message="fiche.credits.text">
 
       </ion-alert>
@@ -80,8 +80,8 @@ export default defineComponent({
     return {
       fiche: {
         contenu: "",
-        description: "La fiche n'a pas été trouvée !",
-        nom: "Pas de fiche",
+        description: this.$t('sheetPage.sheetNotFound'),
+        nom: this.$t('sheetPage.noSheet'),
         tags: [],
         slug: "",
         credits: {
@@ -101,13 +101,13 @@ export default defineComponent({
     async shareSheet() {
       try {
         await Share.share({
-          title: `"${this.fiche.nom}" sur Remède`,
-          text: `La fiche de français "${this.fiche.nom}" est sur Remède !`,
+          title: this.$t('share.sheetTitle', { name: this.fiche.nom }),
+          text: this.$t('share.sheetDescription', { name: this.fiche.nom }),
           url: `https://remede-app.camarm.fr/fiches/${this.fiche.slug}`,
-          dialogTitle: "Partager la fiche",
+          dialogTitle: this.$t('share.sheetDialogTitle')
         })
       } catch {
-        alert("Fonctionnalité non supportée par votre navigateur")
+        console.error('Failed to share')
       }
     },
     getTagColor(tag: string) {
