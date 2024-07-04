@@ -118,7 +118,8 @@
     "searchErrored" : "La recherche dans le dictionnaire des rimes a échouée.",
     "syllablesMinimumAbbr": "Syllabes min.",
     "syllablesMaximumAbbr": "Syllabes max.",
-    "searchRhymesAbove": "Recherchez des rimes ci-dessus !"
+    "searchRhymesAbove": "Recherchez des rimes ci-dessus !",
+    "rhymeNature": "Nature des rimes"
   },
   "nature": {
     "name": "Nom",
