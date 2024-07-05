@@ -10,9 +10,6 @@ on:
 
 jobs:
   publish-tauri:
-    defaults:
-      run:
-        working-directory: ./app
     permissions:
       contents: write
     strategy:
@@ -32,7 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies (ubuntu only)
-        working-directory: ./app
         if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
         run: |
           sudo apt-get update
@@ -44,8 +40,9 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 18
           cache: 'npm' # Set this to npm, yarn or pnpm.
+          cache-dependency-path: app/package-lock.json
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
