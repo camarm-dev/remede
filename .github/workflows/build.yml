@@ -6,8 +6,6 @@ on:
       - main
       - dev
 
-
-
 jobs:
   publish-tauri:
     permissions:
@@ -65,9 +63,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseName: '__VERSION__'
+          releaseBody: '## `__VERSION__`: Unknown Codename'
           releaseDraft: true
           prerelease: false
           projectPath: ./app
           args: ${{ matrix.args }}
+
+      - name: Copy DEB binary
+        if: matrix.platform == 'ubuntu-22.04'
+        run: cp /home/runner/work/remede/remede/app/src-tauri/target/release/bundle/deb /home/runner/work/remede/remede/builds/remede.deb
+
+      - name: Copy x64 DMG binary
+        if: matrix.platform == 'macos-latest' && matrix.args == '--target x86_64-apple-darwin'
+        run: |
+          cp /Users/runner/work/remede/remede/app/src-tauri/target/x86_64-apple-darwin/release/bundle/macos/remede.app  /Users/runner/work/remede/remede/builds/remede.x64.app
+          cp /Users/runner/work/remede/remede/app/src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg  /Users/runner/work/remede/remede/builds/remede.x64.dmg
+
+      - name: Copy aarch64 DMG binary
+        if: matrix.platform == 'macos-latest' && matrix.args == '--target aarch64-apple-darwin'
+        run: |
+          cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app  /Users/runner/work/remede/remede/builds/remede.aarch64.app
+          cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg  /Users/runner/work/remede/remede/builds/remede.aarch64.dmg
+
+      - name: Commit binaries
+        run: |
+          git add builds/*
+          git commit -m "chore(binaries): added latest Remède binaries"
+          git push
