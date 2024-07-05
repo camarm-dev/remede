@@ -12,6 +12,9 @@
   "cancel": "Annuler",
   "apply": "Appliquer",
   "confirm": "Confirmer",
+  "continue": "Continuer",
+  "start": "Commencer",
+  "letsgo": "C'est parti",
   "delete": "Supprimer",
   "close": "Fermer",
   "credits": "Crédits",
@@ -154,5 +157,18 @@
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",
     "onlyWorkWithInternet": "Fonctionne seulement avec une connexion internet !"
+  },
+  "landingScreen": {
+    "welcomeTo": "Bienvenue sur",
+    "yourNewFavoriteDictionary": "Votre nouveau dictionnaire préféré !",
+    "oneAppAllYour": "Une application, tous vos",
+    "words": "mots",
+    "functionalities": "+ 900 000 mots, mais aussi des rimes, des exemples, un correcteur et plus encore... Remède est bien plus qu'un dictionnaire !",
+    "butAboveAll": "Mais surtout ...",
+    "openSource": "open source",
+    "openSourceDescription": "Et oui ! Remède grandi avec sa communauté et est 100% open source !",
+    "readyToStart": "Prêts à entrer dans l'",
+    "adventure": "aventure",
+    "tagline": "Guérir vos maux face au français, c'est possible dès maintenant avec Remède !"
   }
 }

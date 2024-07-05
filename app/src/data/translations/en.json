@@ -12,6 +12,9 @@
   "cancel": "Cancel",
   "apply": "Apply",
   "confirm": "Confirm",
+  "continue": "Continue",
+  "start": "Start",
+  "letsgo": "Let's go",
   "delete": "Delete",
   "close": "Close",
   "credits": "Credits",
@@ -154,5 +157,18 @@
   "sheetsPage": {
     "placeholder": "Search a sheet",
     "onlyWorkWithInternet": "Only works with an internet connection !"
+  },
+  "landingScreen": {
+    "welcomeTo": "Welcome to",
+    "yourNewFavoriteDictionary": "Your new favorite dictionary !",
+    "oneAppAllYour": "One application, all your",
+    "words": "words",
+    "functionalities": "+ 900 000 word, but also rhymes, examples, a corrector and more... Remède is much more than a dictionary !",
+    "butAboveAll": "But above all ...",
+    "openSource": "open source",
+    "openSourceDescription": "Yes ! Remède is growing with his community and 100% open source !",
+    "readyToStart": "Ready to enter the ",
+    "adventure": "adventure",
+    "tagline": "Cure your French ills now with Remède !"
   }
 }
