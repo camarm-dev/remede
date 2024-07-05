@@ -76,7 +76,7 @@ jobs:
 
       - name: Copy DEB binary
         if: matrix.platform == 'ubuntu-22.04'
-        run: cp /home/runner/work/remede/remede/app/src-tauri/target/release/bundle/deb /home/runner/work/remede/remede/builds/remede.deb
+        run: cp /home/runner/work/remede/remede/app/src-tauri/target/release/bundle/deb/*.deb /home/runner/work/remede/remede/builds/remede.deb
 
       - name: Copy x64 DMG binary
         if: matrix.platform == 'macos-latest' && matrix.args == '--target x86_64-apple-darwin'
