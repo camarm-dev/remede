@@ -26,12 +26,12 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
+      - uses: actions/checkout@v4
       - name: Configure Windows git.exe
         if: matrix.platform == 'windows-latest'
         working-directory: app
         run: git config core.protectNTFS false
 
-      - uses: actions/checkout@v4
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
         run: |
@@ -104,8 +104,8 @@ jobs:
 
       - name: Commit binaries
         run: |
+          git config pull.rebase true
           git add builds/*
           git commit -m "chore(binaries): added latest Remède binaries"
           git pull
-          git fetch
           git push
