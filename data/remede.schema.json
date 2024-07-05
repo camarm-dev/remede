@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://remede.camarm.fr/schema.json",
+  "title": "Remède word document.",
+  "description": "A Remède word document schema. This document represent all the word metadata.",
+  "type": "object",
+  "properties": {
+    "synonyms": {
+      "description": "The synonyms of the word.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "properties": {}
+      }
+    },
+    "antonyms": {
+      "description": "The antonyms of the word.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "properties": {}
+      }
+    },
+    "etymologies": {
+      "description": "The etymologies of the word.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "properties": {}
+      }
+    },
+    "definitions": {
+      "description": "The word's definitions.",
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "gender",
+          "nature",
+          "explanations",
+          "examples",
+          "plurals"
+        ],
+        "properties": {
+          "gender": {
+            "description": "Word gender for this definition.",
+            "type": "string",
+            "minLength": 1
+          },
+          "nature": {
+            "description": "Word nature for this definition.",
+            "type": "string",
+            "minLength": 1
+          },
+          "explanations": {
+            "description": "Different explanations of the word.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "properties": {}
+            }
+          },
+          "examples": {
+            "description": "Different examples usages of the word.",
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 0,
+            "items": {
+              "required": [
+                "content",
+                "sources"
+              ],
+              "properties": {
+                "content": {
+                  "description": "The example content.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sources": {
+                  "description": "The example source.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "plurals": {
+            "description": "Plurals orthography of the word.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "properties": {}
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids",
+      "items": {
+        "minLength": 1,
+        "type": "string",
+        "properties": {}
+      }
+    },
+    "phoneme": {
+      "type": "string",
+      "description": "The word IPS notation.",
+      "minLength": 1
+    },
+    "conjugations": {
+      "type": "object",
+      "description": "The word's conjugations if it is a verb.",
+      "properties": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      }
+    }
+  },
+  "required": [
+    "synonyms",
+    "antonyms",
+    "etymologies",
+    "definitions",
+    "sources",
+    "phoneme",
+    "conjugations"
+  ]
+}
