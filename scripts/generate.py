@@ -9,7 +9,7 @@ import requests
 from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words
 from scripts.utils.dictionary_database import RemedeDatabase
 from scripts.utils.sanitize import sanitize_word
-from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, count_syllables
+from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, count_syllables, get_word_stats
 
 modes_conjugation_subjects = {
     "Participe_Présent": "(en)",
@@ -94,7 +94,8 @@ def remedize(word_list: list):
         if not document:
             errored += 1
         # TODO nature
-        database.insert(word, sanitize_word(word), ipa, "", count_syllables(ipa), )
+        elidable, feminine, syllables = get_word_stats(word, ipa)
+        database.insert(word, sanitize_word(word), ipa, "", syllables, elidable, feminine, document)
         print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs")
 
 

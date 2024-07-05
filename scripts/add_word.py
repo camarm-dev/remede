@@ -4,6 +4,7 @@ import runpy
 import sqlite3
 import sys
 
+from scripts.utils.dictionary_database import RemedeDatabase
 from scripts.utils.sanitize import sanitize_word
 
 
@@ -70,19 +71,13 @@ if __name__ == '__main__':
             document = get_word_document(word, phoneme)
             print("Fait.")
 
-            print("- Ajout du document aux bases JSON")
-            add_to_json(word, document)
+            print("- Insertion du document Remède...")
+            database.insert(word, phoneme)
             print("Fait.")
 
-            print("- Ajout du document à la base Sqlite")
-            insert_document(document, word)
-            print("Fait.")
-
-            print("- Mise à jour de l'index...")
-            cursor.execute("INSERT INTO wordlist VALUES (?,?)", (word, sanitize_word(word)))
-            print("Fait.")
-
-
+        print("- Sauvegarde de la base de données...")
+        database.save()
+        print("Fait.")
         print("- Génération des ressources...")
         runpy.run_module('pre_generate_ressources', run_name='__main__')
         print("Fait.")

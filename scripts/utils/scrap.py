@@ -24,6 +24,7 @@ def get_word_stats(word: str, phoneme: str):
     :param phoneme: phoneme of word
     :return: Elidable, Feminine, Syllable count
     """
+    # TODO find with drime database
     return False, phoneme[-1] == 'e', count_syllables(word.lower())
 
 
