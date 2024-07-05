@@ -62,9 +62,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
+          tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: '__VERSION__'
-          releaseBody: '## `__VERSION__`: Unknown Codename'
+          releaseBody: '## `__VERSION__`: Unknown Codename
+          Quick description...
+          ## Associated issues
+          - [ ]
+          '
           releaseDraft: true
           prerelease: false
           projectPath: ./app
@@ -77,14 +81,20 @@ jobs:
       - name: Copy x64 DMG binary
         if: matrix.platform == 'macos-latest' && matrix.args == '--target x86_64-apple-darwin'
         run: |
-          cp /Users/runner/work/remede/remede/app/src-tauri/target/x86_64-apple-darwin/release/bundle/macos/remede.app  /Users/runner/work/remede/remede/builds/remede.x64.app
+          cp /Users/runner/work/remede/remede/app/src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app.tar.gz  /Users/runner/work/remede/remede/builds/remede.x64.app.tar.gz
           cp /Users/runner/work/remede/remede/app/src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg  /Users/runner/work/remede/remede/builds/remede.x64.dmg
 
       - name: Copy aarch64 DMG binary
         if: matrix.platform == 'macos-latest' && matrix.args == '--target aarch64-apple-darwin'
         run: |
-          cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app  /Users/runner/work/remede/remede/builds/remede.aarch64.app
+          cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app.tar.gz  /Users/runner/work/remede/remede/builds/remede.aarch64.app.tar.gz
           cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg  /Users/runner/work/remede/remede/builds/remede.aarch64.dmg
+
+      - name: Copy MSI binary
+        if: matrix.platform == 'windows-latest'
+        run: |
+          Copy-Item help
+        # Copy-Item -Path "C:\TEMP\PS\DossierA\*" -Destination "C:\TEMP\PS\DossierB\" -Include *.jpg
 
       - name: Commit binaries
         run: |
