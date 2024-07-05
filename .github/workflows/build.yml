@@ -97,10 +97,17 @@ jobs:
           Copy-Item help
         # Copy-Item -Path "C:\TEMP\PS\DossierA\*" -Destination "C:\TEMP\PS\DossierB\" -Include *.jpg
 
-      - name: Commit binaries
+      - name: Commit changes
         run: |
+          git config --local user.name actions-user
+          git config --local user.email "actions@github.com"
           git config pull.rebase true
           git add builds/*
           git commit -m "chore(binaries): added latest Remède binaries"
           git pull
-          git push
+
+      - name: Push changes # push the output folder to your repo
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
