@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Remède custom words",
+  "description": "Remède custom_words.json schema.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "patternProperties": {
+    "^.*$": {
+      "$ref": "./remede.schema.json"
+    },
+    "additionalProperties": false
+  },
+  "additionalProperties": false
+}
