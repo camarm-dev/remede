@@ -20,10 +20,11 @@
       </div>
       <ion-list inset>
         <ion-item color="light">
+          <ion-icon slot="start" :icon="contrastOutline"/>
           <ion-label>
             <h3>{{ $t('settingsPage.theme') }}</h3>
           </ion-label>
-          <ion-select label="Thème" :value="getCurrentTheme()" :placeholder="$t('settingsPage.lightTheme')" @ionChange="handleThemeChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
+          <ion-select :label="$t('settingsPage.theme')" :value="getCurrentTheme()" :placeholder="$t('settingsPage.lightTheme')" @ionChange="handleThemeChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
             <ion-select-option value="light">{{ $t('settingsPage.lightTheme') }}</ion-select-option>
             <ion-select-option value="dark">{{ $t('settingsPage.darkTheme') }}</ion-select-option>
           </ion-select>
@@ -31,11 +32,12 @@
       </ion-list>
       <ion-list inset>
         <ion-item color="light">
+          <ion-icon slot="start" :icon="languageOutline"/>
           <ion-label>
             <h3>{{ $t('settingsPage.tongue') }}</h3>
           </ion-label>
           <ion-select :label="$t('settingsPage.tongue')" :value="getCurrentLang()" placeholder="System" @ionChange="handleLangChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
-            <ion-select-option v-for="locale in availableLocales" :value="locale" :key="locale">{{ locale }}</ion-select-option>
+            <ion-select-option v-for="locale in availableLocales" :value="locale" :key="locale">{{ getLocaleName(locale) }}</ion-select-option>
             <ion-select-option value="system">System</ion-select-option>
           </ion-select>
         </ion-item>
@@ -125,7 +127,14 @@ import {
   IonNote,
   IonList
 } from "@ionic/vue"
-import {checkmarkCircle, closeCircle, refreshOutline, trashBinOutline} from "ionicons/icons"
+import {
+  checkmarkCircle,
+  closeCircle, contrastOutline,
+  globeOutline,
+  invertModeOutline, languageOutline,
+  refreshOutline,
+  trashBinOutline
+} from "ionicons/icons"
 import {deleteDictionary} from "@/functions/offline"
 </script>
 
@@ -139,6 +148,7 @@ import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
 import {RemedeWordDocument} from "@/functions/types/remede"
 import {getDeviceLocale} from "@/functions/device";
+import locales from "@/functions/locales";
 
 export default {
   data() {
@@ -180,6 +190,9 @@ export default {
       document.body.classList.remove("dark")
       document.body.classList.remove("light")
       document.body.classList.add(theme)
+    },
+    getLocaleName(locale: string) {
+      return locales[locale] || locale
     },
     getCurrentTheme() {
       return localStorage.getItem("userTheme") || "light"
