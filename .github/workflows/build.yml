@@ -100,8 +100,10 @@ jobs:
           Copy-Item help
         # Copy-Item -Path "C:\TEMP\PS\DossierA\*" -Destination "C:\TEMP\PS\DossierB\" -Include *.jpg
 
-      - name: Commit binaries
+      - uses: actions/checkout@v1
+        name: Commit binaries
         run: |
           git add builds/*
           git commit -m "chore(binaries): added latest Remède binaries"
+          git pull
           git push
