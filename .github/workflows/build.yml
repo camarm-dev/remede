@@ -26,6 +26,11 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
+      - name: Configure Windows git.exe
+        if: matrix.platform == 'windows-latest'
+        run: git config core.protectNTFS false
+
+      - uses: actions/checkout@v4
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
         run: |
