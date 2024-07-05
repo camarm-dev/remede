@@ -25,7 +25,6 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
       - name: Configure Windows git.exe
         if: matrix.platform == 'windows-latest'
         run: git config core.protectNTFS false
