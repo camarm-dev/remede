@@ -1,4 +1,4 @@
-name: 'Build Remède native applications'
+name: 'Build Remède desktop applications'
 
 on:
   push:
