@@ -208,7 +208,7 @@ export default {
       openedFromSelection: false,
       textSelectionReadOnly: false,
       availableDialects: availableDialects as string[],
-      selectedDialect: availableDialects.at(0) || this.$i18n.locale
+      selectedDialect: availableDialects.at(0) || locale
     }
   },
   mounted() {
