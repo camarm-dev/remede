@@ -27,6 +27,11 @@
             <p v-else>{{ $t('correctionPage.text')}}</p>
           </ion-label>
           <ion-buttons slot="end">
+            <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale)">
+              <ion-select label="" :value="selectedDialect" @ionChange="selectedDialect = $event.target.value" interface="popover">
+                <ion-select-option v-for="dialect in availableDialects">{{ dialect }}</ion-select-option>
+              </ion-select>
+            </ion-item>
             <ion-button v-if="locked" @click="locked = false" color="primary">
               {{ $t('correctionPage.edit') }}&nbsp;<ion-icon :icon="pencilOutline"/>
             </ion-button>
@@ -163,7 +168,9 @@ import {
   IonList,
   IonNote,
   IonSpinner,
-  IonModal
+  IonModal,
+  IonSelect,
+  IonSelectOption
 } from "@ionic/vue"
 import {
   chevronForwardOutline,
@@ -171,17 +178,24 @@ import {
   pencilOutline,
   sparkles,
   closeOutline,
-  trashOutline, languageOutline, informationCircleOutline, returnUpBackOutline
+  trashOutline,
+  languageOutline,
+  informationCircleOutline,
+  returnUpBackOutline
 } from "ionicons/icons"
+import { hasDialect } from "@/functions/locales";
 </script>
 
 <script lang="ts">
 import { Clipboard } from "@capacitor/clipboard"
 import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
 import SetResult from "@/functions/plugins/setResult"
+import locales from "@/functions/locales";
 
 export default {
   data() {
+    const locale = this.$i18n.locale
+    const availableDialects = locales.dialects[locale] || [] as string[]
     return {
       content: "",
       corrections: [] as LanguageToolCorrection[],
@@ -192,7 +206,9 @@ export default {
       ignoredErrors: [] as any[],
       pageElement: null as any,
       openedFromSelection: false,
-      textSelectionReadOnly: false
+      textSelectionReadOnly: false,
+      availableDialects: availableDialects as string[],
+      selectedDialect: availableDialects.at(0) || this.$i18n.locale
     }
   },
   mounted() {
@@ -260,7 +276,7 @@ export default {
       const url = "https://remede-corrector.camarm.fr/v2/check"
       const body = new FormData()
       body.set("text", this.content)
-      body.set("language", this.$i18n.locale)
+      body.set("language", this.selectedDialect)
       body.set("motherTongue", this.$i18n.locale)
       body.set("allowIncompleteResults", "false")
       body.set("mode", "allButTextLevelOnly")
