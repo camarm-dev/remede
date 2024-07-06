@@ -68,7 +68,7 @@
                     </ion-label>
                     <br>
                     <ion-button :title="suggested.value" size="small" :color="suggested.value == '' ? 'danger': 'primary'" @click="setSegmentAsText(segment, suggested.value); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" :key="`suggestion-${corrections.indexOf(segment.correction)}-${suggested}`" v-for="suggested in segment.correction.replacements">{{ suggested.value == '' ? 'Supprimer': suggested.value }}<br></ion-button>
-                    <ion-button size="small" @click="ignoreError(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="light">Ignorer <ion-icon :icon="closeOutline"/></ion-button>
+                    <ion-button size="small" @click="ignoreError(segment.text, segment.correction); setSegmentAsText(segment, segment.text); closeModal(`correction-${corrections.indexOf(segment.correction)}`)" color="light">{{ $t('ignore') }} <ion-icon :icon="closeOutline"/></ion-button>
                   </ion-content>
                   <ion-content class="ion-padding" v-else>
                     <ion-label>
