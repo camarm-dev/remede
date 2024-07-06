@@ -348,20 +348,22 @@ export default {
 }
 
 .error {
-  text-decoration: underline wavy var(--ion-color-danger);
+  text-decoration: underline;
+  text-decoration-color: var(--ion-color-danger);
+  text-decoration-style: wavy;
   cursor: pointer;
 }
 
 .error.CAT_GRAMMAIRE, .error.TYPOS {
-  text-decoration: underline wavy var(--ion-color-warning);
+  text-decoration-color: var(--ion-color-warning);
 }
 
 .error.CAT_PONCTUATION {
-  text-decoration: underline wavy var(--ion-color-success-shade);
+  text-decoration-color: var(--ion-color-success-shade);
 }
 
 .error.ignored {
-  text-decoration: underline wavy var(--ion-color-medium-shade) !important;
+  text-decoration-color: var(--ion-color-medium-shade) !important;
 }
 
 .correction + .correction {
