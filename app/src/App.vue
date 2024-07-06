@@ -117,8 +117,10 @@ export default defineComponent({
         this.router.push(url.replaceAll("remede:/", ""))
       }
     })
-    this.setLocale()
     window.addEventListener("keydown", this.handleKeyDown)
+  },
+  beforeMount() {
+    this.setLocale()
   },
   data() {
     return {
