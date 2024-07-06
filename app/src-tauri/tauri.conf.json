@@ -16,13 +16,12 @@
     },
     "bundle": {
       "active": true,
-      "appimage": {
-        "bundleMediaFramework": true
-      },
       "deb": {
         "depends": [],
         "files": {
-          "/usr/share/README.md": "../../README.md"
+          "/usr/share/README.md": "../../README.md",
+          "/usr/share/applications/remede.desktop": "./remede.desktop",
+          "/usr/share/metainfo/remede.metainfo.xml":  "./remede.metainfo.xml"
         }
       },
       "externalBin": [],

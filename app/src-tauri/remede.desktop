@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Office;
+Comment=Le dictionnaire libre
+Exec=remede
+Icon=remede
+Name=Remède
+Terminal=false
+Type=Application
