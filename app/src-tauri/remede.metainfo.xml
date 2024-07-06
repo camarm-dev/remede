@@ -10,7 +10,7 @@
     <url type="bugtracker">https://github.com/camarm-dev/remede/issues</url>
     <url type="donation">https://ko-fi.com/camarm</url>
     <url type="homepage">https://remede.camarm.fr</url>
-    <project_license>GPL-3.0-or-later</project_license>
+    <project_license>GPL-3.0</project_license>
     <metadata_license>CC-BY-4.0</metadata_license>
     <summary>The free dictionary</summary>
     <summary xml:lang="fr">Le dictionnaire libre</summary>
