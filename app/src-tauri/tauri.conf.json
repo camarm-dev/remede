@@ -18,10 +18,10 @@
       "active": true,
       "deb": {
         "depends": [],
+        "desktopTemplate": "./remede.desktop",
         "files": {
           "/usr/share/README.md": "../../README.md",
-          "/usr/share/applications/dev.camarm.remede.desktop": "./remede.desktop",
-          "/usr/share/metainfo/dev.camarm.remede.metainfo.xml":  "./remede.metainfo.xml"
+          "/usr/share/metainfo/remede.metainfo.xml":  "./remede.metainfo.xml"
         }
       },
       "externalBin": [],

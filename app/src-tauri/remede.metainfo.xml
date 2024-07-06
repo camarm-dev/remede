@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>dev.camarm.remede</id>
-    <launchable type="desktop-id">dev.camarm.remede.desktop</launchable>
+    <id>remede</id>
+    <launchable type="desktop-id">remede.desktop</launchable>
     <name>Remède</name>
     <developer id="dev.camarm.remede">
         <name>Armand CAMPONOVO</name>
