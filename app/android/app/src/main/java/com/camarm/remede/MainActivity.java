@@ -1,4 +1,4 @@
-package com.camarm.remede;
+package dev.camarm.remede;
 
 import android.os.Bundle;
 

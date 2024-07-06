@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>remede.desktop</id>
-    <launchable type="desktop-id">remede.desktop</launchable>
+    <id>dev.camarm.remede</id>
+    <launchable type="desktop-id">dev.camarm.remede.desktop</launchable>
     <name>Remède</name>
-    <developer id="com.camarm.remede">
+    <developer id="dev.camarm.remede">
         <name>Armand CAMPONOVO</name>
     </developer>
     <content_rating type="oars-1.0" />
@@ -12,16 +12,16 @@
     <url type="homepage">https://remede.camarm.fr</url>
     <project_license>GPL-3.0-or-later</project_license>
     <metadata_license>CC-BY-4.0</metadata_license>
-    <summary>The open source dictionary</summary>
+    <summary>The free dictionary</summary>
     <summary xml:lang="fr">Le dictionnaire libre</summary>
     <description>
         <p>
-            Remède is a powerful dictionary developed by his community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.
+            Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.
             <br/>
             Remède is distributed under the <a href="https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html">CECILL-2.1</a> license, which is compatible with <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPL-3.0</a> license.
         </p>
         <p xml:lang="fr">
-            Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +500 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.
+            Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +900 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.
             <br/>
             Remède est distribué sous la licence <a href="https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html">CECILL-2.1</a>, qui est compatible avec la licence <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPL-3.0</a>.
         </p>

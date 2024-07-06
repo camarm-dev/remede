@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.camarm.remede',
+  appId: 'dev.camarm.remede',
   appName: 'Remède',
   webDir: 'dist',
   plugins: {
@@ -18,13 +18,6 @@ const config: CapacitorConfig = {
   },
   server: {
     androidScheme: 'https'
-  },
-  electron: {
-    deepLinkingEnabled: true,
-    deepLinkingCustomProtocol: 'remede',
-    splashScreenImageName: "splash.png",
-    splashScreenEnabled: true,
-    customUrlScheme: 'remede'
   }
 };
 

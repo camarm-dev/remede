@@ -1,4 +1,4 @@
-package com.camarm.remede;
+package dev.camarm.remede;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -13,7 +13,7 @@ import android.widget.RemoteViews;
  */
 public class RemedeSearchbarWidget extends AppWidgetProvider {
 
-    public static String CLICK_ACTION = "com.camarm.remede.action.OPEN_SEARCHBAR";
+    public static String CLICK_ACTION = "dev.camarm.remede.action.OPEN_SEARCHBAR";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {

@@ -1,4 +1,4 @@
-package com.camarm.remede;
+package dev.camarm.remede;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -22,7 +22,7 @@ import java.util.Scanner;
  */
 public class RemedeWordOfDayWidget extends AppWidgetProvider {
 
-    public static String CLICK_ACTION = "com.camarm.remede.action.OPEN_WORD_OF_DAY";
+    public static String CLICK_ACTION = "dev.camarm.remede.action.OPEN_WORD_OF_DAY";
     public static String DEFAULT_WORD_JSON = "{}";
 
     private static JSONObject getJsonResponse(URL url) throws JSONException, IOException {

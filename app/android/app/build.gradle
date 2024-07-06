@@ -5,10 +5,10 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace "com.camarm.remede"
+    namespace "dev.camarm.remede"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.camarm.remede"
+        applicationId "dev.camarm.remede"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 124

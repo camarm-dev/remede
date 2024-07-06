@@ -1,4 +1,4 @@
-package com.camarm.remede;
+package dev.camarm.remede;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -47,7 +47,7 @@ public class ActiveRemedeActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            String result = data.getStringExtra("com.camarm.remede.ACTIVE_REMEDE_RESULT");
+            String result = data.getStringExtra("dev.camarm.remede.ACTIVE_REMEDE_RESULT");
             Log.w("Active Remede", result);
             Intent outgoingIntent = new Intent().putExtra(Intent.EXTRA_PROCESS_TEXT, result);
             setResult(Activity.RESULT_OK, outgoingIntent);

@@ -20,7 +20,7 @@
         "depends": [],
         "files": {
           "/usr/share/README.md": "../../README.md",
-          "/usr/share/applications/remede.desktop": "./remede.desktop",
+          "/usr/share/applications/dev.camarm.remede.desktop": "./remede.desktop",
           "/usr/share/metainfo/remede.metainfo.xml":  "./remede.metainfo.xml"
         }
       },
@@ -32,9 +32,9 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.camarm.remede",
-      "shortDescription": "Le dictionnaire libre",
-      "longDescription": "Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +500 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.",
+      "identifier": "dev.camarm.remede",
+      "shortDescription": "The free dictionary",
+      "longDescription": "Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.",
       "copyright": "Remède and its contributors.",
       "category": "Productivity",
       "macOS": {
