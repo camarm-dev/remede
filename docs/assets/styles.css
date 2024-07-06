@@ -52,6 +52,16 @@ h4 {
     font-family: "IBMPlexSerif", serif;
 }
 
+.level.banner {
+    cursor: pointer;
+}
+
+.level.banner p {
+    display: flex;
+    align-items: center;
+    gap: .2em;
+}
+
 .icon.remede {
     margin: 0;
 }
