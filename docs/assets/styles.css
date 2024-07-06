@@ -267,10 +267,12 @@ a:not(.button):hover {
 .company {
     transition: .2s ease-in-out;
     opacity: .7;
+    filter: grayscale(100);
 }
 
 .company:hover {
     opacity: 1;
+    filter: grayscale(0);
 }
 
 .container .columns.no-mg {
@@ -322,6 +324,10 @@ a:not(.button):hover {
 
 .box img.is-small {
     height: 3em;
+}
+
+.box img.is-small.is-2-2 {
+    height: 2.2em;
 }
 
 .box img.is-inline {
