@@ -3,7 +3,7 @@
     <id>remede</id>
     <launchable type="desktop-id">remede.desktop</launchable>
     <name>Remède</name>
-    <developer id="dev.camarm.remede">
+    <developer id="remede">
         <name>Armand CAMPONOVO</name>
     </developer>
     <content_rating type="oars-1.0" />
@@ -17,13 +17,13 @@
     <description>
         <p>
             Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.
-            <br/>
-            Remède is distributed under the <a href="https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html">CECILL-2.1</a> license, which is compatible with <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPL-3.0</a> license.
+
+            Remède is distributed under the CECILL-2.1 (https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html) license, which is compatible with GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0-standalone.html) license.
         </p>
         <p xml:lang="fr">
             Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +900 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.
-            <br/>
-            Remède est distribué sous la licence <a href="https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html">CECILL-2.1</a>, qui est compatible avec la licence <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPL-3.0</a>.
+
+            Remède est distribué sous la licence CECILL-2.1 (https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html), qui est compatible avec la licence GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0-standalone.html).
         </p>
     </description>
     <supports>
