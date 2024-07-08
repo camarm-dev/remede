@@ -58,6 +58,16 @@ jobs:
         working-directory: ./app
         run: npm install # change this to npm or pnpm depending on which one you use.
 
+      # Additional windows configuration options
+      - uses: actions/setup-python@v5
+        if: matrix.platform == 'windows-latest'
+        with:
+          python-version: '3.10'
+      - name: Make configuration changes for windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          python app/src-tauri/windows_conf.py
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
