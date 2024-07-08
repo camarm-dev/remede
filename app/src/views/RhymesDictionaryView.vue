@@ -9,7 +9,7 @@
         <ion-title v-else>{{ $t('rhymes') }}</ion-title>
       </ion-toolbar>
       <ion-toolbar ref="searchToolbar">
-        <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" :placeholder="$t('rhymesPage.placeholder')"></ion-searchbar>
+        <ion-searchbar @keydown.enter="goTo(`/rimes/${query}`)" @focusin="onFocus()" @focusout="onLeave()" :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" :placeholder="$t('rhymesPage.placeholder')"></ion-searchbar>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
