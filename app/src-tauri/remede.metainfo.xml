@@ -10,6 +10,8 @@
     <url type="bugtracker">https://github.com/camarm-dev/remede/issues</url>
     <url type="donation">https://ko-fi.com/camarm</url>
     <url type="homepage">https://remede.camarm.fr</url>
+    <url type="vcs-browser">https://github.com/camarm-dev/remede</url>
+    <url type="contribute">https://docs.remede.camarm.fr/docs/contributing</url>
     <project_license>GPL-3.0</project_license>
     <metadata_license>CC-BY-4.0</metadata_license>
     <summary>The free dictionary</summary>
@@ -18,12 +20,12 @@
         <p>
             Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.
 
-            Remède is distributed under the CECILL-2.1 (https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html) license, which is compatible with GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0-standalone.html) license.
+            Remède is distributed under the CECILL-2.1 license, which is compatible with GPL-3.0 license.
         </p>
         <p xml:lang="fr">
             Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +900 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.
 
-            Remède est distribué sous la licence CECILL-2.1 (https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html), qui est compatible avec la licence GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0-standalone.html).
+            Remède est distribué sous la licence CECILL-2.1, qui est compatible avec la licence GPL-3.0.
         </p>
     </description>
     <supports>
