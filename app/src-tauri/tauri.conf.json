@@ -56,7 +56,7 @@
         },
         "nsis": {
           "installerIcon": "icons/icon.ico",
-          "headerImage": "src/header.png",
+          "headerImage": "src/header.bmp",
           "license": "../../LICENSE"
         }
       }
