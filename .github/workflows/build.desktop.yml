@@ -105,6 +105,8 @@ jobs:
         run: |
           Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.msi
           Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.exe
+          git restore app/package.json
+          git restore app/src-tauri/Cargo.toml
 
       - name: Commit changes
         run: |
@@ -113,7 +115,6 @@ jobs:
           git config pull.rebase true
           git add builds/*
           git commit -m "chore(binaries): added latest Remède binaries"
-          git status
           git pull
 
       - name: Push changes # push the output folder to your repo
