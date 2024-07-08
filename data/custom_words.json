@@ -132,7 +132,13 @@
             "sources": "(Émile Zola, <i>Le Docteur Pascal</i>, G. Charpentier, 1893, chapitre VI)"
           }
         ],
-        "plurals": []
+        "plurals": [
+          {
+            "label": "",
+            "singular": "remède",
+            "plural": "remèdes"
+          }
+        ]
       }
     ],
     "sources": [
