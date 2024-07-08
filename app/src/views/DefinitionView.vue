@@ -39,6 +39,7 @@ import { Swiper, SwiperSlide } from "swiper/vue"
 import { Pagination } from "swiper/modules"
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
+import TabSection from "@/components/TabSection.vue";
 
 
 const detailsModal = ref()
@@ -167,13 +168,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </div>
         </div>
       </div>
-      <div v-if="tab == 'syn'" class="tab-content">
-        <div class="definition">
-          <header>
-            <h4>{{ $t('definition.synonyms') }}</h4>
-            <hr>
-          </header>
-        </div>
+      <TabSection v-if="tab == 'syn'" :title="$t('definition.synonyms')">
         <ul>
           <li :key="syn" v-for="syn in document.synonymes">
             <a @click="goTo(`/dictionnaire/${syn}`)">
@@ -182,14 +177,8 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </li>
         </ul>
         <ion-note v-if="document.synonymes.length == 0">{{ $t('definition.noSynonyms') }}</ion-note>
-      </div>
-      <div v-if="tab == 'ant'" class="tab-content">
-        <div class="definition">
-          <header>
-            <h4>{{ $t('definition.antonyms') }}</h4>
-            <hr>
-          </header>
-        </div>
+      </TabSection>
+      <TabSection v-if="tab == 'ant'" :title="$t('definition.antonyms')">
         <ul>
           <li :key="ant" v-for="ant in document.antonymes">
             <a @click="goTo(`/dictionnaire/${ant}`)">
@@ -198,15 +187,8 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </li>
         </ul>
         <ion-note v-if="document.antonymes.length == 0">{{ $t('definition.noAntonyms') }}</ion-note>
-      </div>
-      <div v-if="tab == 'conj'" class="tab-content">
-        <div class="definition">
-          <header>
-            <h4>{{ $t('definition.conjugation') }}</h4>
-            <hr>
-          </header>
-        </div>
-        <br>
+      </TabSection>
+      <TabSection v-if="tab == 'conj'" :title="$t('definition.conjugation')">
         <ion-list inset class="border-radius border">
           <ion-item color="light" lines="full">
             <ion-label slot="start">
@@ -233,8 +215,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </ion-label>
           </ion-item>
         </ion-list>
-        <br>
-      </div>
+      </TabSection>
       <br>
       <br>
       <ion-modal ref="detailsModal" :trigger="id.modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
