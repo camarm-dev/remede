@@ -143,6 +143,11 @@ def root():
                 "nom": "Remède (FR) ~500Mb",
                 "slug": "remede",
                 "hash": DATASET
+            },
+            "remede.extended": {
+                "nom": "Remède Extended (FR) ~1Gb",
+                "slug": "remede.extended",
+                "hash": DATASET
             }
         }
     }

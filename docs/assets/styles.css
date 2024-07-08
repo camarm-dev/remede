@@ -1,13 +1,7 @@
 @font-face {
     font-family: "Amiko";
-    font-weight: bold;
-    src: url("./Amiko-Bold.ttf");
-}
-
-@font-face {
-    font-family: "Amiko";
     font-weight: normal;
-    src: url("./Amiko-Regular.ttf");
+    src: url("./Amiko-Bold.ttf");
 }
 
 @font-face {
