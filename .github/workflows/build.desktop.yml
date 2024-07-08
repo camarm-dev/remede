@@ -100,15 +100,16 @@ jobs:
           cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app.tar.gz  /Users/runner/work/remede/remede/builds/remede.aarch64.app.tar.gz
           cp /Users/runner/work/remede/remede/app/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg  /Users/runner/work/remede/remede/builds/remede.aarch64.dmg
 
-      - name: Copy MSI binary
-        if: matrix.platform == 'windows-latest'
-        run: |
-          Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.msi
-          Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.exe
-          git restore app/package.json
-          git restore app/src-tauri/Cargo.toml
+#      - name: Copy MSI binary
+#        if: matrix.platform == 'windows-latest'
+#        run: |
+#          Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.msi
+#          Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.exe
+#          git restore app/package.json
+#          git restore app/src-tauri/Cargo.toml
 
       - name: Commit changes
+        if: matrix.platform != 'windows-latest'
         run: |
           git config --local user.name actions-user
           git config --local user.email "actions@github.com"
@@ -118,6 +119,7 @@ jobs:
           git pull
 
       - name: Push changes # push the output folder to your repo
+        if: matrix.platform != 'windows-latest'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
