@@ -40,6 +40,7 @@ import { Pagination } from "swiper/modules"
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
 import TabSection from "@/components/TabSection.vue";
+import ConjugationTable from "@/components/ConjugationTable.vue";
 
 
 const detailsModal = ref()
@@ -140,7 +141,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </ion-popover>
             <hr>
           </header>
-          <ion-list inset class="border-radius" v-if="getModes().length > 0 && def.genre.includes('Verbe')">
+          <ion-list inset class="border-radius" v-if="hasConjugations() && def.genre.includes('Verbe')">
             <ion-item lines="none" color="light" button @click="tab = 'conj'">
               {{ $t('definition.openConjugation') }}
             </ion-item>
@@ -189,32 +190,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <ion-note v-if="document.antonymes.length == 0">{{ $t('definition.noAntonyms') }}</ion-note>
       </TabSection>
       <TabSection v-if="tab == 'conj'" :title="$t('definition.conjugation')">
-        <ion-list inset class="border-radius border">
-          <ion-item color="light" lines="full">
-            <ion-label slot="start">
-              <p>{{ $t('definition.conjugationMode') }}</p>
-            </ion-label>
-            <ion-label slot="end">
-              <p>{{ $t('definition.conjugationTense') }}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item color="light" lines="full">
-            <ion-select @ionChange="changeMode($event.target.value)" slot="start" interface="action-sheet" placeholder="Mode" :value="currentMode">
-              <ion-select-option :key="mode" v-for="mode in getModes()" :value="mode">{{ mode }}</ion-select-option>
-            </ion-select>
-            <ion-select @ionChange="changeTemps($event.target.value)" slot="end" interface="action-sheet" placeholder="Temps" :value="currentTemps">
-              <ion-select-option :key="temps" v-for="temps in modeTemps" :value="temps">{{ temps }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item :key="sujet" v-for="sujet in currentSujets">
-            <ion-label>
-              <p>{{ sujet }}</p>
-            </ion-label>
-            <ion-label slot="end">
-              {{ getFormeVerbale(currentMode, currentTemps, sujet) }}
-            </ion-label>
-          </ion-item>
-        </ion-list>
+        <ConjugationTable :conjugations="document.conjugaisons"/>
       </TabSection>
       <br>
       <br>
@@ -300,14 +276,10 @@ export default defineComponent({
   data() {
     return {
       mot: "",
-      currentMode: "",
-      currentTemps: "",
       id: {
         modal: generateId(),
         examples: [] as string[]
       },
-      modeTemps: [] as string[],
-      currentSujets: [] as string[],
       tab: localStorage.getItem("defaultTab") || "def" as string,
       document: {
         synonymes: [] as string[],
@@ -377,13 +349,6 @@ export default defineComponent({
       }
 
       this.stared = isWordStarred(this.mot)
-
-      if (this.getModes().length > 0) {
-        this.currentMode = this.getModes()[0]
-        this.modeTemps = this.getTemps(this.currentMode)
-        this.currentTemps = this.modeTemps[0]
-        this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
-      }
     },
     async shareDefinition() {
       try {
@@ -396,18 +361,6 @@ export default defineComponent({
       } catch {
         console.error("Failed to share.")
       }
-    },
-    getModes() {
-      return Object.keys(this.document.conjugaisons) as string[]
-    },
-    getTemps(mode: string) {
-      return Object.keys(this.document.conjugaisons[mode]) as string[]
-    },
-    getSujets(mode: string, temps: string) {
-      return Object.keys(this.document.conjugaisons[mode][temps]) as string[]
-    },
-    getFormeVerbale(mode: string, temps: string, sujet: string) {
-      return this.document.conjugaisons[mode][temps][sujet]
     },
     readWord() {
       this.audioLoading = true
@@ -430,15 +383,6 @@ export default defineComponent({
         this.audioLoading = false
         await toast.present()
       })
-    },
-    changeMode(mode: string) {
-      this.currentMode = mode
-      this.modeTemps = this.getTemps(this.currentMode)
-      this.changeTemps(this.modeTemps[0])
-    },
-    changeTemps(temps: string) {
-      this.currentTemps = temps
-      this.currentSujets = this.getSujets(this.currentMode, this.currentTemps)
     },
     open(url: string) {
       window.open(url)
@@ -470,6 +414,9 @@ export default defineComponent({
       } catch (e) {
         return meaning
       }
+    },
+    hasConjugations() {
+      return Object.keys(this.document.conjugaisons).length > 0
     },
     starWord
   }
