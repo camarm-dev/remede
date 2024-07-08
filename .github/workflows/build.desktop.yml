@@ -103,8 +103,8 @@ jobs:
       - name: Copy MSI binary
         if: matrix.platform == 'windows-latest'
         run: |
-          Copy-Item help
-        # Copy-Item -Path "C:\TEMP\PS\DossierA\*" -Destination "C:\TEMP\PS\DossierB\" -Include *.jpg
+          Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.msi
+          Copy-Item -Path "D:\a\remede\remede\app\src-tauri\target\release\bundle\nsis\*" -Destination "D:\a\remede\remede\builds" -Include *.exe
 
       - name: Commit changes
         run: |
