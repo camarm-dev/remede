@@ -9,8 +9,6 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonSelect,
-  IonSelectOption,
   IonList,
   IonNote,
   IonLabel,
@@ -105,7 +103,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           {{ $t('definition.wordNotFound') }}
         </ion-note>
       </div>
-      <div v-if="tab == 'def'" class="tab-content">
+      <div v-if="isTab('def')" class="tab-content">
         <div class="definition" :key="`def-genre-${wordObject.definitions.indexOf(def).toString()}`" v-for="def in wordObject.definitions">
           <header>
             <div class="header-title">
@@ -169,7 +167,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </div>
         </div>
       </div>
-      <TabSection v-if="tab == 'syn'" :title="$t('definition.synonyms')">
+      <TabSection v-if="isTab('syn')" :title="$t('definition.synonyms')">
         <ul>
           <li :key="syn" v-for="syn in wordObject.synonymes">
             <a @click="goTo(`/dictionnaire/${syn}`)">
@@ -179,7 +177,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </ul>
         <ion-note v-if="wordObject.synonymes.length == 0">{{ $t('definition.noSynonyms') }}</ion-note>
       </TabSection>
-      <TabSection v-if="tab == 'ant'" :title="$t('definition.antonyms')">
+      <TabSection v-if="isTab('ant')" :title="$t('definition.antonyms')">
         <ul>
           <li :key="ant" v-for="ant in wordObject.antonymes">
             <a @click="goTo(`/dictionnaire/${ant}`)">
@@ -189,7 +187,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </ul>
         <ion-note v-if="wordObject.antonymes.length == 0">{{ $t('definition.noAntonyms') }}</ion-note>
       </TabSection>
-      <TabSection v-if="tab == 'conj'" :title="$t('definition.conjugation')">
+      <TabSection v-if="isTab('conj')" :title="$t('definition.conjugation')">
         <ConjugationTable :conjugations="wordObject.conjugaisons"/>
       </TabSection>
       <br>
@@ -390,6 +388,9 @@ export default defineComponent({
     refreshListeners() {
       window.dispatchEvent(new Event("reset"))
       this.listenSpecialTags()
+    },
+    isTab(tab: string) {
+      return this.tab == tab
     },
     async listenSpecialTags() {
       document.querySelectorAll("reference").forEach(el => {
