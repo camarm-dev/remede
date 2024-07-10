@@ -36,43 +36,43 @@
     </supports>
     <screenshots>
         <screenshot type="default" xml:lang="fr">
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/header.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/fr/header.png</image>
             <caption>Remède</caption>
         </screenshot>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/header.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/header.png</image>
             <caption>Remède</caption>
         </screenshot>
         <screenshot xml:lang="fr">
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/home.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/fr/home.png</image>
             <caption>Remède page d'accueil</caption>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/home.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/home.png</image>
             <caption>Remède homepage</caption>
         </screenshot>
         <screenshot xml:lang="fr">
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/definition.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/fr/definition.png</image>
             <caption>Remède page de définition</caption>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/definition.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/definition.png</image>
             <caption>Definition page</caption>
         </screenshot>
         <screenshot xml:lang="fr">
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/correction.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/fr/correction.png</image>
             <caption>Correcteur</caption>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/correction.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/correction.png</image>
             <caption>Corrector</caption>
         </screenshot>
         <screenshot xml:lang="fr">
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/settings.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/fr/settings.png</image>
             <caption>Paramètres</caption>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/settings.png</image>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/main/.github/screenshots/settings.png</image>
             <caption>Settings</caption>
         </screenshot>
     </screenshots>
