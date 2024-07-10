@@ -10,3 +10,5 @@
 /data/remede.db
 /data/remede-less.db
 /data/remede.*.db
+/builds/*.exe
+/builds/*.msi
