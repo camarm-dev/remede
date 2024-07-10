@@ -44,7 +44,7 @@
 <script lang="ts">
 import {getRimesAutocomplete} from "@/functions/dictionnary"
 import {
-  type Animation, AnimationDirection, createAnimation,
+  type Animation, AnimationDirection,
   IonButtons,
   IonContent,
   IonHeader,
@@ -74,7 +74,7 @@ import {
   defaultRemedeContentAnimation,
   defaultRemedeMainToolbarAnimation,
   defaultRemedeSearchToolbarAnimation
-} from "@/functions/animations";
+} from "@/functions/animations"
 
 export default defineComponent({
   data() {
@@ -143,8 +143,8 @@ export default defineComponent({
           this.results = await getRimesAutocomplete(query)
         } catch (e) {
           const message = await toastController.create({
-            header: this.$t('error'),
-            message: this.$t('errors.rhymesSearchFailed', { error: e }),
+            header: this.$t("error"),
+            message: this.$t("errors.rhymesSearchFailed", { error: e }),
             duration: 5000,
             color: "danger"
           })

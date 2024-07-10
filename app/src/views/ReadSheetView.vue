@@ -73,15 +73,15 @@ import {
 
 <script lang="ts">
 import {defineComponent} from "vue"
-import {Share} from "@capacitor/share";
+import {Share} from "@capacitor/share"
 
 export default defineComponent({
   data() {
     return {
       fiche: {
         contenu: "",
-        description: this.$t('sheetPage.sheetNotFound'),
-        nom: this.$t('sheetPage.noSheet'),
+        description: this.$t("sheetPage.sheetNotFound"),
+        nom: this.$t("sheetPage.noSheet"),
         tags: [],
         slug: "",
         credits: {
@@ -101,13 +101,13 @@ export default defineComponent({
     async shareSheet() {
       try {
         await Share.share({
-          title: this.$t('share.sheetTitle', { name: this.fiche.nom }),
-          text: this.$t('share.sheetDescription', { name: this.fiche.nom }),
+          title: this.$t("share.sheetTitle", { name: this.fiche.nom }),
+          text: this.$t("share.sheetDescription", { name: this.fiche.nom }),
           url: `https://remede-app.camarm.fr/fiches/${this.fiche.slug}`,
-          dialogTitle: this.$t('share.sheetDialogTitle')
+          dialogTitle: this.$t("share.sheetDialogTitle")
         })
       } catch {
-        console.error('Failed to share')
+        console.error("Failed to share")
       }
     },
     getTagColor(tag: string) {

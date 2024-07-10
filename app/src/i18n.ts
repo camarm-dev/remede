@@ -1,4 +1,4 @@
-import  { createI18n } from 'vue-i18n'
+import  { createI18n } from "vue-i18n"
 import frenchTranslations from "@/data/translations/fr.json"
 import englishTranslations from "@/data/translations/en.json"
 
@@ -8,8 +8,8 @@ const globalizationList = {
 }
 
 export default createI18n({
-    locale: 'fr',
-    fallbackLocale: 'en',
+    locale: "fr",
+    fallbackLocale: "en",
     messages: globalizationList,
     preserveDirectiveContent: true
 })

@@ -37,8 +37,8 @@ import { Swiper, SwiperSlide } from "swiper/vue"
 import { Pagination } from "swiper/modules"
 import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
-import TabSection from "@/components/TabSection.vue";
-import ConjugationTable from "@/components/ConjugationTable.vue";
+import TabSection from "@/components/TabSection.vue"
+import ConjugationTable from "@/components/ConjugationTable.vue"
 
 
 const detailsModal = ref()
@@ -351,10 +351,10 @@ export default defineComponent({
     async shareDefinition() {
       try {
         await Share.share({
-          title: this.$t('share.definitionTitle', { word: this.mot }),
-          text: this.$t('share.definitionDescription', { word: this.mot }),
+          title: this.$t("share.definitionTitle", { word: this.mot }),
+          text: this.$t("share.definitionDescription", { word: this.mot }),
           url: `https://remede-app.camarm.fr/dictionnaire/${this.mot}`,
-          dialogTitle: this.$t('share.definitionDialogTitle'),
+          dialogTitle: this.$t("share.definitionDialogTitle"),
         })
       } catch {
         console.error("Failed to share.")
@@ -373,8 +373,8 @@ export default defineComponent({
         this.audioLoading = false
       }).catch(async e => {
         const toast = await toastController.create({
-          header: this.$t('error'),
-          message: this.$t('errors.cannotReadWord', { error: e }),
+          header: this.$t("error"),
+          message: this.$t("errors.cannotReadWord", { error: e }),
           color: "danger",
           duration: 3000
         })

@@ -1,4 +1,4 @@
-import {createAnimation} from "@ionic/vue";
+import {createAnimation} from "@ionic/vue"
 
 export const defaultRemedeMainToolbarAnimation = (element: Element | Element[] | Node | Node[] | NodeList) => createAnimation()
     .addElement(element)
@@ -8,7 +8,7 @@ export const defaultRemedeMainToolbarAnimation = (element: Element | Element[] |
 
 export const defaultRemedeSearchToolbarAnimation = (element: Element | Element[] | Node | Node[] | NodeList) => createAnimation()
     .addElement(element)
-    .beforeAddClass('mt')
+    .beforeAddClass("mt")
     .duration(250)
     .fromTo("transform", "translateY(0)", "translateY(-50%)")
     .fromTo("scale", "1", "1.01")

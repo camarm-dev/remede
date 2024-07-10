@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {IonItem, IonLabel, IonList, IonSelect, IonSelectOption} from "@ionic/vue";
+import {IonItem, IonLabel, IonList, IonSelect, IonSelectOption} from "@ionic/vue"
 </script>
 
 <template>
@@ -33,7 +33,7 @@ import {IonItem, IonLabel, IonList, IonSelect, IonSelectOption} from "@ionic/vue
 </template>
 
 <script lang="ts">
-import {PropType} from "vue";
+import {PropType} from "vue"
 
 type conjugationData = {
   [key: string]: { // Mode
@@ -46,14 +46,14 @@ type conjugationData = {
 export default {
   props: {
     conjugations: {
-      type: Object as PropType<any>,
+      type: Object as PropType<conjugationData>,
       required: true
     }
   },
   data() {
     return {
-      currentMode: '' as string,
-      currentTense: '' as string,
+      currentMode: "" as string,
+      currentTense: "" as string,
       currentSubjects: [] as string[],
       availableTenses: [] as string[]
     }

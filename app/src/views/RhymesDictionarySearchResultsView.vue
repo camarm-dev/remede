@@ -184,7 +184,7 @@ export default defineComponent({
         name: "minSyllabes",
         options: [
           {
-            text: this.$t('rhymesPage.syllablesMinimumAbbr'),
+            text: this.$t("rhymesPage.syllablesMinimumAbbr"),
             value: 0
           },
           {
@@ -209,7 +209,7 @@ export default defineComponent({
         name: "maxSyllabes",
         options: [
           {
-            text: this.$t('rhymesPage.syllablesMaximumAbbr'),
+            text: this.$t("rhymesPage.syllablesMaximumAbbr"),
             value: 0
           },
           {
@@ -238,11 +238,11 @@ export default defineComponent({
 
     const syllabesPickerButtons = [
       {
-        text: this.$t('cancel'),
+        text: this.$t("cancel"),
         role: "cancel",
       },
       {
-        text: this.$t('apply'),
+        text: this.$t("apply"),
         handler: (value: any) => {
           this.setMinMax(value.minSyllabes.value, value.maxSyllabes.value)
           this.search()
@@ -255,19 +255,19 @@ export default defineComponent({
         name: "quality",
         options: [
           {
-            text: this.$t('feminineAll'),
+            text: this.$t("feminineAll"),
             value: 0
           },
           {
-            text: this.$t('rhymesPage.qualityPoor'),
+            text: this.$t("rhymesPage.qualityPoor"),
             value: 1
           },
           {
-            text: this.$t('rhymesPage.qualitySufficient'),
+            text: this.$t("rhymesPage.qualitySufficient"),
             value: 2
           },
           {
-            text: this.$t('rhymesPage.qualityRich'),
+            text: this.$t("rhymesPage.qualityRich"),
             value: 3
           }
         ],
@@ -276,11 +276,11 @@ export default defineComponent({
 
     const rimeQualityPickerButtons = [
       {
-        text: this.$t('cancel'),
+        text: this.$t("cancel"),
         role: "cancel",
       },
       {
-        text: this.$t('apply'),
+        text: this.$t("apply"),
         handler: (value: any) => {
           this.setQuality(value.quality.value)
           this.search()

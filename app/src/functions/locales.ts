@@ -13,7 +13,7 @@ const locales = {
 }
 
 export function hasDialect(locale: string) {
-    return locales.dialects.hasOwnProperty(locale)
+    return Object.prototype.hasOwnProperty.call(locales.dialects, locale)
 }
 
 export default locales

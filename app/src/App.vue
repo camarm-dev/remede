@@ -97,9 +97,9 @@ import RemedeLogo from "@/components/RemedeLogo.vue"
 import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
-import {defineComponent} from "vue";
+import {defineComponent} from "vue"
 import {wordExists} from "@/functions/dictionnary"
-import {getDeviceLocale} from "@/functions/device";
+import {getDeviceLocale} from "@/functions/device"
 
 export default defineComponent({
   mounted() {
@@ -127,12 +127,12 @@ export default defineComponent({
       router: useRouter(),
       path: location.pathname,
       downloaded: false,
-      query: ''
+      query: ""
     }
   },
   methods: {
     async setLocale() {
-      this.$i18n.locale = localStorage.getItem("interfaceLanguage") || await getDeviceLocale();
+      this.$i18n.locale = localStorage.getItem("interfaceLanguage") || await getDeviceLocale()
     },
     async handleFastSearch(query: string) {
       if (await wordExists(query)) {
@@ -155,7 +155,7 @@ export default defineComponent({
             this.query = this.query.slice(0, this.query.length - 1)
             return
           }
-          this.query += event.key.length == 1 ? event.key: ''
+          this.query += event.key.length == 1 ? event.key: ""
           return
         }
       }

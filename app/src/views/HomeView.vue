@@ -157,7 +157,7 @@ import {
   defaultRemedeContentAnimation,
   defaultRemedeMainToolbarAnimation,
   defaultRemedeSearchToolbarAnimation
-} from "@/functions/animations";
+} from "@/functions/animations"
 
 export default defineComponent({
   components: {
@@ -277,8 +277,8 @@ export default defineComponent({
               this.query = this.query.slice(0, this.query.length - 1)
               return
             }
-            if (this.$route.name == 'dictionnaire') {
-              this.query += event.key.length == 1 ? event.key: ''
+            if (this.$route.name == "dictionnaire") {
+              this.query += event.key.length == 1 ? event.key: ""
             }
           }
         })

@@ -130,8 +130,7 @@ import {
 import {
   checkmarkCircle,
   closeCircle, contrastOutline,
-  globeOutline,
-  invertModeOutline, languageOutline,
+  languageOutline,
   refreshOutline,
   trashBinOutline
 } from "ionicons/icons"
@@ -147,8 +146,8 @@ import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
 import {RemedeWordDocument} from "@/functions/types/remede"
-import {getDeviceLocale} from "@/functions/device";
-import locales from "@/functions/locales";
+import {getDeviceLocale} from "@/functions/device"
+import locales from "@/functions/locales"
 
 export default {
   data() {
@@ -241,9 +240,9 @@ export default {
       try {
         await downloadDictionary(this.availableDictionaries[this.dictionaryToDownload])
         const successMessage = await alertController.create({
-          header: this.$t('settingsPage.downloadSuccess'),
-          subHeader: this.$t('settingsPage.downloadDescription'),
-          message: this.$t('settingsPage.downloadLongDescription'),
+          header: this.$t("settingsPage.downloadSuccess"),
+          subHeader: this.$t("settingsPage.downloadDescription"),
+          message: this.$t("settingsPage.downloadLongDescription"),
           buttons: [
             {
               text: "C'est compris !",
@@ -258,8 +257,8 @@ export default {
         await successMessage.present()
       } catch (e) {
         const message = await toastController.create({
-          header: this.$t('settingsPage.downloadFailed'),
-          message: this.$t('settingsPage.downloadFailedDescription', { error: e }),
+          header: this.$t("settingsPage.downloadFailed"),
+          message: this.$t("settingsPage.downloadFailedDescription", { error: e }),
           duration: 5000,
           color: "danger"
         })

@@ -1,6 +1,6 @@
 const sources = {
     antonyme_org: {
-        label: 'definition.antonyms',
+        label: "definition.antonyms",
         url: "http://www.antonyme.org/antonyme/{word}"
     },
     synonymo_fr: {

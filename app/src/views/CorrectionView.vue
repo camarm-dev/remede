@@ -29,7 +29,7 @@
           <ion-buttons slot="end">
             <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale)">
               <ion-select label="" :value="selectedDialect" @ionChange="selectedDialect = $event.target.value" interface="popover">
-                <ion-select-option v-for="dialect in availableDialects">{{ dialect }}</ion-select-option>
+                <ion-select-option :key="dialect" v-for="dialect in availableDialects">{{ dialect }}</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-button v-if="locked" @click="locked = false" color="primary">
@@ -183,14 +183,14 @@ import {
   informationCircleOutline,
   returnUpBackOutline
 } from "ionicons/icons"
-import { hasDialect } from "@/functions/locales";
+import { hasDialect } from "@/functions/locales"
 </script>
 
 <script lang="ts">
 import { Clipboard } from "@capacitor/clipboard"
 import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
 import SetResult from "@/functions/plugins/setResult"
-import locales from "@/functions/locales";
+import locales from "@/functions/locales"
 
 export default {
   data() {
