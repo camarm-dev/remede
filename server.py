@@ -29,12 +29,14 @@ app.add_middleware(
 
 
 class BinariesVariant(str, Enum):
-    dmg = "dmg"
+    aarch_dmg = "aarch64.dmg"
+    aarch_app = "aarch64.app.tar.gz"
+    x64_dmg = "x64.dmg"
+    x64_app = "x64.app.tar.gz"
     apk = "apk"
     deb = "deb"
-    rpm = "rpm"
     exe = "exe"
-    nupkg = "nupkg"
+    msi = "msi"
 
 
 def in_json(response: str | list):
@@ -138,8 +140,13 @@ def root():
         "total": entities,
         "dictionnaires": {
             "remede": {
-                "nom": "Remède (FR) ~374Mb",
+                "nom": "Remède (FR) ~500Mb",
                 "slug": "remede",
+                "hash": DATASET
+            },
+            "remede.extended": {
+                "nom": "Remède Extended (FR) ~1Gb",
+                "slug": "remede.extended",
                 "hash": DATASET
             }
         }
@@ -266,7 +273,7 @@ def download_binary(variant: BinariesVariant):
     """
     Télécharge les derniers exécutables
     """
-    return FileResponse(f'builds/latest/remede.{variant}', filename=f"remede.{variant}", media_type="multipart/form-data")
+    return FileResponse(f'builds/remede.{variant}', filename=f"remede.{variant}", media_type="multipart/form-data")
 
 
 if __name__ == '__main__':

@@ -5,60 +5,58 @@
         <ion-menu content-id="main-content" type="overlay">
           <ion-content>
             <ion-list>
-              <img class="ion-margin-start" width="50" alt="Remède icon" src="/favicon.png" height="50"/>
-              <ion-list-header>Remède</ion-list-header>
-              <ion-note>Retrouvez vos mots en toute simplicité</ion-note>
-
+              <RemedeLogo class="ion-margin-start"/>
+              <ion-note>{{ $t('theDictionary') }}</ion-note>
+              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="handleFastSearch($event.target.value)" :class="`hidden-mobile ${isPage('/dictionnaire') ? 'hidden': ''}`" :placeholder="$t('home.searchWord')"></ion-searchbar>
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="path === '/dictionnaire' ? 'selected': ''">
+                    <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="isPage('/dictionnaire') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
-                      <ion-label>Dictionnaire</ion-label>
+                      <ion-label>{{ $t('dictionary') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="path === '/marques-page' ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
-                      <ion-label>Marques Pages</ion-label>
-                    </ion-item>
-                  </ion-menu-toggle>
-                  <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/correction')" lines="none" :detail="false" class="hydrated" :class="path === '/correction' ? 'selected': ''">
+                    <ion-item @click="goTo('/correction')" lines="none" :detail="false" class="hydrated" :class="isPage('/correction') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="medicalOutline"></ion-icon>
-                      <ion-label>Correction</ion-label>
+                      <ion-label>{{ $t('correction') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/fiches')" lines="none" :detail="false" class="hydrated" :class="path === '/fiches' ? 'selected': ''">
+                    <ion-item @click="goTo('/fiches')" lines="none" :detail="false" class="hydrated" :class="isPage('/fiches') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="documentOutline"></ion-icon>
-                      <ion-label>Fiches</ion-label>
+                      <ion-label>{{ $t('sheets') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item :disabled="!downloaded" @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="path === '/rimes' ? 'selected': ''">
+                    <ion-item :disabled="!downloaded" @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="isPage('/rimes') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="swapHorizontalOutline"></ion-icon>
-                      <ion-label>Rimes</ion-label>
+                      <ion-label>{{ $t('rhymes') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                 </div>
                 <div class="end">
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="path === '/parametres' ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
-                      <ion-label>Paramètres</ion-label>
+                    <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="isPage('/marques-page') ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
+                      <ion-label>{{ $t('bookmarks') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/a-propos')" lines="none" :detail="false" class="hydrated" :class="path === '/a-propos' ? 'selected': ''">
+                    <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="isPage('/parametres') ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
+                      <ion-label>{{ $t('settings') }}</ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                  <ion-menu-toggle :auto-hide="false">
+                    <ion-item @click="goTo('/a-propos')" lines="none" :detail="false" class="hydrated" :class="isPage('/a-propos') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="informationCircleOutline"></ion-icon>
-                      <ion-label>À propos</ion-label>
+                      <ion-label>{{ $t('about') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                 </div>
               </div>
             </ion-list>
-
           </ion-content>
         </ion-menu>
         <ion-router-outlet id="main-content"></ion-router-outlet>
@@ -69,38 +67,48 @@
 
 <script setup lang="ts">
 import {
+  IonApp,
   IonContent,
   IonIcon,
   IonItem,
   IonLabel,
   IonList,
-  IonListHeader,
   IonMenu,
   IonMenuToggle,
   IonNote,
+  IonPage,
   IonRouterOutlet,
-  IonSplitPane,
-  IonApp,
-  IonPage
+  IonSearchbar,
+  IonSplitPane
 } from "@ionic/vue"
 import {
+  bookmarkOutline,
   bookOutline,
+  cogOutline,
+  documentOutline,
   informationCircleOutline,
-  cogOutline, documentOutline, bookmarkOutline, medicalOutline, swapHorizontalOutline
+  medicalOutline,
+  swapHorizontalOutline
 } from "ionicons/icons"
+import RemedeLogo from "@/components/RemedeLogo.vue"
 </script>
 
 <script lang="ts">
 import {useRouter} from "vue-router"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import { App } from "@capacitor/app"
+import {defineComponent} from "vue"
+import {wordExists} from "@/functions/dictionnary"
+import {getDeviceLocale} from "@/functions/device"
 
-export default {
+export default defineComponent({
   mounted() {
+    this.router.afterEach(() => {
+      this.path = location.pathname
+    })
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
     getOfflineDictionaryStatus().then(status => {
       this.downloaded = status.downloaded
-
     })
 
     App.getLaunchUrl().then(object => {
@@ -109,28 +117,68 @@ export default {
         this.router.push(url.replaceAll("remede:/", ""))
       }
     })
-
+    window.addEventListener("keydown", this.handleKeyDown)
+  },
+  beforeMount() {
+    this.setLocale()
   },
   data() {
     return {
       router: useRouter(),
       path: location.pathname,
-      downloaded: false
+      downloaded: false,
+      query: ""
     }
   },
   methods: {
+    async setLocale() {
+      this.$i18n.locale = localStorage.getItem("interfaceLanguage") || await getDeviceLocale()
+    },
+    async handleFastSearch(query: string) {
+      if (await wordExists(query)) {
+        this.goTo(`/dictionnaire/${query}`)
+      } else {
+        this.goTo(`/search/${query}`)
+      }
+    },
+    async handleKeyDown(event: KeyboardEvent) {
+      switch (event.key) {
+        case "Escape":
+          this.$router.back()
+          return
+      }
+      const searchbar = (this.$refs.searchbar as any).$el
+      if (!searchbar?.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
+        await searchbar.setFocus()
+        if (!searchbar.focused) {
+          if (event.key == "backspace") {
+            this.query = this.query.slice(0, this.query.length - 1)
+            return
+          }
+          this.query += event.key.length == 1 ? event.key: ""
+          return
+        }
+      }
+    },
     isPage(path: string) {
-      return location.pathname === path
+      return this.path === path
     },
     goTo(path: string) {
       this.router.push(path)
-      this.path = path
     }
   }
-}
+})
 </script>
 
 <style scoped>
+ion-menu-toggle {
+  cursor: pointer;
+}
+
+ion-menu {
+  z-index: 1000000;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }

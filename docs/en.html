@@ -1,0 +1,633 @@
+---
+# front matter tells Jekyll to process Liquid
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="The free cross-platform dictionary. On your phone or on your computer, install Remède the best dictionary ! It is free and available in french or in english. It's a good alternative to Antidote.">
+  <meta name="author" content="camarm">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="/assets/icon.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+  <title>Remède | The free/open dictionary</title>
+  <meta property="og:title" content="Remède | The free dictionary" />
+  <meta property="og:url" content="https://remede.camarm.fr" />
+  <meta property="og:image" content="https://remede.camarm.fr/og.png" />
+  <meta name="description" content="The free cross-platform dictionary. On your phone or on your computer, install Remède the best dictionary ! It is free and available in french or in english. It's a good alternative to Antidote.">
+  <meta name="keywords" content="french,français,dictionnaire,dictionary,remède,alternative,gratuit, open source,libre,free">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="remede.camarm.fr">
+  <meta property="twitter:url" content="https://remede.camarm.fr">
+  <meta name="twitter:title" content="Remède | The free dictionary">
+  <meta name="twitter:description" content="The free cross-platform dictionary. On your phone or on your computer, install Remède the best dictionary ! It is free and available in french or in english. It's a good alternative to Antidote.">
+  <meta name="twitter:image" content="https://remede.camarm.fr/og.png">
+</head>
+<body>
+<nav class="navbar is-fixed" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item mr-5 mb-1" href="/">
+      <img src="assets/logo.png" class="image is-h is-small" alt="Remède icon"/>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Home
+      </a>
+
+      <a class="navbar-item" href="/blog">
+        Blog
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/blog" target="_blank">
+            About
+          </a>
+          <a class="navbar-item" href="/desktop" target="_blank">
+            Desktop
+          </a>
+          <a class="navbar-item" href="https://support.camarm.fr" target="_blank">
+            Support
+          </a>
+          <a class="navbar-item" href="mailto:software@camarm.dev">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
+            Credits
+          </a>
+          <a class="navbar-item" href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
+            Credits
+          </a>
+          <a class="navbar-item" href="https://github.com/camarm-dev/remede/issues/new/choose" target="_blank">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="/download">
+            <strong>Download</strong>
+          </a>
+          <a class="button is-light" href="https://docs.remede.camarm.fr" target="_blank">
+            Documentation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="section mt-6 mb-6 is-medium is-full">
+  <div class="columns is-centered is-align-items-center is-justify-content-center">
+    <div class="column is-half">
+      <h1 class="title no-mg is-large has-text-dark">
+        The free cross-platform
+        <span class="is-family-secondary">dictionary</span><br>
+        <i class="fas fa-arrow-right has-text-primary"></i>
+        <span class="has-text-primary">Not like the others</span>
+      </h1>
+      <p class="has-text-grey"><span class="is-family-secondary"><b>Remède</b></span> is a free cross-platform dictionary which is simple and very powerful !</p>
+      <br>
+      <a href="/download" class="button is-primary">Download</a>
+      <a href="https://remede-app.camarm.fr" target="_blank" class="button is-outlined is-primary mb-2">
+        Discover online
+        <i class="fas fa-external-link has-text-primary mb-1 ml-2" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="column is-half is-flex is-align-items-center is-justify-content-right">
+      <img class="image is-small" src="assets/phone.png" alt="Dictionnaire Remède mobile"/>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <h1 class="title has-text-dark">They trust us</h1>
+  <div class="container">
+    <div class="mb-6 columns no-mg is-align-items-center">
+      <div class="box transparent company mb-0">
+        <a href="https://labse.camarm.fr" target="_blank">
+          <img src="assets/labse.png" alt="Labse Software, la société qui propulse Remède" class="is-small is-h">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <h1 class="title has-text-dark">A powerful dictionary.</h1>
+  <div class="container">
+    <div class="columns no-mg is-multiline">
+      <div class="column is-one-third">
+        <div class="box">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Remède is <span class="has-text-primary">huge.</span></h4>
+            <p class="subtitle has-text-grey">Remède it's +900 000 french words and expressions, and 500 000 english !</p>
+          </div>
+          <div class="image vertical">
+            <img class="float1" src="assets/remede.png" alt="Logo de Remède en 3D">
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">An extraordinary experience</h4>
+            <p class="subtitle has-text-grey">Thanks to our simple, intuitive design, our dictionary is pleasant and practical to use.</p>
+          </div>
+          <div class="image stacked anim bordered">
+            <img src="assets/screenshots/home.png" alt="Page d'accueil du dictionnaire Remède sur mobile">
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">An all-purpose tool</h4>
+            <p class="subtitle has-text-grey">Our dictionary can be used for any purpose, even by night owls !</p>
+          </div>
+          <div class="image stacked anim center">
+            <img src="assets/screenshots/dark.png" alt="Exemple du thème sombre du dictionnaire Remède mobile">
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="box img">
+          <img src="assets/screenshots/landing.png" alt="Écran d'accueil du dictionnaire Remède mobile">
+        </div>
+      </div>
+      <div class="column is-three-quarters">
+        <div class="box">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Powerful yet accessible features</h4>
+            <p class="subtitle has-text-grey">Remède is a powerful tool with a wide range of features.</p>
+          </div>
+          <div>
+            <div class="columns inline is-mobile is-multiline is-5 mb-5 centered">
+              <div class="column is-one-third card">
+                <figure class="image is-32x32">
+                  <img src="assets/desktop-icon3d.png" alt="Application de bureau">
+                </figure>
+                <h4 class="has-text-centered">
+                  <a href="/desktop" target="_blank" style="color: #4a4a4a !important">
+                    <b>Desktop applications</b>
+                    <span class="icon m-0 has-text-grey">
+                      <i class="fas fa-external-link"></i>
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div class="column is-one-third card">
+                <figure class="image is-32x32">
+                  <img src="assets/arrows.png" alt="Rimes">
+                </figure>
+                <h4 class="has-text-centered"><b>Rhymes</b></h4>
+              </div>
+              <div class="column is-one-third card">
+                <figure class="image is-32x32">
+                  <img src="assets/sheets.png" alt="Fiches">
+                </figure>
+                <h4 class="has-text-centered"><b>French grammar sheet</b></h4>
+              </div>
+              <div class="column is-one-third card">
+                <figure class="image is-32x32">
+                  <img src="assets/correction.png" alt="Correction">
+                </figure>
+                <h4 class="has-text-centered"><b>Corrector</b></h4>
+              </div>
+              <div class="column is-one-third card">
+                <figure class="image is-32x32">
+                  <img src="assets/offline.png" alt="Hors ligne">
+                </figure>
+                <h4 class="has-text-centered"><b>Offline</b></h4>
+              </div>
+              <div class="column is-one-third card">
+                <figure class="image is-32x32 p-1">
+                  <img src="assets/favoris.png" alt="Favoris">
+                </figure>
+                <h4 class="has-text-centered"><b>Bookmarks</b></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gap-1">
+          <div class="image vertical">
+            <img class="float2" src="assets/rocket.png" alt="Modulable">
+          </div>
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Remède is <span class="has-text-secondary">modular.</span></h4>
+            <p class="subtitle has-text-grey">Thanks to our solid software base, Remède can be easily translated into several languages or reused by another project !</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gap-1">
+          <div class="image vertical">
+            <img src="assets/fast.png" alt="Fast" class="float1">
+          </div>
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Remède is <span class="has-text-warning">fast.</span></h4>
+            <p class="subtitle has-text-grey">Dictionary searching is powered by en index, which makes our dictionary fast.</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gap-1">
+          <div class="image vertical">
+            <img src="assets/opensource.png" alt="Open source" class="float3">
+          </div>
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Remède is <span class="has-text-primary">free.</span></h4>
+            <p class="subtitle has-text-grey">Remède is 100% <i>Open Source</i> (<a style="color: #7a7a7a !important;" class="has-text-gray is-underlined has-text-weight-normal" target="_blank" href="https://github.com/camarm-dev/remede/blob/main/LICENSE">license</a>) and developed for you, thanks to you.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-full">
+        <div class="box gapless has-background-primary p-6" onclick="window.open('https://github.com/camarm-dev/remede')">
+          <h2 class="is-size-1 mb-2 is-size-3-mobile has-text-weight-bold"><i class="fas fa-external-link-square-alt icon-hover"></i> Help us</h2>
+          <p style="font-size: 1.1em">
+            Don't hesitate to check our Github repository, to <em>star</em> it, or even contribute ! Thanks !
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <h1 class="title">Discover our functionalities</h1>
+  <div class="container">
+    <div class="columns no-mg is-multiline">
+      <div class="column is-two-thirds">
+        <div class="box">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Integration right into your home screen</h4>
+            <p class="subtitle has-text-grey">Search for words on Remède or discover the word of the day on your home screen thanks to widgets!</p>
+          </div>
+          <div class="image stacked multiple">
+            <img class="mr-3" src="assets/screenshots/widget1.png" alt="Widget mot du jour">
+            <img src="assets/screenshots/widget2.png" alt="Widget barre de recherche">
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gapless">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">A smart corrector</h4>
+            <p class="subtitle has-text-grey">Powered by <a href="https://languagetool.org" target="_blank"><i>languagetool</i></a>, the Remède corrector offers a simple and effective correction experience!</p>
+          </div>
+          <div class="image anim stacked center">
+            <img src="assets/screenshots/correcteur.png" alt="Correcteur Remède">
+          </div>
+        </div>
+      </div>
+      <div class="column is-full">
+        <div class="box gapless pt-5">
+          <div class="columns center pt-5 mb-0">
+            <div class="column is-one-third">
+              <div class="image hover stacked center">
+                <img src="assets/screenshots/rimes.png" alt="Rimes Remède">
+              </div>
+              <div class="details center">
+                <h4 class="is-size-4 has-text-weight-bold mb-2">Rhymes</h4>
+                <p class="subtitle has-text-grey">Precise, meticulous research</p>
+              </div>
+            </div>
+            <div class="column is-one-third">
+              <div class="image hover stacked center">
+                <img src="assets/screenshots/exemple.png" alt="Exemples Remède">
+              </div>
+              <div class="details center">
+                <h4 class="is-size-4 has-text-weight-bold mb-2">Examples</h4>
+                <p class="subtitle has-text-grey">Find a word in context</p>
+              </div>
+            </div>
+            <div class="column is-one-third">
+              <div class="image hover stacked center">
+                <img src="assets/screenshots/fiches.png" alt="Fiches Remède">
+              </div>
+              <div class="details center">
+                <h4 class="is-size-4 has-text-weight-bold mb-2">Sheets</h4>
+                <p class="subtitle has-text-grey">Learn french grammar</p>
+              </div>
+            </div>
+          </div>
+          <div class="details pt-0">
+            <p class="subtitle has-text-grey">Remède is much more than a dictionary. Find rhymes, examples, French lessons and much more!</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gapless">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Simplified management</h4>
+            <p class="subtitle has-text-grey">Let us take care of the database, and enjoy the best dictionary in the business. Download it and we'll keep an eye on its health!</p>
+          </div>
+          <div class="image stacked anim center">
+            <img src="assets/manage.png" alt="Modale crédits">
+          </div>
+        </div>
+      </div>
+      <div class="column is-two-thirds is-hidden-mobile">
+        <div class="box gapless">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Always there for you</h4>
+            <p class="subtitle has-text-grey">Open Remède with a simple text selection!</p>
+          </div>
+          <div class="image hidden stacked multiple video">
+            <video class="mr-5" title="Ouverture du correcteur Remède avec un texte sélectionné." preload="auto" muted src="/assets/fast_corrector.mp4" onmouseover="this.play()" onmouseout="this.pause()">
+              <source src="/assets/fast_corrector.mp4" type="video/mp4">
+            </video>
+            <video title="Ouverture du dictionnaire Remède avec un mot sélectionné." preload="auto" muted src="/assets/fast_definition.mp4" onmouseover="this.play()" onmouseout="this.pause()">
+              <source src="/assets/fast_definition.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box gapless">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Integrity and tracking of our data</h4>
+            <p class="subtitle has-text-grey">Find the Remède license, our resource guides or a word's sources easily! Transparency is important to us.</p>
+          </div>
+          <div class="image stacked anim small center">
+            <img src="assets/credits.png" alt="Modale crédits">
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box gapless">
+          <div class="details">
+            <h4 class="is-size-4 has-text-weight-bold mb-2">Updated database</h4>
+            <p class="subtitle has-text-grey">We enrich the database regularly, adding new words and updating others. Our goal is to serve over a million words by 2025.</p>
+          </div>
+          <div class="image hover left vertical">
+            <img class="float3" src="assets/database.png" alt="Modale crédits">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <h1 class="title">Discover Remède</h1>
+  <div class="container">
+    <div class="columns no-mg is-multiline">
+      <div class="column is-one-third" onclick="window.location = '/download'">
+        <div class="pt-4 pb-4 box is-flex is-clickable is-flex-direction-column is-justify-content-space-between is-align-items-flex-center">
+          <p class="pl-3">
+            <span class="tag is-primary">Download</span>
+            <br>
+            <span class="icon has-text-grey ml-0">
+              <i class="fas fa-external-link"></i>
+            </span>
+            Download Remède for smartphone
+          </p>
+        </div>
+      </div>
+      <div class="column is-one-third" onclick="window.location = '/desktop'">
+        <div class="pt-4 pb-4 box is-flex is-clickable is-flex-direction-column is-justify-content-space-between is-align-items-flex-center">
+          <p class="pl-3">
+            <span class="tag is-primary">Download</span>
+            <br>
+            <span class="icon has-text-grey ml-0">
+              <i class="fas fa-external-link"></i>
+            </span>
+            Download Remède for desktop
+          </p>
+        </div>
+      </div>
+      <div class="column is-one-third" onclick="window.location = '/next'">
+        <div class="pt-4 pb-4 box is-flex is-clickable is-flex-direction-column is-justify-content-space-between is-align-items-flex-center">
+          <p class="pl-3">
+            <span class="tag is-primary">Discover</span>
+            <br>
+            <span class="icon has-text-grey ml-0">
+              <i class="fas fa-external-link"></i>
+            </span>
+            Discover the Remède Next program
+          </p>
+        </div>
+      </div>
+      <div class="column is-one-third" onclick="window.location = '/blog'">
+        <div class="pt-4 pb-4 box is-flex is-clickable is-flex-direction-column is-justify-content-space-between is-align-items-flex-center">
+          <p class="pl-3">
+            <span class="tag is-primary">Discover</span>
+            <br>
+            <span class="icon has-text-grey ml-0">
+              <i class="fas fa-external-link"></i>
+            </span>
+            Discover the Remède blog
+          </p>
+        </div>
+      </div>
+      <div class="column is-one-third" onclick="window.open('https://docs.remede.camarm.fr')">
+        <div class="pt-4 pb-4 box is-flex is-clickable is-flex-direction-column is-justify-content-space-between is-align-items-flex-center">
+          <p class="pl-3">
+            <span class="tag is-primary">Discover</span>
+            <br>
+            <span class="icon has-text-grey ml-0">
+              <i class="fas fa-external-link"></i>
+            </span>
+            Discover the documentation
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="section">
+  <div class="container">
+    <div class="pb-2 is-flex is-flex-wrap-wrap is-justify-content-between is-align-items-center">
+      <div class="mr-auto mb-1">
+        <a class="is-inline-block" href="#">
+          <img class="image" src="assets/footer.png" alt="Logo Remède" style="height: 3em"></a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="is-flex-tablet is-justify-content-between is-align-items-center">
+      <p class="has-text-weight-normal has-text-grey">Copyright © Remède 2023 - 2024, <a style="color: #7a7a7a !important;" class="has-text-gray is-underlined" target="_blank" href="https://github.com/camarm-dev/remede/blob/main/LICENSE">CECILL-2.1</a></p>
+      <div class="py-2 is-hidden-tablet"></div>
+      <div class="ml-auto">
+        <a class="mr-4 is-inline-block" href="https://play.google.com/dev" target="_blank"><i class="fab fa-google-play"></i> Play Store</a>
+        <a class="mr-4 is-inline-block" href="mailto:software@camarm.dev"><i class="fas fa-envelope"></i> Email</a>
+        <a class="mr-4 is-inline-block" href="https://github.com/camarm-dev/remede"><i class="fab fa-github"></i> Github</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<style>
+hr {
+    width: 65%;
+    margin: auto;
+    height: .55px;
+    border-radius: 5px;
+    margin-top: 2em;
+}
+
+.has-background-primary {
+    background: var(--primary) !important;
+    color: #fff !important;
+    cursor: pointer;
+}
+
+.has-background-secondary {
+    background: #31bb67 !important;
+    color: #fff !important
+}
+
+hr {
+    background-color: var(--grey)
+}
+
+@media (min-width: 1024px) {
+    .box.img img:hover {
+        animation-play-state: paused;
+        scale: 1.01 !important;
+        transition: .2s ease-in-out;
+    }
+}
+
+.float1 {
+    animation: float1 10s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.float2 {
+    animation: float2 20s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+.float3 {
+    animation: float3 10s infinite ease-in-out;
+    transition: .5s ease-in-out;
+}
+
+
+@keyframes float1 {
+    0% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    50% {
+        transform: translate(0%, -8%);
+    }
+    60% {
+        transform: translate(0%, -8%);
+        scale: 1.05;
+    }
+    90% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    100% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+}
+
+
+@keyframes float2 {
+    0% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+    50% {
+        transform: translate(-2%, -8%);
+        scale: 1;
+    }
+    60% {
+        transform: translate(-2%, -8%);
+        scale: 1.02;
+    }
+    90% {
+        transform: translate(0%, 0%);
+        scale: 1.02;
+    }
+    100% {
+        transform: translate(0%, 0%);
+        scale: 1;
+    }
+}
+
+@keyframes float3 {
+    0% {
+        scale: 1;
+    }
+    50% {
+        scale: 1;
+    }
+    60% {
+        scale: 1.03;
+    }
+    90% {
+        scale: 1.03;
+    }
+    100% {
+        scale: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .box div {
+        margin-left: 0 !important;
+    }
+
+    .column {
+        padding: 0 !important;
+    }
+
+    .box.img:not(.main) {
+        display: none;
+    }
+
+    .card {
+        padding: 1em !important;
+        margin-bottom: .5em;
+    }
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

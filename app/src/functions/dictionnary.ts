@@ -42,7 +42,7 @@ async function getRandomWordFromDatabase() {
 }
 
 async function doesWordExistsWithAPI(word: string) {
-    return (await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json())).message != "Mot non trouvé"
+    return (await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json()).catch(() => { return { message: "Mot non trouvé" } })).message != "Mot non trouvé"
 }
 
 async function doesWordExistsWithDatabase(word: string) {

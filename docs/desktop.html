@@ -1,0 +1,241 @@
+---
+# front matter tells Jekyll to process Liquid
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Le dictionnaire mobile en français !">
+  <meta name="author" content="camarm">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="/assets/icon.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+  <title>Remède | Applications de bureau</title>
+  <meta property="og:title" content="Remède | Le dictionnaire" />
+  <meta property="og:url" content="https://remede.camarm.fr" />
+  <meta property="og:image" content="https://remede.camarm.fr/og.png" />
+</head>
+<body>
+<nav class="navbar is-fixed" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item mr-5 mb-1" href="/">
+      <img src="assets/logo.png" class="image is-h is-small" alt="Remède icon"/>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/">
+        Home
+      </a>
+
+      <a class="navbar-item" href="/blog">
+        Blog
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/blog" target="_blank">
+            About
+          </a>
+          <a class="navbar-item" href="/desktop" target="_blank">
+            Desktop
+          </a>
+          <a class="navbar-item" href="https://support.camarm.fr" target="_blank">
+            Support
+          </a>
+          <a class="navbar-item" href="mailto:software@camarm.dev">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
+            Credits
+          </a>
+          <a class="navbar-item" href="https://github.com/camarm-dev/remede/issues/new/choose" target="_blank">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="/download">
+            <strong>Download</strong>
+          </a>
+          <a class="button is-light" href="https://docs.remede.camarm.fr" target="_blank">
+            Documentation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="section mt-6 mb-6 is-medium is-full">
+  <div class="columns is-centered is-align-items-center is-justify-content-center">
+    <div class="column is-half">
+      <h1 class="title no-mg is-large has-text-dark">
+        Applications de
+        <span class="is-family-secondary">bureau</span>;<br>
+        <i class="fas fa-arrow-right has-text-primary"></i>
+        <span class="has-text-primary">Remède, sur ton ordinateur</span>
+      </h1>
+      <p class="has-text-grey">Choisis ta plateforme ci-dessous et profite du meilleur dictionnaire de bureau dès maintenant !</p>
+      <br>
+      <a href="/" class="button is-primary">Découvrir Remède</a>
+    </div>
+    <div class="column is-half pl-6">
+      <img class="image ml-6 is-large" src="/assets/desktop.png" alt="Remède phone"/>
+    </div>
+  </div>
+</section>
+<section class="section is-full">
+  <div class="container">
+    <div class="columns no-mg is-multiline">
+      <div class="column is-one-third">
+        <div class="box gapless p-3">
+          <div class="mb-2 is-flex is-justify-content-space-between">
+            <span class="tag is-primary">Linux</span>
+            <figure class="image is-32x32 m-0">
+              <img src="assets/icon-linux.png" alt="Icon linux">
+            </figure>
+          </div>
+          <div class="mb-2">
+            <h2 class="title mb-0"><span class="is-family-secondary">Linux</span> <span class="tag">1.3.0-beta</span></h2>
+            <p class="has-text-grey">
+              Choisi ta plateforme et installe Remède sur ton ordinateur !
+            </p>
+          </div>
+          <div class="buttons">
+            <a href="https://api-remede.camarm.fr/release/deb?cache=no" download="remede.deb" class="button is-primary">DEB</a>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gapless p-3">
+          <div class="mb-2 is-flex is-justify-content-space-between">
+            <span class="tag is-primary">Windows</span>
+            <figure class="image is-32x32 m-0">
+              <img src="assets/icon-win.png" alt="Icon windows">
+            </figure>
+          </div>
+          <div class="mb-2">
+            <h2 class="title mb-0"><span class="is-family-secondary">Windows</span> <span class="tag">1.3.0-beta</span></h2>
+            <p class="has-text-grey">
+              Choisi ton format et profite de Remède sur Windows !
+            </p>
+          </div>
+          <div class="buttons">
+            <a href="https://api-remede.camarm.fr/release/msi?cache=no" download="remede.msi" class="button is-primary">MSI</a>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gapless p-3">
+          <div class="mb-2 is-flex is-justify-content-space-between">
+            <span class="tag is-primary">MacOS</span>
+            <figure class="image is-32x32 m-0">
+              <img src="assets/icon-ios.png" alt="Icon ios">
+            </figure>
+          </div>
+          <div class="mb-2">
+            <h2 class="title mb-0"><span class="is-family-secondary">MacOS</span> <span class="tag">1.3.0-beta</span></h2>
+            <p class="has-text-grey">
+              Installe Remède sur ton Mac !
+            </p>
+          </div>
+          <div class="buttons">
+            <a href="https://api-remede.camarm.fr/release/aarch64.dmg?cache=no" download="remede.dmg" class="button is-small is-primary">DMG (aarch64)</a>
+            <a href="https://api-remede.camarm.fr/release/x64.dmg?cache=no" download="remede.dmg" class="button is-small is-primary">DMG (x64)</a>
+            <a href="https://api-remede.camarm.fr/release/aarch64.app.tar.gz?cache=no" download="remede.app" class="button is-small is-primary">APP (aarch64)</a>
+            <a href="https://api-remede.camarm.fr/release/x64.app.tar.gz?cache=no" download="remede.app" class="button is-small is-primary">APP (x64)</a>
+          </div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="box gapless p-3">
+          <div class="mb-2 is-flex is-justify-content-space-between">
+            <span class="tag is-primary">Github</span>
+            <figure class="image is-32x32 m-0">
+              <img src="assets/icon-github.png" alt="Icon github">
+            </figure>
+          </div>
+          <div class="mb-2">
+            <h2 class="title mb-0"><span class="is-family-secondary">Autres</span> <span class="tag">latest</span></h2>
+            <p class="has-text-grey">
+              Découvre tous les builds disponibles, ainsi que les versions beta dans les releases Github !
+            </p>
+          </div>
+          <div>
+            <a href="https://github.com/camarm-dev/remede/releases" download="remede.apk" class="button is-primary">
+              <span>Découvrir</span>
+              <span class="icon has-text-white">
+                <i class="fas fa-external-link"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="section">
+  <div class="container">
+    <div class="pb-2 is-flex is-flex-wrap-wrap is-justify-content-between is-align-items-center">
+      <div class="mr-auto mb-1">
+        <a class="is-inline-block" href="#">
+          <img class="image" src="assets/footer.png" alt="Logo Remède" style="height: 3em"></a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="is-flex-tablet is-justify-content-between is-align-items-center">
+      <p class="has-text-weight-normal has-text-grey">Copyright © Remède 2023 - 2024, <a style="color: #7a7a7a !important;" class="has-text-gray is-underlined" target="_blank" href="https://github.com/camarm-dev/remede/blob/main/LICENSE">CECILL-2.1</a></p>
+      <div class="py-2 is-hidden-tablet"></div>
+      <div class="ml-auto">
+        <a class="mr-4 is-inline-block" href="https://play.google.com/dev" target="_blank"><i class="fab fa-google-play"></i> Play Store</a>
+        <a class="mr-4 is-inline-block" href="mailto:software@camarm.dev"><i class="fas fa-envelope"></i> Email</a>
+        <a class="mr-4 is-inline-block" href="https://github.com/camarm-dev/remede"><i class="fab fa-github"></i> Github</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

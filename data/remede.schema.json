@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://remede.camarm.fr/schema.json",
+  "title": "Remède word document.",
+  "description": "A Remède word document schema. This document represent all the word metadata.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "synonyms": {
+      "description": "The synonyms of the word.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "antonyms": {
+      "description": "The antonyms of the word.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "etymologies": {
+      "description": "The etymologies of the word.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "definitions": {
+      "description": "The word's definitions.",
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "gender",
+          "nature",
+          "explanations",
+          "examples",
+          "plurals"
+        ],
+        "properties": {
+          "gender": {
+            "description": "Word gender for this definition.",
+            "type": "string",
+            "minLength": 0
+          },
+          "nature": {
+            "description": "Word nature for this definition.",
+            "type": "string",
+            "minLength": 1
+          },
+          "explanations": {
+            "description": "Different explanations of the word.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "examples": {
+            "description": "Different examples usages of the word.",
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 0,
+            "items": {
+              "required": [
+                "content",
+                "sources"
+              ],
+              "properties": {
+                "content": {
+                  "description": "The example content.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sources": {
+                  "description": "The example source.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "plurals": {
+            "description": "Plurals orthography of the word.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "description": "The label of the plural (example: \"Masculins\" or \"Variant 1\").",
+                  "type": "string",
+                  "minLength": 0
+                },
+                "singular": {
+                  "description": "The singular form.",
+                  "type": "string",
+                  "minLength": 0
+                },
+                "plural": {
+                  "description": "The plural form.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids",
+      "items": {
+        "minLength": 1,
+        "type": "string",
+        "enum": [
+          "fr_wik",
+          "antonyme_org",
+          "synonymo_fr",
+          "conjuguons_fr",
+          "en_wik"
+        ]
+      }
+    },
+    "phoneme": {
+      "type": "string",
+      "description": "The word IPS notation.",
+      "minLength": 1
+    },
+    "conjugations": {
+      "type": "object",
+      "description": "The word's conjugations if it is a verb.",
+      "patternProperties": {
+        "^.*$": {
+          "patternProperties": {
+            "^.*$": {
+              "patternProperties": {
+                "^.*$": {
+                  "type": "string"
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "synonyms",
+    "antonyms",
+    "etymologies",
+    "definitions",
+    "sources",
+    "phoneme",
+    "conjugations"
+  ],
+  "additionalProperties": false
+}

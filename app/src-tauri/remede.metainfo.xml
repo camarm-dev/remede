@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>remede</id>
+    <launchable type="desktop-id">remede.desktop</launchable>
+    <name>Remède</name>
+    <developer id="remede">
+        <name>Armand CAMPONOVO</name>
+    </developer>
+    <content_rating type="oars-1.0" />
+    <url type="bugtracker">https://github.com/camarm-dev/remede/issues</url>
+    <url type="donation">https://ko-fi.com/camarm</url>
+    <url type="homepage">https://remede.camarm.fr</url>
+    <url type="vcs-browser">https://github.com/camarm-dev/remede</url>
+    <url type="contribute">https://docs.remede.camarm.fr/docs/contributing</url>
+    <project_license>GPL-3.0</project_license>
+    <metadata_license>CC-BY-4.0</metadata_license>
+    <summary>The free dictionary</summary>
+    <summary xml:lang="fr">Le dictionnaire libre</summary>
+    <description>
+        <p>
+            Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.
+
+            Remède is distributed under the CECILL-2.1 license, which is compatible with GPL-3.0 license.
+        </p>
+        <p xml:lang="fr">
+            Remède est un dictionnaire puissant développé par sa communauté. Il dispose d'une large base de +900 000 mots, avec des synonymes, des antonymes, des conjugaisons et des rimes. Vous y retrouverez aussi un correcteur et un mode hors ligne. Avec Remède, ne perdez plus vos mots.
+
+            Remède est distribué sous la licence CECILL-2.1, qui est compatible avec la licence GPL-3.0.
+        </p>
+    </description>
+    <supports>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
+        <display_length compare="ge">360</display_length>
+    </supports>
+    <screenshots>
+        <screenshot type="default" xml:lang="fr">
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/header.png</image>
+            <caption>Remède</caption>
+        </screenshot>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/header.png</image>
+            <caption>Remède</caption>
+        </screenshot>
+        <screenshot xml:lang="fr">
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/home.png</image>
+            <caption>Remède page d'accueil</caption>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/home.png</image>
+            <caption>Remède homepage</caption>
+        </screenshot>
+        <screenshot xml:lang="fr">
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/definition.png</image>
+            <caption>Remède page de définition</caption>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/definition.png</image>
+            <caption>Definition page</caption>
+        </screenshot>
+        <screenshot xml:lang="fr">
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/correction.png</image>
+            <caption>Correcteur</caption>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/correction.png</image>
+            <caption>Corrector</caption>
+        </screenshot>
+        <screenshot xml:lang="fr">
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/fr/settings.png</image>
+            <caption>Paramètres</caption>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/camarm-dev/remede/.github/screenshots/settings.png</image>
+            <caption>Settings</caption>
+        </screenshot>
+    </screenshots>
+    <requires>
+        <display_length compare="ge">360</display_length>
+    </requires>
+    <releases>
+        <release version="1.3.0" date="2024-08-01">
+            <description>
+                <ul>
+                    <li>Added desktop application</li>
+                    <li>More than 900 000 french words</li>
+                    <li>Added English support !</li>
+                    <li>New database schema !</li>
+                </ul>
+            </description>
+        </release>
+    </releases>
+    <update_contact>software@camarm.dev</update_contact>
+
+    <keywords>
+        <keyword>Dictionary</keyword>
+        <keyword>French</keyword>
+        <keyword>English</keyword>
+        <keyword>Correction</keyword>
+        <keyword>Rhymes</keyword>
+    </keywords>
+    <references>
+        <doi>10.5281/zenodo.10546995</doi>
+        <citation_cff>https://raw.githubusercontent.com/camarm-dev/remede/main/CITATIONS.cff</citation_cff>
+    </references>
+</component>

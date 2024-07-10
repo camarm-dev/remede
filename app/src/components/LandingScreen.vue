@@ -18,10 +18,10 @@
         <swiper-slide>
           <div>
             <div class="title" data-swiper-parallax="-100">
-              <h1 class="remede-font no-capitalize">Bienvenue sur <span class="contrast">Remède</span> !</h1>
+              <h1 class="remede-font no-capitalize">{{ $t('landingScreen.welcomeTo') }} <span class="contrast">Remède</span> !</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              Votre nouveau dictionnaire préféré !
+              {{ $t('landingScreen.yourNewFavoriteDictionary') }}
             </div>
           </div>
           <div
@@ -33,15 +33,15 @@
             <img class="image quote" :src="Quote" alt="Remède icon"/>
             <img class="image ellipse" :src="Ellipse" alt="Remède icon"/>
           </div>
-          <LandingScreenNextButton class="margin-bottom" text="Commencer"/>
+          <LandingScreenNextButton class="margin-bottom" :text="$t('start')"/>
         </swiper-slide>
         <swiper-slide>
           <div>
             <div class="title" data-swiper-parallax="-100">
-              <h1 class="remede-font no-capitalize">Une application, tous vos <span class="contrast">mots</span> !</h1>
+              <h1 class="remede-font no-capitalize">{{ $t('landingScreen.oneAppAllYour') }} <span class="contrast">{{ $t('landingScreen.words') }}</span> !</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              + 340 000 mots, mais aussi des rimes, des exemples, un correcteur et plus encore... Remède est bien plus qu'un dictionnaire !
+              {{ $t('landingScreen.functionalities') }}
             </div>
           </div>
           <div
@@ -56,10 +56,10 @@
         <swiper-slide>
           <div>
             <div class="title" data-swiper-parallax="-100">
-              <h1 class="remede-font no-capitalize">Mais surtout ... <span class="contrast">open source</span> !</h1>
+              <h1 class="remede-font no-capitalize">{{ $t('landingScreen.butAboveAll') }} <span class="contrast">{{ $t('landingScreen.openSource') }}</span> !</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              Et oui ! Remède grandi avec sa communauté et est 100% open source !
+              {{ $t('landingScreen.openSourceDescription') }}
             </div>
           </div>
           <div
@@ -74,10 +74,10 @@
         <swiper-slide>
           <div>
             <div class="title" data-swiper-parallax="-100">
-              <h1 class="remede-font no-capitalize">Prêts à entrer dans l'<span class="contrast">aventure</span> ?</h1>
+              <h1 class="remede-font no-capitalize">{{ $t('landingScreen.readyToStart') }}<span class="contrast">{{ $t('landingScreen.adventure') }}</span> ?</h1>
             </div>
             <div class="subtitle" data-swiper-parallax="-200">
-              Guérir vos maux face au français, c'est possible dès maintenant avec Remède !
+              {{ $t('landingScreen.tagline') }}
             </div>
           </div>
           <div
@@ -88,7 +88,7 @@
             <img class="slide-image" :src="RocketIcon" alt="Illustration">
           </div>
           <ion-button @click="close()" shape="round" expand="full" fill="outline">
-            C'est parti <ion-icon slot="end" :icon="arrowForward"/>
+            {{ $t('letsgo') }} <ion-icon slot="end" :icon="arrowForward"/>
           </ion-button>
         </swiper-slide>
       </swiper>

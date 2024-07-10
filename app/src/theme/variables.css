@@ -3,6 +3,74 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 
+@keyframes spawn {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    height: auto;
+    opacity: 1;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .hidden-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hidden-desktop {
+    display: none;
+  }
+
+  .hidden-mobile {
+    transition: .5s ease-in-out;
+    animation: .5s ease-in-out spawn;
+  }
+
+  .radius-0 {
+    border-radius: 0;
+  }
+
+  ion-list.list-inset:not(.search-results,.corrector,.fullwidth) {
+    scale: 1.02;
+    margin-inline-start: calc(var(--margin-start, 16px) + 1em) !important;
+    max-width: 60%;
+    margin: 16px auto;
+  }
+
+  .corrector ion-textarea, .corrector .correction-content {
+    min-height: 10em !important;
+  }
+
+  ion-menu {
+    width: max-content;
+  }
+
+  ion-toolbar.hidden-desktop + ion-toolbar {
+    margin-top: 1em;
+  }
+
+  .mt {
+    margin-top: 2.5em !important;
+  }
+
+  .no-desktop-swiper .swiper-slide {
+    max-width: 30% !important;
+    margin-right: 1em;
+  }
+
+  .no-desktop-swiper .swiper-pagination {
+    display: none;
+  }
+}
+
 @font-face {
   font-family: "IMBPlexSerif";
   font-weight: normal;
@@ -327,4 +395,17 @@ html {
   /* For more information on dynamic font scaling, visit the documentation:
   https://ionicframework.com/docs/layout/dynamic-font-scaling */
   --ion-dynamic-font: var(--ion-default-dynamic-font);
+}
+
+
+body.dark .new-version {
+  content: url("@/assets/newVersionDark.png");
+}
+
+body.dark .new-base {
+  content: url("@/assets/newBaseDark.png");
+}
+
+body.dark .changelog {
+  content: url("@/assets/changelogDark.png");
 }

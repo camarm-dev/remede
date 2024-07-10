@@ -29,14 +29,13 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 - [Documentation](#documentation)
 - [Screenshots](#screenshots)
 
-## Current: 1.2.0-beta — Brown Sheep
+## Current: 1.3.0-beta — Phenomenal Feather
 
-La version `1.2.0`, nom de code `Brown Sheep` inclue les nouvelles fonctionnalités suivantes :
-- [x] Dictionnaire de **rimes**
-- [x] Nouvelle navigation **encore plus agréable**.
-- [x] Actions natives quand **un mot est sélectionné** n'importe où dans votre téléphone !
-- [x] Widget pour un accès **plus rapide**.
-- [x] **Base révisée** avec +340 000 mots !
+La version `1.3.0`, nom de code `Phenomenal Feather` inclue les nouvelles fonctionnalités suivantes :
+- [x] Application traduite en anglais
+- [ ] Nouvelle structure de données
+- [ ] Applications de bureau
+- [ ] **Base révisée** avec +900 000 mots !
 - [ ] Téléchargeable sur le **Play Store** !
 
 ## Télécharger
