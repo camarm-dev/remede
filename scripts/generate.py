@@ -154,12 +154,14 @@ if __name__ == '__main__':
         print(f"Resumed at word {all_words[0]}. Continuing generation...\n")
 
     database = RemedeDatabase(sqlite3.connect('data/remede.db'))
+    database.init_dictionary()
 
     try:
         remedize(all_words)
     except KeyboardInterrupt:
         print("Received exit signal.")
 
+    database.save()
     after = datetime.datetime.now()
     time = after - before
     hour, minute, second = getTimeDetails(time)
