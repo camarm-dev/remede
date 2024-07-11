@@ -1,11 +1,10 @@
-from sqlite3 import Cursor, Connection, register_adapter, register_converter
+import json
+from sqlite3 import Cursor, Connection
 
 
 class RemedeDatabase:
 
     def __init__(self, database: Connection):
-        register_adapter(bool, int)
-        register_converter("BOOLEAN", lambda v: bool(int(v)))
         self.database = database
         self.cursor: Cursor = database.cursor()
 
@@ -19,4 +18,4 @@ class RemedeDatabase:
         self.cursor.execute("CREATE TABLE IF NOT EXISTS dictionary (word TEXT NOT NULL, indexed TEXT NOT NULL, phoneme TEXT NOT NULL, nature TEXT NOT NULL, syllables INT NOT NULL, min_syllables INT NOT NULL, max_syllables INT NOT NULL, elidable BOOLEAN, feminine BOOLEAN, document TEXT NOT NULL)")
 
     def insert(self, word: str, sanitized_word: str, phoneme: str, nature: str, syllables: int, min_syllables: int, max_syllables: int, elidable: bool, feminine: bool, document: dict):
-        self.cursor.execute("INSERT INTO dictionary VALUES (?,?,?,?,?,?,?,?,?,?)", (word, phoneme, sanitized_word, nature, syllables, min_syllables, max_syllables, elidable, feminine, document))
+        self.cursor.execute("INSERT INTO dictionary VALUES (?,?,?,?,?,?,?,?,?,?)", (word, phoneme, sanitized_word, nature, syllables, min_syllables, max_syllables, elidable, feminine, json.dumps(document)))
