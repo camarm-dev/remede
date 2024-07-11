@@ -132,7 +132,6 @@ def getTimeDetails(time_object):
 if __name__ == '__main__':
 
     # Resume option
-    letters = []
     if '--resume' in sys.argv:
         pass
     print(f"Generating Remède database...\n")
