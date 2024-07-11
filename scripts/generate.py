@@ -4,7 +4,8 @@ import sys
 import urllib.parse
 import requests
 
-from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_wordlist
+from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_wordlist, \
+    save_progression_wordlist
 from scripts.utils.dictionary_database import RemedeDatabase
 from scripts.utils.sanitize import sanitize_word
 from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
@@ -104,21 +105,28 @@ def safe_get_word_document(word: str, ipa: str):
 def remedize(word_list: list):
     total = len(word_list)
     errored = 0
-    for word in word_list:
-        if word in custom_words:
-            document = custom_words_json[word]
-            ipa = document["phoneme"]
-        else:
-            ipa = get_ipa(word)
-            document = safe_get_word_document(word, ipa)
-        if not document:
-            errored += 1
-        elidable, feminine, syllables, min_syllables, max_syllables, nature = get_word_metadata(word, ipa)
-        # No Openlexicon data, need to find by ourselves
-        if not nature:
-            nature = get_word_natures(document)
-        database.insert(word, sanitize_word(word), ipa, nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
-        print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
+    try:
+        for word in word_list:
+            if word in custom_words:
+                document = custom_words_json[word]
+                ipa = document["phoneme"]
+            else:
+                ipa = get_ipa(word)
+                document = safe_get_word_document(word, ipa)
+            if not document:
+                errored += 1
+            elidable, feminine, syllables, min_syllables, max_syllables, nature = get_word_metadata(word, ipa)
+            # No Openlexicon data, need to find by ourselves
+            if not nature:
+                nature = get_word_natures(document)
+            database.insert(word, sanitize_word(word), ipa, nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
+            print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
+    except Exception as e:
+        print(f"Program raised error {e}. Saving progression...")
+        save = word_list[word_list.index(word):]
+        save_progression_wordlist(save)
+        raise KeyboardInterrupt
+
 
 
 def getTimeDetails(time_object):
@@ -150,7 +158,7 @@ if __name__ == '__main__':
     try:
         remedize(all_words)
     except KeyboardInterrupt:
-        print("Saving and exit...")
+        print("Received exit signal.")
 
     after = datetime.datetime.now()
     time = after - before
