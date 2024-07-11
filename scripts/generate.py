@@ -14,6 +14,28 @@ modes_conjugation_subjects = {
     "Participe_Passé": "(a / est)"
 }
 
+natures_keywords = {
+    "Lettre": "LETTRE",
+    "Locution adverbiale": "LOC",
+    "Verbe": "VER",
+    "Nom": "NOM",
+    "Adjectif": "ADJ",
+    "Adverbe": "ADV",
+    "Préposition": "PRO",
+    "Conjonction": "CON",
+    "Pronom": "PRO",
+    "Onométopée": "ONO",
+}
+
+
+def get_word_natures(document: dict):
+    natures = []
+    for definition in document.get('definitions', []):
+        if definition['nature'] != '':
+            nature = definition.get('nature', '').split(' ')[0] # "Nom commun 1" will be Nom
+            natures.append(natures_keywords[nature])
+    return ','.join(natures)
+
 
 def get_ipa(word: str):
     return all_ipa.get(word, '')
@@ -56,8 +78,8 @@ def get_word_document(word: str, ipa: str):
         "etymologies": result['etymologies'],
         "definitions": [
             {
-                "genre": result['genre'][index] if result['genre'][index] != result['nature'][index] else '',
-                "classe": result['nature'][index],
+                "gender": result['genre'][index] if result['genre'][index] != result['nature'][index] else '',
+                "nature": result['nature'][index],
                 "explanations": result['natureDef'][index][0],
                 "examples": result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1],
                 "plurals": []
@@ -91,9 +113,11 @@ def remedize(word_list: list):
             document = safe_get_word_document(word, ipa)
         if not document:
             errored += 1
-        # TODO nature
-        elidable, feminine, syllables, min_syllables, max_syllables = get_word_metadata(word, ipa)
-        database.insert(word, sanitize_word(word), ipa, "", syllables, min_syllables, max_syllables, elidable, feminine, document)
+        elidable, feminine, syllables, min_syllables, max_syllables, nature = get_word_metadata(word, ipa)
+        # No Openlexicon data, need to find by ourselves
+        if not nature:
+            nature = get_word_natures(document)
+        database.insert(word, sanitize_word(word), ipa, nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
         print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs")
 
 
