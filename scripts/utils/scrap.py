@@ -21,7 +21,7 @@ def count_syllables(word: str):
     return count
 
 
-def get_word_metadata(word: str, phoneme: str) -> Tuple[bool | None, bool, int, int, int, str | False]:
+def get_word_metadata(word: str, phoneme: str) -> Tuple[bool | None, bool, int, int, int, str | bool]:
     """
     Get the number of syllables, the elidable property and if the word end phoneme is feminine.
     :param word: string of word
