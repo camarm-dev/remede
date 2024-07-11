@@ -21,18 +21,18 @@ def count_syllables(word: str):
     return count
 
 
-def get_word_metadata(word: str, phoneme: str) -> Tuple[bool | None, bool, int, int, int]:
+def get_word_metadata(word: str, phoneme: str) -> Tuple[bool | None, bool, int, int, int, str | False]:
     """
     Get the number of syllables, the elidable property and if the word end phoneme is feminine.
     :param word: string of word
     :param phoneme: phoneme of word
-    :return: Elidable, Feminine, Syllable count, Min syllables count, Max syllables count
+    :return: Elidable, Feminine, Syllable count, Min syllables count, Max syllables count and Nature
     """
     syllables_count = count_syllables(word.lower())
     openlexicon_result = get_word_stats(word)
     if openlexicon_result:
-        return openlexicon_result.elidable, openlexicon_result.feminine, syllables_count, openlexicon_result.min_syllables, openlexicon_result.max_syllables
-    return None, phoneme[-1] == 'e', syllables_count, syllables_count, syllables_count
+        return openlexicon_result.elidable, openlexicon_result.feminine, syllables_count, openlexicon_result.min_syllables, openlexicon_result.max_syllables, openlexicon_result.nature
+    return None, phoneme[-1] == 'e', syllables_count, syllables_count, syllables_count, False
 
 
 def get_synonyms(word: str):
