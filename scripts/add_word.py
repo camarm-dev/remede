@@ -3,6 +3,9 @@ import runpy
 import sqlite3
 import sys
 
+from generate import get_ipa, safe_get_word_document, get_word_natures
+from utils.scrap import get_word_metadata
+from utils.dataset import get_words, get_custom_words, get_word2ipa
 from utils.dictionary_database import RemedeDatabase
 from utils.sanitize import sanitize_word
 
@@ -33,6 +36,19 @@ def getTimeDetails(time_object):
     return hours, minutes, seconds
 
 
+def add_to_database(word: str):
+    if word in custom_words:
+        document = custom_words_json[word]
+        ipa = document["phoneme"]
+    else:
+        ipa = get_ipa(word)
+        document = safe_get_word_document(word, ipa)
+    elidable, feminine, syllables, min_syllables, max_syllables, nature = get_word_metadata(word, ipa)
+    if not nature:
+        nature = get_word_natures(document)
+    database.insert(word, sanitize_word(word), ipa, nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
+
+
 if __name__ == '__main__':
     before = datetime.datetime.now()
 
@@ -57,6 +73,18 @@ if __name__ == '__main__':
         print("- Ajout des mots à la liste de mots...")
         add_to_wordlist(words_to_add)
         print("Fait.")
+        print("- Génération des ressources...")
+        runpy.run_module('pre_generate_ressources', run_name='__main__')
+        print("Fait.")
+
+        # Wordlist
+        all_words = get_words()
+        # IPA.json
+        all_ipa = get_word2ipa()
+        # custom_words.json
+        custom_words_json = get_custom_words()
+        custom_words = custom_words_json.keys()
+
         for element in words_to_add:
             word, phoneme = element
 
@@ -64,21 +92,10 @@ if __name__ == '__main__':
                 print(f"Phoneme must be formated like \"/ʁəmɛd/\", skipping {word}.")
                 continue
 
-            print(f"Ajout du mot \"{word}\"...")
-
-            print("- Construction du document Remède...")
-            document = get_word_document(word, phoneme)
-            print("Fait.")
-
-            print("- Insertion du document Remède...")
-            database.insert(word, phoneme)
-            print("Fait.")
+            add_to_database(word)
 
         print("- Sauvegarde de la base de données...")
         database.save()
-        print("Fait.")
-        print("- Génération des ressources...")
-        runpy.run_module('pre_generate_ressources', run_name='__main__')
         print("Fait.")
 
     except Exception as e:
