@@ -4,7 +4,7 @@ import sys
 import urllib.parse
 import requests
 
-from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words
+from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_wordlist
 from scripts.utils.dictionary_database import RemedeDatabase
 from scripts.utils.sanitize import sanitize_word
 from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
@@ -130,12 +130,7 @@ def getTimeDetails(time_object):
 
 
 if __name__ == '__main__':
-
-    # Resume option
-    if '--resume' in sys.argv:
-        pass
     print(f"Generating Remède database...\n")
-
     # Wordlist
     all_words = get_words()
     # IPA.json
@@ -144,6 +139,11 @@ if __name__ == '__main__':
     custom_words_json = get_custom_words()
     custom_words = custom_words_json.keys()
     before = datetime.datetime.now()
+
+    # Resume option: replace wordlist
+    if '--resume' in sys.argv:
+        all_words = get_saved_wordlist()
+        print(f"Resumed at word {all_words[0]}. Continuing generation...\n")
 
     database = RemedeDatabase(sqlite3.connect('data/remede.db'))
 
