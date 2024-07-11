@@ -1,5 +1,4 @@
 import datetime
-import json
 import runpy
 import sqlite3
 import sys
