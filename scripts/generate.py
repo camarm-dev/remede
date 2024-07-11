@@ -1,15 +1,13 @@
 import datetime
-import json
 import sqlite3
 import sys
 import urllib.parse
-
 import requests
 
 from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words
 from scripts.utils.dictionary_database import RemedeDatabase
 from scripts.utils.sanitize import sanitize_word
-from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, count_syllables, get_word_stats
+from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
 
 modes_conjugation_subjects = {
     "Participe_Présent": "(en)",
@@ -58,7 +56,7 @@ def get_word_document(word: str, ipa: str):
         "etymologies": result['etymologies'],
         "definitions": [
             {
-                "genre": result['genre'][index],
+                "genre": result['genre'][index] if result['genre'][index] != result['nature'][index] else '',
                 "classe": result['nature'][index],
                 "explanations": result['natureDef'][index][0],
                 "examples": result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1],
@@ -94,8 +92,8 @@ def remedize(word_list: list):
         if not document:
             errored += 1
         # TODO nature
-        elidable, feminine, syllables = get_word_stats(word, ipa)
-        database.insert(word, sanitize_word(word), ipa, "", syllables, elidable, feminine, document)
+        elidable, feminine, syllables, min_syllables, max_syllables = get_word_metadata(word, ipa)
+        database.insert(word, sanitize_word(word), ipa, "", syllables, min_syllables, max_syllables, elidable, feminine, document)
         print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (22 - len(word))} | {errored} erreurs")
 
 
