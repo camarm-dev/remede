@@ -4,11 +4,11 @@ import sys
 import urllib.parse
 import requests
 
-from scripts.utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_wordlist, \
+from utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_wordlist, \
     save_progression_wordlist
-from scripts.utils.dictionary_database import RemedeDatabase
-from scripts.utils.sanitize import sanitize_word
-from scripts.utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
+from utils.dictionary_database import RemedeDatabase
+from utils.sanitize import sanitize_word
+from utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
 
 modes_conjugation_subjects = {
     "Participe_Présent": "(en)",

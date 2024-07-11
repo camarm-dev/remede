@@ -3,7 +3,7 @@ import sys
 from bs4 import BeautifulSoup
 import requests
 
-from scripts.utils.sanitize import sanitize_word
+from utils.sanitize import sanitize_word
 
 
 def get_phoneme(word: str):

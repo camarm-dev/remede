@@ -3,7 +3,7 @@ from typing import Tuple
 from bs4 import BeautifulSoup
 import requests
 
-from scripts.utils.openlexicon import get_word_stats
+from utils.openlexicon import get_word_stats
 
 
 def count_syllables(word: str):

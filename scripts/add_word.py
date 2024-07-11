@@ -4,8 +4,8 @@ import runpy
 import sqlite3
 import sys
 
-from scripts.utils.dictionary_database import RemedeDatabase
-from scripts.utils.sanitize import sanitize_word
+from utils.dictionary_database import RemedeDatabase
+from utils.sanitize import sanitize_word
 
 
 def add_to_wordlist(wordlist: list):
