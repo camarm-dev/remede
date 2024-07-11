@@ -58,7 +58,7 @@ def get_word_document(word: str, ipa: str):
         return False
 
     conjugations = {}
-    if 'Verbe' in result['genre']:
+    if 'Verbe' in result['classe']:
         conjugations = get_conjugaisons(word)
 
     synonyms = get_synonyms(word)
