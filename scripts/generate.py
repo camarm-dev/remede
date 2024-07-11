@@ -53,13 +53,20 @@ def get_wictionary_doc(word: str):
         return {}, False
 
 
+def parse_examples(examples: list):
+    for obj in examples:
+        obj['content'] = obj['contenu']
+        del obj['contenu']
+    return examples
+
+
 def get_word_document(word: str, ipa: str):
     result, success = get_wictionary_doc(word)
     if not success:
         return False
 
     conjugations = {}
-    if 'Verbe' in result['classe']:
+    if 'Verbe' in result['nature']:
         conjugations = get_conjugaisons(word)
 
     synonyms = get_synonyms(word)
@@ -81,8 +88,8 @@ def get_word_document(word: str, ipa: str):
             {
                 "gender": result['genre'][index] if result['genre'][index] != result['nature'][index] else '',
                 "nature": result['nature'][index],
-                "explanations": result['natureDef'][index][0],
-                "examples": result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1],
+                "explanations": list(result['natureDef'][index][0].values()),
+                "examples": parse_examples(result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1]),
                 "plurals": result['plurals']
             }
             for index in range(len(result['nature']))
