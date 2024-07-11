@@ -11,6 +11,11 @@ def get_saved_wordlist():
         return file.read().split(',')
 
 
+def save_progression_wordlist(save: list):
+    with open('data/missing-wordlist.txt', 'w+') as file:
+        file.write(','.join(save))
+
+
 def get_custom_words():
     with open('data/custom_words.json') as file:
         return json.loads(file.read())
