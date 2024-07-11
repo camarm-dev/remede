@@ -31,7 +31,7 @@ def get_word_metadata(word: str, phoneme: str) -> Tuple[bool | None, bool, int, 
     syllables_count = count_syllables(word.lower())
     openlexicon_result = get_word_stats(word)
     if openlexicon_result:
-        return openlexicon_result.elidable, openlexicon_result.feminine, syllables_count, openlexicon_result.min_syllables, openlexicon_result.max_syllables, openlexicon_result.nature
+        return openlexicon_result.elidable == 1, openlexicon_result.feminine == 1, syllables_count, openlexicon_result.min_syllables, openlexicon_result.max_syllables, openlexicon_result.nature
     return None, phoneme.replace('/', '')[-1] == 'e', syllables_count, syllables_count, syllables_count, False
 
 
