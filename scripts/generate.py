@@ -82,7 +82,7 @@ def get_word_document(word: str, ipa: str):
                 "nature": result['nature'][index],
                 "explanations": result['natureDef'][index][0],
                 "examples": result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1],
-                "plurals": []
+                "plurals": result['plurals']
             }
             for index in range(len(result['nature']))
         ],
