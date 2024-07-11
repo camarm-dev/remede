@@ -160,6 +160,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("Received exit signal.")
 
+    database.save()
     after = datetime.datetime.now()
     time = after - before
     hour, minute, second = getTimeDetails(time)
