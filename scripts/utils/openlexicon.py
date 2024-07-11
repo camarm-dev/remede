@@ -1,6 +1,6 @@
 import sqlite3
 
-database = sqlite3.connect('../../data/drime.db')
+database = sqlite3.connect('data/drime.db')
 openlexicon = database.cursor()
 
 
