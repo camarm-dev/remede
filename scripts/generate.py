@@ -125,7 +125,7 @@ def remedize(word_list: list):
                 errored += 1
             elidable, feminine, syllables, min_syllables, max_syllables, nature = get_word_metadata(word, ipa)
             # No Openlexicon data, need to find by ourselves
-            if not nature:
+            if not nature and document:
                 nature = get_word_natures(document)
             database.insert(word, sanitize_word(word), ipa, nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
             print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
