@@ -95,7 +95,7 @@
         "gender": "",
         "nature": "Nom propre",
         "explanations": [
-          "(Informatique) Dictionnaire français, open source et gratuit qui a pour objectif de remplacer Antidote."
+          "(Informatique) Dictionnaire libre multiplateforme qui a pour objectif de remplacer Antidote."
         ],
         "examples": [
           {
@@ -113,9 +113,9 @@
         "gender": "masculin",
         "nature": "Nom commun",
         "explanations": [
-          "(Médecine) Substance qui sert à guérir un mal ou une maladie. "
-          "(Sens figuré) Ce qui sert à guérir les maladies de l’âme. "
-          "(Sens figuré) Ce qui sert à prévenir, surmonter ou faire cesser un malheur, un inconvénient ou une disgrâce. "
+          "(Médecine) Substance qui sert à guérir un mal ou une maladie. ",
+          "(Sens figuré) Ce qui sert à guérir les maladies de l’âme. ",
+          "(Sens figuré) Ce qui sert à prévenir, surmonter ou faire cesser un malheur, un inconvénient ou une disgrâce. ",
           "(En particulier) Lavement. "
         ],
         "examples": [
