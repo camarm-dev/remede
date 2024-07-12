@@ -10,7 +10,7 @@ def get_ipas():
 
 def write_wordlist(data: list):
     with open('data/mots.txt', 'w') as file:
-        return file.write(','.join(data))
+        return file.write(';'.join(data))
 
 
 def write_word2ipa(data: dict):

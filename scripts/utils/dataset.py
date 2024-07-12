@@ -3,17 +3,17 @@ import json
 
 def get_words():
     with open('data/mots.txt') as file:
-        return file.read().split(',')
+        return file.read().split(';')
 
 
 def get_saved_wordlist():
     with open('data/missing-wordlist.txt') as file:
-        return file.read().split(',')
+        return file.read().split(';')
 
 
 def save_progression_wordlist(save: list):
     with open('data/missing-wordlist.txt', 'w+') as file:
-        file.write(','.join(save))
+        file.write(';'.join(save))
 
 
 def get_custom_words():
