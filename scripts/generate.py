@@ -10,11 +10,6 @@ from utils.dictionary_database import RemedeDatabase
 from utils.sanitize import sanitize_word
 from utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
 
-modes_conjugation_subjects = {
-    "Participe_Présent": "(en)",
-    "Participe_Passé": "(a / est)"
-}
-
 natures_keywords = {
     "Lettre": "LETTRE",
     "Locution adverbiale": "LOC",
@@ -67,7 +62,7 @@ def get_word_document(word: str, ipa: str):
         return False
 
     conjugations = {}
-    if 'Verbe' in result['nature']:
+    if 'Verbe' in result['nature'] or 'Verbe 1' in result['nature']:
         conjugations = get_conjugaisons(word)
 
     synonyms = get_synonyms(word)

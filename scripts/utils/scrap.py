@@ -6,6 +6,12 @@ import requests
 from utils.openlexicon import get_word_stats
 
 
+modes_conjugation_subjects = {
+    "Participe_Présent": "(en)",
+    "Participe_Passé": "(a / est)"
+}
+
+
 def count_syllables(word: str):
     count = 0
     vowels = "aeiouy"
@@ -75,10 +81,10 @@ def get_conjugaisons(verb: str):
                 verb_conjugaisons[nom_mode][nom_temps] = {}
                 for forme in formes_verbales:
                     element_sujet = forme.find('span', attrs={'class': 'pronom'})
-                    sujet = element_sujet.text if element_sujet else modes_conjugaison_sujets.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
+                    sujet = element_sujet.text if element_sujet else modes_conjugation_subjects.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
                     forme_verbale = forme.text.replace(sujet + ' ', '')
                     verb_conjugaisons[nom_mode][nom_temps][sujet] = forme_verbale
         return verb_conjugaisons
-    except Exception:
+    except Exception as e:
         return {}
 
