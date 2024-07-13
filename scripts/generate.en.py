@@ -56,7 +56,7 @@ def get_word_document(word: str, ipa: str):
         return False
 
     conjugations = {}
-    if 'Verbe' in result['nature'] or 'Verbe 1' in result['nature']:
+    if 'Verb' in result['nature'] or 'Verb 1' in result['nature']:
         conjugations = get_conjugations(word)
 
     synonyms, antonyms = get_synonyms_and_antonyms(word)
