@@ -58,7 +58,7 @@
             "description": "Different explanations of the word.",
             "type": "array",
             "items": {
-              "type": "string"
+              "type": ["string", "array"]
             }
           },
           "examples": {
