@@ -3,18 +3,18 @@ import json
 
 # Ce programme créé ipa.json et mots.txt à partir de IPA.txt
 
-def get_ipas():
-    with open('data/fr/IPA.txt') as file:
+def get_ipas(lang: str):
+    with open(f'data/{lang}/IPA.txt') as file:
         return file.read().split('\n')
 
 
-def write_wordlist(data: list):
-    with open('data/fr/words.txt', 'w') as file:
+def write_wordlist(data: list, lang: str):
+    with open(f'data/{lang}/words.txt', 'w') as file:
         return file.write(';'.join(data))
 
 
-def write_word2ipa(data: dict):
-    with open('data/fr/ipa.json', 'w') as file:
+def write_word2ipa(data: dict, lang: str):
+    with open(f'data/{lang}/ipa.json', 'w') as file:
         return file.write(json.dumps(data))
 
 
@@ -31,11 +31,15 @@ def generate_wordlist(data_list: list):
 
 
 if __name__ == '__main__':
-    print("Création des ressources [0/2]...")
-    IPAs = get_ipas()
-    print("\033[A\033[KCréation des ressources [1/2]...")
-    wordlist, word2ipa = generate_wordlist(IPAs)
-    print("\033[A\033[KSauvegarde des ressources [2/2]...")
-    write_wordlist(wordlist)
-    write_word2ipa(word2ipa)
-    print("\033[A\033[KCréation des ressources [2/2]... Terminé.")
+    langs = ['fr']
+    total_steps = len(langs) * 2
+    for lang in langs:
+        step = langs.index(lang) * 2
+        print(f"Generating resources ({lang}) [{step}/{total_steps}]...")
+        IPAs = get_ipas(lang)
+        print(f"\033[A\033[KCreating resources ({lang}) [{step + 1}/{total_steps}]...")
+        wordlist, word2ipa = generate_wordlist(IPAs)
+        print(f"\033[A\033[KSaving resources ({lang}) [{step + 2}/{total_steps}]...")
+        write_wordlist(wordlist, lang)
+        write_word2ipa(word2ipa, lang)
+        print(f"\033[A\033[KGenerating resources ({lang}) [{step + 2}/{total_steps}]... Done.")
