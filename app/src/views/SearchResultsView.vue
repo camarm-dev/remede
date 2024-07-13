@@ -9,7 +9,9 @@ import {
   IonToolbar,
   IonLabel,
   IonBackButton,
-  IonList
+  IonList,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent
 } from "@ionic/vue"
 </script>
 
@@ -33,6 +35,9 @@ import {
           </ion-label>
         </ion-item>
       </ion-list>
+      <ion-infinite-scroll v-if="results.length > 0" @ionInfinite="loadMore">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-content>
   </ion-page>
 </template>
@@ -40,7 +45,7 @@ import {
 <script lang="ts">
 import {getSearchResults} from "@/functions/dictionnary"
 import {defineComponent} from "vue"
-import {useIonRouter} from "@ionic/vue"
+import {InfiniteScrollCustomEvent, useIonRouter} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 
 export default defineComponent({
@@ -48,6 +53,7 @@ export default defineComponent({
     return {
       mot: "" as string,
       results: [] as string[],
+      page: 0,
       goTo: function (path: string): void {
         console.log(path)
         return
@@ -68,7 +74,16 @@ export default defineComponent({
   },
   methods: {
     async loadData() {
-      this.results = await getSearchResults(this.mot)
+      const results = await getSearchResults(this.mot, this.page)
+      for (const element of results) {
+        this.results.push(element)
+      }
+    },
+    async loadMore(event: InfiniteScrollCustomEvent) {
+      this.page += 1
+      this.loadData().then(() => {
+        event.target.complete()
+      })
     }
   }
 })
