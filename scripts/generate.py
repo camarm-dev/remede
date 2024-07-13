@@ -122,7 +122,10 @@ def remedize(word_list: list):
             # No Openlexicon data, need to find by ourselves
             if not nature and document:
                 nature = get_word_natures(document)
-            database.insert(word, sanitize_word(word), ipa, nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
+            # Multiple pronunciations, phoneme will be set as the first phoneme, while "phoneme" field will contains both
+            if ',' in ipa:
+                ipa = ipa.split(',')[0]
+            database.insert(word, sanitize_word(word), ipa.replace('/', ''), nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
             print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
     except Exception as e:
         print(f"Program raised error {e}. Saving progression...")
