@@ -2,7 +2,7 @@ import json
 
 
 def get_words():
-    with open('data/mots.txt') as file:
+    with open('data/fr/words.txt') as file:
         return file.read().split(';')
 
 
@@ -22,5 +22,5 @@ def get_custom_words():
 
 
 def get_word2ipa():
-    with open('data/ipa.json') as file:
+    with open('data/fr/ipa.json') as file:
         return json.loads(file.read())

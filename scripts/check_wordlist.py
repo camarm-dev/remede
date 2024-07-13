@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     before = datetime.datetime.now()
 
-    WORDLIST = open('data/mots.txt').read().split(",")
+    WORDLIST = open('data/fr/words.txt').read().split(";")
 
     try:
         TO_CHECK = open(sys.argv[1]).read().split("\n")

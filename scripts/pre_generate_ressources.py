@@ -4,17 +4,17 @@ import json
 # Ce programme créé ipa.json et mots.txt à partir de IPA.txt
 
 def get_ipas():
-    with open('data/IPA.txt') as file:
+    with open('data/fr/IPA.txt') as file:
         return file.read().split('\n')
 
 
 def write_wordlist(data: list):
-    with open('data/mots.txt', 'w') as file:
+    with open('data/fr/words.txt', 'w') as file:
         return file.write(';'.join(data))
 
 
 def write_word2ipa(data: dict):
-    with open('data/ipa.json', 'w') as file:
+    with open('data/fr/ipa.json', 'w') as file:
         return file.write(json.dumps(data))
 
 

@@ -11,10 +11,10 @@ from utils.sanitize import sanitize_word
 
 
 def add_to_wordlist(wordlist: list):
-    with open('data/IPA.txt', 'r') as file:
+    with open('data/fr/IPA.txt', 'r') as file:
         content = file.read()
         words = content.split('\n')
-    with open('data/IPA.txt', 'w') as file:
+    with open('data/fr/IPA.txt', 'w') as file:
         for element in wordlist:
             word, phoneme = element
             insert = f"{word}\t{phoneme}"
