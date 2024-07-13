@@ -31,7 +31,7 @@ def generate_wordlist(data_list: list):
 
 
 if __name__ == '__main__':
-    langs = ['fr']
+    langs = ['fr', 'en']
     total_steps = len(langs) * 2
     for lang in langs:
         step = langs.index(lang) * 2
