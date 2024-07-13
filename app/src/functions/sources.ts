@@ -18,6 +18,10 @@ const sources = {
     en_wik: {
         label: "Wiktionary",
         url: "https://fr.wiktionary.org/wiki/{word}"
+    },
+    thesaurus_com: {
+        label: "definition.synonyms_and_antonyms",
+        url: "https://www.thesaurus.com/browse/{word}"
     }
 }
 
