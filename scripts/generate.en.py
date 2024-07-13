@@ -9,7 +9,7 @@ from utils.dataset_en import get_words, get_word2ipa, get_saved_wordlist, \
 from utils.dataset import get_custom_words
 from utils.dictionary_database import RemedeDatabase
 from utils.sanitize import sanitize_word
-from utils.scrap import get_conjugaisons, get_word_metadata
+from utils.scrap_en import get_conjugations, get_word_metadata, get_synonyms_and_antonyms
 from generate import parse_examples
 
 natures_keywords = {
@@ -50,11 +50,6 @@ def get_wictionary_doc(word: str):
         return {}, False
 
 
-def get_synonyms_antonyms(word: str):
-    # TODO
-    return [], []
-
-
 def get_word_document(word: str, ipa: str):
     result, success = get_wictionary_doc(word)
     if not success:
@@ -62,15 +57,13 @@ def get_word_document(word: str, ipa: str):
 
     conjugations = {}
     if 'Verbe' in result['nature'] or 'Verbe 1' in result['nature']:
-        conjugations = get_conjugaisons(word)
+        conjugations = get_conjugations(word)
 
-    synonyms, antonyms = get_synonyms_antonyms(word)
+    synonyms, antonyms = get_synonyms_and_antonyms(word)
 
     sources = ["en_wik"]
-    if len(synonyms) > 0:
-        sources.append("synonymo_fr")
-    if len(antonyms) > 0:
-        sources.append("antonyme_org")
+    if len(synonyms) > 0 or len(antonyms) > 0:
+        sources.append("thesaurus_com")
     if conjugations != {}:
         sources.append("conjuguons_fr")
 
