@@ -63,7 +63,7 @@ def get_antonyms(word: str):
         return []
 
 
-def get_conjugaisons(verb: str):
+def get_conjugations(verb: str):
     try:
         verb_conjugaisons = {}
         parser = BeautifulSoup(requests.get(f'http://conjuguons.fr/conjugaison/verbe/{verb}').content, 'html.parser')

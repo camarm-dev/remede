@@ -8,7 +8,7 @@ from utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_w
     save_progression_wordlist
 from utils.dictionary_database import RemedeDatabase
 from utils.sanitize import sanitize_word
-from utils.scrap import get_conjugaisons, get_synonyms, get_antonyms, get_word_metadata
+from utils.scrap import get_conjugations, get_synonyms, get_antonyms, get_word_metadata
 
 natures_keywords = {
     "Lettre": "LETTRE",
@@ -63,7 +63,7 @@ def get_word_document(word: str, ipa: str):
 
     conjugations = {}
     if 'Verbe' in result['nature'] or 'Verbe 1' in result['nature']:
-        conjugations = get_conjugaisons(word)
+        conjugations = get_conjugations(word)
 
     synonyms = get_synonyms(word)
     antonyms = get_antonyms(word)
