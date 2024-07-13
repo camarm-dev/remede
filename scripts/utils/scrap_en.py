@@ -6,6 +6,11 @@ import requests
 from utils.scrap import count_syllables
 
 
+headers = {
+    "User-Agent": 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0'
+}
+
+
 def get_word_metadata(word: str, _: str) -> Tuple[None, None, int, int, int, bool]:
     """
     Get the number of syllables, the elidable property and if the word end phoneme is feminine.
@@ -18,8 +23,21 @@ def get_word_metadata(word: str, _: str) -> Tuple[None, None, int, int, int, boo
 
 
 def get_synonyms_and_antonyms(word: str):
-    # TODO with thethaurus.com https://www.thesaurus.com/browse/eat
-    return [], []
+    synonyms = []
+    antonyms = []
+    try:
+        url = f'https://dictionary.cambridge.org/thesaurus/{word}'
+        response = requests.get(url, headers=headers).content
+        html = BeautifulSoup(response, 'html.parser')
+        synonyms_elements = html.select('.pr.sense.dsense .ddef_block .hax .tlcs.lmt-10.lmb-20 .item.lc.lc1 .synonym')
+        antonyms_elements = html.select('.pr.sense.dsense .ddef_block .hax .tlcs.lmt-10.lmb-20 .item.lc.lc1 .opposite')
+        for el in synonyms_elements:
+            synonyms.append(el.text)
+        for el in antonyms_elements:
+            antonyms.append(el.text)
+    except:
+        pass
+    return synonyms, antonyms
 
 
 def get_conjugations(verb: str):
