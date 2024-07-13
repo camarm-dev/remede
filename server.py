@@ -64,12 +64,12 @@ def fetch_remede_doc(word: str):
     return response[0] if response else {'message': 'Mot non trouvé'}
 
 
-def fetch_autocomplete(query: str, limit: bool = False):
+def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
     lock.acquire(True)
     if limit:
         response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
     else:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC").fetchall()
+        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}").fetchall()
     return list(map(lambda row: row[0], response))
 
 
@@ -193,12 +193,12 @@ def get_autocomplete(query: str):
 
 
 @app.get('/search/{query}')
-def get_search_results(query: str):
+def get_search_results(query: str, page: int = 0):
     """
     Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
     """
     safe_query = sanitize_query(query)
-    results = fetch_autocomplete(safe_query)
+    results = fetch_autocomplete(safe_query, False, page)
     lock.release()
     return in_json(results)
 
