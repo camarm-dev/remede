@@ -20,7 +20,7 @@ natures_keywords = {
     "Préposition": "PRO",
     "Conjonction": "CON",
     "Pronom": "PRO",
-    "Onométopée": "ONO",
+    "Onomatopée": "ONO",
 }
 
 
