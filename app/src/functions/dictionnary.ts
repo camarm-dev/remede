@@ -17,12 +17,12 @@ async function getAutocompleteFromDatabase(word: string) {
     return await database?.getAutocomplete(removeAccents(word)) as any[]
 }
 
-async function getSearchResultsWithAPI(query: string) {
-    return await fetch(`https://api-remede.camarm.fr/search/${query}`).then(resp => resp.json())
+async function getSearchResultsWithAPI(query: string, page: number) {
+    return await fetch(`https://api-remede.camarm.fr/search/${query}?page=${page}`).then(resp => resp.json())
 }
 
-async function getSearchResultsFromDatabase(query: string) {
-    return await database?.search(removeAccents(query)) as any[]
+async function getSearchResultsFromDatabase(query: string, page: number) {
+    return await database?.search(removeAccents(query), page) as any[]
 }
 
 async function getWordWithAPI(word: string) {
@@ -62,11 +62,11 @@ async function getAutocomplete(word: string) {
 }
 
 
-async function getSearchResults(query: string) {
+async function getSearchResults(query: string, page: number) {
     if (await useApi()) {
-        return await getSearchResultsWithAPI(query)
+        return await getSearchResultsWithAPI(query, page)
     }
-    return await getSearchResultsFromDatabase(query)
+    return await getSearchResultsFromDatabase(query, page)
 }
 
 async function getWordDocument(word: string) {

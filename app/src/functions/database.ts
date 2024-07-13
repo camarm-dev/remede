@@ -46,8 +46,8 @@ class RemedeDatabase {
         return await this.query(statement)
     }
 
-    async search(query: string) {
-        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC`
+    async search(query: string, page: number = 0) {
+        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}`
         return await this.query(statement)
     }
 
