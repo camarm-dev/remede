@@ -61,7 +61,7 @@ def fetch_remede_word_of_day():
 def fetch_remede_doc(word: str):
     lock.acquire(True)
     response = cursor.execute(f"SELECT document FROM dictionary WHERE word = '{word}'").fetchone()
-    return response[0] if response else {'message': 'Mot non trouvé'}
+    return response[0] if response else json.dumps({'message': 'Mot non trouvé'})
 
 
 def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
