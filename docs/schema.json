@@ -125,7 +125,7 @@
     },
     "phoneme": {
       "type": "string",
-      "description": "The word IPS notation.",
+      "description": "The word IPA notation.",
       "minLength": 1
     },
     "conjugations": {
