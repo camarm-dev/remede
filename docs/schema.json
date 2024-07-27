@@ -120,15 +120,7 @@
       "description": "The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids",
       "items": {
         "minLength": 1,
-        "type": "string",
-        "enum": [
-          "fr_wik",
-          "antonyme_org",
-          "synonymo_fr",
-          "conjuguons_fr",
-          "en_wik",
-          "thesaurus_com"
-        ]
+        "type": ["string", "object"]
       }
     },
     "phoneme": {
