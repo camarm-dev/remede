@@ -41,6 +41,15 @@ class RemedeDatabase {
         return JSON.parse(response[0])
     }
 
+    async getSource(identifier: string) {
+        const statement = `SELECT label,url FROM sources WHERE identifier = '${identifier}'`
+        const response = await this.rawQuery(statement) as string[][]
+        return {
+            label: response[0][0],
+            url: response[0][1]
+        }
+    }
+
     async getAutocomplete(query: string) {
         const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC LIMIT 5`
         return await this.query(statement)

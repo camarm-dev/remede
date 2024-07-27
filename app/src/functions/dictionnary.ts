@@ -1,5 +1,6 @@
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
+import {RemedeSource} from "@/functions/types/remede";
 
 function removeAccents(value: string) {
     return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
@@ -116,6 +117,15 @@ async function getRimesAutocomplete(query: string) {
         return []
     }
     return await database?.getRimesAutocomplete(query) as any as Promise<string[]>
+}
+
+
+async function getSource(source: string | RemedeSource): Promise<RemedeSource> {
+    if (await useApi()) {
+        // Source doc is returned already built by the API
+        return source as RemedeSource
+    }
+    return await database?.getSource(source as string) as any as Promise<RemedeSource>
 }
 
 const database = await useApi() ? null: new RemedeDatabase()
