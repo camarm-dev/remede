@@ -22,4 +22,4 @@ class RemedeDatabase:
     def add_source(self, source: dict):
         self.cursor.execute("INSERT INTO sources VALUES (?,?,?)", (source['identifier'], source['label'], source['url']))
     def insert(self, word: str, sanitized_word: str, phoneme: str, nature: str, syllables: int, min_syllables: int, max_syllables: int, elidable: bool, feminine: bool, document: dict):
-        self.cursor.execute("INSERT INTO dictionary VALUES (?,?,?,?,?,?,?,?,?,?)", (word, phoneme, sanitized_word, nature, syllables, min_syllables, max_syllables, elidable, feminine, json.dumps(document)))
+        self.cursor.execute("INSERT INTO dictionary VALUES (?,?,?,?,?,?,?,?,?,?)", (word, sanitized_word, phoneme, nature, syllables, min_syllables, max_syllables, elidable, feminine, json.dumps(document)))
