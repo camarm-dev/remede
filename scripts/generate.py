@@ -31,7 +31,8 @@ def get_word_natures(document: dict):
         if definition['nature'] != '':
             nature = definition.get('nature', '').split(' ')[0]  # "Nom commun 1" will be Nom
             if nature in natures_keywords.keys():
-                natures.append(natures_keywords[nature])
+                if not natures_keywords[nature] in natures:
+                    natures.append(natures_keywords[nature])
     return ','.join(natures)
 
 
