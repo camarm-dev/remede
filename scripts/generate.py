@@ -4,6 +4,7 @@ import sys
 import urllib.parse
 import requests
 
+from utils.sources import SOURCES, FRENCH_SOURCES
 from utils.dataset import get_words, get_word2ipa, get_custom_words, get_saved_wordlist, \
     save_progression_wordlist
 from utils.dictionary_database import RemedeDatabase
@@ -68,13 +69,13 @@ def get_word_document(word: str, ipa: str):
     synonyms = get_synonyms(word)
     antonyms = get_antonyms(word)
 
-    sources = ["fr_wik"]
+    sources = [SOURCES['fr.wik']['identifier']]
     if len(synonyms) > 0:
-        sources.append("synonymo_fr")
+        sources.append(SOURCES['synonymo.fr']['identifier'])
     if len(antonyms) > 0:
-        sources.append("antonyme_org")
+        sources.append(SOURCES['antonyme.org']['identifier'])
     if conjugations != {}:
-        sources.append("conjuguons_fr")
+        sources.append(SOURCES['conjuguons.fr']['identifier'])
 
     return {
         "synonyms": synonyms,
@@ -154,13 +155,18 @@ if __name__ == '__main__':
     custom_words = custom_words_json.keys()
     before = datetime.datetime.now()
 
+    database = RemedeDatabase(sqlite3.connect('data/remede.db'))
+
     # Resume option: replace wordlist
     if '--resume' in sys.argv:
         all_words = get_saved_wordlist()
         print(f"Resumed at word {all_words[0]}. Continuing generation...\n")
-
-    database = RemedeDatabase(sqlite3.connect('data/remede.db'))
-    database.init_dictionary()
+    else:
+        database.init_dictionary()
+        print(f"Adding sources metadata...")
+        for source in FRENCH_SOURCES:
+            database.add_source(SOURCES[source])
+        print(f"\033[A\033[KAdding metadata... Done.\n")
 
     try:
         remedize(all_words)

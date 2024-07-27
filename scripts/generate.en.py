@@ -4,6 +4,7 @@ import sys
 import urllib.parse
 import requests
 
+from utils.sources import ENGLISH_SOURCES, SOURCES
 from utils.dataset_en import get_words, get_word2ipa, get_saved_wordlist, \
     save_progression_wordlist
 from utils.dataset import get_custom_words
@@ -61,9 +62,9 @@ def get_word_document(word: str, ipa: str):
 
     synonyms, antonyms = get_synonyms_and_antonyms(word)
 
-    sources = ["en_wik"]
+    sources = [SOURCES['en.wik']['identifier']]
     if len(synonyms) > 0 or len(antonyms) > 0:
-        sources.append("thesaurus_com")
+        sources.append(SOURCES['thesaurus.com']['identifier'])
     if conjugations != {}:
         sources.append("conjuguons_fr")
 
@@ -145,13 +146,18 @@ if __name__ == '__main__':
     custom_words = custom_words_json.keys()
     before = datetime.datetime.now()
 
+    database = RemedeDatabase(sqlite3.connect('data/remede.en.db'))
+
     # Resume option: replace wordlist
     if '--resume' in sys.argv:
         all_words = get_saved_wordlist()
         print(f"Resumed at word {all_words[0]}. Continuing generation...\n")
-
-    database = RemedeDatabase(sqlite3.connect('data/remede.en.db'))
-    database.init_dictionary()
+    else:
+        database.init_dictionary()
+        print(f"Adding sources metadata...")
+        for source in ENGLISH_SOURCES:
+            database.add_source(SOURCES[source])
+        print(f"\033[A\033[KAdding metadata... Done.\n")
 
     try:
         remedize(all_words)
