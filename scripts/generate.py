@@ -14,6 +14,7 @@ from utils.scrap import get_conjugations, get_synonyms, get_antonyms, get_word_m
 natures_keywords = {
     "Lettre": "LETTRE",
     "Locution adverbiale": "LOC",
+    "Locution verbale": "LOC",
     "Verbe": "VER",
     "Nom": "NOM",
     "Adjectif": "ADJ",
