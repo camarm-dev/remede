@@ -11,7 +11,7 @@ android {
         applicationId "dev.camarm.remede"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 124
+        versionCode 125
         versionName '1.3.0-beta — Phenomenal Feather, Beta'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
