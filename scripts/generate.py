@@ -111,6 +111,7 @@ def safe_get_word_document(word: str, ipa: str):
 def remedize(word_list: list):
     total = len(word_list)
     errored = 0
+    word = None
     try:
         for word in word_list:
             if word in custom_words:
@@ -131,10 +132,8 @@ def remedize(word_list: list):
             database.insert(word, sanitize_word(word), ipa.replace('/', ''), nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
             print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
     except Exception as e:
-        print(f"Program raised error {e}. Saving progression...")
-        save = word_list[word_list.index(word):]
-        save_progression_wordlist(save)
-        raise KeyboardInterrupt
+        print(f"Program raised error {e}. Exiting...")
+    return word
 
 
 
@@ -171,7 +170,11 @@ if __name__ == '__main__':
         print(f"\033[A\033[KAdding metadata... Done.\n")
 
     try:
-        remedize(all_words)
+        last_word = remedize(all_words)
+        if last_word:
+            print("Saving progression...")
+            save = all_words[all_ipa.index(last_word):]
+            save_progression_wordlist(save)
     except KeyboardInterrupt:
         print("Received exit signal.")
 
