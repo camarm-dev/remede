@@ -95,6 +95,10 @@ def get_word_document(word: str, ipa: str):
         ],
         "sources": sources,
         "phoneme": ipa,
+        "pronunciation": {
+            "audio": result['pronunciations'][0]['url'],
+            "credits": result['pronunciations'][0]['credits']
+        } if len(result['pronunciations']) > 0 else None,
         "conjugations": conjugations
     }
 
