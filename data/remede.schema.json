@@ -125,8 +125,26 @@
     },
     "phoneme": {
       "type": "string",
-      "description": "The word IPA notation.",
+      "description": "The word IPA notation. Can be a list of IPA notations, comma separated.",
       "minLength": 1
+    },
+    "pronunciation": {
+      "type": ["object", "null"],
+      "description": "The word pronunciation audio URL.",
+      "required": [
+        "audio",
+        "credits"
+      ],
+      "properties": {
+        "audio": {
+          "type": "string",
+          "description": "An URL pointing to the pronunciation audio file."
+        },
+        "credits": {
+          "type": "string",
+          "description": "URL pointing to credits page."
+        }
+      }
     },
     "conjugations": {
       "type": "object",
@@ -157,6 +175,7 @@
     "definitions",
     "sources",
     "phoneme",
+    "pronunciation",
     "conjugations"
   ],
   "additionalProperties": false
