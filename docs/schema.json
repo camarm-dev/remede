@@ -144,7 +144,8 @@
           "type": "string",
           "description": "URL pointing to credits page."
         }
-      }
+      },
+      "additionalProperties": false
     },
     "conjugations": {
       "type": "object",
