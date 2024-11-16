@@ -17,13 +17,7 @@
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-<!--        <item name="android:background">@drawable/splash</item>-->
         <item name="android:background">@drawable/splash_background</item>
-<!--        <item name="android:windowNoTitle">true</item>-->
-<!--        <item name="android:windowActionBar">false</item>-->
-<!--        <item name="android:windowFullscreen">true</item>-->
-<!--        <item name="android:windowContentOverlay">@null</item>-->
-<!--        <item name="android:windowIsTranslucent">true</item>-->
     </style>
 
     <style name="Widget.Android.AppWidget.Container" parent="android:Widget">
