@@ -147,6 +147,10 @@
       "synonymo_fr"
     ],
     "phoneme": "/ʁəmɛd/",
+    "pronunciation": {
+      "audio": "https://upload.wikimedia.org/wikipedia/commons/2/27/Fr-rem%C3%A8de.ogg",
+      "credits": "https://commons.wikimedia.org/w/index.php?curid=3043985"
+    },
     "conjugations": {}
   }
 }
