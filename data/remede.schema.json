@@ -120,7 +120,7 @@
       "description": "The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids",
       "items": {
         "minLength": 1,
-        "type": ["string", "object"]
+        "type": "string"
       }
     },
     "phoneme": {
