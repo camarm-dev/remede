@@ -175,14 +175,15 @@ if __name__ == '__main__':
 
     try:
         last_word = remedize(all_words)
+        print("Saving database...")
+        database.save()
         if last_word:
             print("Saving progression...")
-            save = all_words[all_ipa.index(last_word):]
+            save = all_words[all_words.index(last_word):]
             save_progression_wordlist(save)
     except KeyboardInterrupt:
         print("Received exit signal.")
 
-    database.save()
     after = datetime.datetime.now()
     time = after - before
     hour, minute, second = getTimeDetails(time)
