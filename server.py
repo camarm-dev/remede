@@ -15,8 +15,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
+from scripts.utils.validate import validate_doc
+
 lock = threading.Lock()
-version = "1.2.3"
+version = "1.3.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
 app.add_middleware(
     CORSMiddleware,
@@ -45,6 +47,23 @@ def get_stats(db_path: str):
     total = db_cursor.execute("SELECT COUNT(*) FROM dictionary").fetchone()[0]
     db_cursor.close()
     return total
+
+
+def check_validity(db_path: str, use_new_schema: bool = False, schema: str = None):
+    db = sqlite3.connect(db_path, check_same_thread=False)
+    db_cursor = db.cursor()
+    all_documents = db_cursor.execute("SELECT * FROM dictionary").fetchall()
+    db_cursor.close()
+    index = 1 if not use_new_schema else 9
+    for row in all_documents:
+        doc = json.loads(row[index])
+        if not doc:
+            continue
+        success, error = validate_doc(doc, schema)
+        if not success:
+            print(f"\033[A\033[KStarting API | Checking JSON schemas validity... Failed for \"{db_path}\", {error} [3/3]")
+            return False
+    return True
 
 
 def in_json(response: str | list):
@@ -142,6 +161,8 @@ def root():
         - Their slug; used to download or search in specific database (`slug`)
         - The number of words in the database (`total`)
         - Does the database respect the Remède JSON Schema (`valid`)
+        - Which schema does it follow (`schema`)
+        - Database readable size (`size`)
     """
     return {
         "version": version,
@@ -274,6 +295,7 @@ def download_binary(variant: BinariesVariant):
 
 
 if __name__ == '__main__':
+    print("Starting API | Opening databases... [1/3]")
     remede_database = sqlite3.connect('data/remede.db', check_same_thread=False)
     remede_cursor = remede_database.cursor()
 
@@ -286,19 +308,25 @@ if __name__ == '__main__':
         "date": "",
         "word": ""
     }
-
+    print("\033[A\033[KStarting API | Calculating databases size... [2/3]")
     DICTIONARIES = {
         "remede": {
-            "name": "Remède (FR) ~700Mb",
+            "name": "Remède (FR)",
             "slug": "remede",
             "total": get_stats('data/remede.db'),
-            "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
+            "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7],
+            "valid": False,
+            "schema": "schema.json",
+            "size": f"{int(os.path.getsize('data/remede.db') * 10e-7)}Mb"
         },
         "remede.legacy": {
-            "name": "Remède 1.2.3 (FR) ~500Mb",
+            "name": "Remède 1.2.3 (FR)",
             "slug": "remede.legacy",
-            "total": get_stats('data/remede.db'),
-            "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]  # TODO replace with legacy new database
+            "total": get_stats('data/remede.legacy.db'),
+            "hash": md5(open('data/remede.legacy.db', 'rb').read()).hexdigest()[0:7],  # TODO replace with legacy new database
+            "valid": False,
+            "schema": "1.2.3.schema.json",
+            "size": f"{int(os.path.getsize('data/remede.legacy.db') * 10e-7)}Mb"
         },
         # "remede.en": {
         #     "nom": "Remède (EN) ~200Mb",
@@ -307,7 +335,13 @@ if __name__ == '__main__':
         # }
     }
 
+    print("\033[A\033[KStarting API | Checking JSON schemas validity... Can take a while... [3/3]")
+    # DICTIONARIES["remede"]["valid"] = check_validity('data/remede.db', True)
+    DICTIONARIES["remede"]["valid"] = check_validity('data/remede.db', schema='docs/1.2.3.schema.json')
+    DICTIONARIES["remede.legacy"]["valid"] = check_validity('data/remede.legacy.db', schema='docs/1.2.3.schema.json')
+
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
 
+    print("\033[A\033[KStarting API | Done. [3/3]")
     uvicorn.run(app, host='0.0.0.0')
