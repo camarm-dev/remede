@@ -52,7 +52,8 @@ def get_stats(db_path: str):
 def check_validity(db_path: str, schema: str = None):
     db = sqlite3.connect(db_path, check_same_thread=False)
     db_cursor = db.cursor()
-    all_documents = db_cursor.execute("SELECT document FROM dictionary").fetchall()
+    # Taking a thousand random documents to check validity
+    all_documents = db_cursor.execute("SELECT document FROM dictionary ORDER BY RANDOM() LIMIT 1000").fetchall()
     db_cursor.close()
     for row in all_documents:
         doc = json.loads(row[0])
