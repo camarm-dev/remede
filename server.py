@@ -49,14 +49,13 @@ def get_stats(db_path: str):
     return total
 
 
-def check_validity(db_path: str, use_new_schema: bool = False, schema: str = None):
+def check_validity(db_path: str, schema: str = None):
     db = sqlite3.connect(db_path, check_same_thread=False)
     db_cursor = db.cursor()
-    all_documents = db_cursor.execute("SELECT * FROM dictionary").fetchall()
+    all_documents = db_cursor.execute("SELECT document FROM dictionary").fetchall()
     db_cursor.close()
-    index = 1 if not use_new_schema else 9
     for row in all_documents:
-        doc = json.loads(row[index])
+        doc = json.loads(row[0])
         if not doc:
             continue
         success, error = validate_doc(doc, schema)
@@ -72,6 +71,7 @@ def in_json(response: str | list):
 
 def fetch_random_word():
     lock.acquire(True)
+    # TODO, change query to new "SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1"
     return cursor.execute("SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1").fetchone()[0]
 
 
@@ -297,12 +297,7 @@ def download_binary(variant: BinariesVariant):
 if __name__ == '__main__':
     print("Starting API | Opening databases... [1/3]")
     remede_database = sqlite3.connect('data/remede.db', check_same_thread=False)
-    remede_cursor = remede_database.cursor()
-
-    DATABASES = {
-        "remede": remede_cursor,
-        "remede.legacy": remede_cursor  # TODO change
-    }
+    cursor = remede_database.cursor()
 
     WORD_OF_DAY = {
         "date": "",
