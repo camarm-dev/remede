@@ -21,9 +21,6 @@
       <ion-list inset>
         <ion-item color="light">
           <ion-icon slot="start" :icon="contrastOutline"/>
-          <ion-label>
-            <h3>{{ $t('settingsPage.theme') }}</h3>
-          </ion-label>
           <ion-select :label="$t('settingsPage.theme')" :value="getCurrentTheme()" :placeholder="$t('settingsPage.lightTheme')" @ionChange="handleThemeChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
             <ion-select-option value="light">{{ $t('settingsPage.lightTheme') }}</ion-select-option>
             <ion-select-option value="dark">{{ $t('settingsPage.darkTheme') }}</ion-select-option>
@@ -33,9 +30,6 @@
       <ion-list inset>
         <ion-item color="light">
           <ion-icon slot="start" :icon="languageOutline"/>
-          <ion-label>
-            <h3>{{ $t('settingsPage.tongue') }}</h3>
-          </ion-label>
           <ion-select :label="$t('settingsPage.tongue')" :value="getCurrentLang()" placeholder="System" @ionChange="handleLangChangement($event.detail.value)" :cancel-text="$t('cancel')" :ok-text="$t('confirm')" interface="action-sheet">
             <ion-select-option v-for="locale in availableLocales" :value="locale" :key="locale">{{ getLocaleName(locale) }}</ion-select-option>
             <ion-select-option value="system">System</ion-select-option>
