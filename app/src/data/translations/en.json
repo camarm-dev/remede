@@ -59,7 +59,8 @@
     "wordNotFound": "This word cannot be found in the Remède dictionary...",
     "examples": "Examples",
     "openConjugation": "Open conjugation",
-    "openRhymesDictionary": "Open rhymes dictionary"
+    "openRhymesDictionary": "Open rhymes dictionary",
+    "noSubject": "(No subject)"
   },
   "share": {
     "definitionTitle": "Definition of \"{word}\" on Remède",

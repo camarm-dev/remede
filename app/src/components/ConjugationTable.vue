@@ -23,7 +23,7 @@ import {IonItem, IonLabel, IonList, IonSelect, IonSelectOption} from "@ionic/vue
     </ion-item>
     <ion-item :key="sujet" v-for="sujet in currentSubjects">
       <ion-label>
-        <p>{{ sujet }}</p>
+        <p>{{ replaceSubjects.includes(sujet) ? $t('definition.noSubject'): sujet }}</p>
       </ion-label>
       <ion-label slot="end">
         {{ getVerbalForm(currentMode, currentTense, sujet) }}
@@ -55,7 +55,8 @@ export default {
       currentMode: "" as string,
       currentTense: "" as string,
       currentSubjects: [] as string[],
-      availableTenses: [] as string[]
+      availableTenses: [] as string[],
+      replaceSubjects: ["1PS", "1PP", "2PP"]
     }
   },
   mounted() {

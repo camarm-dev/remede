@@ -59,7 +59,8 @@
     "wordNotFound": "Ce mot n'a pas été trouvé dans le dictionnaire Remède...",
     "examples": "Exemples",
     "openConjugation": "Ouvrir la conjugaison",
-    "openRhymesDictionary": "Ouvrir le dictionnaire des rimes"
+    "openRhymesDictionary": "Ouvrir le dictionnaire des rimes",
+    "noSubject": "(Pas de sujet)"
   },
   "share": {
     "definitionTitle": "Définition \"{word}\" sur Remède",
