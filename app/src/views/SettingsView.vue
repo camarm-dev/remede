@@ -76,7 +76,7 @@
         </ion-item>
         <ion-item color="light">
           <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="popover" :label="$t('dictionary')" value="remede" :name="$t('dictionary')">
-            <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].nom }}</ion-select-option>
+            <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].name }} {{ availableDictionaries[key].size }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item color="light" v-if="loading">
@@ -225,7 +225,7 @@ export default {
 
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionaries
-      this.availableDictionariesName = Object.keys(specs.dictionaires)
+      this.availableDictionariesName = Object.keys(specs.dictionares)
 
       this.latestDictionary = specs.dataset
       if (this.downloaded) {

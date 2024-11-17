@@ -5,6 +5,9 @@ interface RemedeDictionaryOption {
     slug: string
     hash: string
     total: number
+    size: string
+    valid: boolean
+    schema: string
 }
 
 interface RemedeAvailableDictionaries {
