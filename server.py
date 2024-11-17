@@ -174,7 +174,7 @@ def root():
 @app.get('/word/{word}')
 def get_word_document(word: str):
     """
-    Renvoie le document Remède du mot `word`
+    Returns the Remède document of `word`.
     """
     document = fetch_remede_doc(word.replace("'", "''"))
     lock.release()
@@ -184,7 +184,7 @@ def get_word_document(word: str):
 @app.get('/random')
 def get_random_word_document():
     """
-    Renvoie un mot au hasard
+    Returns a random word.
     """
     word = fetch_random_word()
     lock.release()
@@ -194,7 +194,7 @@ def get_random_word_document():
 @app.get('/word-of-day')
 def get_word_of_day():
     """
-    Renvoie le mot du jour
+    Returns the word of day.
     """
     return in_json(fetch_remede_word_of_day())
 
@@ -202,7 +202,7 @@ def get_word_of_day():
 @app.get('/autocomplete/{query}')
 def get_autocomplete(query: str):
     """
-    Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
+    Returns the 6 first word starting by `query`. Not case and accent sensible !
     """
     safe_query = sanitize_query(query)
     results = fetch_autocomplete(safe_query, True)
@@ -213,7 +213,7 @@ def get_autocomplete(query: str):
 @app.get('/search/{query}')
 def get_search_results(query: str, page: int = 0):
     """
-    Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
+    Returns the word starting with `query`. Not case and accent sensible !
     """
     safe_query = sanitize_query(query)
     results = fetch_autocomplete(safe_query, False, page)
@@ -224,7 +224,7 @@ def get_search_results(query: str, page: int = 0):
 @app.get('/ask-new-word/{query}')
 def send_new_word(query: str):
     """
-    Enregistre le word `query` comme mot à rajouter au dictionnaire !
+    Save the word `query` as a word to add to the dictionary.
     """
     success = register_new_word_idea(query)
     if success:
@@ -239,7 +239,7 @@ def send_new_word(query: str):
 @app.get('/sheets')
 def get_cheatsheets():
     """
-    Renvoie la totalité des fiches de grammaire, d'orthographe et de règles référencées
+    Returns all grammar & orthography sheets.
     """
     return SHEETS
 
@@ -247,7 +247,7 @@ def get_cheatsheets():
 @app.get('/sheets/{slug}')
 def get_cheatsheet_by_slug(slug: str):
     """
-    Renvoie la fiche de grammaire / d'orthographe avec le slug `slug`
+    Returns the grammar sheet / orthography with slug `slug`.
     """
     return SHEETS_BY_SLUG.get(slug, {
         "contenu": "",
@@ -262,7 +262,7 @@ def get_cheatsheet_by_slug(slug: str):
 @app.get('/sheets/download/{slug}')
 def download_cheatsheet_by_slug(slug: str):
     """
-    Renvoie le fichier markdown correspondant à la fiche avec le slug `slug`
+    Returns the markdown file corresponding to sheet with slug `slug`.
     """
     fiche = SHEETS_BY_SLUG.get(slug, {
         "contenu": "",
@@ -281,7 +281,7 @@ def download_cheatsheet_by_slug(slug: str):
 @app.get('/download')
 def download_database(variant: str = 'remede'):
     """
-    Télécharge la base Sqlite sous form de fichier.
+    Download the Sqlite database as a file.
     """
     return FileResponse(f'data/{variant}.db')
 
@@ -289,7 +289,7 @@ def download_database(variant: str = 'remede'):
 @app.get('/release/{variant}')
 def download_binary(variant: BinariesVariant):
     """
-    Télécharge les derniers exécutables
+    Download the latest builds.
     """
     return FileResponse(f'builds/remede.{variant}', filename=f"remede.{variant}", media_type="multipart/form-data")
 
