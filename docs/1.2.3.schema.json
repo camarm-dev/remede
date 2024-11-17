@@ -119,36 +119,32 @@
     "credits": {
       "type": "object",
       "description": "Definition credits & sources.",
-      "items": {
-        "required": [
-          "name",
-          "url"
-        ],
-        "properties": {
-          "name": {
-            "description": "The credit name.",
-            "type": "string",
-            "minLength": 1
-          },
-          "url": {
-            "description": "The credit URL.",
-            "type": "string",
-            "minLength": 1
-          }
+      "required": [
+        "name",
+        "url"
+      ],
+      "properties": {
+        "name": {
+          "description": "The credit name.",
+          "type": "string",
+          "minLength": 1
         },
-        "additionalProperties": false
+        "url": {
+          "description": "The credit URL.",
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     }
   },
   "required": [
-    "synonyms",
-    "antonyms",
+    "synonymes",
+    "antonymes",
     "etymologies",
     "definitions",
-    "sources",
-    "phoneme",
-    "conjugations"
+    "credits",
+    "conjugaisons"
   ],
   "additionalProperties": false
 }
