@@ -8,14 +8,14 @@
     "$schema": {
       "type": "string"
     },
-    "synonyms": {
+    "synonymes": {
       "description": "The synonyms of the word.",
       "type": "array",
       "items": {
         "type": "string"
       }
     },
-    "antonyms": {
+    "antonymes": {
       "description": "The antonyms of the word.",
       "type": "array",
       "items": {
@@ -37,38 +37,38 @@
       "items": {
         "type": "object",
         "required": [
-          "gender",
-          "nature",
-          "explanations",
+          "genre",
+          "classe",
+          "explications",
           "examples",
           "plurals"
         ],
         "properties": {
-          "gender": {
+          "genre": {
             "description": "Word gender for this definition.",
             "type": "string",
             "minLength": 0
           },
-          "nature": {
+          "classe": {
             "description": "Word nature for this definition.",
             "type": "string",
             "minLength": 1
           },
-          "explanations": {
+          "explications": {
             "description": "Different explanations of the word.",
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "examples": {
+          "exemples": {
             "description": "Different examples usages of the word.",
             "type": "array",
             "uniqueItems": true,
             "minItems": 0,
             "items": {
               "required": [
-                "content",
+                "contenu",
                 "sources"
               ],
               "properties": {
@@ -85,57 +85,17 @@
               },
               "additionalProperties": false
             }
-          },
-          "plurals": {
-            "description": "Plurals orthography of the word.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "label": {
-                  "description": "The label of the plural (example: \"Masculins\" or \"Variant 1\").",
-                  "type": "string",
-                  "minLength": 0
-                },
-                "singular": {
-                  "description": "The singular form.",
-                  "type": "string",
-                  "minLength": 0
-                },
-                "plural": {
-                  "description": "The plural form.",
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "additionalProperties": false
-            }
           }
         },
         "additionalProperties": false
       }
     },
-    "sources": {
-      "type": "array",
-      "description": "The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids",
-      "items": {
-        "minLength": 1,
-        "type": "string",
-        "enum": [
-          "fr_wik",
-          "antonyme_org",
-          "synonymo_fr",
-          "conjuguons_fr",
-          "en_wik"
-        ]
-      }
-    },
-    "phoneme": {
+    "ipa": {
       "type": "string",
-      "description": "The word IPS notation.",
+      "description": "The word IPA notation.",
       "minLength": 1
     },
-    "conjugations": {
+    "conjugaisons": {
       "type": "object",
       "description": "The word's conjugations if it is a verb.",
       "patternProperties": {
@@ -153,6 +113,30 @@
           },
           "additionalProperties": false
         }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "type": "object",
+      "description": "Definition credits & sources.",
+      "items": {
+        "required": [
+          "name",
+          "url"
+        ],
+        "properties": {
+          "name": {
+            "description": "The credit name.",
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "description": "The credit URL.",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
       },
       "additionalProperties": false
     }
