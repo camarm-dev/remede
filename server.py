@@ -39,6 +39,14 @@ class BinariesVariant(str, Enum):
     msi = "msi"
 
 
+def get_stats(db_path: str):
+    db = sqlite3.connect(db_path, check_same_thread=False)
+    db_cursor = db.cursor()
+    total = db_cursor.execute("SELECT COUNT(*) FROM dictionary").fetchone()[0]
+    db_cursor.close()
+    return total
+
+
 def in_json(response: str | list):
     return json.loads(json.dumps(response))
 
@@ -126,30 +134,19 @@ def sanitize_query(q: str):
 @app.get('/')
 def root():
     """
-    ### Renvoie des informations utiles à propos de l'API:
-    - Sa version
-    - L'identifiant du dataset API (`dataset`)
-    - Le hash du dataset de la base Sqlite (`hash`)
-    - Le nombre de mots dans la base (`total`)
+    ### Returns useful information about API and datasets
+    - Its version
+    - The available dictionaries
+        - Their name (`name`)
+        - Their unique identifier (hash) (`hash`)
+        - Their slug; used to download or search in specific database (`slug`)
+        - The number of words in the database (`total`)
+        - Does the database respect the Remède JSON Schema (`valid`)
     """
     return {
         "version": version,
         "message": "Check /docs for documentation",
-        "dataset": DATASET,
-        "hash": DATASET,
-        "total": entities,
-        "dictionnaires": {
-            "remede": {
-                "nom": "Remède (FR) ~500Mb",
-                "slug": "remede",
-                "hash": DATASET
-            },
-            "remede.extended": {
-                "nom": "Remède Extended (FR) ~1Gb",
-                "slug": "remede.extended",
-                "hash": DATASET
-            }
-        }
+        "dictionaries": DICTIONARIES
     }
 
 
@@ -277,16 +274,38 @@ def download_binary(variant: BinariesVariant):
 
 
 if __name__ == '__main__':
-    database = sqlite3.connect('data/remede.db', check_same_thread=False)
-    cursor = database.cursor()
-    entities = cursor.execute("SELECT COUNT(*) FROM dictionary").fetchone()[0]
+    remede_database = sqlite3.connect('data/remede.db', check_same_thread=False)
+    remede_cursor = remede_database.cursor()
+
+    DATABASES = {
+        "remede": remede_cursor,
+        "remede.legacy": remede_cursor  # TODO change
+    }
 
     WORD_OF_DAY = {
         "date": "",
         "word": ""
     }
 
-    DATASET = md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
+    DICTIONARIES = {
+        "remede": {
+            "name": "Remède (FR) ~700Mb",
+            "slug": "remede",
+            "total": get_stats('data/remede.db'),
+            "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
+        },
+        "remede.legacy": {
+            "name": "Remède 1.2.3 (FR) ~500Mb",
+            "slug": "remede.legacy",
+            "total": get_stats('data/remede.db'),
+            "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]  # TODO replace with legacy new database
+        },
+        # "remede.en": {
+        #     "nom": "Remède (EN) ~200Mb",
+        #     "slug": "remede.en",
+        #     "hash": md5(open('data/remede.en.db', 'rb').read()).hexdigest()[0:7]
+        # }
+    }
 
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
