@@ -75,7 +75,7 @@
           </ion-label>
         </ion-item>
         <ion-item color="light">
-          <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="popover" :label="$t('dictionary')" value="remede" :name="$t('dictionary')">
+          <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="alert" :label="$t('dictionary')" value="remede" :name="$t('dictionary')">
             <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].name }} {{ availableDictionaries[key].size }}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -223,13 +223,14 @@ export default {
         this.canDownload = false
       }
 
-      const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
+      // const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
+      const specs = await fetch("http://localhost:8000").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionaries
-      this.availableDictionariesName = Object.keys(specs.dictionares)
+      this.availableDictionariesName = Object.keys(specs.dictionaries)
 
       this.latestDictionary = specs.dataset
       if (this.downloaded) {
-        this.hasUpdate = this.dictionary.hash != specs.dictionnaires[this.dictionary.slug].hash
+        this.hasUpdate = this.dictionary.hash != specs.dictionaries[this.dictionary.slug].hash
       } else {
         this.hasUpdate = false
       }
