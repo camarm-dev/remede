@@ -61,9 +61,12 @@
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
           <ion-label>{{ $t('settingsPage.updateTo') }} "{{ latestDictionary }}"</ion-label>
         </ion-item>
+      </ion-list>
+
+      <ion-list inset v-if="downloaded">
         <ion-item>
           <ion-note>
-
+            {{ $t('settingsPage.dictionaryRevisionDownloaded', { name: dictionary.name, rev: dictionary.hash, size: dictionary.size, words: dictionary.words }) }}
           </ion-note>
         </ion-item>
       </ion-list>
@@ -166,7 +169,8 @@ export default {
       dictionary: {
         hash: "",
         slug: "",
-        name: ""
+        name: "",
+        words: ""
       },
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
@@ -223,8 +227,7 @@ export default {
         this.canDownload = false
       }
 
-      // const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
-      const specs = await fetch("http://localhost:8000").then(resp => resp.json()) as InformationsResponse
+      const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionaries
       this.availableDictionariesName = Object.keys(specs.dictionaries)
 
