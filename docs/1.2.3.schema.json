@@ -76,8 +76,7 @@
               "properties": {
                 "contenu": {
                   "description": "The example content.",
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "sources": {
                   "description": "The example source.",
