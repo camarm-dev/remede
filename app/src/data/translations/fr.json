@@ -155,7 +155,8 @@
     "cannotDownload": "Vous ne pouvez pas télécharger le dictionnaire...",
     "downloadingDisclaimer": "Veuillez ne pas quitter cette page pendant le téléchargement.\n\nIl est conseillé de redémarrer l'application après le téléchargement.",
     "workingNormally": "Tout semble fonctionner parfaitement. Vous pouvez commencer à chercher des mots hors-ligne !",
-    "problemDetected": "Un problème a été détecté, veuillez réinstaller le dictionnaire ou contacter le support."
+    "problemDetected": "Un problème a été détecté, veuillez réinstaller le dictionnaire ou contacter le support.",
+    "understood": "C'est compris !"
   },
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",
