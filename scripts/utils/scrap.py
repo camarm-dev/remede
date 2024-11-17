@@ -82,6 +82,8 @@ def get_conjugations(verb: str):
                 for forme in formes_verbales:
                     element_sujet = forme.find('span', attrs={'class': 'pronom'})
                     sujet = element_sujet.text if element_sujet else modes_conjugation_subjects.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
+                    if nom_mode == "Impératif":
+                        sujet = ['2PS', '1PP', '2PP'][formes_verbales.index(forme)]
                     forme_verbale = forme.text.replace(sujet + ' ', '')
                     verb_conjugaisons[nom_mode][nom_temps][sujet] = forme_verbale
         return verb_conjugaisons
