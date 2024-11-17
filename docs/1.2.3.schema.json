@@ -40,13 +40,12 @@
           "genre",
           "classe",
           "explications",
-          "examples",
-          "plurals"
+          "exemples"
         ],
         "properties": {
           "genre": {
             "description": "Word gender for this definition.",
-            "type": "string",
+            "type": ["string", "array"],
             "minLength": 0
           },
           "classe": {
@@ -56,15 +55,18 @@
           },
           "explications": {
             "description": "Different explanations of the word.",
-            "type": "array",
-            "items": {
-              "type": "string"
+            "type": ["object", "array"],
+            "patternProperties": {
+              "^[0-9]*$": {
+                "items": {
+                  "type": ["string", "array"]
+                }
+              }
             }
           },
           "exemples": {
             "description": "Different examples usages of the word.",
             "type": "array",
-            "uniqueItems": true,
             "minItems": 0,
             "items": {
               "required": [
@@ -72,7 +74,7 @@
                 "sources"
               ],
               "properties": {
-                "content": {
+                "contenu": {
                   "description": "The example content.",
                   "type": "string",
                   "minLength": 1
@@ -80,7 +82,7 @@
                 "sources": {
                   "description": "The example source.",
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 0
                 }
               },
               "additionalProperties": false
