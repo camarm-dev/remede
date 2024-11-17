@@ -51,7 +51,7 @@
 
       <ion-list inset v-if="downloaded">
         <ion-item color="light">
-          {{ $t('dictionary') }} "{{ dictionary.hash }}" {{ $t('settingsPage.downloaded') }}.
+          {{ $t('dictionary') }} "{{ dictionary.name }}" {{ $t('settingsPage.downloaded') }}.
         </ion-item>
         <ion-item button color="danger" @click="deleteDictionary().then(() => { reloadDictionaryStatus(); canDownload = true })">
           <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
@@ -60,6 +60,11 @@
         <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; canDownload = true; deleteDictionary().then(() => { reloadDictionaryStatus().then(() => { download() }) })">
           <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
           <ion-label>{{ $t('settingsPage.updateTo') }} "{{ latestDictionary }}"</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-note>
+
+          </ion-note>
         </ion-item>
       </ion-list>
 
@@ -160,7 +165,8 @@ export default {
       dictionaryToDownload: "remede",
       dictionary: {
         hash: "",
-        slug: ""
+        slug: "",
+        name: ""
       },
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
@@ -218,8 +224,8 @@ export default {
       }
 
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
-      this.availableDictionaries = specs.dictionnaires
-      this.availableDictionariesName = Object.keys(specs.dictionnaires)
+      this.availableDictionaries = specs.dictionaries
+      this.availableDictionariesName = Object.keys(specs.dictionaires)
 
       this.latestDictionary = specs.dataset
       if (this.downloaded) {
