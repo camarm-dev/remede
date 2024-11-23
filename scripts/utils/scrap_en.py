@@ -15,7 +15,7 @@ def get_word_metadata(word: str, _: str) -> Tuple[None, None, int, int, int, boo
     """
     Get the number of syllables, the elidable property and if the word end phoneme is feminine.
     :param word: string of word
-    :param _: formally the phoneme og the word. this parameter is useless
+    :param _: formally the phoneme of the word. this parameter is useless
     :return: Elidable, Feminine, Syllable count, Min syllables count, Max syllables count and Nature
     """
     syllables_count = count_syllables(word.lower())
