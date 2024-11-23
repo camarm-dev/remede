@@ -176,7 +176,7 @@ def root():
 
 
 @app.get('/validity/{slug}')
-def check_validity(slug: str):
+def get_validity(slug: str):
     """
     Returns the dictionary `slug` validity (`true`/`false`). It's a check to know if it follows his JSON Schema.
     """
