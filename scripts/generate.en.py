@@ -148,9 +148,6 @@ if __name__ == '__main__':
     custom_words = custom_words_json.keys()
     before = datetime.datetime.now()
 
-    print(get_word_document('eat', 'eat'))
-    exit()
-
     database = RemedeDatabase(sqlite3.connect('data/remede.en.db'))
 
     # Resume option: replace wordlist
