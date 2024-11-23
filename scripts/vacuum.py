@@ -11,5 +11,7 @@ if __name__ == '__main__':
     db = sqlite3.connect(f"data/{database_choice}", check_same_thread=False)
     print("Vacuuming...")
     db.execute("VACUUM;")
+    db.commit()
+    db.close()
     after = int(os.path.getsize(f'data/{database_choice}') * 10e-7)
     print(f"Done. {before}Mb -> {after}Mb")
