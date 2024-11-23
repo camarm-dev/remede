@@ -2,10 +2,10 @@ from typing import Tuple
 
 from bs4 import BeautifulSoup
 import requests
-
+from mlconjug3 import Conjugator
 from utils.scrap import count_syllables
 
-
+conjugator = Conjugator('en')
 headers = {
     "User-Agent": 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0'
 }
@@ -41,28 +41,17 @@ def get_synonyms_and_antonyms(word: str):
 
 
 def get_conjugations(verb: str):
-    # TODO
-    try:
-        verb_conjugaisons = {}
-        parser = BeautifulSoup(requests.get(f'http://conjuguons.fr/conjugaison/verbe/{verb}').content, 'html.parser')
-        table = parser.find('div', attrs={'id': 'toustemps'})
-        modes_conjugaison = table.find_all('div', attrs={'class': 'modeConjugue'})
-        for mode in modes_conjugaison:
-            nom_mode = ' '.join(mode.attrs.get('class')).replace('modeConjugue ', '')
-            temps_conjugaison = mode.find_all('div', attrs={'class': 'temps'})
-            if nom_mode == 'Infinitif':
-                continue
-            verb_conjugaisons[nom_mode] = {}
-            for temps in temps_conjugaison:
-                nom_temps = ' '.join(temps.attrs.get('class')).replace('temps ', '')
-                formes_verbales = temps.find_all('li')
-                verb_conjugaisons[nom_mode][nom_temps] = {}
-                for forme in formes_verbales:
-                    element_sujet = forme.find('span', attrs={'class': 'pronom'})
-                    sujet = element_sujet.text if element_sujet else modes_conjugation_subjects.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
-                    forme_verbale = forme.text.replace(sujet + ' ', '')
-                    verb_conjugaisons[nom_mode][nom_temps][sujet] = forme_verbale
-        return verb_conjugaisons
-    except Exception as e:
-        return {}
-
+    conjugations = {}
+    data = conjugator.conjugate([verb], 'pronoun')
+    if data:
+        for verb in data:
+            for mood_name, mood in verb.full_forms.items():
+                conjugations[mood_name.title()] = {}
+                for tense_name, tense in mood.items():
+                    conjugations[mood_name.title()][tense_name.title()] = {}
+                    if type(tense) == str:
+                        conjugations[mood_name.title()][tense_name.title()]["(No subject)"] = tense
+                    else:
+                        for subject, form in tense.items():
+                            conjugations[mood_name.title()][tense_name.title()][subject.title()] = form
+    return conjugations
