@@ -61,7 +61,8 @@ def check_validity(db_path: str, schema: str = None):
             continue
         success, error = validate_doc(doc, schema)
         if not success:
-            print(f"\033[A\033[KStarting API | Checking JSON schemas validity... Failed for \"{db_path}\", {error} [3/3]")
+            print(
+                f"\033[A\033[KStarting API | Checking JSON schemas validity... Failed for \"{db_path}\", {error} [3/3]")
             return False
     return True
 
@@ -95,9 +96,11 @@ def fetch_remede_doc(word: str):
 def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
     lock.acquire(True)
     if limit:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
+        response = cursor.execute(
+            f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
     else:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}").fetchall()
+        response = cursor.execute(
+            f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}").fetchall()
     return list(map(lambda row: row[0], response))
 
 
@@ -170,6 +173,14 @@ def root():
         "message": "Check /docs for documentation",
         "dictionaries": DICTIONARIES
     }
+
+
+@app.get('/validity/{slug}')
+def check_validity(slug: str):
+    """
+    Returns the dictionary `slug` validity (`true`/`false`). It's a check to know if it follows his JSON Schema.
+    """
+    return DICTIONARIES.get(slug, {"valid": {"message": "Slug not found"}})["valid"]
 
 
 @app.get('/word/{word}')
@@ -319,7 +330,8 @@ if __name__ == '__main__':
             "name": "Remède 1.2.3 (FR)",
             "slug": "remede.legacy",
             "total": get_stats('data/remede.legacy.db'),
-            "hash": md5(open('data/remede.legacy.db', 'rb').read()).hexdigest()[0:7],  # TODO replace with legacy new database
+            "hash": md5(open('data/remede.legacy.db', 'rb').read()).hexdigest()[0:7],
+            # TODO replace with legacy new database
             "valid": False,
             "schema": "1.2.3.schema.json",
             "size": f"{int(os.path.getsize('data/remede.legacy.db') * 10e-7)}Mb"
