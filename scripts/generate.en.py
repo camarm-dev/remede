@@ -95,8 +95,8 @@ def safe_get_word_document(word: str, ipa: str):
     try:
         return get_word_document(word, ipa)
     except Exception as e:
-        print(f'Pausing: errored with {e}. Enter to retry')
-        input()
+        print(f'Pausing: errored with {e}. Enter to retry, "s" to skip')
+        if input() == 's': return
         return safe_get_word_document(word, ipa)
 
 
