@@ -98,6 +98,8 @@
               <li>Mise à jour sur l'interface.</li>
               <li>Traduction de l'application.</li>
               <li>Base de données Remède Next.</li>
+              <li>Dictionnaire anglais.</li>
+              <li>Pluriels des mots.</li>
               <li>+ 900 000 mots !</li>
             </ul>
           </p>
