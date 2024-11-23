@@ -249,7 +249,7 @@ export default {
           message: this.$t("settingsPage.downloadLongDescription"),
           buttons: [
             {
-              text: this.$t('settingsPage.understood'),
+              text: this.$t("settingsPage.understood"),
               role: "confirm",
               handler: async () => {
                 await this.closeApp()
