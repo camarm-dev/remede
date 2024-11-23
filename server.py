@@ -15,8 +15,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
-from scripts.utils.validate import validate_doc
-
 lock = threading.Lock()
 version = "1.3.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
@@ -49,22 +47,10 @@ def get_stats(db_path: str):
     return total
 
 
-def check_validity(db_path: str, schema: str = None):
-    db = sqlite3.connect(db_path, check_same_thread=False)
-    db_cursor = db.cursor()
-    # Taking a thousand random documents to check validity
-    all_documents = db_cursor.execute("SELECT document FROM dictionary ORDER BY RANDOM() LIMIT 1000").fetchall()
-    db_cursor.close()
-    for row in all_documents:
-        doc = json.loads(row[0])
-        if not doc:
-            continue
-        success, error = validate_doc(doc, schema)
-        if not success:
-            print(
-                f"\033[A\033[KStarting API | Checking JSON schemas validity... Failed for \"{db_path}\", {error} [3/3]")
-            return False
-    return True
+def check_validity(slug: str):
+    with open('validity.json', 'r') as f:
+        data = json.loads(f.read())
+        return data.get(slug, {'valid': False, 'schema': 'schema.json', 'hash': ''})
 
 
 def in_json(response: str | list):
@@ -178,7 +164,7 @@ def root():
 @app.get('/validity/{slug}')
 def get_validity(slug: str):
     """
-    Returns the dictionary `slug` validity (`true`/`false`). It's a check to know if it follows his JSON Schema.
+    Returns the dictionary `slug` validity (`true`/`false`). It's a check to know if it follows his JSON Schema. If state is unknown returns null.
     """
     return DICTIONARIES.get(slug, {"valid": {"message": "Slug not found"}})["valid"]
 
@@ -344,9 +330,14 @@ if __name__ == '__main__':
     }
 
     print("\033[A\033[KStarting API | Checking JSON schemas validity... Can take a while... [3/3]")
-    # DICTIONARIES["remede"]["valid"] = check_validity('data/remede.db', True)
-    DICTIONARIES["remede"]["valid"] = check_validity('data/remede.db', schema='docs/1.2.3.schema.json')
-    DICTIONARIES["remede.legacy"]["valid"] = check_validity('data/remede.legacy.db', schema='docs/1.2.3.schema.json')
+    for slug, data in DICTIONARIES.items():
+        validity = check_validity(slug)
+        if data["hash"] != validity["hash"]:
+            print(f"Validity check is outdated for database {slug}.")
+            data["valid"] = None
+            continue
+        data["valid"] = validity["valid"]
+        data["schema"] = validity["schema"]
 
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
