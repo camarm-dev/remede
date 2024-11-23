@@ -86,7 +86,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-toolbar>
+        <ion-toolbar class="ion-margin-top">
           <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value as string; refreshListeners()">
             <ion-segment-button value="def">{{ $t('definition.definition') }}</ion-segment-button>
             <ion-segment-button value="syn">{{ $t('definition.synonyms') }}</ion-segment-button>
