@@ -79,8 +79,7 @@
                 },
                 "sources": {
                   "description": "The example source.",
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 }
               },
               "additionalProperties": false
