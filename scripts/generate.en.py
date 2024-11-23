@@ -6,8 +6,7 @@ import requests
 
 from utils.sources import ENGLISH_SOURCES, SOURCES
 from utils.dataset_en import get_words, get_word2ipa, get_saved_wordlist, \
-    save_progression_wordlist
-from utils.dataset import get_custom_words
+    save_progression_wordlist, get_custom_words
 from utils.dictionary_database import RemedeDatabase
 from utils.sanitize import sanitize_word
 from utils.scrap_en import get_conjugations, get_word_metadata, get_synonyms_and_antonyms
@@ -84,6 +83,10 @@ def get_word_document(word: str, ipa: str):
         ],
         "sources": sources,
         "phoneme": ipa,
+        "pronunciation": {
+            "audio": result['pronunciations'][0]['url'],
+            "credits": result['pronunciations'][0]['credits']
+        } if len(result['pronunciations']) > 0 else None,
         "conjugations": conjugations
     }
 
@@ -100,6 +103,7 @@ def safe_get_word_document(word: str, ipa: str):
 def remedize(word_list: list):
     total = len(word_list)
     errored = 0
+    word = None
     try:
         for word in word_list:
             if word in custom_words:
@@ -120,10 +124,8 @@ def remedize(word_list: list):
             database.insert(word, sanitize_word(word), ipa.replace('/', ''), nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
             print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
     except Exception as e:
-        print(f"Program raised error {e}. Saving progression...")
-        save = word_list[word_list.index(word):]
-        save_progression_wordlist(save)
-        raise KeyboardInterrupt
+        print(f"Program raised error {e}. Exiting...")
+    return word
 
 
 
@@ -146,6 +148,9 @@ if __name__ == '__main__':
     custom_words = custom_words_json.keys()
     before = datetime.datetime.now()
 
+    print(get_word_document('eat', 'eat'))
+    exit()
+
     database = RemedeDatabase(sqlite3.connect('data/remede.en.db'))
 
     # Resume option: replace wordlist
@@ -160,11 +165,16 @@ if __name__ == '__main__':
         print(f"\033[A\033[KAdding metadata... Done.\n")
 
     try:
-        remedize(all_words)
+        last_word = remedize(all_words)
+        print("Saving database...")
+        database.save()
+        if last_word:
+            print("Saving progression...")
+            save = all_words[all_words.index(last_word):]
+            save_progression_wordlist(save)
     except KeyboardInterrupt:
         print("Received exit signal.")
 
-    database.save()
     after = datetime.datetime.now()
     time = after - before
     hour, minute, second = getTimeDetails(time)
