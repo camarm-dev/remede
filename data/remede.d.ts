@@ -17,52 +17,50 @@ export interface RemedeWordDocument {
     /**
      * The word's definitions.
      */
-    definitions: [
-        {
+    definitions: {
+        /**
+         * Word gender for this definition.
+         */
+        gender: string
+        /**
+         * Word nature for this definition.
+         */
+        nature: string
+        /**
+         * Different explanations of the word.
+         */
+        explanations: (string | string[])[]
+        /**
+         * Different examples usages of the word.
+         */
+        examples: {
             /**
-             * Word gender for this definition.
+             * The example content.
              */
-            gender: string
+            content: string
             /**
-             * Word nature for this definition.
+             * The example source.
              */
-            nature: string
+            sources: string
+        }[]
+        /**
+         * Plurals orthography of the word.
+         */
+        plurals: {
             /**
-             * Different explanations of the word.
+             * The label of the plural (example: "Masculins" or "Variant 1").
              */
-            explanations: (string | string[])[]
+            label?: string
             /**
-             * Different examples usages of the word.
+             * The singular form.
              */
-            examples: {
-                /**
-                 * The example content.
-                 */
-                content: string
-                /**
-                 * The example source.
-                 */
-                sources: string
-            }[]
+            singular?: string
             /**
-             * Plurals orthography of the word.
+             * The plural form.
              */
-            plurals: {
-                /**
-                 * The label of the plural (example: "Masculins" or "Variant 1").
-                 */
-                label?: string
-                /**
-                 * The singular form.
-                 */
-                singular?: string
-                /**
-                 * The plural form.
-                 */
-                plural?: string
-            }[]
-        }
-    ]
+            plural?: string
+        }[]
+    }[]
     /**
      * The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids
      */
