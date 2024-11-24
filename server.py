@@ -66,8 +66,8 @@ def fetch_random_word():
 
 def fetch_words_with_phoneme(phoneme: str):
     lock.acquire(True)
-    results = cursor.execute("SELECT document FROM dictionary WHERE phoneme = ?", (phoneme,)).fetchall()
-    return list(map(lambda x: json.loads(x[0]), results))
+    results = cursor.execute("SELECT word, document FROM dictionary WHERE phoneme = ?", (phoneme,)).fetchall()
+    return list(map(lambda x: (x[0], json.loads(x[1])), results))  # [('word' {..doc})]
 
 
 def fetch_remede_word_of_day():
