@@ -261,12 +261,13 @@ import {isWordStarred, starWord} from "@/functions/favorites"
 import {Share} from "@capacitor/share"
 import { FilledRemedeWordDocument } from "@/functions/types/remede"
 import {defineComponent, ref} from "vue"
-import {toastController, useIonRouter} from "@ionic/vue"
+import {modalController, toastController, useIonRouter} from "@ionic/vue"
 import "swiper/css"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {generateId} from "@/functions/id"
 import {App} from "@capacitor/app"
+import PhonemeDetailsSheet from "@/components/PhonemeDetailsSheet.vue";
 
 
 export default defineComponent({
@@ -399,7 +400,7 @@ export default defineComponent({
     async listenSpecialTags() {
       // Listen for <reference> tags
       document.querySelectorAll("reference").forEach(el => {
-        const listener = async () => {
+        const referenceListener = async () => {
           const href = el.getAttribute("href") || ""
           const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "").replaceAll("/wiki/", "")
           if (await wordExists(word)) {
@@ -408,21 +409,29 @@ export default defineComponent({
             window.open(href)
           }
         }
-        el.addEventListener("click", listener)
+        el.addEventListener("click", referenceListener)
         window.addEventListener("reset", () => {
-          el.removeEventListener("click", listener)
+          el.removeEventListener("click", referenceListener)
         })
       })
       // Listen for <phoneme> tags
       document.querySelectorAll("phoneme").forEach(el => {
-        const listener = async () => {
+        const phonemeListener = async () => {
           const phoneme = el.textContent
-          // Open sheet with informations about phoneme
-          // TODO
+          const modal = await modalController.create({
+            component: PhonemeDetailsSheet,
+            breakpoints: [0, 1],
+            initialBreakpoint: 1,
+            componentProps: {
+              phoneme
+            },
+            cssClass: 'phoneme-modal'
+          })
+          await modal.present()
         }
-        el.addEventListener("click", listener)
+        el.addEventListener("click", phonemeListener)
         window.addEventListener("reset", () => {
-          el.removeEventListener("click", listener)
+          el.removeEventListener("click", phonemeListener)
         })
       })
     },
@@ -625,5 +634,9 @@ ion-popover.example {
   position: relative;
   padding-left: 1em;
   top: .5em;
+}
+
+.phoneme-modal {
+  --height: auto
 }
 </style>
