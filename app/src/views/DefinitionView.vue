@@ -73,7 +73,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-header collapse="condense">
-        <ion-toolbar>
+        <ion-toolbar class="ion-margin-bottom">
           <ion-label>
             <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
             <ion-skeleton-text class="ion-margin-start" style="width: 65px; border-radius: 2px" v-if="loading"/>
@@ -86,7 +86,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-toolbar class="ion-margin-top">
+        <ion-toolbar>
           <ion-segment swipe-gesture :disabled="notFound" :value="tab" @ionChange="tab = $event.detail.value as string; refreshListeners()">
             <ion-segment-button value="def">{{ $t('definition.definition') }}</ion-segment-button>
             <ion-segment-button value="syn">{{ $t('definition.synonyms') }}</ion-segment-button>
@@ -107,9 +107,8 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <div class="definition" :key="`def-genre-${wordObject.definitions.indexOf(def).toString()}`" v-for="def in wordObject.definitions">
           <header>
             <div class="header-title">
-              <h4 v-if="typeof def.gender !== 'string'">{{ def.gender[0] }}, {{ def.gender[1] }}</h4>
-              <h4 v-else-if="def.gender != def.nature && def.nature != ''">{{ def.gender }}, {{ def.nature }}</h4>
-              <h4 v-else>{{ def.gender }}</h4>
+              <h4 v-if="def.gender != ''">{{ def.nature }}, {{ def.gender }}</h4>
+              <h4 v-else>{{ def.nature }}</h4>
               <ion-icon v-if="def.examples.length > 0" :id="id.examples[wordObject.definitions.indexOf(def)]" :icon="example" color="medium"/>
             </div>
             <ion-popover class="example" v-if="def.examples.length > 0" :trigger="id.examples[wordObject.definitions.indexOf(def)]">
@@ -117,21 +116,20 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
                 <h5>
                   {{ $t('definition.examples') }}
                   <span class="ion-color-medium">{{ mot }}</span>,
-                  <span v-if="typeof def.gender !== 'string'">{{ def.gender[0] }}, {{ def.gender[1] }}</span>
-                  <span v-else-if="def.gender != def.nature && def.nature != ''">{{ def.gender }}, {{ def.nature }}</span>
-                  <span v-else>{{ def.gender }}</span>
+                  <span v-if="def.gender != ''">{{ def.nature }}, {{ def.gender }}</span>
+                  <span v-else>{{ def.nature }}</span>
                 </h5>
                 <swiper
                     :pagination="{ clickable: true, enabled: true }"
                     :modules="[Pagination]"
                 >
-                  <swiper-slide v-for="exemple in def.examples" :key="exemple.contenu">
+                  <swiper-slide v-for="example in def.examples" :key="example.content">
                     <div class="example-container">
                       <ion-icon class="opening-quote" :icon="quoteOpen"/>
                       <div>
-                        <i class="example-content" v-html="exemple.contenu"/>
+                        <i class="example-content" v-html="example.content"/>
                       </div>
-                      <span class="sources" v-html="exemple.sources"/>
+                      <span class="sources" v-html="example.sources"/>
                     </div>
                   </swiper-slide>
                 </swiper>
@@ -347,9 +345,15 @@ export default defineComponent({
         console.error("Failed to share.")
       }
     },
+    getAudioUrl() {
+      if (this.wordObject.pronunciation) {
+        return this.wordObject.pronunciation.audio
+      }
+      return `https://remede-tts.camarm.fr/api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.005&text=${encodeURIComponent(this.mot)}&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true`
+    },
     readWord() {
       this.audioLoading = true
-      const url = `https://remede-tts.camarm.fr/api/tts?voice=nanotts%3Afr-FR&lang=fr&vocoder=high&denoiserStrength=0.005&text=${encodeURIComponent(this.mot)}&speakerId=&ssml=true&ssmlNumbers=false&ssmlDates=false&ssmlCurrency=false&cache=true`
+      const url = this.getAudioUrl()
       fetch(url, {
         method: "GET",
         cache: "no-cache"
