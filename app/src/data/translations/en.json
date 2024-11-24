@@ -66,7 +66,8 @@
     "examples": "Examples",
     "openConjugation": "Open conjugation",
     "openRhymesDictionary": "Open rhymes dictionary",
-    "noSubject": "(No subject)"
+    "noSubject": "(No subject)",
+    "wordWithThisPhoneme": "Words with this pronunciation"
   },
   "share": {
     "definitionTitle": "Definition of \"{word}\" on Remède",
