@@ -39,6 +39,7 @@ import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
 import TabSection from "@/components/TabSection.vue"
 import ConjugationTable from "@/components/ConjugationTable.vue"
+import PluralsTable from "@/components/PluralsTable.vue";
 
 
 const detailsModal = ref()
@@ -164,6 +165,15 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </ul>
           </div>
         </div>
+        <div class="definition" v-if="wordObject.plurals.length > 0">
+          <header>
+            <h4>{{ $t('definition.plurals') }}</h4>
+            <hr>
+          </header>
+          <div class="content">
+            <PluralsTable :plurals="wordObject.plurals"/>
+          </div>
+        </div>
       </div>
       <TabSection v-if="isTab('syn')" :title="$t('definition.synonyms')">
         <ul>
@@ -272,6 +282,7 @@ export default defineComponent({
         antonyms: [],
         definitions: [],
         phoneme: "",
+        plurals: [],
         sources: [],
         pronunciation: null,
         conjugations: {},
