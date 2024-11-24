@@ -18,13 +18,13 @@ import {IonItem, IonLabel, IonList} from "@ionic/vue"
     </ion-item>
     <ion-item lines="full" v-for="plural in plurals">
       <ion-label slot="start" v-if="plurals.some(plural => plural.label != '')">
-        <p v-html="plural.label"/>
+        <h5 v-html="plural.label"/>
       </ion-label>
       <ion-label slot="start">
-        <p v-html="plural.singular"/>
+        <h5 v-html="plural.singular"/>
       </ion-label>
       <ion-label slot="end">
-        <p v-html="plural.plural"/>
+        <h5 v-html="plural.plural"/>
       </ion-label>
     </ion-item>
   </ion-list>
