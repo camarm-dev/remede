@@ -1,6 +1,6 @@
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
-import {RemedeSource} from "@/functions/types/remede"
+import {FilledRemedeWordDocument, RemedeSource, RemedeWordDocument} from "@/functions/types/remede"
 
 function removeAccents(value: string) {
     return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
@@ -31,7 +31,7 @@ async function getWordWithAPI(word: string) {
 }
 
 async function getWordFromDatabase(word: string) {
-    return await database?.getWord(word) as any[]
+    return await database?.getWord(word) as any
 }
 
 async function getRandomWordWithAPI() {
@@ -70,11 +70,20 @@ async function getSearchResults(query: string, page: number) {
     return await getSearchResultsFromDatabase(query, page)
 }
 
-async function getWordDocument(word: string) {
+async function getWordDocument(word: string): Promise<FilledRemedeWordDocument> {
     if (await useApi()) {
-        return await getWordWithAPI(word)
+        return await getWordWithAPI(word) as FilledRemedeWordDocument
     }
-    return await getWordFromDatabase(word)
+    const document = await getWordFromDatabase(word) as RemedeWordDocument
+    if (!document) return document
+    const sources: RemedeSource[] = []
+    for (const source of document.sources) {
+        sources.push(await getSource(source))
+    }
+    return {
+        ...document,
+        sources
+    }
 }
 
 async function getRandomWord() {
