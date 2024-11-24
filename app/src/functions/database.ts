@@ -61,7 +61,7 @@ class RemedeDatabase {
     }
 
     async getRandomWord() {
-        const statement = "SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1"
+        const statement = "SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1"
         const response = await this.query(statement)
         return response[0]
     }
