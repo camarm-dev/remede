@@ -77,7 +77,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           <ion-label>
             <ion-title class="remede-font" size="large">{{ mot }}</ion-title>
             <ion-skeleton-text class="ion-margin-start" style="width: 65px; border-radius: 2px" v-if="loading"/>
-            <p class="ion-padding-start" v-else>{{ wordObject.ipa }}</p>
+            <p class="ion-padding-start" v-else>{{ wordObject.phoneme }}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button @click="readWord()" :disabled="notFound">
@@ -107,25 +107,25 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <div class="definition" :key="`def-genre-${wordObject.definitions.indexOf(def).toString()}`" v-for="def in wordObject.definitions">
           <header>
             <div class="header-title">
-              <h4 v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</h4>
-              <h4 v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</h4>
-              <h4 v-else>{{ def.genre }}</h4>
-              <ion-icon v-if="def.exemples.length > 0" :id="id.examples[wordObject.definitions.indexOf(def)]" :icon="example" color="medium"/>
+              <h4 v-if="typeof def.gender !== 'string'">{{ def.gender[0] }}, {{ def.gender[1] }}</h4>
+              <h4 v-else-if="def.gender != def.nature && def.nature != ''">{{ def.gender }}, {{ def.nature }}</h4>
+              <h4 v-else>{{ def.gender }}</h4>
+              <ion-icon v-if="def.examples.length > 0" :id="id.examples[wordObject.definitions.indexOf(def)]" :icon="example" color="medium"/>
             </div>
-            <ion-popover class="example" v-if="def.exemples.length > 0" :trigger="id.examples[wordObject.definitions.indexOf(def)]">
+            <ion-popover class="example" v-if="def.examples.length > 0" :trigger="id.examples[wordObject.definitions.indexOf(def)]">
               <div class="ion-padding examples">
                 <h5>
                   {{ $t('definition.examples') }}
                   <span class="ion-color-medium">{{ mot }}</span>,
-                  <span v-if="typeof def.genre !== 'string'">{{ def.genre[0] }}, {{ def.genre[1] }}</span>
-                  <span v-else-if="def.genre != def.classe && def.classe != ''">{{ def.genre }}, {{ def.classe }}</span>
-                  <span v-else>{{ def.genre }}</span>
+                  <span v-if="typeof def.gender !== 'string'">{{ def.gender[0] }}, {{ def.gender[1] }}</span>
+                  <span v-else-if="def.gender != def.nature && def.nature != ''">{{ def.gender }}, {{ def.nature }}</span>
+                  <span v-else>{{ def.gender }}</span>
                 </h5>
                 <swiper
                     :pagination="{ clickable: true, enabled: true }"
                     :modules="[Pagination]"
                 >
-                  <swiper-slide v-for="exemple in def.exemples" :key="exemple.contenu">
+                  <swiper-slide v-for="exemple in def.examples" :key="exemple.contenu">
                     <div class="example-container">
                       <ion-icon class="opening-quote" :icon="quoteOpen"/>
                       <div>
@@ -139,14 +139,14 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             </ion-popover>
             <hr>
           </header>
-          <ion-list inset class="border-radius" v-if="hasConjugations() && def.genre.includes('Verbe')">
+          <ion-list inset class="border-radius" v-if="hasConjugations() && isVerb(def)">
             <ion-item lines="none" color="light" button @click="tab = 'conj'">
               {{ $t('definition.openConjugation') }}
             </ion-item>
           </ion-list>
           <div class="content">
             <ul>
-              <li :key="`def-${meaning}`" v-for="meaning in def.explications">
+              <li :key="`def-${meaning}`" v-for="meaning in def.explanations">
                 <span v-html="parseMeaning(meaning)" v-if="typeof meaning === 'string'"></span>
                 <ul v-else class="ion-padding-start">
                   <li :key="`def-submeaning-${meaning.indexOf(subMeaning)}`" v-for="subMeaning in meaning" v-html="parseMeaning(subMeaning)"></li>
@@ -169,26 +169,26 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       </div>
       <TabSection v-if="isTab('syn')" :title="$t('definition.synonyms')">
         <ul>
-          <li :key="syn" v-for="syn in wordObject.synonymes">
+          <li :key="syn" v-for="syn in wordObject.synonyms">
             <a @click="goTo(`/dictionnaire/${syn}`)">
               {{ syn }}
             </a>
           </li>
         </ul>
-        <ion-note v-if="wordObject.synonymes.length == 0">{{ $t('definition.noSynonyms') }}</ion-note>
+        <ion-note v-if="wordObject.synonyms.length == 0">{{ $t('definition.noSynonyms') }}</ion-note>
       </TabSection>
       <TabSection v-if="isTab('ant')" :title="$t('definition.antonyms')">
         <ul>
-          <li :key="ant" v-for="ant in wordObject.antonymes">
+          <li :key="ant" v-for="ant in wordObject.antonyms">
             <a @click="goTo(`/dictionnaire/${ant}`)">
               {{ ant }}
             </a>
           </li>
         </ul>
-        <ion-note v-if="wordObject.antonymes.length == 0">{{ $t('definition.noAntonyms') }}</ion-note>
+        <ion-note v-if="wordObject.antonyms.length == 0">{{ $t('definition.noAntonyms') }}</ion-note>
       </TabSection>
       <TabSection v-if="isTab('conj')" :title="$t('definition.conjugation')">
-        <ConjugationTable :conjugations="wordObject.conjugaisons"/>
+        <ConjugationTable :conjugations="wordObject.conjugations"/>
       </TabSection>
       <br>
       <br>
@@ -229,17 +229,8 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
                   <ion-label>{{ $t('sources') }}</ion-label>
                 </ion-item>
                 <div slot="content" class="accordion-content">
-                  <ion-item @click="open(wordObject.credits.url)" button lines="inset" :detail-icon="link">
-                    {{ wordObject.credits.name }}
-                  </ion-item>
-                  <ion-item v-if="wordObject.synonymes.length > 0" @click="open(`http://synonymo.fr/synonyme/${mot}`)" button lines="inset" :detail-icon="link">
-                    {{ $t('definition.synonyms') }}
-                  </ion-item>
-                  <ion-item v-if="wordObject.antonymes.length > 0" @click="open(`http://www.antonyme.org/antonyme/${mot}`)" button lines="inset" :detail-icon="link">
-                    {{ $t('definition.antonyms') }}
-                  </ion-item>
-                  <ion-item v-if="Object.keys(wordObject.conjugaisons).length > 0" @click="open(`http://conjuguons.fr/conjugaison/verbe/${mot}`)" button lines="none" :detail-icon="link">
-                    {{ $t('definition.conjugation') }}
+                  <ion-item v-for="source in wordObject.sources" :key="source.url" @click="open(source.url.replaceAll('{word}', mot))" button lines="inset" :detail-icon="link">
+                    {{ $t(source.label) }}
                   </ion-item>
                 </div>
               </ion-accordion>
@@ -258,10 +249,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
 import {getWordDocument, wordExists} from "@/functions/dictionnary"
 import {isWordStarred, starWord} from "@/functions/favorites"
 import {Share} from "@capacitor/share"
-import {RemedeConjugateDocument, RemedeWordDocument} from "@/functions/types/remede"
+import { FilledRemedeWordDocument } from "@/functions/types/remede"
 import {defineComponent, ref} from "vue"
 import {toastController, useIonRouter} from "@ionic/vue"
-
 import "swiper/css"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
@@ -280,18 +270,15 @@ export default defineComponent({
       },
       tab: localStorage.getItem("defaultTab") || "def" as string,
       wordObject: {
-        synonymes: [] as string[],
-        antonymes: [] as string[],
+        synonyms: [],
+        antonyms: [],
         definitions: [],
-        references: [],
-        ipa: "",
-        credits: {
-          name: "",
-          url: ""
-        },
-        conjugaisons: {} as RemedeConjugateDocument,
+        phoneme: "",
+        sources: [],
+        pronunciation: null,
+        conjugations: {},
         etymologies: [] as string[]
-      } as RemedeWordDocument,
+      } as FilledRemedeWordDocument,
       notFound: false,
       stared: false,
       audioLoading: false,
@@ -417,7 +404,10 @@ export default defineComponent({
       }
     },
     hasConjugations() {
-      return Object.keys(this.wordObject.conjugaisons).length > 0
+      return Object.keys(this.wordObject.conjugations).length > 0
+    },
+    isVerb(def: FilledRemedeWordDocument["definitions"][keyof FilledRemedeWordDocument["definitions"]]) {
+      return def.nature.includes('Verbe') || def.nature.includes('Verb')
     },
     starWord
   }
