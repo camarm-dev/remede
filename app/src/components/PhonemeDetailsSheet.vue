@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     async loadWords() {
-      this.words = await getWordsWithPhoneme(this.phoneme)
+      this.words = await getWordsWithPhoneme(this.phoneme.replaceAll('\\', ''))
     },
     readWord(wordObject: RemedeWordDocument) {
       // todo
