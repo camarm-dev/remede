@@ -392,7 +392,14 @@ export default defineComponent({
     },
     refreshListeners() {
       window.dispatchEvent(new Event("reset"))
-      this.listenSpecialTags()
+      const safeListen = () => {
+        if (document.querySelectorAll("reference, phoneme").length == 0) {
+          setTimeout(safeListen, 500)
+        } else {
+          this.listenSpecialTags()
+        }
+      }
+      setTimeout(safeListen, 500)
     },
     isTab(tab: string) {
       return this.tab == tab
