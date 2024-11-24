@@ -96,12 +96,12 @@ def get_word_document(word: str, ipa: str):
 
 
 def safe_get_word_document(word: str, ipa: str):
-    # try:
-    return get_word_document(word, ipa)
-    # except Exception as e:
-    #     print(f'Pausing: errored with {e}. Enter to retry, "s" to skip')
-    #     if input() == 's': return
-    #     return safe_get_word_document(word, ipa)
+    try:
+        return get_word_document(word, ipa)
+    except Exception as e:
+        print(f'Pausing: errored with {e}. Enter to retry, "s" to skip')
+        if input() == 's': return
+        return safe_get_word_document(word, ipa)
 
 
 def remedize(word_list: list):
@@ -128,7 +128,6 @@ def remedize(word_list: list):
             database.insert(word, sanitize_word(word), ipa.replace('/', ''), nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
             print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
     except Exception as e:
-        raise e
         print(f"Program raised error {e}. Exiting...")
     return word
 
