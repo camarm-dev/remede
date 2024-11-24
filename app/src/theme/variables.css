@@ -98,6 +98,21 @@ reference:hover, a:hover {
   text-decoration: underline solid var(--ion-color-primary-tint);
 }
 
+phoneme {
+  padding: .1em .2em;
+  margin-top: .1em;
+  margin-bottom: .1em;
+  font-size: .9em;
+  border-radius: 3px;
+  background-color: var(--ion-color-light);
+  color: var(--ion-color-medium-tint);
+  cursor: pointer;
+}
+
+phoneme:hover {
+  background-color: var(--ion-color-light-tint);
+}
+
 .remede-font {
   font-family: "IMBPlexSerif", serif !important;
   text-transform: capitalize;
