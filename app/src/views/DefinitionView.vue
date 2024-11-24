@@ -237,7 +237,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
                   <ion-label>{{ $t('sources') }}</ion-label>
                 </ion-item>
                 <div slot="content" class="accordion-content">
-                  <ion-item v-for="source in wordObject.sources" :key="source.url" @click="open(source.url.replaceAll('{word}', mot))" button lines="inset" :detail-icon="link">
+                  <ion-item v-for="source in wordObject.sources" :key="source.url" @click="open(source.url.replaceAll('{word}', mot))" :lines="wordObject.sources.indexOf(source) == wordObject.sources.length - 1 ? 'none': 'inset'" button :detail-icon="link">
                     {{ $t(source.label) }}
                   </ion-item>
                 </div>
@@ -395,6 +395,7 @@ export default defineComponent({
       return this.tab == tab
     },
     async listenSpecialTags() {
+      // Listen for <reference> tags
       document.querySelectorAll("reference").forEach(el => {
         const listener = async () => {
           const href = el.getAttribute("href") || ""
@@ -404,6 +405,18 @@ export default defineComponent({
           } else {
             window.open(href)
           }
+        }
+        el.addEventListener("click", listener)
+        window.addEventListener("reset", () => {
+          el.removeEventListener("click", listener)
+        })
+      })
+      // Listen for <phoneme> tags
+      document.querySelectorAll("phoneme").forEach(el => {
+        const listener = async () => {
+          const phoneme = el.textContent
+          // Open sheet with informations about phoeneme
+          // TODO
         }
         el.addEventListener("click", listener)
         window.addEventListener("reset", () => {
