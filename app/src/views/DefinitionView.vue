@@ -200,7 +200,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       </TabSection>
       <br>
       <br>
-      <ion-modal ref="detailsModal" :trigger="id.modal" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+      <ion-modal ref="detailsModal" :trigger="id.modal" :initial-breakpoint="0.75" :breakpoints="[0, 0.75, 0.9]">
         <ion-content class="ion-padding">
           <div class="list-title no-margin ion-padding-bottom">
             {{ $t('dictionary') }}
@@ -237,6 +237,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
                   <ion-label>{{ $t('sources') }}</ion-label>
                 </ion-item>
                 <div slot="content" class="accordion-content">
+                  <ion-item v-if="wordObject.pronunciation" @click="open(wordObject.pronunciation.credits)" :lines="wordObject.sources.length == 0 ? 'none': 'inset'" button :detail-icon="link">
+                    {{ $t('definition.pronunciation') }}
+                  </ion-item>
                   <ion-item v-for="source in wordObject.sources" :key="source.url" @click="open(source.url.replaceAll('{word}', mot))" :lines="wordObject.sources.indexOf(source) == wordObject.sources.length - 1 ? 'none': 'inset'" button :detail-icon="link">
                     {{ $t(source.label) }}
                   </ion-item>
@@ -246,7 +249,6 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </ion-list>
         </ion-content>
       </ion-modal>
-
       <br>
     </ion-content>
   </ion-page>
@@ -415,7 +417,7 @@ export default defineComponent({
       document.querySelectorAll("phoneme").forEach(el => {
         const listener = async () => {
           const phoneme = el.textContent
-          // Open sheet with informations about phoeneme
+          // Open sheet with informations about phoneme
           // TODO
         }
         el.addEventListener("click", listener)
