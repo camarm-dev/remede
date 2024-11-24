@@ -138,7 +138,12 @@
       {
         "label": "",
         "singular": "remède",
-        "plural": "remèdes"
+        "plural": "<reference href=\"rem%C3%A8des\">remèdes</reference>"
+      },
+      {
+        "label": "",
+        "singular": "<phoneme>\\ʁə.mɛd\\</phoneme>",
+        "plural": "<phoneme>\\ʁə.mɛd\\</phoneme>"
       }
     ],
     "sources": [
