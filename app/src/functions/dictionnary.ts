@@ -46,6 +46,10 @@ async function doesWordExistsWithAPI(word: string) {
     return (await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json()).catch(() => { return { message: "Mot non trouvé" } })).message != "Mot non trouvé"
 }
 
+async function getWordsWithPhonemeWithAPI(phoneme: string) {
+    return await fetch(`https://api-remede.camarm.fr/phoneme/${phoneme}`).then(resp => resp.json())
+}
+
 async function doesWordExistsWithDatabase(word: string) {
     try {
         await database?.getWord(word)
@@ -126,6 +130,13 @@ async function getRimesAutocomplete(query: string) {
         return []
     }
     return await database?.getRimesAutocomplete(query) as any as Promise<string[]>
+}
+
+async function getWordsWithPhoneme(phoneme: string) {
+    if (await useApi()) {
+        return await getWordsWithPhonemeWithAPI(phoneme)
+    }
+    return await database?.getWordsWithPhoneme(phoneme) as any as Promise<RemedeWordDocument[]>
 }
 
 
