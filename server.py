@@ -14,6 +14,7 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
+from scripts.utils.sources import SOURCES
 
 lock = threading.Lock()
 version = "1.3.0"
@@ -176,7 +177,12 @@ def get_word_document(word: str):
     """
     document = fetch_remede_doc(word.replace("'", "''"))
     lock.release()
-    return json.loads(document)
+    json_doc = json.loads(document)
+    sources = []
+    for source in json_doc['sources']:
+        sources.append(SOURCES[source])
+    json_doc['sources'] = sources
+    return json_doc
 
 
 @app.get('/random')
