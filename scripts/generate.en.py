@@ -66,7 +66,11 @@ def get_word_document(word: str, ipa: str):
         sources.append(SOURCES['thesaurus.com']['identifier'])
     if conjugations != {}:
         sources.append("conjuguons_fr")
-
+    if type(result['natureDef']) is dict:
+        data = result['natureDef']
+        result['natureDef'] = [[]] * len(data)
+        for key, value in data.items():
+            result['natureDef'][int(key)-1] = value
     return {
         "synonyms": synonyms,
         "antonyms": antonyms,
@@ -79,7 +83,7 @@ def get_word_document(word: str, ipa: str):
                 "examples": parse_examples(result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1]),
                 "plurals": result['plurals']
             }
-            for index in range(len(result['nature']))
+            for index in range(len(result['natureDef']))
         ],
         "sources": sources,
         "phoneme": ipa,
@@ -92,12 +96,12 @@ def get_word_document(word: str, ipa: str):
 
 
 def safe_get_word_document(word: str, ipa: str):
-    try:
-        return get_word_document(word, ipa)
-    except Exception as e:
-        print(f'Pausing: errored with {e}. Enter to retry, "s" to skip')
-        if input() == 's': return
-        return safe_get_word_document(word, ipa)
+    # try:
+    return get_word_document(word, ipa)
+    # except Exception as e:
+    #     print(f'Pausing: errored with {e}. Enter to retry, "s" to skip')
+    #     if input() == 's': return
+    #     return safe_get_word_document(word, ipa)
 
 
 def remedize(word_list: list):
@@ -124,6 +128,7 @@ def remedize(word_list: list):
             database.insert(word, sanitize_word(word), ipa.replace('/', ''), nature, syllables, min_syllables, max_syllables, elidable, feminine, document)
             print(f"\033[A\033[KMot n°{word_list.index(word) + 1}/{total}: \"{word}\"{' ' * (35 - len(word))} | {errored} erreurs")
     except Exception as e:
+        raise e
         print(f"Program raised error {e}. Exiting...")
     return word
 
