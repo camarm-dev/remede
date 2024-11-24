@@ -134,9 +134,9 @@ async function getRimesAutocomplete(query: string) {
 
 async function getWordsWithPhoneme(phoneme: string) {
     if (await useApi()) {
-        return await getWordsWithPhonemeWithAPI(phoneme)
+        return await getWordsWithPhonemeWithAPI(phoneme) as any as Promise<[string, RemedeWordDocument[]][]>
     }
-    return await database?.getWordsWithPhoneme(phoneme) as any as Promise<RemedeWordDocument[]>
+    return await database?.getWordsWithPhoneme(phoneme) as any as Promise<[string, RemedeWordDocument[]][]>
 }
 
 
@@ -158,5 +158,6 @@ export {
     getTodayWord,
     wordExists,
     getWordRimes,
-    getRimesAutocomplete
+    getRimesAutocomplete,
+    getWordsWithPhoneme
 }
