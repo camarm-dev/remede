@@ -179,7 +179,7 @@ def get_validity(slug: str):
 @app.get('/phoneme/{phoneme}')
 def get_words_by_phoneme(phoneme: str):
     """
-    Returns a list of words with phoneme `phoneme`
+    Get th list of words with phoneme `phoneme`. It returns a list of tuples containing the word as the first element, and its document as the second element.
     """
     return fetch_words_with_phoneme(phoneme)
 
