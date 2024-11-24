@@ -82,7 +82,7 @@ def fetch_remede_word_of_day():
 
 def fetch_remede_doc(word: str):
     lock.acquire(True)
-    response = cursor.execute(f"SELECT document FROM dictionary WHERE word = '{word}'").fetchone()
+    response = cursor.execute("SELECT document FROM dictionary WHERE word = ?", (word,)).fetchone()
     return response[0] if response else json.dumps({'message': 'Mot non trouvé'})
 
 
@@ -90,10 +90,10 @@ def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
     lock.acquire(True)
     if limit:
         response = cursor.execute(
-            f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
+            "SELECT word FROM wordlist WHERE indexed LIKE ? + '%' ORDER BY word ASC LIMIT 5", (query,)).fetchall()
     else:
         response = cursor.execute(
-            f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}").fetchall()
+            "SELECT word FROM wordlist WHERE indexed LIKE ? + '%' ORDER BY word ASC LIMIT 50 OFFSET ?", (query, page * 50)).fetchall()
     return list(map(lambda row: row[0], response))
 
 
