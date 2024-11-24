@@ -102,13 +102,18 @@ interface RemedeWordDocument {
     }
 }
 
+
 interface RemedeSource {
     label: string
     url: string
 }
 
+type FilledRemedeWordDocument = Omit<RemedeWordDocument, "sources"> & {
+    sources: RemedeSource[]
+}
 export type {
     RemedeWordDocument,
     RemedeSheet,
-    RemedeSource
+    RemedeSource,
+    FilledRemedeWordDocument
 }
