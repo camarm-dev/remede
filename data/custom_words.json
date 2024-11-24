@@ -131,20 +131,20 @@
             "content": "<i>Et, s’il acceptait qu’on le soignât, il refusait rudement tout <b>remède</b>, dans le doute où il était tombé de la médecine.</i> ",
             "sources": "(Émile Zola, <i>Le Docteur Pascal</i>, G. Charpentier, 1893, chapitre VI)"
           }
-        ],
-        "plurals": [
-          {
-            "label": "",
-            "singular": "remède",
-            "plural": "remèdes"
-          }
         ]
       }
     ],
+    "plurals": [
+      {
+        "label": "",
+        "singular": "remède",
+        "plural": "remèdes"
+      }
+    ],
     "sources": [
-      "fr_wik",
-      "antonyme_org",
-      "synonymo_fr"
+      "fr.wik",
+      "antonyme.org",
+      "synonymo.fr"
     ],
     "phoneme": "/ʁəmɛd/",
     "pronunciation": {
