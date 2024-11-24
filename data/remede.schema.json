@@ -40,8 +40,7 @@
           "gender",
           "nature",
           "explanations",
-          "examples",
-          "plurals"
+          "examples"
         ],
         "properties": {
           "gender": {
@@ -84,31 +83,31 @@
               },
               "additionalProperties": false
             }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "plurals": {
+      "description": "Plurals orthography of the word.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "description": "The label of the plural (example: \"Masculins\" or \"Variant 1\").",
+            "type": "string",
+            "minLength": 0
           },
-          "plurals": {
-            "description": "Plurals orthography of the word.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "label": {
-                  "description": "The label of the plural (example: \"Masculins\" or \"Variant 1\").",
-                  "type": "string",
-                  "minLength": 0
-                },
-                "singular": {
-                  "description": "The singular form.",
-                  "type": "string",
-                  "minLength": 0
-                },
-                "plural": {
-                  "description": "The plural form.",
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "additionalProperties": false
-            }
+          "singular": {
+            "description": "The singular form.",
+            "type": "string",
+            "minLength": 0
+          },
+          "plural": {
+            "description": "The plural form.",
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
@@ -173,6 +172,7 @@
     "antonyms",
     "etymologies",
     "definitions",
+    "plurals",
     "sources",
     "phoneme",
     "pronunciation",
