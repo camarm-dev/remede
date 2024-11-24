@@ -16,7 +16,7 @@ import {IonItem, IonLabel, IonList} from "@ionic/vue"
         <p>{{ $t('definition.plural') }}</p>
       </ion-label>
     </ion-item>
-    <ion-item lines="full" v-for="plural in plurals">
+    <ion-item lines="full" :key="`plural-${plural.singular}-${plural.plural}-${plurals.indexOf(plural)}`" v-for="plural in plurals">
       <ion-label slot="start" v-if="plurals.some(plural => plural.label != '')">
         <h5 v-html="plural.label"/>
       </ion-label>
