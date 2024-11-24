@@ -66,7 +66,8 @@
     "examples": "Exemples",
     "openConjugation": "Ouvrir la conjugaison",
     "openRhymesDictionary": "Ouvrir le dictionnaire des rimes",
-    "noSubject": "(Pas de sujet)"
+    "noSubject": "(Pas de sujet)",
+    "wordWithThisPhoneme": "Mots avec la même prononciation"
   },
   "share": {
     "definitionTitle": "Définition \"{word}\" sur Remède",
