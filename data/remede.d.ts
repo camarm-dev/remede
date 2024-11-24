@@ -43,23 +43,23 @@ export interface RemedeWordDocument {
              */
             sources: string
         }[]
+    }[]
+    /**
+     * Plurals orthography of the word.
+     */
+    plurals: {
         /**
-         * Plurals orthography of the word.
+         * The label of the plural (example: "Masculins" or "Variant 1").
          */
-        plurals: {
-            /**
-             * The label of the plural (example: "Masculins" or "Variant 1").
-             */
-            label?: string
-            /**
-             * The singular form.
-             */
-            singular?: string
-            /**
-             * The plural form.
-             */
-            plural?: string
-        }[]
+        label?: string
+        /**
+         * The singular form.
+         */
+        singular?: string
+        /**
+         * The plural form.
+         */
+        plural?: string
     }[]
     /**
      * The sources ids. Used to display sources link on the interface. See https://docs.remede.camarm.fr/docs/database/schema#sourcesids
