@@ -39,7 +39,7 @@ import example from "@/assets/example.svg"
 import quoteOpen from "@/assets/openQuote.svg"
 import TabSection from "@/components/TabSection.vue"
 import ConjugationTable from "@/components/ConjugationTable.vue"
-import PluralsTable from "@/components/PluralsTable.vue";
+import PluralsTable from "@/components/PluralsTable.vue"
 
 
 const detailsModal = ref()
@@ -267,7 +267,7 @@ import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {generateId} from "@/functions/id"
 import {App} from "@capacitor/app"
-import PhonemeDetailsSheet from "@/components/PhonemeDetailsSheet.vue";
+import PhonemeDetailsSheet from "@/components/PhonemeDetailsSheet.vue"
 
 
 export default defineComponent({
@@ -432,7 +432,7 @@ export default defineComponent({
             componentProps: {
               phoneme
             },
-            cssClass: 'phoneme-modal'
+            cssClass: "phoneme-modal"
           })
           await modal.present()
         }
@@ -453,7 +453,7 @@ export default defineComponent({
       return Object.keys(this.wordObject.conjugations).length > 0
     },
     isVerb(def: FilledRemedeWordDocument["definitions"][keyof FilledRemedeWordDocument["definitions"]]) {
-      return def.nature.includes('Verbe') || def.nature.includes('Verb')
+      return def.nature.includes("Verbe") || def.nature.includes("Verb")
     },
     starWord
   }

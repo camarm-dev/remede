@@ -32,7 +32,7 @@ import {IonItem, IonLabel, IonList} from "@ionic/vue"
 
 <script lang="ts">
 import {PropType} from "vue"
-import {RemedeWordDocument} from "@/functions/types/remede";
+import {RemedeWordDocument} from "@/functions/types/remede"
 
 export default {
   props: {

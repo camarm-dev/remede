@@ -2,8 +2,8 @@
 
 import {
   IonSpinner, IonContent, IonIcon, IonButton
-} from "@ionic/vue";
-import {play} from "ionicons/icons";
+} from "@ionic/vue"
+import {play} from "ionicons/icons"
 </script>
 
 <template>
@@ -32,9 +32,9 @@ import {play} from "ionicons/icons";
 </template>
 
 <script lang="ts">
-import { RemedeWordDocument } from "@/functions/types/remede";
-import {getWordsWithPhoneme} from "@/functions/dictionnary";
-import {toastController} from "@ionic/vue";
+import { RemedeWordDocument } from "@/functions/types/remede"
+import {getWordsWithPhoneme} from "@/functions/dictionnary"
+import {toastController} from "@ionic/vue"
 
 export default {
   props: {
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async loadWords() {
-      this.words = await getWordsWithPhoneme(this.phoneme.replaceAll('\\', ''))
+      this.words = await getWordsWithPhoneme(this.phoneme.replaceAll("\\", ""))
     },
     getAudioUrl(wordObject: [string, RemedeWordDocument]) {
       if (wordObject[1].pronunciation) {
