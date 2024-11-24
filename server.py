@@ -309,7 +309,7 @@ if __name__ == '__main__':
             "total": get_stats('data/remede.db'),
             "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7],
             "valid": False,
-            "schema": "schema.json",
+            "schema": "",
             "size": f"{int(os.path.getsize('data/remede.db') * 10e-7)}Mb"
         },
         "remede.legacy": {
@@ -317,16 +317,19 @@ if __name__ == '__main__':
             "slug": "remede.legacy",
             "total": get_stats('data/remede.legacy.db'),
             "hash": md5(open('data/remede.legacy.db', 'rb').read()).hexdigest()[0:7],
-            # TODO replace with legacy new database
             "valid": False,
-            "schema": "1.2.3.schema.json",
+            "schema": "",
             "size": f"{int(os.path.getsize('data/remede.legacy.db') * 10e-7)}Mb"
         },
-        # "remede.en": {
-        #     "nom": "Remède (EN) ~200Mb",
-        #     "slug": "remede.en",
-        #     "hash": md5(open('data/remede.en.db', 'rb').read()).hexdigest()[0:7]
-        # }
+        "remede.en": {
+            "name": "Remède (EN)",
+            "slug": "remede.en",
+            "total": get_stats('data/remede.en.db'),
+            "hash": md5(open('data/remede.en.db', 'rb').read()).hexdigest()[0:7],
+            "valid": False,
+            "schema": "",
+            "size": f"{int(os.path.getsize('data/remede.en.db') * 10e-7)}Mb"
+        }
     }
 
     print("\033[A\033[KStarting API | Checking JSON schemas validity... Can take a while... [3/3]")
