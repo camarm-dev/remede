@@ -80,11 +80,11 @@ def get_word_document(word: str, ipa: str):
                 "gender": result['genre'][index] if result['genre'][index] != result['nature'][index] else '',
                 "nature": result['nature'][index],
                 "explanations": list(result['natureDef'][index][0].values()) if type(result['natureDef'][index][0]) is dict else [],
-                "examples": parse_examples(result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1]),
-                "plurals": result['plurals']
+                "examples": parse_examples(result['natureDef'][index][1][:3] if len(result['natureDef'][index][1]) > 3 else result['natureDef'][index][1])
             }
             for index in range(len(result['natureDef']))
         ],
+        "plurals": result['plurals'],
         "sources": sources,
         "phoneme": ipa,
         "pronunciation": {
