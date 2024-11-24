@@ -6,7 +6,7 @@ import {IonItem, IonLabel, IonList} from "@ionic/vue"
 <template>
   <ion-list inset class="border-radius border">
     <ion-item color="light" lines="full">
-      <ion-label slot="start" v-if="plurals.some(plural => plural.label != '')">
+      <ion-label slot="start" v-if="plurals.some(el => el.label != '')">
         <p>{{ $t('definition.form') }}</p>
       </ion-label>
       <ion-label slot="start">
@@ -17,7 +17,7 @@ import {IonItem, IonLabel, IonList} from "@ionic/vue"
       </ion-label>
     </ion-item>
     <ion-item lines="full" :key="`plural-${plural.singular}-${plural.plural}-${plurals.indexOf(plural)}`" v-for="plural in plurals">
-      <ion-label slot="start" v-if="plurals.some(plural => plural.label != '')">
+      <ion-label slot="start" v-if="plurals.some(el => el.label != '')">
         <h5 v-html="plural.label"/>
       </ion-label>
       <ion-label slot="start">
