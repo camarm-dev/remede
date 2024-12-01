@@ -364,7 +364,7 @@ export default defineComponent({
       })
     },
     scrollToTop() {
-      this.$refs.content.$el.scrollToTop(500)
+      ((this.$refs.content as any).$el as HTMLIonContentElement).scrollToTop(500)
     },
   },
   components: {
