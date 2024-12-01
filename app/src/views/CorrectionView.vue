@@ -29,7 +29,7 @@
           <ion-buttons slot="end">
             <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale)">
               <ion-select label="" :value="selectedDialect" @ionChange="selectedDialect = $event.target.value" interface="popover">
-                <ion-select-option :key="dialect" v-for="dialect in availableDialects">{{ dialect }}</ion-select-option>
+                <ion-select-option :key="dialect" v-for="dialect in getDialects()">{{ dialect }}</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-button v-if="locked" @click="locked = false" color="primary">
@@ -194,8 +194,6 @@ import locales from "@/functions/locales"
 
 export default {
   data() {
-    const locale = this.$i18n.locale
-    const availableDialects = locales.dialects[locale] || [] as string[]
     return {
       content: "",
       corrections: [] as LanguageToolCorrection[],
@@ -207,8 +205,7 @@ export default {
       pageElement: null as any,
       openedFromSelection: false,
       textSelectionReadOnly: false,
-      availableDialects: availableDialects as string[],
-      selectedDialect: availableDialects.at(0) || locale
+      selectedDialect: "" as string
     }
   },
   mounted() {
@@ -236,6 +233,12 @@ export default {
     },
     getWordDictionary() {
       // TODO, dict remede
+    },
+    getDialects() {
+      const locale = this.$i18n.locale
+      const availableDialects = locales.dialects[locale] || [] as string[]
+      this.selectedDialect = availableDialects.at(0) || locale
+      return availableDialects
     },
     ignoreError(text: string, correction: LanguageToolCorrection) {
       this.ignoredErrors.push({
@@ -270,6 +273,7 @@ export default {
       SetResult.sendActiveRemedeResult({ value: result })
     },
     correct() {
+      if (!this.selectedDialect.includes(this.$i18n.locale)) this.selectedDialect = this.$i18n.locale
       this.loading = true
       this.modalsOpenStates = {}
 
