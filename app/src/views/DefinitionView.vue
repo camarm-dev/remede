@@ -452,7 +452,7 @@ export default defineComponent({
     hasConjugations() {
       return Object.keys(this.wordObject.conjugations).length > 0
     },
-    isVerb(def: FilledRemedeWordDocument["definitions"][keyof FilledRemedeWordDocument["definitions"]]) {
+    isVerb(def: FilledRemedeWordDocument["definitions"][number]) {
       return def.nature.includes("Verbe") || def.nature.includes("Verb")
     },
     starWord
