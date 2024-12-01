@@ -468,8 +468,8 @@ export default defineComponent({
 }
 
 .definition header h4 {
-  min-width: max-content;
-  margin: 0 .3em 0 0;
+  width: max-content;
+  margin: 0;
 }
 
 .header-title {
@@ -477,10 +477,12 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   margin: 0 1em 0 0;
+  max-width: 90%;
 }
 
 .header-title ion-icon {
   cursor: pointer;
+  margin-left: .3em;
 }
 
 .definition header hr {
