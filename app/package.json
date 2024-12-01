@@ -49,7 +49,7 @@
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "5.5.1",
-    "@tauri-apps/cli": "^1.5.14",
+    "@tauri-apps/cli": "^2.1.0",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
