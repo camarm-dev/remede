@@ -335,7 +335,7 @@ export default defineComponent({
       const downloaded = status.downloaded
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       if (downloaded) {
-        this.hasDictionaryUpdate = status.hash != specs.dictionnaires[status.slug].hash
+        this.hasDictionaryUpdate = status.hash != specs.dictionaries[status.slug].hash
       }
 
       const tag = await fetch("https://api.github.com/repos/camarm-dev/remede/tags").then(resp => resp.json()).then((resp: any) => resp[0].name)
