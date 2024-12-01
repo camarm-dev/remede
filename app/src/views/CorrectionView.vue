@@ -190,7 +190,7 @@ import { hasDialect } from "@/functions/locales"
 import { Clipboard } from "@capacitor/clipboard"
 import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
 import SetResult from "@/functions/plugins/setResult"
-import locales from "@/functions/locales"
+import locales, {localeCode} from "@/functions/locales"
 
 export default {
   data() {
@@ -210,7 +210,7 @@ export default {
   },
   mounted() {
     this.loadExceptions()
-    this.pageElement = this.$refs.page.$el
+    this.pageElement = (this.$refs.page as any).$el as any
     const url = new URLSearchParams(location.search)
     const data = url.get("data")
     const readonly = url.get("readonly")
@@ -235,7 +235,7 @@ export default {
       // TODO, dict remede
     },
     getDialects() {
-      const locale = this.$i18n.locale
+      const locale = this.$i18n.locale as localeCode
       const availableDialects = locales.dialects[locale] || [] as string[]
       this.selectedDialect = availableDialects.at(0) || locale
       return availableDialects
@@ -253,7 +253,7 @@ export default {
         return element.text == text && element.error == correction.rule.id
       })
     },
-    removeException(text: string, correction: LanguageToolCorrection) {
+    removeException(text: string, correction: LanguageToolCorrection | { rule: { id: string } }) {
       this.ignoredErrors = this.ignoredErrors.filter(element => {
           return !(element.text == text && element.error == correction.rule.id)
       })
