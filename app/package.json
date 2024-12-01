@@ -19,6 +19,7 @@
     "test": "cypress run",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
+    "typecheck": "vue-tsc --noEmit",
     "tauri": "tauri"
   },
   "dependencies": {
@@ -60,7 +61,7 @@
     "jsdom": "^22.1.0",
     "typescript": "^5.1.6",
     "vite": "^4.5.3",
-    "vue-tsc": "^1.0.24"
+    "vue-tsc": "^2.1.10"
   },
   "description": "A french mobile and offline dictionary."
 }
