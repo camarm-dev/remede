@@ -149,7 +149,7 @@ import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
 import {RemedeWordDocument} from "@/functions/types/remede"
 import {getDeviceLocale} from "@/functions/device"
-import locales from "@/functions/locales"
+import locales, {localeCode} from "@/functions/locales"
 
 export default {
   data() {
@@ -164,20 +164,21 @@ export default {
         hash: "",
         slug: "",
         name: "",
-        words: ""
+        words: "",
+        size: ""
       },
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
       working: true,
-      availableLocales: this.$i18n.availableLocales
+      availableLocales: this.$i18n.availableLocales as any[] as localeCode[]
     }
   },
   mounted() {
     this.reloadDictionaryStatus().then(async () => {
       if (this.downloaded) {
         try {
-          const word = await getWordDocument("remède") as RemedeWordDocument
-          if (word.ipa != "/ʁəmɛd/") {
+          const word = await getWordDocument("remède")
+          if (word.phoneme != "/ʁəmɛd/") {
             throw "Database is wrong"
           }
           this.working = true
@@ -194,7 +195,7 @@ export default {
       document.body.classList.remove("light")
       document.body.classList.add(theme)
     },
-    getLocaleName(locale: string) {
+    getLocaleName(locale: localeCode) {
       return locales[locale] || locale
     },
     getCurrentTheme() {
