@@ -78,8 +78,8 @@
     "sheetDialogTitle": "Share sheet"
   },
   "aboutPage": {
-    "description": "Remède is an open source dictionary built on extern resources.",
-    "moreInformationCredits": "For more information about our data provenance, or how it is built, please visit the documentation on our",
+    "description": "Remède is an open source dictionary built on extern resources. Check our",
+    "moreInformationCredits": "For more information about our data provenance, or how it is built, please visit the online documentation at",
     "contributors": "Contributors",
     "donors": "Donors",
     "contributorsAndDonors": "Contributors & donors",

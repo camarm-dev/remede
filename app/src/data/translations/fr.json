@@ -78,8 +78,8 @@
     "sheetDialogTitle": "Partager la fiche"
   },
   "aboutPage": {
-    "description": "Remède est un dictionnaire français libre, construit sur plusieurs services tiers.",
-    "moreInformationCredits": "Pour plus d'informations concernant la provenance des données de nos dictionnaires et leur construction, visitez la documentation sur notre",
+    "description": "Remède est un dictionnaire français libre, construit sur plusieurs services tiers. Conçu pour être puissant, reliable et facilement utilisable, Remède est votre meilleur ami linguistique. Le code source est disponible sur notre ",
+    "moreInformationCredits": "Pour plus d'informations concernant la provenance des données de nos dictionnaires et leur construction, visitez la documentation en ligne à",
     "contributors": "Contributeurs",
     "donors": "Donateurs",
     "contributorsAndDonors": "Contributeurs & donateurs",

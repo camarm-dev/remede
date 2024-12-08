@@ -21,10 +21,11 @@
       <ion-content class="ion-padding">
         <p>
           {{ $t('aboutPage.description') }}
+          <a href="https://github.com/camarm-dev/remede" target="_blank">{{ $t('repository') }}</a>.
         </p>
         <p>
           {{ $t('aboutPage.moreInformationCredits') }}
-          <a href="https://github.com/camarm-dev/remede/blob/main/docs/FR.md#donn%C3%A9es" target="_blank">{{ $t('repository') }}</a>.
+          <a href="https://docs.remede.camarm.fr" target="_blank">docs.remede.camarm.fr</a>.
         </p>
         <ion-list class="border-radius">
           <ion-item color="light" button href="https://github.com/camarm-dev/remede" target="_blank">
