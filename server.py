@@ -17,7 +17,7 @@ from starlette.middleware.cors import CORSMiddleware
 from scripts.utils.sources import SOURCES
 
 lock = threading.Lock()
-version = "1.3.0"
+version = "1.4.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
 app.add_middleware(
     CORSMiddleware,
