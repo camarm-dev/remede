@@ -60,8 +60,7 @@ def in_json(response: str | list):
 
 def fetch_random_word():
     lock.acquire(True)
-    # TODO, change query to new "SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1"
-    return cursor.execute("SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1").fetchone()[0]
+    return cursor.execute("SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1").fetchone()[0]
 
 
 def fetch_words_with_phoneme(phoneme: str):
