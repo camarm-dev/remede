@@ -116,7 +116,7 @@ import { App } from "@capacitor/app"
 export default {
   data() {
     return {
-      version: "1.3.0-beta.1",
+      version: "1.4.0-beta",
       build: "tauri-2"
     }
   },
