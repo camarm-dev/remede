@@ -89,10 +89,10 @@ def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
     lock.acquire(True)
     if limit:
         response = cursor.execute(
-            "SELECT word FROM dictionary WHERE indexed LIKE ? + '%' ORDER BY word COLLATE NOCASE ASC LIMIT 5", (query,)).fetchall()
+            "SELECT word FROM dictionary WHERE indexed LIKE ? ORDER BY lower(word) ASC LIMIT 5", (query + '%',)).fetchall()
     else:
         response = cursor.execute(
-            "SELECT word FROM dictionary WHERE indexed LIKE ? + '%' ORDER BY word COLLATE NOCASE ASC LIMIT 50 OFFSET ?", (query, page * 50)).fetchall()
+            "SELECT word FROM dictionary WHERE indexed LIKE ? ORDER BY lower(word) ASC LIMIT 50 OFFSET ?", (query + '%', page * 50)).fetchall()
     return list(map(lambda row: row[0], response))
 
 
