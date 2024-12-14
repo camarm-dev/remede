@@ -101,7 +101,7 @@ Cette section est à propos des données utilisées et fournies par Remède.
 ### Données Remède
 Remède créé sa propre base de mots, synonymes, antonymes français à partir de services tiers.
 
-- Les définitions, exemples et étymologies par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil)<sup>[CC BY-SA 3.0 Deed](https://fr.wiktionary.org/wiki/Wiktionnaire:Licence)</sup>, via le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/)<sup>[GPL 3.0](https://github.com/FredGainza/api-definition/blob/main/LICENSE)</sup> de l'API, réadapté par [Labse Software](https://github.com/LabseSoftware/api-definition)
+- Les définitions, exemples et étymologies par le [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil)<sup>[CC BY-SA 3.0 Deed](https://fr.wiktionary.org/wiki/Wiktionnaire:Licence)</sup>, via le wrapper de [Frederic Gainza](https://api-definition.fgainza.fr/)<sup>[GPL 3.0](https://github.com/FredGainza/api-definition/blob/main/LICENSE)</sup> de l'API, réadapté par [Labse Studio](https://github.com/LabseStudio/api-definition)
 - Les synonymes via [synonymo.fr](http://www.synonymo.fr)
 - Les antonymes via [antonyme.org](http://www.antonyme.org)
 - Les conjugaisons via [conjuguons.fr](http://www.conjuguons.fr)

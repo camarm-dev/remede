@@ -64,12 +64,12 @@
                   <p>{{ $t('aboutPage.maintainer') }}</p>
                 </ion-label>
               </ion-item>
-              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/labsesoftware" target="_blank" color="light">
+              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/LabseStudio" target="_blank" color="light">
                 <ion-avatar aria-hidden="true" slot="start">
-                  <img alt="Photo de profil de Labse Software" src="@/assets/labse.png" />
+                  <img alt="Photo de profil de Labse Studio" src="@/assets/labse.png" />
                 </ion-avatar>
                 <ion-label>
-                  <h2>Labse Software</h2>
+                  <h2>Labse Studio</h2>
                   <p>{{ $t('aboutPage.contributors') }}</p>
                 </ion-label>
               </ion-item>

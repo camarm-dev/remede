@@ -34,7 +34,7 @@ async function getOfflineDictionaryStatus() {
 async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     const downloadResponse = await Filesystem.downloadFile({
         path: "remedeSQLite.db",
-        url: `https://api-remede.camarm.fr/download?variant=${dictionary.slug}`,
+        url: `http://localhost:8000/download?variant=${dictionary.slug}`,
         directory: Directory.Data,
         progress: true
     })
