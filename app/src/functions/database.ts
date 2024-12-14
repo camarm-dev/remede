@@ -51,12 +51,12 @@ class RemedeDatabase {
     }
 
     async getAutocomplete(query: string) {
-        const statement = `SELECT word FROM dictionary WHERE indexed LIKE '${query}%' ORDER BY word COLLATE NOCASE ASC LIMIT 5`
+        const statement = `SELECT word FROM dictionary WHERE indexed LIKE '${query}%' ORDER BY lower(word) ASC LIMIT 5`
         return await this.query(statement)
     }
 
     async search(query: string, page = 0) {
-        const statement = `SELECT word FROM dictionary WHERE indexed LIKE '${query}%' ORDER BY word COLLATE NOCASE ASC LIMIT 50 OFFSET ${page * 50}`
+        const statement = `SELECT word FROM dictionary WHERE indexed LIKE '${query}%' ORDER BY lower(word) ASC LIMIT 50 OFFSET ${page * 50}`
         return await this.query(statement)
     }
 
@@ -67,7 +67,7 @@ class RemedeDatabase {
     }
 
     async getRimesAutocomplete(query: string) {
-        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY freq DESC LIMIT 5`
+        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY word ASC LIMIT 5`
         return await this.query(statement) as any as Promise<string[]>
     }
 
