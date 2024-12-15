@@ -15,8 +15,8 @@ Open Source and free alternative to Antidote dictionary.
 ## Why Remède ?
 
 Remède is a dictionary, which can replace any proprietary dictionary, with these advantages:
-- Simple UI
-- Nice UX
+- Ready for all situations: rimes, examples, plurals, synonyms, antonyms, conjugation, even a corrector !
+- Simple and nice interface
 - Free
 - Cross-platform
 - Self-hostable
