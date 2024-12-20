@@ -413,7 +413,7 @@ export default defineComponent({
           if (await wordExists(word)) {
             this.goTo(`/dictionnaire/${word}`)
           } else {
-            window.open(href)
+            window.open(`https://fr.wiktionary.com/wiki/${word}`)
           }
         }
         el.addEventListener("click", referenceListener)
