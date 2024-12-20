@@ -12,6 +12,10 @@ Open Source and free alternative to Antidote dictionary.
 
 </div>
 
+## Breaking changes with Remède 1.4.0
+
+Remède 1.4.0 is released and old version of Remède are not supported anymore ! You can continue to search on Remède if you have downloaded the dictionary, but you must update your Remède application !
+
 ## Why Remède ?
 
 Remède is a dictionary, which can replace any proprietary dictionary, with these advantages:
