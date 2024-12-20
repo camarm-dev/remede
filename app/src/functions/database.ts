@@ -87,11 +87,11 @@ class RemedeDatabase {
         const phon = document[0]
 
         const splicedPhon = phon.slice(phon.length - quality)
-        const qualityFilter = `(phon LIKE '%${quality === 0 ? phon.slice(phon.length - 1): splicedPhon}')`
+        const qualityFilter = `(phoneme LIKE '%${quality === 0 ? phon.slice(phon.length - 1): splicedPhon}')`
 
         let natureFilter = `(${nature.length === 0}`
         for (const string of nature) {
-            natureFilter += ` OR nature LIKE '%${string}:%' OR nature LIKE '%${string}|%'`
+            natureFilter += ` OR nature LIKE '%${string}:%' OR nature LIKE '%${string},%'`
         }
         natureFilter += ")"
 
