@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {
-  IonSpinner, IonContent, IonIcon, IonButton
+  IonSpinner, IonContent, IonIcon, IonButton, IonNote
 } from "@ionic/vue"
 import {play} from "ionicons/icons"
 </script>
@@ -15,6 +15,9 @@ import {play} from "ionicons/icons"
     <p class="contrast">{{ $t('definition.wordWithThisPhoneme') }}</p>
     <div v-if="loading" class="ion-padding ion-text-center">
       <ion-spinner name="crescent"></ion-spinner>
+    </div>
+    <div v-if="words.length == 0" class="ion-padding ion-text-center">
+      <ion-note>{{ $t('definition.noWordWithThisPhoneme') }}</ion-note>
     </div>
     <div class="definition" :key="`phoneme-${wordObject[0]}`" v-for="wordObject in words">
       <header>
