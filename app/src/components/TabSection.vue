@@ -2,7 +2,9 @@
   <div class="tab-content">
     <div class="definition">
       <header>
-        <h4>{{ title }}</h4>
+        <div class="header-title">
+          <h4>{{ title }}</h4>
+        </div>
         <hr>
       </header>
     </div>

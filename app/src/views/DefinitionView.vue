@@ -110,7 +110,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             <div class="header-title">
               <h4 v-if="def.gender != ''">{{ def.nature }}, {{ def.gender }}</h4>
               <h4 v-else>{{ def.nature }}</h4>
-              <ion-icon v-if="def.examples.length > 0" :id="id.examples[wordObject.definitions.indexOf(def)]" :icon="example" color="medium"/>
+              <ion-icon class="exampleIcon" v-if="def.examples.length > 0" :id="id.examples[wordObject.definitions.indexOf(def)]" :icon="example" color="medium"/>
             </div>
             <ion-popover class="example" v-if="def.examples.length > 0" :trigger="id.examples[wordObject.definitions.indexOf(def)]">
               <div class="ion-padding examples">
@@ -156,7 +156,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </div>
         <div class="definition">
           <header v-if="wordObject.etymologies.length > 0">
-            <h4>{{ $t('definition.etymologies') }}</h4>
+            <div class="header-title">
+              <h4>{{ $t('definition.etymologies') }}</h4>
+            </div>
             <hr>
           </header>
           <div class="content">
@@ -167,7 +169,9 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </div>
         <div class="definition" v-if="wordObject.plurals.length > 0">
           <header>
-            <h4>{{ $t('definition.plurals') }}</h4>
+            <div class="header-title">
+              <h4>{{ $t('definition.plurals') }}</h4>
+            </div>
             <hr>
           </header>
           <div class="content">
@@ -647,5 +651,10 @@ ion-popover.example {
 
 .phoneme-modal {
   --height: auto
+}
+
+.exampleIcon {
+  min-width: 16px;
+  min-height: 16px;
 }
 </style>
