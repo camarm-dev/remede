@@ -15,8 +15,8 @@ const locales = {
 
 export type localeCode = "en" | "fr"
 
-export function hasDialect(locale: string) {
-    return Object.prototype.hasOwnProperty.call(locales.dialects, locale)
+export function hasDialect(locale: keyof typeof locales["dialects"]) {
+    return locales.dialects[locale]
 }
 
 export default locales

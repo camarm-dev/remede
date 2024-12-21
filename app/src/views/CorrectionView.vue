@@ -22,23 +22,23 @@
 
       <ion-list inset class="ion-bg-light corrector">
         <ion-item color="light" class="no-border border-bottom">
-          <ion-label slot="start">
+          <ion-label>
             <p v-if="locked">{{ $t('correctionPage.corrected')}}</p>
             <p v-else>{{ $t('correctionPage.text')}}</p>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale)">
+            <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale as unknown as keyof typeof locales['dialects'])">
               <ion-select label="" :value="selectedDialect" @ionChange="selectedDialect = $event.target.value" interface="popover">
                 <ion-select-option :key="dialect" v-for="dialect in getDialects()">{{ dialect }}</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-button v-if="locked" @click="locked = false" color="primary">
+            <ion-button v-if="locked" slot="end" @click="locked = false" color="primary">
               {{ $t('correctionPage.edit') }}&nbsp;<ion-icon :icon="pencilOutline"/>
             </ion-button>
-            <ion-button v-else-if="!locked && !loading" @click="correct()" color="success">
+            <ion-button v-else-if="!locked && !loading" slot="end" @click="correct()" color="success">
               {{ $t('correctionPage.correct') }}&nbsp;<ion-icon :icon="sparkles"/>
             </ion-button>
-            <ion-button v-else color="success">
+            <ion-button v-else slot="end" color="success">
               <ion-spinner name="dots" color="success"></ion-spinner>
             </ion-button>
           </ion-buttons>
