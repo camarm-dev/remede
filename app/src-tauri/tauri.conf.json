@@ -57,8 +57,7 @@
         }
       }
     },
-    "licenseFile": "../../LICENSE",
-    "createUpdaterArtifacts": "v1Compatible"
+    "licenseFile": "../../LICENSE"
   },
   "productName": "remede",
   "mainBinaryName": "remede",
