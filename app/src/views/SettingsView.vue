@@ -147,7 +147,6 @@ import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/typ
 import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
 import {getWordDocument} from "@/functions/dictionnary"
-import {RemedeWordDocument} from "@/functions/types/remede"
 import {getDeviceLocale} from "@/functions/device"
 import locales, {localeCode} from "@/functions/locales"
 
