@@ -114,7 +114,7 @@ jobs:
           git config pull.rebase true
           git add builds/*
           git commit -m "chore(binaries): added latest Remède binaries"
-          git pull
+          git pull --rebase --autostash
 
       - name: Push changes # push the output folder to your repo
         if: matrix.platform != 'windows-latest'
