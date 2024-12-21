@@ -223,7 +223,7 @@ export default {
 
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionaries
-      this.availableDictionariesName = Object.keys(specs.dictionaries)
+      this.availableDictionariesName = Object.keys(this.availableDictionaries).filter(dictionary => !dictionary.includes('legacy'))
 
       this.latestDictionary = specs.dataset
       if (this.downloaded) {
