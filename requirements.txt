@@ -6,7 +6,7 @@ python-frontmatter~=1.0.1
 Markdown~=3.6
 uvicorn~=0.15.0
 fastapi~=0.103.2
-starlette~=0.27.0
+starlette<=0.40.0
 jsonschema~=4.17.3
 
 mlconjug3~=3.11.0
