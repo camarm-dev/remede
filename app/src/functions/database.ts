@@ -72,7 +72,7 @@ class RemedeDatabase {
     }
 
     async getWordsWithPhoneme(phoneme: string) {
-        const statement = `SELECT word, document FROM dictionary WHERE phoneme = '${phoneme}'`
+        const statement = `SELECT word, document FROM dictionary WHERE phoneme = '${phoneme}' OR phoneme = '${phoneme.replaceAll('.', '')}'`
         const response = await this.rawQuery(statement) as string[][]
         return response.map(document => [document[0], JSON.parse(document[1])])
     }
