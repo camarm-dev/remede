@@ -84,9 +84,9 @@ public class RemedeWordOfDayWidget extends AppWidgetProvider {
         String definition;
         try {
             wordDocument = getWordDocument(word);
-            nature = wordDocument.getJSONArray("definitions").getJSONObject(0).getString("classe");
-            phoneme = wordDocument.getString("ipa");
-            definition = wordDocument.getJSONArray("definitions").getJSONObject(0).getJSONObject("explications").getString("1");
+            nature = wordDocument.getJSONArray("definitions").getJSONObject(0).getString("nature");
+            phoneme = wordDocument.getString("phoneme");
+            definition = wordDocument.getJSONArray("definitions").getJSONObject(0).getJSONArray("explanations").getString(0);
             definition = definition.replaceAll("<[^>]*>", "");
             if (definition.length() > 100) {
                 definition = definition.substring(0, 90) + "...";
