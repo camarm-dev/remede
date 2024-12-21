@@ -21,10 +21,11 @@
       <ion-content class="ion-padding">
         <p>
           {{ $t('aboutPage.description') }}
+          <a href="https://github.com/camarm-dev/remede" target="_blank">{{ $t('repository') }}</a>.
         </p>
         <p>
           {{ $t('aboutPage.moreInformationCredits') }}
-          <a href="https://github.com/camarm-dev/remede/blob/main/docs/FR.md#donn%C3%A9es" target="_blank">{{ $t('repository') }}</a>.
+          <a href="https://docs.remede.camarm.fr" target="_blank">docs.remede.camarm.fr</a>.
         </p>
         <ion-list class="border-radius">
           <ion-item color="light" button href="https://github.com/camarm-dev/remede" target="_blank">
@@ -63,12 +64,12 @@
                   <p>{{ $t('aboutPage.maintainer') }}</p>
                 </ion-label>
               </ion-item>
-              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/labsesoftware" target="_blank" color="light">
+              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/LabseStudio" target="_blank" color="light">
                 <ion-avatar aria-hidden="true" slot="start">
-                  <img alt="Photo de profil de Labse Software" src="@/assets/labse.png" />
+                  <img alt="Photo de profil de Labse Studio" src="@/assets/labse.png" />
                 </ion-avatar>
                 <ion-label>
-                  <h2>Labse Software</h2>
+                  <h2>Labse Studio</h2>
                   <p>{{ $t('aboutPage.contributors') }}</p>
                 </ion-label>
               </ion-item>
@@ -87,7 +88,7 @@
                   {{ $t('license') }}
                 </ion-label>
               </ion-item>
-              <ion-item lines="none" color="light" button href="https://github.com/camarm-dev/remede#données-remède" target="_blank">
+              <ion-item lines="none" color="light" button href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
                 <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
                 <ion-label>
                   {{ $t('remedeData') }}
@@ -115,8 +116,8 @@ import { App } from "@capacitor/app"
 export default {
   data() {
     return {
-      version: "1.3.0-beta",
-      build: "tauri-1"
+      version: "1.4.0-beta",
+      build: "tauri-2"
     }
   },
   mounted() {

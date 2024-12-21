@@ -91,14 +91,16 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">{{ $t('home.changelog') }}</h1>
           <p v-if="$i18n.locale == 'fr'">
-            La version sur laquelle vous naviguez est la version <code>1.3.0</code>, nom de code <i>Phenomenal Feather</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.4.0</code>, nom de code <i>Phenomenal Feather</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Application de bureau.</li>
               <li>Mise à jour sur l'interface.</li>
               <li>Traduction de l'application.</li>
               <li>Base de données Remède Next.</li>
-              <li>+ 900 000 mots !</li>
+<!--              <li>Dictionnaire anglais.</li>-->
+              <li>Pluriels des mots.</li>
+              <li>844 253 mots !</li>
             </ul>
           </p>
           <p v-else>
@@ -333,7 +335,7 @@ export default defineComponent({
       const downloaded = status.downloaded
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       if (downloaded) {
-        this.hasDictionaryUpdate = status.hash != specs.dictionnaires[status.slug].hash
+        this.hasDictionaryUpdate = status.hash != specs.dictionaries[status.slug].hash
       }
 
       const tag = await fetch("https://api.github.com/repos/camarm-dev/remede/tags").then(resp => resp.json()).then((resp: any) => resp[0].name)

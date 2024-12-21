@@ -41,53 +41,67 @@ class RemedeDatabase {
         return JSON.parse(response[0])
     }
 
+    async getSource(identifier: string) {
+        const statement = `SELECT label,url FROM sources WHERE identifier = '${identifier}'`
+        const response = await this.rawQuery(statement) as string[][]
+        return {
+            label: response[0][0],
+            url: response[0][1]
+        }
+    }
+
     async getAutocomplete(query: string) {
-        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC LIMIT 5`
+        const statement = `SELECT word FROM dictionary WHERE indexed LIKE '${query}%' ORDER BY lower(word) ASC LIMIT 5`
         return await this.query(statement)
     }
 
-    async search(query: string) {
-        const statement = `SELECT word FROM wordlist WHERE indexed LIKE '${query}%' ORDER BY word ASC`
+    async search(query: string, page = 0) {
+        const statement = `SELECT word FROM dictionary WHERE indexed LIKE '${query}%' ORDER BY lower(word) ASC LIMIT 50 OFFSET ${page * 50}`
         return await this.query(statement)
     }
 
     async getRandomWord() {
-        const statement = "SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1"
+        const statement = "SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1"
         const response = await this.query(statement)
         return response[0]
     }
 
     async getRimesAutocomplete(query: string) {
-        const statement = `SELECT word FROM rimes WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY freq DESC LIMIT 5`
+        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY word ASC LIMIT 5`
         return await this.query(statement) as any as Promise<string[]>
     }
 
+    async getWordsWithPhoneme(phoneme: string) {
+        const statement = `SELECT word, document FROM dictionary WHERE phoneme = '${phoneme}' OR phoneme = '${phoneme.replaceAll(".", "")}'`
+        const response = await this.rawQuery(statement) as string[][]
+        return response.map(document => [document[0], JSON.parse(document[1])])
+    }
+
     async getWordRimes(word: string, maxSyllabes = 0, minSyllabes = 0, elide = false, feminine = false, quality = 0, nature: string[], page = 0) {
-        const statement = `SELECT phon_end, phon FROM rimes WHERE word = '${word}'`
+        const statement = `SELECT phoneme FROM dictionary WHERE word = '${word}'`
         const response = await this.rawQuery(statement) as any[]
         const document = response[0]
 
         if (!document) return []
 
-        const phonEnd = document[0]
-        const phon = document[1]
+        const phon = document[0]
 
         const splicedPhon = phon.slice(phon.length - quality)
-        const qualityFilter = `(${quality === 0} OR phon LIKE '%${splicedPhon}')`
+        const qualityFilter = `(phoneme LIKE '%${quality === 0 ? phon.slice(phon.length - 1): splicedPhon}')`
 
         let natureFilter = `(${nature.length === 0}`
         for (const string of nature) {
-            natureFilter += ` OR orgi LIKE '%${string}:%' OR orgi LIKE '%${string}|%'`
+            natureFilter += ` OR nature LIKE '%${string}:%' OR nature LIKE '%${string},%'`
         }
         natureFilter += ")"
 
-        const query = `SELECT word, phon, feminine, elidable FROM rimes WHERE (phon_end = '${phonEnd}')
-             AND ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_nsyl >= ${minSyllabes})
-             AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_nsyl <= ${maxSyllabes} OR (elidable AND min_nsyl - 1 <= ${maxSyllabes} AND ${elide}))
+        const query = `SELECT word, phoneme, feminine, elidable FROM dictionary WHERE
+             ((${maxSyllabes === 0 || maxSyllabes === undefined} OR max_syllables >= ${minSyllabes})
+             AND (${minSyllabes === 0 || minSyllabes === undefined} OR min_syllables <= ${maxSyllabes} OR (elidable AND min_syllables - 1 <= ${maxSyllabes} AND ${elide}))
              AND (feminine OR ${!feminine})
              AND ${qualityFilter}
              AND ${natureFilter})
-             ORDER BY freq DESC LIMIT 50 OFFSET ${page * 50}`
+             ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}`
         return await this.rawQuery(query)
     }
 

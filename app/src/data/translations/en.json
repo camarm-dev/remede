@@ -46,19 +46,29 @@
   },
   "definition": {
     "etymologies": "Etymologies",
+    "plurals": "Plurals",
+    "plural": "Plural",
+    "singular": "Singular",
+    "phoneme": "Phoneme",
+    "pronunciation": "Pronunciation (audio)",
+    "form": "Form",
     "backToApp": "Back to app",
     "definition": "Definition",
     "synonyms": "Synonyms",
     "noSynonyms": "No synonyms referenced",
     "antonyms": "Antonyms",
     "noAntonyms": "No antonyms referenced",
+    "synonyms_and_antonyms": "Synonyme and antonyms",
     "conjugation": "Conjugation",
     "conjugationMode": "Mode",
     "conjugationTense": "Tense",
     "wordNotFound": "This word cannot be found in the Remède dictionary...",
     "examples": "Examples",
     "openConjugation": "Open conjugation",
-    "openRhymesDictionary": "Open rhymes dictionary"
+    "openRhymesDictionary": "Open rhymes dictionary",
+    "noSubject": "(No subject)",
+    "wordWithThisPhoneme": "Words with this pronunciation",
+    "noWordWithThisPhoneme": "No words found with this pronunciation."
   },
   "share": {
     "definitionTitle": "Definition of \"{word}\" on Remède",
@@ -69,8 +79,8 @@
     "sheetDialogTitle": "Share sheet"
   },
   "aboutPage": {
-    "description": "Remède is an open source dictionary built on extern resources.",
-    "moreInformationCredits": "For more information about our data provenance, or how it is built, please visit the documentation on our",
+    "description": "Remède is an open source dictionary built on extern resources. Check our",
+    "moreInformationCredits": "For more information about our data provenance, or how it is built, please visit the online documentation at",
     "contributors": "Contributors",
     "donors": "Donors",
     "contributorsAndDonors": "Contributors & donors",
@@ -153,7 +163,9 @@
     "cannotDownload": "You cannot download the dictionary...",
     "downloadingDisclaimer": "Please let this page open while the dictionary is downloading.\n\nYou must restart the application after the dictionary has been downloaded.",
     "workingNormally": "Everything looks ok ! You can start searching words offline !",
-    "problemDetected": "A problem has been detected, please reinstall the dictionary or contact the support."
+    "problemDetected": "A problem has been detected, please reinstall the dictionary or contact the support.",
+    "understood": "That's ok !",
+    "dictionaryRevisionDownloaded": "Dictionary \"{name}\", revision \"{rev}\" downloaded. Taking {size} storage. {words} words."
   },
   "sheetsPage": {
     "placeholder": "Search a sheet",

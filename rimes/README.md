@@ -1,5 +1,10 @@
 # Dictionnaire des rimes
 
+> [!CAUTION]
+> Remède n'utilise plus cet exact système. La base est toujours alimentée par _drime_ en revanche. Veuillez vous référer à la nouvelle [documentation](https://docs.remede.camarm.fr/docs/database/rimes)
+> 
+> Remède is no longer using this exact system. The database is always fed by _drime_ on the other hand. Please refer to the new [documentation](https://docs.remede.camarm.fr/docs/database/rimes)
+
 Remède génère aussi son dictionnaire de rimes !
 
 ## Comment ça marche ?

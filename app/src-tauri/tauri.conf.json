@@ -3,70 +3,69 @@
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:5173",
-    "distDir": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173"
   },
-  "package": {
-    "productName": "remede",
-    "version": "../package.json"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false
+  "bundle": {
+    "active": true,
+    "targets": [
+      "deb",
+      "nsis",
+      "msi",
+      "dmg",
+      "app"
+    ],
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "",
+      "webviewInstallMode": {
+        "type": "offlineInstaller"
+      },
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "headerImage": "src/header.bmp"
+      }
     },
-    "bundle": {
-      "active": true,
+    "shortDescription": "The free dictionary",
+    "longDescription": "Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.",
+    "copyright": "Remède and its contributors.",
+    "category": "Productivity",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": [],
+    "linux": {
       "deb": {
         "depends": [],
         "desktopTemplate": "./remede.desktop",
         "files": {
           "/usr/share/README.md": "../../README.md",
-          "/usr/share/metainfo/remede.metainfo.xml":  "./remede.metainfo.xml"
-        }
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "dev.camarm.remede",
-      "shortDescription": "The free dictionary",
-      "longDescription": "Remède is a powerful dictionary developed by its community. It has a large database with over 900 000 french words, synonyms, antonyms, conjugations and rhymes. It also has a corrector and an offline mode. With Remède, never lost your words again.",
-      "copyright": "Remède and its contributors.",
-      "category": "Productivity",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null,
-        "license": "../../LICENSE"
-      },
-      "resources": [],
-      "targets": ["deb", "nsis", "msi", "dmg", "app", "updater"],
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": "",
-        "webviewInstallMode": {
-          "type": "offlineInstaller"
-        },
-        "nsis": {
-          "installerIcon": "icons/icon.ico",
-          "headerImage": "src/header.bmp",
-          "license": "../../LICENSE"
+          "/usr/share/metainfo/remede.metainfo.xml": "./remede.metainfo.xml"
         }
       }
     },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
+    "licenseFile": "../../LICENSE",
+    "createUpdaterArtifacts": "v1Compatible"
+  },
+  "productName": "remede",
+  "mainBinaryName": "remede",
+  "version": "../package.json",
+  "identifier": "dev.camarm.remede",
+  "plugins": {},
+  "app": {
     "windows": [
       {
         "fullscreen": false,
@@ -77,8 +76,12 @@
         "height": 800,
         "resizable": true,
         "title": "Remède | Dictionnaire",
-        "width": 1300
+        "width": 1300,
+        "useHttpsScheme": true
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }

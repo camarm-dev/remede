@@ -17,9 +17,7 @@
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="android:background">@drawable/splash</item>
-        <item name="android:scaleType">fitCenter</item>
-        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:background">@drawable/splash_background</item>
     </style>
 
     <style name="Widget.Android.AppWidget.Container" parent="android:Widget">

@@ -22,23 +22,23 @@
 
       <ion-list inset class="ion-bg-light corrector">
         <ion-item color="light" class="no-border border-bottom">
-          <ion-label slot="start">
+          <ion-label>
             <p v-if="locked">{{ $t('correctionPage.corrected')}}</p>
             <p v-else>{{ $t('correctionPage.text')}}</p>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale)">
+            <ion-item color="light" lines="none" v-if="hasDialect($i18n.locale as unknown as keyof typeof locales['dialects'])">
               <ion-select label="" :value="selectedDialect" @ionChange="selectedDialect = $event.target.value" interface="popover">
-                <ion-select-option :key="dialect" v-for="dialect in availableDialects">{{ dialect }}</ion-select-option>
+                <ion-select-option :key="dialect" v-for="dialect in getDialects()">{{ dialect }}</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-button v-if="locked" @click="locked = false" color="primary">
+            <ion-button v-if="locked" slot="end" @click="locked = false" color="primary">
               {{ $t('correctionPage.edit') }}&nbsp;<ion-icon :icon="pencilOutline"/>
             </ion-button>
-            <ion-button v-else-if="!locked && !loading" @click="correct()" color="success">
+            <ion-button v-else-if="!locked && !loading" slot="end" @click="correct()" color="success">
               {{ $t('correctionPage.correct') }}&nbsp;<ion-icon :icon="sparkles"/>
             </ion-button>
-            <ion-button v-else color="success">
+            <ion-button v-else slot="end" color="success">
               <ion-spinner name="dots" color="success"></ion-spinner>
             </ion-button>
           </ion-buttons>
@@ -190,12 +190,10 @@ import { hasDialect } from "@/functions/locales"
 import { Clipboard } from "@capacitor/clipboard"
 import {ExplainSegment, LanguageToolCorrection} from "@/functions/types/languagetool"
 import SetResult from "@/functions/plugins/setResult"
-import locales from "@/functions/locales"
+import locales, {localeCode} from "@/functions/locales"
 
 export default {
   data() {
-    const locale = this.$i18n.locale
-    const availableDialects = locales.dialects[locale] || [] as string[]
     return {
       content: "",
       corrections: [] as LanguageToolCorrection[],
@@ -207,13 +205,12 @@ export default {
       pageElement: null as any,
       openedFromSelection: false,
       textSelectionReadOnly: false,
-      availableDialects: availableDialects as string[],
-      selectedDialect: availableDialects.at(0) || locale
+      selectedDialect: "" as string
     }
   },
   mounted() {
     this.loadExceptions()
-    this.pageElement = this.$refs.page.$el
+    this.pageElement = (this.$refs.page as any).$el as any
     const url = new URLSearchParams(location.search)
     const data = url.get("data")
     const readonly = url.get("readonly")
@@ -237,6 +234,12 @@ export default {
     getWordDictionary() {
       // TODO, dict remede
     },
+    getDialects() {
+      const locale = this.$i18n.locale as localeCode
+      const availableDialects = locales.dialects[locale] || [] as string[]
+      this.selectedDialect = availableDialects.at(0) || locale
+      return availableDialects
+    },
     ignoreError(text: string, correction: LanguageToolCorrection) {
       this.ignoredErrors.push({
         text: text,
@@ -250,7 +253,7 @@ export default {
         return element.text == text && element.error == correction.rule.id
       })
     },
-    removeException(text: string, correction: LanguageToolCorrection) {
+    removeException(text: string, correction: LanguageToolCorrection | { rule: { id: string } }) {
       this.ignoredErrors = this.ignoredErrors.filter(element => {
           return !(element.text == text && element.error == correction.rule.id)
       })
@@ -270,6 +273,7 @@ export default {
       SetResult.sendActiveRemedeResult({ value: result })
     },
     correct() {
+      if (!this.selectedDialect.includes(this.$i18n.locale)) this.selectedDialect = this.$i18n.locale
       this.loading = true
       this.modalsOpenStates = {}
 

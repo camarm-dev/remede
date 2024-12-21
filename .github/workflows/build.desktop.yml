@@ -1,9 +1,7 @@
 name: 'Build Remède desktop applications'
 
 on:
-  push:
-    branches:
-      - dev
+  workflow_dispatch:
 
 jobs:
   publish-tauri:

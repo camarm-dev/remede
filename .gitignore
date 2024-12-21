@@ -10,3 +10,6 @@
 /data/remede.db
 /data/remede-less.db
 /data/remede.*.db
+/data/missing-wordlist.txt
+/builds/*.exe
+/builds/*.msi

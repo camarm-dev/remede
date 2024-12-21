@@ -14,9 +14,10 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
+from scripts.utils.sources import SOURCES
 
 lock = threading.Lock()
-version = "1.2.3"
+version = "1.4.0"
 app = FastAPI(title='Remède', description='Un dictionnaire libre.', version=version)
 app.add_middleware(
     CORSMiddleware,
@@ -39,13 +40,33 @@ class BinariesVariant(str, Enum):
     msi = "msi"
 
 
+def get_stats(db_path: str):
+    db = sqlite3.connect(db_path, check_same_thread=False)
+    db_cursor = db.cursor()
+    total = db_cursor.execute("SELECT COUNT(*) FROM dictionary").fetchone()[0]
+    db_cursor.close()
+    return total
+
+
+def check_validity(slug: str):
+    with open('validity.json', 'r') as f:
+        data = json.loads(f.read())
+        return data.get(slug, {'valid': False, 'schema': 'schema.json', 'hash': ''})
+
+
 def in_json(response: str | list):
     return json.loads(json.dumps(response))
 
 
 def fetch_random_word():
     lock.acquire(True)
-    return cursor.execute("SELECT word FROM dictionary ORDER BY RANDOM() LIMIT 1").fetchone()[0]
+    return cursor.execute("SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1").fetchone()[0]
+
+
+def fetch_words_with_phoneme(phoneme: str):
+    lock.acquire(True)
+    results = cursor.execute("SELECT word, document FROM dictionary WHERE phoneme = ?", (phoneme,)).fetchall()
+    return list(map(lambda x: (x[0], json.loads(x[1])), results))  # [('word' {..doc})]
 
 
 def fetch_remede_word_of_day():
@@ -60,16 +81,18 @@ def fetch_remede_word_of_day():
 
 def fetch_remede_doc(word: str):
     lock.acquire(True)
-    response = cursor.execute(f"SELECT document FROM dictionary WHERE word = '{word}'").fetchone()
-    return response[0] if response else {'message': 'Mot non trouvé'}
+    response = cursor.execute("SELECT document FROM dictionary WHERE word = ?", (word,)).fetchone()
+    return response[0] if response else json.dumps({'message': 'Mot non trouvé'})
 
 
-def fetch_autocomplete(query: str, limit: bool = False):
+def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
     lock.acquire(True)
     if limit:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC LIMIT 5").fetchall()
+        response = cursor.execute(
+            "SELECT word FROM dictionary WHERE indexed LIKE ? ORDER BY lower(word) ASC LIMIT 5", (query + '%',)).fetchall()
     else:
-        response = cursor.execute(f"SELECT word FROM wordlist WHERE indexed LIKE '{query}%' ORDER BY word ASC").fetchall()
+        response = cursor.execute(
+            "SELECT word FROM dictionary WHERE indexed LIKE ? ORDER BY lower(word) ASC LIMIT 50 OFFSET ?", (query + '%', page * 50)).fetchall()
     return list(map(lambda row: row[0], response))
 
 
@@ -126,47 +149,59 @@ def sanitize_query(q: str):
 @app.get('/')
 def root():
     """
-    ### Renvoie des informations utiles à propos de l'API:
-    - Sa version
-    - L'identifiant du dataset API (`dataset`)
-    - Le hash du dataset de la base Sqlite (`hash`)
-    - Le nombre de mots dans la base (`total`)
+    ### Returns useful information about API and datasets
+    - Its version
+    - The available dictionaries
+        - Their name (`name`)
+        - Their unique identifier (hash) (`hash`)
+        - Their slug; used to download or search in specific database (`slug`)
+        - The number of words in the database (`total`)
+        - Does the database respect the Remède JSON Schema (`valid`)
+        - Which schema does it follow (`schema`)
+        - Database readable size (`size`)
     """
     return {
         "version": version,
         "message": "Check /docs for documentation",
-        "dataset": DATASET,
-        "hash": DATASET,
-        "total": entities,
-        "dictionnaires": {
-            "remede": {
-                "nom": "Remède (FR) ~500Mb",
-                "slug": "remede",
-                "hash": DATASET
-            },
-            "remede.extended": {
-                "nom": "Remède Extended (FR) ~1Gb",
-                "slug": "remede.extended",
-                "hash": DATASET
-            }
-        }
+        "dictionaries": DICTIONARIES
     }
+
+
+@app.get('/validity/{slug}')
+def get_validity(slug: str):
+    """
+    Returns the dictionary `slug` validity (`true`/`false`). It's a check to know if it follows his JSON Schema. If state is unknown returns null.
+    """
+    return DICTIONARIES.get(slug, {"valid": {"message": "Slug not found"}})["valid"]
+
+
+@app.get('/phoneme/{phoneme}')
+def get_words_by_phoneme(phoneme: str):
+    """
+    Get th list of words with phoneme `phoneme`. It returns a list of tuples containing the word as the first element, and its document as the second element.
+    """
+    return fetch_words_with_phoneme(phoneme)
 
 
 @app.get('/word/{word}')
 def get_word_document(word: str):
     """
-    Renvoie le document Remède du mot `word`
+    Returns the Remède document of `word`.
     """
     document = fetch_remede_doc(word.replace("'", "''"))
     lock.release()
-    return json.loads(document)
+    json_doc = json.loads(document)
+    sources = []
+    for source in json_doc['sources']:
+        sources.append(SOURCES[source])
+    json_doc['sources'] = sources
+    return json_doc
 
 
 @app.get('/random')
 def get_random_word_document():
     """
-    Renvoie un mot au hasard
+    Returns a random word.
     """
     word = fetch_random_word()
     lock.release()
@@ -176,7 +211,7 @@ def get_random_word_document():
 @app.get('/word-of-day')
 def get_word_of_day():
     """
-    Renvoie le mot du jour
+    Returns the word of day.
     """
     return in_json(fetch_remede_word_of_day())
 
@@ -184,7 +219,7 @@ def get_word_of_day():
 @app.get('/autocomplete/{query}')
 def get_autocomplete(query: str):
     """
-    Renvoie les 6 premiers mots commençant par `query`, n'est pas sensible à la casse et aux accents !
+    Returns the 6 first word starting by `query`. Not case and accent sensible !
     """
     safe_query = sanitize_query(query)
     results = fetch_autocomplete(safe_query, True)
@@ -193,12 +228,12 @@ def get_autocomplete(query: str):
 
 
 @app.get('/search/{query}')
-def get_search_results(query: str):
+def get_search_results(query: str, page: int = 0):
     """
-    Renvoie les mots commençant par `query`, n'est pas sensible à la casse et aux accents !
+    Returns the word starting with `query`. Not case and accent sensible !
     """
     safe_query = sanitize_query(query)
-    results = fetch_autocomplete(safe_query)
+    results = fetch_autocomplete(safe_query, False, page)
     lock.release()
     return in_json(results)
 
@@ -206,7 +241,7 @@ def get_search_results(query: str):
 @app.get('/ask-new-word/{query}')
 def send_new_word(query: str):
     """
-    Enregistre le word `query` comme mot à rajouter au dictionnaire !
+    Save the word `query` as a word to add to the dictionary.
     """
     success = register_new_word_idea(query)
     if success:
@@ -221,7 +256,7 @@ def send_new_word(query: str):
 @app.get('/sheets')
 def get_cheatsheets():
     """
-    Renvoie la totalité des fiches de grammaire, d'orthographe et de règles référencées
+    Returns all grammar & orthography sheets.
     """
     return SHEETS
 
@@ -229,7 +264,7 @@ def get_cheatsheets():
 @app.get('/sheets/{slug}')
 def get_cheatsheet_by_slug(slug: str):
     """
-    Renvoie la fiche de grammaire / d'orthographe avec le slug `slug`
+    Returns the grammar sheet / orthography with slug `slug`.
     """
     return SHEETS_BY_SLUG.get(slug, {
         "contenu": "",
@@ -244,7 +279,7 @@ def get_cheatsheet_by_slug(slug: str):
 @app.get('/sheets/download/{slug}')
 def download_cheatsheet_by_slug(slug: str):
     """
-    Renvoie le fichier markdown correspondant à la fiche avec le slug `slug`
+    Returns the markdown file corresponding to sheet with slug `slug`.
     """
     fiche = SHEETS_BY_SLUG.get(slug, {
         "contenu": "",
@@ -263,7 +298,7 @@ def download_cheatsheet_by_slug(slug: str):
 @app.get('/download')
 def download_database(variant: str = 'remede'):
     """
-    Télécharge la base Sqlite sous form de fichier.
+    Download the Sqlite database as a file.
     """
     return FileResponse(f'data/{variant}.db')
 
@@ -271,24 +306,63 @@ def download_database(variant: str = 'remede'):
 @app.get('/release/{variant}')
 def download_binary(variant: BinariesVariant):
     """
-    Télécharge les derniers exécutables
+    Download the latest builds.
     """
     return FileResponse(f'builds/remede.{variant}', filename=f"remede.{variant}", media_type="multipart/form-data")
 
 
 if __name__ == '__main__':
-    database = sqlite3.connect('data/remede.db', check_same_thread=False)
-    cursor = database.cursor()
-    entities = cursor.execute("SELECT COUNT(*) FROM dictionary").fetchone()[0]
+    print("Starting API | Opening databases... [1/3]")
+    remede_database = sqlite3.connect('data/remede.db', check_same_thread=False)
+    cursor = remede_database.cursor()
 
     WORD_OF_DAY = {
         "date": "",
         "word": ""
     }
+    print("\033[A\033[KStarting API | Calculating databases size... [2/3]")
+    DICTIONARIES = {
+        "remede": {
+            "name": "Remède (FR)",
+            "slug": "remede",
+            "total": get_stats('data/remede.db'),
+            "hash": md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7],
+            "valid": False,
+            "schema": "",
+            "size": f"{int(os.path.getsize('data/remede.db') * 10e-7)}Mb"
+        },
+        "remede.legacy": {
+            "name": "Remède 1.2.3 (FR)",
+            "slug": "remede.legacy",
+            "total": get_stats('data/remede.legacy.db'),
+            "hash": md5(open('data/remede.legacy.db', 'rb').read()).hexdigest()[0:7],
+            "valid": False,
+            "schema": "",
+            "size": f"{int(os.path.getsize('data/remede.legacy.db') * 10e-7)}Mb"
+        },
+        "remede.en": {
+            "name": "Remède (EN)",
+            "slug": "remede.en",
+            "total": get_stats('data/remede.en.db'),
+            "hash": md5(open('data/remede.en.db', 'rb').read()).hexdigest()[0:7],
+            "valid": False,
+            "schema": "",
+            "size": f"{int(os.path.getsize('data/remede.en.db') * 10e-7)}Mb"
+        }
+    }
 
-    DATASET = md5(open('data/remede.db', 'rb').read()).hexdigest()[0:7]
+    print("\033[A\033[KStarting API | Checking JSON schemas validity... Can take a while... [3/3]")
+    for slug, data in DICTIONARIES.items():
+        validity = check_validity(slug)
+        if data["hash"] != validity["hash"]:
+            print(f"Validity check is outdated for database {slug}.")
+            data["valid"] = None
+            continue
+        data["valid"] = validity["valid"]
+        data["schema"] = validity["schema"]
 
     SHEETS = get_sheets()
     SHEETS_BY_SLUG = {f"{sheet['slug']}": sheet for sheet in SHEETS}
 
+    print("\033[A\033[KStarting API | Done. [3/3]")
     uvicorn.run(app, host='0.0.0.0')

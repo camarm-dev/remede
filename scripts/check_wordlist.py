@@ -3,7 +3,7 @@ import sys
 from bs4 import BeautifulSoup
 import requests
 
-from scripts.utils.sanitize import sanitize_word
+from utils.sanitize import sanitize_word
 
 
 def get_phoneme(word: str):
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     before = datetime.datetime.now()
 
-    WORDLIST = open('data/mots.txt').read().split(",")
+    WORDLIST = open('data/fr/words.txt').read().split(";")
 
     try:
         TO_CHECK = open(sys.argv[1]).read().split("\n")

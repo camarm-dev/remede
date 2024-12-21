@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://remede.camarm.fr/schema.json",
+  "title": "Remède word document.",
+  "description": "A Remède word document schema. This document represent all the word metadata.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "synonymes": {
+      "description": "The synonyms of the word.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "antonymes": {
+      "description": "The antonyms of the word.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "etymologies": {
+      "description": "The etymologies of the word.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "definitions": {
+      "description": "The word's definitions.",
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "genre",
+          "classe",
+          "explications",
+          "exemples"
+        ],
+        "properties": {
+          "genre": {
+            "description": "Word gender for this definition.",
+            "type": ["string", "array"],
+            "minLength": 0
+          },
+          "classe": {
+            "description": "Word nature for this definition.",
+            "type": "string",
+            "minLength": 1
+          },
+          "explications": {
+            "description": "Different explanations of the word.",
+            "type": ["object", "array"],
+            "patternProperties": {
+              "^[0-9]*$": {
+                "items": {
+                  "type": ["string", "array"]
+                }
+              }
+            }
+          },
+          "exemples": {
+            "description": "Different examples usages of the word.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "required": [
+                "contenu",
+                "sources"
+              ],
+              "properties": {
+                "contenu": {
+                  "description": "The example content.",
+                  "type": "string"
+                },
+                "sources": {
+                  "description": "The example source.",
+                  "type": "string",
+                  "minLength": 0
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ipa": {
+      "type": "string",
+      "description": "The word IPA notation.",
+      "minLength": 1
+    },
+    "conjugaisons": {
+      "type": "object",
+      "description": "The word's conjugations if it is a verb.",
+      "patternProperties": {
+        "^.*$": {
+          "patternProperties": {
+            "^.*$": {
+              "patternProperties": {
+                "^.*$": {
+                  "type": "string"
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "type": "object",
+      "description": "Definition credits & sources.",
+      "required": [
+        "name",
+        "url"
+      ],
+      "properties": {
+        "name": {
+          "description": "The credit name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "description": "The credit URL.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "synonymes",
+    "antonymes",
+    "etymologies",
+    "definitions",
+    "credits",
+    "conjugaisons"
+  ],
+  "additionalProperties": false
+}

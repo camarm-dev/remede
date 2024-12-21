@@ -1,5 +1,15 @@
+from typing import Tuple
+
 from bs4 import BeautifulSoup
 import requests
+
+from utils.openlexicon import get_word_stats
+
+
+modes_conjugation_subjects = {
+    "Participe_Présent": "(en)",
+    "Participe_Passé": "(a / est)"
+}
 
 
 def count_syllables(word: str):
@@ -17,15 +27,18 @@ def count_syllables(word: str):
     return count
 
 
-def get_word_stats(word: str, phoneme: str):
+def get_word_metadata(word: str, phoneme: str) -> Tuple[bool | None, bool, int, int, int, str | bool]:
     """
     Get the number of syllables, the elidable property and if the word end phoneme is feminine.
     :param word: string of word
     :param phoneme: phoneme of word
-    :return: Elidable, Feminine, Syllable count
+    :return: Elidable, Feminine, Syllable count, Min syllables count, Max syllables count and Nature
     """
-    # TODO find with drime database
-    return False, phoneme[-1] == 'e', count_syllables(word.lower())
+    syllables_count = count_syllables(word.lower())
+    openlexicon_result = get_word_stats(word)
+    if openlexicon_result:
+        return openlexicon_result.elidable == 1, openlexicon_result.feminine == 1, syllables_count, openlexicon_result.min_syllables, openlexicon_result.max_syllables, openlexicon_result.nature
+    return None, phoneme.replace('/', '')[-1] == 'e', syllables_count, syllables_count, syllables_count, False
 
 
 def get_synonyms(word: str):
@@ -50,7 +63,7 @@ def get_antonyms(word: str):
         return []
 
 
-def get_conjugaisons(verb: str):
+def get_conjugations(verb: str):
     try:
         verb_conjugaisons = {}
         parser = BeautifulSoup(requests.get(f'http://conjuguons.fr/conjugaison/verbe/{verb}').content, 'html.parser')
@@ -68,10 +81,12 @@ def get_conjugaisons(verb: str):
                 verb_conjugaisons[nom_mode][nom_temps] = {}
                 for forme in formes_verbales:
                     element_sujet = forme.find('span', attrs={'class': 'pronom'})
-                    sujet = element_sujet.text if element_sujet else modes_conjugaison_sujets.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
+                    sujet = element_sujet.text if element_sujet else modes_conjugation_subjects.get(f'{nom_mode}_{nom_temps}', '(Pas de sujet)')
+                    if nom_mode == "Impératif":
+                        sujet = ['2PS', '1PP', '2PP'][formes_verbales.index(forme)]
                     forme_verbale = forme.text.replace(sujet + ' ', '')
                     verb_conjugaisons[nom_mode][nom_temps][sujet] = forme_verbale
         return verb_conjugaisons
-    except Exception:
+    except Exception as e:
         return {}
 

@@ -6,8 +6,11 @@
 |------------|--------------------|
 | < 1.0.0    | :x:                |
 | 1.0.0-rc   | :x:                |
-| 1.0.0 <    | :white_check_mark: |
+| 1.0.0 <    | :x:                |
 | 1.1.0-beta | :x:                |
+| 1.2.3      | :white_check_mark: |
+| 1.3.0-beta | :white_check_mark: |
+| 1.3.0 <    | :white_check_mark: |
 
 ## Reporting a Vulnerability
 

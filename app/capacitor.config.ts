@@ -5,12 +5,12 @@ const config: CapacitorConfig = {
   appName: 'Remède',
   webDir: 'dist',
   plugins: {
-    "SplashScreen": {
+    SplashScreen: {
       "launchAutoHide": false,
       "androidScaleType": "CENTER_CROP",
       "splashFullScreen": true,
       "splashImmersive": false,
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff" // YOUR SPLASH SCREEN MAIN COLOR
     },
     CapacitorHttp: {
       enabled: false

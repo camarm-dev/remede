@@ -95,7 +95,7 @@
         "gender": "",
         "nature": "Nom propre",
         "explanations": [
-          "(Informatique) Dictionnaire français, open source et gratuit qui a pour objectif de remplacer Antidote."
+          "(Informatique) Dictionnaire libre multiplateforme qui a pour objectif de remplacer Antidote."
         ],
         "examples": [
           {
@@ -113,9 +113,9 @@
         "gender": "masculin",
         "nature": "Nom commun",
         "explanations": [
-          "(Médecine) Substance qui sert à guérir un mal ou une maladie. "
-          "(Sens figuré) Ce qui sert à guérir les maladies de l’âme. "
-          "(Sens figuré) Ce qui sert à prévenir, surmonter ou faire cesser un malheur, un inconvénient ou une disgrâce. "
+          "(Médecine) Substance qui sert à guérir un mal ou une maladie. ",
+          "(Sens figuré) Ce qui sert à guérir les maladies de l’âme. ",
+          "(Sens figuré) Ce qui sert à prévenir, surmonter ou faire cesser un malheur, un inconvénient ou une disgrâce. ",
           "(En particulier) Lavement. "
         ],
         "examples": [
@@ -131,22 +131,31 @@
             "content": "<i>Et, s’il acceptait qu’on le soignât, il refusait rudement tout <b>remède</b>, dans le doute où il était tombé de la médecine.</i> ",
             "sources": "(Émile Zola, <i>Le Docteur Pascal</i>, G. Charpentier, 1893, chapitre VI)"
           }
-        ],
-        "plurals": [
-          {
-            "label": "",
-            "singular": "remède",
-            "plural": "remèdes"
-          }
         ]
       }
     ],
+    "plurals": [
+      {
+        "label": "",
+        "singular": "remède",
+        "plural": "<reference href=\"rem%C3%A8des\">remèdes</reference>"
+      },
+      {
+        "label": "",
+        "singular": "<phoneme>\\ʁə.mɛd\\</phoneme>",
+        "plural": "<phoneme>\\ʁə.mɛd\\</phoneme>"
+      }
+    ],
     "sources": [
-      "fr_wik",
-      "antonyme_org",
-      "synonymo_fr"
+      "fr.wik",
+      "antonyme.org",
+      "synonymo.fr"
     ],
     "phoneme": "/ʁəmɛd/",
+    "pronunciation": {
+      "audio": "https://upload.wikimedia.org/wikipedia/commons/2/27/Fr-rem%C3%A8de.ogg",
+      "credits": "https://commons.wikimedia.org/w/index.php?curid=3043985"
+    },
     "conjugations": {}
   }
 }

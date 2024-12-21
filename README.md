@@ -12,11 +12,15 @@ Open Source and free alternative to Antidote dictionary.
 
 </div>
 
+## Breaking changes with Remède 1.4.0
+
+Remède 1.4.0 is released and old version of Remède are not supported anymore ! You can continue to search on Remède if you have downloaded the dictionary, but you must update your Remède application !
+
 ## Why Remède ?
 
 Remède is a dictionary, which can replace any proprietary dictionary, with these advantages:
-- Simple UI
-- Nice UX
+- Ready for all situations: rimes, examples, plurals, synonyms, antonyms, conjugation, even a corrector !
+- Simple and nice interface
 - Free
 - Cross-platform
 - Self-hostable
@@ -29,13 +33,16 @@ Remède is a dictionary, which can replace any proprietary dictionary, with thes
 - [Documentation](#documentation)
 - [Screenshots](#screenshots)
 
-## Current: 1.3.0-beta — Phenomenal Feather
+## Current: 1.4.0-beta — Phenomenal Feather
 
-La version `1.3.0`, nom de code `Phenomenal Feather` inclue les nouvelles fonctionnalités suivantes :
+La version `1.4.0`, nom de code `Phenomenal Feather` inclue les nouvelles fonctionnalités suivantes :
 - [x] Application traduite en anglais
-- [ ] Nouvelle structure de données
-- [ ] Applications de bureau
-- [ ] **Base révisée** avec +900 000 mots !
+- [x] Nouvelle structure de données
+- [x] Applications de bureau
+- [x] **Base révisée** avec +800 000 mots !
+- [x] Support avancé des phonemes
+- [x] Support avancé des rimes
+- [x] Pluriels des mots
 - [ ] Téléchargeable sur le **Play Store** !
 
 ## Télécharger

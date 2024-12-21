@@ -56,7 +56,7 @@ Cette opération prend plusieurs jours !
 
 Cette API, originellement écrite par [Frederic Gainza](https://api-definition.fgainza.fr/), scrap les données du [Wictionary français](https://fr.wiktionary.org/wiki/Wiktionnaire:Page_d%E2%80%99accueil).
 
-Pour ce projet, **une réadaptation a été effectuée** par [Labse Software](https://github.com/LabseSoftware/api-definition)
+Pour ce projet, **une réadaptation a été effectuée** par [Labse Studio](https://github.com/LabseStudio/api-definition)
 
 ### Lancer avec docker
 

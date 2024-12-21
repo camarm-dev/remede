@@ -1,5 +1,6 @@
 import {getOfflineDictionaryStatus} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
+import {FilledRemedeWordDocument, RemedeSource, RemedeWordDocument} from "@/functions/types/remede"
 
 function removeAccents(value: string) {
     return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
@@ -17,12 +18,12 @@ async function getAutocompleteFromDatabase(word: string) {
     return await database?.getAutocomplete(removeAccents(word)) as any[]
 }
 
-async function getSearchResultsWithAPI(query: string) {
-    return await fetch(`https://api-remede.camarm.fr/search/${query}`).then(resp => resp.json())
+async function getSearchResultsWithAPI(query: string, page: number) {
+    return await fetch(`https://api-remede.camarm.fr/search/${query}?page=${page}`).then(resp => resp.json())
 }
 
-async function getSearchResultsFromDatabase(query: string) {
-    return await database?.search(removeAccents(query)) as any[]
+async function getSearchResultsFromDatabase(query: string, page: number) {
+    return await database?.search(removeAccents(query), page) as any[]
 }
 
 async function getWordWithAPI(word: string) {
@@ -30,7 +31,7 @@ async function getWordWithAPI(word: string) {
 }
 
 async function getWordFromDatabase(word: string) {
-    return await database?.getWord(word) as any[]
+    return await database?.getWord(word) as any
 }
 
 async function getRandomWordWithAPI() {
@@ -43,6 +44,10 @@ async function getRandomWordFromDatabase() {
 
 async function doesWordExistsWithAPI(word: string) {
     return (await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json()).catch(() => { return { message: "Mot non trouvé" } })).message != "Mot non trouvé"
+}
+
+async function getWordsWithPhonemeWithAPI(phoneme: string) {
+    return await fetch(`https://api-remede.camarm.fr/phoneme/${phoneme}`).then(resp => resp.json())
 }
 
 async function doesWordExistsWithDatabase(word: string) {
@@ -62,18 +67,27 @@ async function getAutocomplete(word: string) {
 }
 
 
-async function getSearchResults(query: string) {
+async function getSearchResults(query: string, page: number) {
     if (await useApi()) {
-        return await getSearchResultsWithAPI(query)
+        return await getSearchResultsWithAPI(query, page)
     }
-    return await getSearchResultsFromDatabase(query)
+    return await getSearchResultsFromDatabase(query, page)
 }
 
-async function getWordDocument(word: string) {
+async function getWordDocument(word: string): Promise<FilledRemedeWordDocument> {
     if (await useApi()) {
-        return await getWordWithAPI(word)
+        return await getWordWithAPI(word) as FilledRemedeWordDocument
     }
-    return await getWordFromDatabase(word)
+    const document = await getWordFromDatabase(word) as RemedeWordDocument
+    if (!document) return document
+    const sources: RemedeSource[] = []
+    for (const source of document.sources) {
+        sources.push(await getSource(source))
+    }
+    return {
+        ...document,
+        sources
+    }
 }
 
 async function getRandomWord() {
@@ -118,6 +132,22 @@ async function getRimesAutocomplete(query: string) {
     return await database?.getRimesAutocomplete(query) as any as Promise<string[]>
 }
 
+async function getWordsWithPhoneme(phoneme: string) {
+    if (await useApi()) {
+        return await getWordsWithPhonemeWithAPI(phoneme) as any as Promise<[string, RemedeWordDocument][]>
+    }
+    return await database?.getWordsWithPhoneme(phoneme) as any as Promise<[string, RemedeWordDocument][]>
+}
+
+
+async function getSource(source: string | RemedeSource): Promise<RemedeSource> {
+    if (await useApi()) {
+        // Source doc is returned already built by the API
+        return source as RemedeSource
+    }
+    return await database?.getSource(source as string) as any as Promise<RemedeSource>
+}
+
 const database = await useApi() ? null: new RemedeDatabase()
 
 export {
@@ -128,5 +158,6 @@ export {
     getTodayWord,
     wordExists,
     getWordRimes,
-    getRimesAutocomplete
+    getRimesAutocomplete,
+    getWordsWithPhoneme
 }

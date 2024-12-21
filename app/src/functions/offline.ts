@@ -12,13 +12,19 @@ async function getOfflineDictionaryStatus() {
                 "downloaded": false,
                 "path": "",
                 "hash": "",
-                "slug": ""
+                "slug": "",
+                "name": "",
+                "size": "",
+                "word": ""
             })
         })
         return {
             downloaded: false,
             hash: "",
-            slug: ""
+            slug: "",
+            name: "",
+            size: "",
+            words: ""
         }
     }
     return status
@@ -37,7 +43,10 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
         downloaded: true,
         path: downloadResponse.path,
         hash: dictionary.hash,
-        slug: dictionary.slug
+        slug: dictionary.slug,
+        name: dictionary.name,
+        size: dictionary.size,
+        words: dictionary.total
     }
 
     await Preferences.set({

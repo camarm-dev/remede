@@ -1,9 +1,13 @@
 import {RemedeWordDocument} from "@/functions/types/remede"
 
 interface RemedeDictionaryOption {
-    nom: string
+    name: string
     slug: string
     hash: string
+    total: number
+    size: string
+    valid: boolean
+    schema: string
 }
 
 interface RemedeAvailableDictionaries {
@@ -14,7 +18,7 @@ interface InformationsResponse {
     version: string
     message: string
     dataset: string
-    dictionnaires: RemedeAvailableDictionaries
+    dictionaries: RemedeAvailableDictionaries
 }
 
 type AutocompleteResponse = string[]
