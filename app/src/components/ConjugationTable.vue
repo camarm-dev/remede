@@ -56,7 +56,7 @@ export default {
       currentTense: "" as string,
       currentSubjects: [] as string[],
       availableTenses: [] as string[],
-      replaceSubjects: ["1PS", "1PP", "2PP"]
+      replaceSubjects: ["2PS", "1PP", "2PP"]
     }
   },
   mounted() {
