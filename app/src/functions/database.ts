@@ -101,7 +101,7 @@ class RemedeDatabase {
              AND (feminine OR ${!feminine})
              AND ${qualityFilter}
              AND ${natureFilter})
-             ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}`
+             ORDER BY lower(word) ASC LIMIT 50 OFFSET ${page * 50}`
         return await this.rawQuery(query)
     }
 
