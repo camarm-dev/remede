@@ -91,6 +91,7 @@ async function getRawDictionary(dictionary: RemedeDictionaryOption) {
 }
 
 export {
+    setFavoriteDictionary,
     downloadDictionary,
     deleteDictionary,
     getOfflineDictionaryStatus,
