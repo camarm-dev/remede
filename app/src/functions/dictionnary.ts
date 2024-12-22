@@ -12,7 +12,7 @@ async function useApi() {
 }
 
 async function getAutocompleteWithAPI(word: string) {
-    return await fetch(`https://api-remede.camarm.fr/autocomplete/${word}`).then(resp => resp.json())
+    return await fetch(`https://api-remede.camarm.fr/autocomplete/${word}?database=${databaseSlug}`).then(resp => resp.json())
 }
 
 async function getAutocompleteFromDatabase(word: string) {
@@ -20,7 +20,7 @@ async function getAutocompleteFromDatabase(word: string) {
 }
 
 async function getSearchResultsWithAPI(query: string, page: number) {
-    return await fetch(`https://api-remede.camarm.fr/search/${query}?page=${page}`).then(resp => resp.json())
+    return await fetch(`https://api-remede.camarm.fr/search/${query}?page=${page}&database=${databaseSlug}`).then(resp => resp.json())
 }
 
 async function getSearchResultsFromDatabase(query: string, page: number) {
@@ -28,7 +28,7 @@ async function getSearchResultsFromDatabase(query: string, page: number) {
 }
 
 async function getWordWithAPI(word: string) {
-    return await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json())
+    return await fetch(`https://api-remede.camarm.fr/word/${word}?database=${databaseSlug}`).then(resp => resp.json())
 }
 
 async function getWordFromDatabase(word: string) {
@@ -36,7 +36,7 @@ async function getWordFromDatabase(word: string) {
 }
 
 async function getRandomWordWithAPI() {
-    return await fetch("https://api-remede.camarm.fr/random").then(resp => resp.json())
+    return await fetch(`https://api-remede.camarm.fr/random?database=${databaseSlug}`).then(resp => resp.json())
 }
 
 async function getRandomWordFromDatabase() {
@@ -44,11 +44,11 @@ async function getRandomWordFromDatabase() {
 }
 
 async function doesWordExistsWithAPI(word: string) {
-    return (await fetch(`https://api-remede.camarm.fr/word/${word}`).then(resp => resp.json()).catch(() => { return { message: "Mot non trouvé" } })).message != "Mot non trouvé"
+    return (await fetch(`https://api-remede.camarm.fr/word/${word}?database=${databaseSlug}`).then(resp => resp.json()).catch(() => { return { message: "Mot non trouvé" } })).message != "Mot non trouvé"
 }
 
 async function getWordsWithPhonemeWithAPI(phoneme: string) {
-    return await fetch(`https://api-remede.camarm.fr/phoneme/${phoneme}`).then(resp => resp.json())
+    return await fetch(`https://api-remede.camarm.fr/phoneme/${phoneme}?database=${databaseSlug}`).then(resp => resp.json())
 }
 
 async function getAvailableDictionariesWithAPI() {
@@ -105,7 +105,7 @@ async function getRandomWord() {
 
 async function getTodayWord() {
     try {
-        return await fetch("https://api-remede.camarm.fr/word-of-day").then(resp => resp.json())
+        return await fetch(`https://api-remede.camarm.fr/word-of-day?database=${databaseSlug}`).then(resp => resp.json())
     } catch (e) {
         return ""
     }
