@@ -1,13 +1,14 @@
-import {getOfflineDictionaryStatus} from "@/functions/offline"
+import {getDownloadedDictionaries} from "@/functions/offline"
 import {RemedeDatabase} from "@/functions/database"
 import {FilledRemedeWordDocument, RemedeSource, RemedeWordDocument} from "@/functions/types/remede"
+import {InformationsResponse, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 
 function removeAccents(value: string) {
     return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
 }
 
 async function useApi() {
-    return !(await getOfflineDictionaryStatus()).downloaded
+    return (await getDownloadedDictionaries()).length == 0
 }
 
 async function getAutocompleteWithAPI(word: string) {
@@ -48,6 +49,11 @@ async function doesWordExistsWithAPI(word: string) {
 
 async function getWordsWithPhonemeWithAPI(phoneme: string) {
     return await fetch(`https://api-remede.camarm.fr/phoneme/${phoneme}`).then(resp => resp.json())
+}
+
+async function getAvailableDictionariesWithAPI() {
+    const response = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
+    return Object.values(response.dictionaries)
 }
 
 async function doesWordExistsWithDatabase(word: string) {
@@ -148,7 +154,28 @@ async function getSource(source: string | RemedeSource): Promise<RemedeSource> {
     return await database?.getSource(source as string) as any as Promise<RemedeSource>
 }
 
-const database = await useApi() ? null: new RemedeDatabase()
+async function getAvailableDictionaries(): Promise<RemedeDictionaryOption[]> {
+    if (await useApi()) {
+        return await getAvailableDictionariesWithAPI()
+    }
+    return await getDownloadedDictionaries()
+}
+
+async function getFavoriteDictionary(dictionaries: RemedeDictionaryOption[]): Promise<RemedeDictionaryOption> {
+    if (await useApi()) {
+        return dictionaries[0]
+    }
+    return (await getDownloadedDictionaries()).find(downloadedDictionary => downloadedDictionary.favorite) || dictionaries[0]
+}
+
+let database = await useApi() ? null: new RemedeDatabase()
+let databaseSlug = "remede"
+
+async function setDictionary(dictionary: RemedeDictionaryOption) {
+    console.log(`[Dictionary] Setting dictionary to ${dictionary.name} (${dictionary.slug})`)
+    database = await useApi() ? null: new RemedeDatabase(dictionary)
+    databaseSlug = dictionary.slug
+}
 
 export {
     getWordDocument,
@@ -159,5 +186,8 @@ export {
     wordExists,
     getWordRimes,
     getRimesAutocomplete,
-    getWordsWithPhoneme
+    getWordsWithPhoneme,
+    getAvailableDictionaries,
+    getFavoriteDictionary,
+    setDictionary
 }
