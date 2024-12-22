@@ -1,7 +1,7 @@
 {
   "remede": {
-    "hash": "02ad53c",
-    "schema": "1.2.3.json",
+    "hash": "866cb32",
+    "schema": "schema.json",
     "valid": true
   },
   "remede.legacy": {
