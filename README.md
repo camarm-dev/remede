@@ -66,9 +66,11 @@ La documentation est disponible sur [docs.remede.camarm.fr](https://docs.remede.
 
 ## Screenshots
 
-| Home page                           | Word page                               |
-|-------------------------------------|-----------------------------------------|
-| ![homepage](.github/home.jpeg)      | ![word page](.github/word.jpeg)         |
-| Sheets page                         | Settings page                           |
-| ![sheets page](.github/sheets.jpeg) | ![settings page](.github/settings.jpeg) |
+| Home page                                                | Word page                                                   |
+|----------------------------------------------------------|-------------------------------------------------------------|
+| ![homepage](.github/home.jpeg)                           | ![word page](metadata/fr/images/phoneScreenshots/3.jpg)     |
+| Rimes                                                    | Settings page                                               |
+| ![rimes page](metadata/fr/images/phoneScreenshots/6.jpg) | ![settings page](metadata/fr/images/phoneScreenshots/7.jpg) |
+| Examples                                                 | Corrector                                                   |
+| ![examples](metadata/fr/images/phoneScreenshots/4.jpg)   | ![corrector](metadata/fr/images/phoneScreenshots/5.jpg)     |
   
