@@ -3,7 +3,7 @@ import {Directory, Filesystem} from "@capacitor/filesystem"
 import {Preferences} from "@capacitor/preferences"
 import {Capacitor} from "@capacitor/core"
 
-type DownloadedDictionaryStatus = RemedeDictionaryOption & { path: string }
+type DownloadedDictionaryStatus = RemedeDictionaryOption & { path: string, favorite: boolean }
 
 async function getOfflineDictionaryStatus(dictionary: RemedeDictionaryOption) {
     return (await getDownloadedDictionaries()).find(downloadedDictionary => downloadedDictionary.slug == dictionary.slug)
@@ -32,6 +32,7 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
 
     const offlineDictionary: DownloadedDictionaryStatus = {
         path: downloadResponse.path || "",
+        favorite: false,
         ...dictionary
     }
 
