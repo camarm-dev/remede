@@ -119,7 +119,7 @@
 
 <script lang="ts">
 import {bookmark, calendarOutline, shuffle, arrowForward, chevronDownOutline} from "ionicons/icons"
-import {getAutocomplete, getAvailableDictionaries, getRandomWord, getTodayWord} from "@/functions/dictionnary"
+import {getAutocomplete, getAvailableDictionaries, getRandomWord, getTodayWord, getFavoriteDictionary} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
 import {
   IonButtons,
@@ -285,7 +285,7 @@ export default defineComponent({
   methods: {
     async loadDictionaries() {
       this.availableDictionaries = (await getAvailableDictionaries()).filter(dictionary => !dictionary.slug.includes("legacy"))
-      this.selectedDictionary = getFavoriteDictionary(this.availableDictionaries)
+      this.selectedDictionary = await getFavoriteDictionary(this.availableDictionaries)
     },
     getSmallDictionaryName(name: string) {
       return name.replaceAll("Remède", "").replaceAll("(", "").replaceAll(")", "")
