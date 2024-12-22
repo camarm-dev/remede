@@ -3,50 +3,36 @@ import {Directory, Filesystem} from "@capacitor/filesystem"
 import {Preferences} from "@capacitor/preferences"
 import {Capacitor} from "@capacitor/core"
 
-async function getOfflineDictionaryStatus() {
-    const status = JSON.parse((await Preferences.get({ key: "offlineDictionary" })).value || "{}")
-    if (JSON.stringify(status) == "{}") {
+type DownloadedDictionaryStatus = RemedeDictionaryOption & { path: string }
+
+async function getOfflineDictionaryStatus(dictionary: RemedeDictionaryOption) {
+    return (await getDownloadedDictionaries()).find(downloadedDictionary => downloadedDictionary.slug == dictionary.slug)
+}
+
+async function getDownloadedDictionaries(): Promise<DownloadedDictionaryStatus[]> {
+    const dictionaries = JSON.parse((await Preferences.get({ key: "offlineDictionary" })).value || "[]")
+    if (dictionaries.length == 0) {
         await Preferences.set({
             key: "offlineDictionary",
-            value: JSON.stringify({
-                "downloaded": false,
-                "path": "",
-                "hash": "",
-                "slug": "",
-                "name": "",
-                "size": "",
-                "word": ""
-            })
+            value: JSON.stringify([])
         })
-        return {
-            downloaded: false,
-            hash: "",
-            slug: "",
-            name: "",
-            size: "",
-            words: ""
-        }
+        return []
     }
-    return status
+    return dictionaries as DownloadedDictionaryStatus[]
 }
 
 
 async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     const downloadResponse = await Filesystem.downloadFile({
-        path: "remedeSQLite.db",
+        path: dictionary.slug,
         url: `https://api-remede.camarm.fr/download?variant=${dictionary.slug}`,
         directory: Directory.Data,
         progress: true
     })
 
-    const offlineDictionary = {
-        downloaded: true,
-        path: downloadResponse.path,
-        hash: dictionary.hash,
-        slug: dictionary.slug,
-        name: dictionary.name,
-        size: dictionary.size,
-        words: dictionary.total
+    const offlineDictionary: DownloadedDictionaryStatus = {
+        path: downloadResponse.path || "",
+        ...dictionary
     }
 
     await Preferences.set({
@@ -56,7 +42,7 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     return
 }
 
-async function deleteDictionary() {
+async function deleteDictionary(dictionary: RemedeDictionaryOption) {
     await Preferences.set({
         key: "offlineDictionary",
         value: JSON.stringify({
@@ -67,16 +53,16 @@ async function deleteDictionary() {
         })
     })
     await Filesystem.deleteFile({
-        path: "remedeSQLite.db",
+        path: dictionary.slug,
         directory: Directory.Data
     })
 }
 
 
-async function getRawDictionary() {
+async function getRawDictionary(dictionary: RemedeDictionaryOption) {
     if (!Capacitor.isNativePlatform() || Capacitor.getPlatform() === "electron") {
         const file = await Filesystem.readFile({
-            path: "remedeSQLite.db",
+            path: dictionary.slug + ".db",
             directory: Directory.Data
         })
 
@@ -85,7 +71,7 @@ async function getRawDictionary() {
         return await fileData.arrayBuffer().then(buf => new Uint8Array(buf))
     }
 
-    const path = (await getOfflineDictionaryStatus()).path
+    const path = (await getOfflineDictionaryStatus(dictionary))?.path || ""
     const newSrc = Capacitor.convertFileSrc(`${path}`)
 
     const file = await fetch(newSrc).then(resp => resp.arrayBuffer())
@@ -97,5 +83,6 @@ export {
     downloadDictionary,
     deleteDictionary,
     getOfflineDictionaryStatus,
+    getDownloadedDictionaries,
     getRawDictionary
 }
