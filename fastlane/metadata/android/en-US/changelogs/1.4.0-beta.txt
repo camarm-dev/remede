@@ -1,0 +1,1 @@
+Database has been reorganised and typed with JSON schema. Enjoy +840 000 words, with new functionalities like plurals or rimes !
