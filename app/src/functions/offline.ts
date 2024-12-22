@@ -11,7 +11,7 @@ async function setFavoriteDictionary(dictionary: RemedeDictionaryOption) {
         downloadedDictionary.favorite = downloadedDictionary.slug == dictionary.slug
     }
     await Preferences.set({
-        key: "offlineDictionary",
+        key: "offlineDictionaries",
         value: JSON.stringify(dictionaries)
     })
 }
@@ -21,10 +21,10 @@ async function getOfflineDictionaryStatus(dictionary: RemedeDictionaryOption) {
 }
 
 async function getDownloadedDictionaries(): Promise<DownloadedDictionaryStatus[]> {
-    const dictionaries = JSON.parse((await Preferences.get({ key: "offlineDictionary" })).value || "[]")
+    const dictionaries = JSON.parse((await Preferences.get({ key: "offlineDictionaries" })).value || "[]")
     if (dictionaries.length == 0) {
         await Preferences.set({
-            key: "offlineDictionary",
+            key: "offlineDictionaries",
             value: JSON.stringify([])
         })
         return []
@@ -47,7 +47,7 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     }
 
     await Preferences.set({
-        key: "offlineDictionary",
+        key: "offlineDictionaries",
         value: JSON.stringify(offlineDictionary)
     })
     return
@@ -55,7 +55,7 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
 
 async function deleteDictionary(dictionary: RemedeDictionaryOption) {
     await Preferences.set({
-        key: "offlineDictionary",
+        key: "offlineDictionaries",
         value: JSON.stringify({
             "downloaded": false,
             "path": "",
