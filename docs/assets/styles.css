@@ -40,6 +40,10 @@ body {
     font-family: "Amiko", sans-serif;
 }
 
+a img {
+    height: 4em;
+}
+
 progress::-moz-progress-bar, progress::-webkit-progress-bar {
     transition: .2s ease-in-out;
 }
