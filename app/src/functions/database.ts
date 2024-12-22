@@ -91,7 +91,7 @@ class RemedeDatabase {
 
         let natureFilter = `(${nature.length === 0}`
         for (const string of nature) {
-            natureFilter += ` OR nature LIKE '%${string}:%' OR nature LIKE '%${string},%'`
+            natureFilter += ` OR nature LIKE '%${string}%' OR nature LIKE '%${string},%'`
         }
         natureFilter += ")"
 
