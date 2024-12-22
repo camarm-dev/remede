@@ -5,6 +5,17 @@ import {Capacitor} from "@capacitor/core"
 
 type DownloadedDictionaryStatus = RemedeDictionaryOption & { path: string, favorite: boolean }
 
+async function setFavoriteDictionary(dictionary: RemedeDictionaryOption) {
+    const dictionaries = await getDownloadedDictionaries()
+    for (const downloadedDictionary of dictionaries) {
+        downloadedDictionary.favorite = downloadedDictionary.slug == dictionary.slug
+    }
+    await Preferences.set({
+        key: "offlineDictionary",
+        value: JSON.stringify(dictionaries)
+    })
+}
+
 async function getOfflineDictionaryStatus(dictionary: RemedeDictionaryOption) {
     return (await getDownloadedDictionaries()).find(downloadedDictionary => downloadedDictionary.slug == dictionary.slug)
 }
@@ -20,7 +31,6 @@ async function getDownloadedDictionaries(): Promise<DownloadedDictionaryStatus[]
     }
     return dictionaries as DownloadedDictionaryStatus[]
 }
-
 
 async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     const downloadResponse = await Filesystem.downloadFile({
