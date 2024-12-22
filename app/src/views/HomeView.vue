@@ -119,7 +119,7 @@
 
 <script lang="ts">
 import {bookmark, calendarOutline, shuffle, arrowForward, chevronDownOutline} from "ionicons/icons"
-import {getAutocomplete, getAvailableDictionaries, getRandomWord, getTodayWord, getFavoriteDictionary} from "@/functions/dictionnary"
+import {getAutocomplete, getAvailableDictionaries, getRandomWord, getTodayWord, getFavoriteDictionary, setDictionary} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
 import {
   IonButtons,
@@ -292,6 +292,7 @@ export default defineComponent({
     },
     changeDictionary(dictionary: RemedeDictionaryOption) {
       this.selectedDictionary = dictionary
+      setDictionary(dictionary)
     },
     handleKeyDown(event: KeyboardEvent) {
       if (!this.searchbar.$el.focused) {
