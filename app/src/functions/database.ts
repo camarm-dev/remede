@@ -1,13 +1,14 @@
 import {getRawDictionary} from "@/functions/offline"
 import initSqlJS, {Database} from "sql.js"
 import {toastController} from "@ionic/vue"
+import {RemedeDictionaryOption} from "@/functions/types/apiResponses"
 
-async function openDatabase() {
+async function openDatabase(dictionary: RemedeDictionaryOption) {
     try {
         const SQL = await initSqlJS({
             locateFile: () => "/sql-wasm.wasm"
         })
-        const raw = await getRawDictionary()
+        const raw = await getRawDictionary(dictionary)
         return new SQL.Database(raw)
     } catch (e) {
         const message = await toastController.create({
@@ -25,14 +26,14 @@ class RemedeDatabase {
 
     private db?: Database
 
-    constructor() {
-        this.getDatabase().then(() => {
+    constructor(dictionary: RemedeDictionaryOption) {
+        this.getDatabase(dictionary).then(() => {
             console.log("Database loaded !")
         })
     }
 
-    private async getDatabase() {
-        this.db = await openDatabase()
+    private async getDatabase(dictionary: RemedeDictionaryOption) {
+        this.db = await openDatabase(dictionary)
     }
 
     async getWord(word: string) {
