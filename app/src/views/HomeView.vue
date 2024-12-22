@@ -10,7 +10,11 @@
         <ion-searchbar @focusin="onFocus()" @focusout="onLeave()" :value="query"
                        @ionInput="handleSearchbarInput($event.detail.value as string)"
                        @keydown.enter="handleSubmit()"
-                       :placeholder="$t('home.searchWord')" ref="searchbar"></ion-searchbar>
+                       :placeholder="$t('home.searchWord')" ref="searchbar" slot="start">
+        </ion-searchbar>
+        <ion-select v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name)" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
+          <ion-select-option :key="dictionary.slug" v-for="dictionary in availableDictionaries" :value="dictionary">{{ dictionary.name }}</ion-select-option>
+        </ion-select>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
@@ -114,11 +118,13 @@
 </template>
 
 <script lang="ts">
-import {bookmark, calendarOutline, shuffle, arrowForward} from "ionicons/icons"
-import {getAutocomplete, getRandomWord, getTodayWord} from "@/functions/dictionnary"
+import {bookmark, calendarOutline, shuffle, arrowForward, chevronDownOutline} from "ionicons/icons"
+import {getAutocomplete, getAvailableDictionaries, getRandomWord, getTodayWord} from "@/functions/dictionnary"
 import {useRouter} from "vue-router"
 import {
   IonButtons,
+  IonSelect,
+  IonSelectOption,
   IonContent,
   IonHeader,
   IonMenuButton,
@@ -152,7 +158,7 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {getOfflineDictionaryStatus} from "@/functions/offline"
-import {InformationsResponse} from "@/functions/types/apiResponses"
+import {InformationsResponse, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Keyboard} from "@capacitor/keyboard"
 import {
@@ -178,6 +184,8 @@ export default defineComponent({
     IonList,
     IonProgressBar,
     Swiper,
+    IonSelect,
+    IonSelectOption,
     SwiperSlide
   },
   data() {
@@ -196,12 +204,15 @@ export default defineComponent({
       todayWordDisabled: true,
       el: null as any,
       hasDictionaryUpdate: false,
-      hasAppUpdate: false
+      hasAppUpdate: false,
+      availableDictionaries: [] as RemedeDictionaryOption[],
+      selectedDictionary: {} as RemedeDictionaryOption
     }
   },
   mounted() {
     this.loadRandomWord()
     this.loadTodayWord()
+    this.loadDictionaries()
     this.el = ref(this.$el)
     this.openLandingScreen()
     this.reloadUpdateStatuses()
@@ -264,6 +275,7 @@ export default defineComponent({
       Navigation,
       Pagination,
       arrowForward,
+      chevronDownOutline,
       changelogIllustration,
       newBaseIllustration,
       newVersionIllustration,
@@ -271,6 +283,16 @@ export default defineComponent({
     }
   },
   methods: {
+    async loadDictionaries() {
+      this.availableDictionaries = (await getAvailableDictionaries()).filter(dictionary => !dictionary.slug.includes("legacy"))
+      this.selectedDictionary = getFavoriteDictionary(this.availableDictionaries)
+    },
+    getSmallDictionaryName(name: string) {
+      return name.replaceAll("Remède", "").replaceAll("(", "").replaceAll(")", "")
+    },
+    changeDictionary(dictionary: RemedeDictionaryOption) {
+      this.selectedDictionary = dictionary
+    },
     handleKeyDown(event: KeyboardEvent) {
       if (!this.searchbar.$el.focused) {
         this.searchbar.$el.setFocus().then(() => {
