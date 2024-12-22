@@ -1,4 +1,4 @@
-import {getRawDictionary} from "@/functions/offline"
+import {getDownloadedDictionaries, getRawDictionary} from "@/functions/offline"
 import initSqlJS, {Database} from "sql.js"
 import {toastController} from "@ionic/vue"
 import {RemedeDictionaryOption} from "@/functions/types/apiResponses"
@@ -26,10 +26,19 @@ class RemedeDatabase {
 
     private db?: Database
 
-    constructor(dictionary: RemedeDictionaryOption) {
-        this.getDatabase(dictionary).then(() => {
-            console.log("Database loaded !")
-        })
+    constructor(dictionary?: RemedeDictionaryOption) {
+        if (dictionary) {
+            this.getDatabase(dictionary).then(() => {
+                console.log("Database loaded !")
+            })
+        } else {
+            getDownloadedDictionaries().then(downloadedDictionaries => {
+                dictionary = downloadedDictionaries.find(downloadedDictionary => downloadedDictionary.favorite) || downloadedDictionaries[0]
+                this.getDatabase(dictionary).then(() => {
+                    console.log("Database loaded !")
+                })
+            })
+        }
     }
 
     private async getDatabase(dictionary: RemedeDictionaryOption) {
