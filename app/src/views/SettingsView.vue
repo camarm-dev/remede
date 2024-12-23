@@ -83,6 +83,7 @@
             <ion-note v-if="dictionariesWorking[dictionary.slug]" color="success">
               {{ $t('settingsPage.working') }}
             </ion-note>
+            <ion-alert :header="dictionariesWorking[dictionary.slug] ? $t('settingsPage.working') : $t('settingsPage.problem')" :message="dictionariesWorking[dictionary.slug] ? $t('settingsPage.workingNormally') : $t('settingsPage.problemDetected')" :trigger="`status-dict-${dictionary.slug}`"></ion-alert>
           </ion-item>
           <ion-item color="light" v-else-if="dictionariesWorking[dictionary.slug] === undefined">
             <ion-spinner slot="start" color="medium" name="crescent"></ion-spinner>
@@ -95,6 +96,7 @@
             <ion-note color="danger">
               {{ $t('settingsPage.problem') }}
             </ion-note>
+            <ion-alert :header="dictionariesWorking[dictionary.slug] ? $t('settingsPage.working') : $t('settingsPage.problem')" :message="dictionariesWorking[dictionary.slug] ? $t('settingsPage.workingNormally') : $t('settingsPage.problemDetected')" :trigger="`status-dict-${dictionary.slug}`"></ion-alert>
           </ion-item>
           <ion-item button color="danger" @click="deleteDictionary(dictionary).then(() => { reloadDictionaryStatus(); canDownload = true })">
             <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
@@ -106,7 +108,6 @@
           </ion-item>
         </ion-list>
 <!--   Adding v-if to trigger refresh     -->
-        <ion-alert v-if="dictionary" :header="dictionariesWorking[dictionary.slug] ? $t('settingsPage.working') : $t('settingsPage.problem')" :message="dictionariesWorking[dictionary.slug] ? $t('settingsPage.workingNormally') : $t('settingsPage.problemDetected')" :trigger="`status-dict-${dictionary.slug}`"></ion-alert>
         <ion-list inset>
           <ion-item lines="none">
             <ion-note>
