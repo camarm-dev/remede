@@ -154,7 +154,7 @@ import {deleteDictionary, setFavoriteDictionary} from "@/functions/offline"
 
 <script lang="ts">
 
-import {downloadDictionary, getDownloadedDictionaries} from "@/functions/offline"
+import {downloadDictionary, getDownloadedDictionaries, DownloadedDictionaryStatus} from "@/functions/offline"
 import {alertController, toastController} from "@ionic/vue"
 import {InformationsResponse, RemedeAvailableDictionaries, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
@@ -172,7 +172,7 @@ export default {
       latestDictionary: "",
       canBeUpdatedDictionaries: [] as string[],
       dictionaryToDownload: {} as RemedeDictionaryOption,
-      downloadedDictionaries: [] as RemedeDictionaryOption[],
+      downloadedDictionaries: [] as DownloadedDictionaryStatus[],
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
       dictionariesWorking: {} as { [key: string]: boolean },
