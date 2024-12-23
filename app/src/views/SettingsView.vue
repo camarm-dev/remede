@@ -88,24 +88,23 @@
           </ion-item>
         </ion-list>
         <ion-list inset>
-          <ion-item>
+          <ion-item lines="none">
+            <ion-note v-if="dictionariesWorking[dictionary.slug]" color="success">
+              <ion-icon :icon="checkmarkCircle"/>
+              {{ $t('settingsPage.workingNormally') }}
+            </ion-note>
+            <ion-note v-else color="danger">
+              <ion-icon :icon="closeCircle"/>
+              {{ $t('settingsPage.problemDetected') }}
+            </ion-note>
+          </ion-item>
+          <ion-item lines="none">
             <ion-note>
               {{ $t('settingsPage.dictionaryRevisionDownloaded', { name: dictionary.name, rev: dictionary.hash, size: dictionary.size, words: dictionary.total }) }}
             </ion-note>
           </ion-item>
         </ion-list>
       </div>
-
-      <ion-list inset v-if="downloaded">
-        <ion-note v-if="working" class="ion-padding" color="success">
-          <ion-icon :icon="checkmarkCircle"/>
-          {{ $t('settingsPage.workingNormally') }}
-        </ion-note>
-        <ion-note v-else class="ion-padding" color="danger">
-          <ion-icon :icon="closeCircle"/>
-          {{ $t('settingsPage.problemDetected') }}
-        </ion-note>
-      </ion-list>
 
     </ion-content>
   </ion-page>
@@ -143,12 +142,12 @@ import {deleteDictionary, setFavoriteDictionary} from "@/functions/offline"
 
 <script lang="ts">
 
-import {downloadDictionary, getDownloadedDictionaries, getOfflineDictionaryStatus} from "@/functions/offline"
+import {downloadDictionary, getDownloadedDictionaries} from "@/functions/offline"
 import {alertController, toastController} from "@ionic/vue"
 import {InformationsResponse, RemedeAvailableDictionaries, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
-import {getWordDocument} from "@/functions/dictionnary"
+import {getAutocomplete, getWordDocument, setDictionary} from "@/functions/dictionnary"
 import {getDeviceLocale} from "@/functions/device"
 import locales, {localeCode} from "@/functions/locales"
 
@@ -164,22 +163,24 @@ export default {
       downloadedDictionaries: [] as RemedeDictionaryOption[],
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
-      working: true,
+      dictionariesWorking: {} as { [key: string]: boolean },
       availableLocales: this.$i18n.availableLocales as any[] as localeCode[]
     }
   },
   mounted() {
     this.reloadDictionaryStatus().then(async () => {
       if (this.downloaded) {
-        // TODO
-        try {
-          const word = await getWordDocument("remède")
-          if (word.phoneme != "/ʁəmɛd/") {
-            throw "Database is wrong"
+        for (const downloadedDictionary of this.downloadedDictionaries) {
+          try {
+            await setDictionary(downloadedDictionary)
+            const results = await getAutocomplete("a")
+            if (results.length != 5) {
+              throw "Database is wrong"
+            }
+            this.dictionariesWorking[downloadedDictionary.slug] = true
+          } catch {
+            this.dictionariesWorking[downloadedDictionary.slug] = false
           }
-          this.working = true
-        } catch {
-          this.working = false
         }
       }
     })
