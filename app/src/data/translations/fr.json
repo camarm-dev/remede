@@ -165,7 +165,8 @@
     "workingNormally": "Tout semble fonctionner parfaitement. Vous pouvez commencer à chercher des mots hors-ligne !",
     "problemDetected": "Un problème a été détecté, veuillez réinstaller le dictionnaire ou contacter le support.",
     "understood": "C'est compris !",
-    "dictionaryRevisionDownloaded": "Dictionnaire \"{name}\", révision \"{rev}\" téléchargé. Taille totale de {size} pour {words} mots."
+    "dictionaryRevisionDownloaded": "Dictionnaire \"{name}\", révision \"{rev}\" téléchargé. Taille totale de {size} pour {words} mots.",
+    "myDictionaries": "Mes dictionnaires téléchargés"
   },
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",

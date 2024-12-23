@@ -165,7 +165,8 @@
     "workingNormally": "Everything looks ok ! You can start searching words offline !",
     "problemDetected": "A problem has been detected, please reinstall the dictionary or contact the support.",
     "understood": "That's ok !",
-    "dictionaryRevisionDownloaded": "Dictionary \"{name}\", revision \"{rev}\" downloaded. Taking {size} storage. {words} words."
+    "dictionaryRevisionDownloaded": "Dictionary \"{name}\", revision \"{rev}\" downloaded. Taking {size} storage. {words} words.",
+    "myDictionaries": "My downloaded dictionaries"
   },
   "sheetsPage": {
     "placeholder": "Search a sheet",
