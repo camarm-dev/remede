@@ -73,10 +73,28 @@
       </div>
 
       <div v-for="dictionary in downloadedDictionaries" :key="dictionary.slug">
-        <ion-list inset>
+        <ion-list inset class="mb-1">
           <ion-item color="light">
             {{ $t('dictionary') }} "{{ dictionary.name }}" {{ $t('settingsPage.downloaded') }}.
             <ion-icon @click="setFavoriteDictionary(dictionary).then(() => reloadDictionaryStatus())" :icon="dictionary.favorite ? heart : heartOutline" slot="end"></ion-icon>
+          </ion-item>
+          <ion-item button color="light" :id="`status-dict-${dictionary.slug}`" v-if="dictionariesWorking[dictionary.slug]">
+            <ion-icon color="success" :icon="checkmarkCircle" slot="start"/>
+            <ion-note v-if="dictionariesWorking[dictionary.slug]" color="success">
+              {{ $t('settingsPage.working') }}
+            </ion-note>
+          </ion-item>
+          <ion-item color="light" v-else-if="dictionariesWorking[dictionary.slug] === undefined">
+            <ion-spinner slot="start" color="medium" name="crescent"></ion-spinner>
+            <ion-note color="medium">
+              {{ $t('settingsPage.loading') }}
+            </ion-note>
+          </ion-item>
+          <ion-item button color="light" :id="`status-dict-${dictionary.slug}`" v-else>
+            <ion-icon color="danger" :icon="closeCircle" slot="start"/>
+            <ion-note color="danger">
+              {{ $t('settingsPage.problem') }}
+            </ion-note>
           </ion-item>
           <ion-item button color="danger" @click="deleteDictionary(dictionary).then(() => { reloadDictionaryStatus(); canDownload = true })">
             <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
@@ -87,17 +105,9 @@
             <ion-label>{{ $t('settingsPage.updateTo') }} "{{ latestDictionary }}"</ion-label>
           </ion-item>
         </ion-list>
+<!--   Adding v-if to trigger refresh     -->
+        <ion-alert v-if="dictionary" :header="dictionariesWorking[dictionary.slug] ? $t('settingsPage.working') : $t('settingsPage.problem')" :message="dictionariesWorking[dictionary.slug] ? $t('settingsPage.workingNormally') : $t('settingsPage.problemDetected')" :trigger="`status-dict-${dictionary.slug}`"></ion-alert>
         <ion-list inset>
-          <ion-item lines="none">
-            <ion-note v-if="dictionariesWorking[dictionary.slug]" color="success">
-              <ion-icon :icon="checkmarkCircle"/>
-              {{ $t('settingsPage.workingNormally') }}
-            </ion-note>
-            <ion-note v-else color="danger">
-              <ion-icon :icon="closeCircle"/>
-              {{ $t('settingsPage.problemDetected') }}
-            </ion-note>
-          </ion-item>
           <ion-item lines="none">
             <ion-note>
               {{ $t('settingsPage.dictionaryRevisionDownloaded', { name: dictionary.name, rev: dictionary.hash, size: dictionary.size, words: dictionary.total }) }}
@@ -105,7 +115,6 @@
           </ion-item>
         </ion-list>
       </div>
-
     </ion-content>
   </ion-page>
 </template>
@@ -126,7 +135,9 @@ import {
   IonItem,
   IonLabel,
   IonNote,
-  IonList
+  IonList,
+  IonAlert,
+  IonSpinner
 } from "@ionic/vue"
 import {
   checkmarkCircle,
@@ -286,6 +297,10 @@ ion-label ion-progress-bar {
 
 ion-note.ion-padding {
   display: block;
+}
+
+.mb-1 {
+  margin-bottom: 5x;
 }
 </style>
 
