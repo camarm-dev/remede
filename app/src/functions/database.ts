@@ -29,13 +29,13 @@ class RemedeDatabase {
     constructor(dictionary?: RemedeDictionaryOption) {
         if (dictionary) {
             this.getDatabase(dictionary).then(() => {
-                console.log("Database loaded !")
+                console.log(`[Dictionary] Database ${dictionary.slug}.db loaded !`)
             })
         } else {
             getDownloadedDictionaries().then(downloadedDictionaries => {
                 dictionary = downloadedDictionaries.find(downloadedDictionary => downloadedDictionary.favorite) || downloadedDictionaries[0]
                 this.getDatabase(dictionary).then(() => {
-                    console.log("Database loaded !")
+                    console.log(`[Dictionary] Database ${dictionary.slug}.db loaded !`)
                 })
             })
         }
