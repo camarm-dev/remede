@@ -15,6 +15,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 from scripts.utils.sources import SOURCES
+from sqlite3 import Cursor
 
 lock = threading.Lock()
 version = "1.4.0"
@@ -28,6 +29,12 @@ app.add_middleware(
     expose_headers=["*"]
 )
 
+default_cursor = sqlite3.connect(':memory:').cursor()
+
+DATABASES = {
+    "remede": default_cursor,
+    "remede.en": default_cursor
+}
 
 class BinariesVariant(str, Enum):
     aarch_dmg = "aarch64.dmg"
@@ -58,40 +65,40 @@ def in_json(response: str | list):
     return json.loads(json.dumps(response))
 
 
-def fetch_random_word():
+def fetch_random_word(database: Cursor = DATABASES['remede']):
     lock.acquire(True)
-    return cursor.execute("SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1").fetchone()[0]
+    return database.execute("SELECT word FROM dictionary WHERE nature != 'VER' AND nature != '' ORDER BY RANDOM() LIMIT 1").fetchone()[0]
 
 
-def fetch_words_with_phoneme(phoneme: str):
+def fetch_words_with_phoneme(phoneme: str, database: Cursor = DATABASES['remede']):
     lock.acquire(True)
-    results = cursor.execute("SELECT word, document FROM dictionary WHERE phoneme = ?", (phoneme,)).fetchall()
+    results = database.execute("SELECT word, document FROM dictionary WHERE phoneme = ?", (phoneme,)).fetchall()
     return list(map(lambda x: (x[0], json.loads(x[1])), results))  # [('word' {..doc})]
 
 
-def fetch_remede_word_of_day():
+def fetch_remede_word_of_day(database: Cursor = DATABASES['remede'], database_identifier: str = 'remede'):
     global WORD_OF_DAY
     today = datetime.datetime.now().strftime("%d/%m/%Y")
-    if today != WORD_OF_DAY['date']:
+    if today != WORD_OF_DAY['date'] or not WORD_OF_DAY.get(f'word.{database_identifier}', None):
         WORD_OF_DAY['date'] = today
-        WORD_OF_DAY['word'] = fetch_random_word()
+        WORD_OF_DAY[f'word.{database_identifier}'] = fetch_random_word(database)
         lock.release()
-    return WORD_OF_DAY['word']
+    return WORD_OF_DAY[f'word.{database_identifier}']
 
 
-def fetch_remede_doc(word: str):
+def fetch_remede_doc(word: str, database: Cursor = DATABASES['remede']):
     lock.acquire(True)
-    response = cursor.execute("SELECT document FROM dictionary WHERE word = ?", (word,)).fetchone()
+    response = database.execute("SELECT document FROM dictionary WHERE word = ?", (word,)).fetchone()
     return response[0] if response else json.dumps({'message': 'Mot non trouvé'})
 
 
-def fetch_autocomplete(query: str, limit: bool = False, page: int = 0):
+def fetch_autocomplete(query: str, limit: bool = False, page: int = 0, database: Cursor = DATABASES['remede']):
     lock.acquire(True)
     if limit:
-        response = cursor.execute(
+        response = database.execute(
             "SELECT word FROM dictionary WHERE indexed LIKE ? ORDER BY lower(word) ASC LIMIT 5", (query + '%',)).fetchall()
     else:
-        response = cursor.execute(
+        response = database.execute(
             "SELECT word FROM dictionary WHERE indexed LIKE ? ORDER BY lower(word) ASC LIMIT 50 OFFSET ?", (query + '%', page * 50)).fetchall()
     return list(map(lambda row: row[0], response))
 
@@ -176,19 +183,22 @@ def get_validity(slug: str):
 
 
 @app.get('/phoneme/{phoneme}')
-def get_words_by_phoneme(phoneme: str):
+def get_words_by_phoneme(phoneme: str, database: str = 'remede'):
     """
     Get th list of words with phoneme `phoneme`. It returns a list of tuples containing the word as the first element, and its document as the second element.
     """
-    return fetch_words_with_phoneme(phoneme)
+    db = DATABASES.get(database, DATABASES['remede'])
+    return fetch_words_with_phoneme(phoneme, db)
 
 
 @app.get('/word/{word}')
-def get_word_document(word: str):
+def get_word_document(word: str, database: str = 'remede'):
     """
     Returns the Remède document of `word`.
     """
-    document = fetch_remede_doc(word.replace("'", "''"))
+    db = DATABASES.get(database, DATABASES['remede'])
+    print(word, database)
+    document = fetch_remede_doc(word.replace("'", "''"), db)
     lock.release()
     json_doc = json.loads(document)
     sources = []
@@ -199,41 +209,46 @@ def get_word_document(word: str):
 
 
 @app.get('/random')
-def get_random_word_document():
+def get_random_word_document(database: str = 'remede'):
     """
     Returns a random word.
     """
-    word = fetch_random_word()
+    db = DATABASES.get(database, DATABASES['remede'])
+    word = fetch_random_word(db)
     lock.release()
     return in_json(word)
 
 
 @app.get('/word-of-day')
-def get_word_of_day():
+def get_word_of_day(database: str = 'remede'):
     """
     Returns the word of day.
     """
-    return in_json(fetch_remede_word_of_day())
+    db = DATABASES.get(database, DATABASES['remede'])
+    identifier = database if database in DATABASES.keys() else 'remede'
+    return in_json(fetch_remede_word_of_day(db, identifier))
 
 
 @app.get('/autocomplete/{query}')
-def get_autocomplete(query: str):
+def get_autocomplete(query: str, database: str = 'remede'):
     """
     Returns the 6 first word starting by `query`. Not case and accent sensible !
     """
+    db = DATABASES.get(database, DATABASES['remede'])
     safe_query = sanitize_query(query)
-    results = fetch_autocomplete(safe_query, True)
+    results = fetch_autocomplete(safe_query, True, 0, db)
     lock.release()
     return in_json(results)
 
 
 @app.get('/search/{query}')
-def get_search_results(query: str, page: int = 0):
+def get_search_results(query: str, page: int = 0, database: str = 'remede'):
     """
     Returns the word starting with `query`. Not case and accent sensible !
     """
+    db = DATABASES.get(database, DATABASES['remede'])
     safe_query = sanitize_query(query)
-    results = fetch_autocomplete(safe_query, False, page)
+    results = fetch_autocomplete(safe_query, False, page, db)
     lock.release()
     return in_json(results)
 
@@ -315,11 +330,21 @@ if __name__ == '__main__':
     print("Starting API | Opening databases... [1/3]")
     remede_database = sqlite3.connect('data/remede.db', check_same_thread=False)
     cursor = remede_database.cursor()
+    remede_en_database = sqlite3.connect('data/remede.en.db', check_same_thread=False)
+    cursor_en = remede_en_database.cursor()
 
     WORD_OF_DAY = {
         "date": "",
-        "word": ""
+        "word.remede": "",
+        "word.remede.en": ""
     }
+    DATABASES = {
+        "remede": cursor,
+        "remede.en": cursor_en
+    }
+
+    del default_cursor
+
     print("\033[A\033[KStarting API | Calculating databases size... [2/3]")
     DICTIONARIES = {
         "remede": {
