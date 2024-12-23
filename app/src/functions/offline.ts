@@ -57,14 +57,12 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
 }
 
 async function deleteDictionary(dictionary: RemedeDictionaryOption) {
+    const dictionaries = await getDownloadedDictionaries()
+    const toDeleteIndex = dictionaries.findIndex(element => element.slug == dictionary.slug)
+    dictionaries.splice(toDeleteIndex, 1)
     await Preferences.set({
         key: "offlineDictionaries",
-        value: JSON.stringify({
-            "downloaded": false,
-            "path": "",
-            "hash": "",
-            "slug": ""
-        })
+        value: JSON.stringify(dictionaries)
     })
     await Filesystem.deleteFile({
         path: dictionary.slug,
