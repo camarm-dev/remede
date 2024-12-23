@@ -99,3 +99,7 @@ export {
     getDownloadedDictionaries,
     getRawDictionary
 }
+
+export type {
+    DownloadedDictionaryStatus
+}
