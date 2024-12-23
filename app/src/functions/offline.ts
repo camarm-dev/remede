@@ -34,7 +34,7 @@ async function getDownloadedDictionaries(): Promise<DownloadedDictionaryStatus[]
 
 async function downloadDictionary(dictionary: RemedeDictionaryOption) {
     const downloadResponse = await Filesystem.downloadFile({
-        path: dictionary.slug,
+        path: dictionary.slug + ".db",
         url: `https://api-remede.camarm.fr/download?variant=${dictionary.slug}`,
         directory: Directory.Data,
         progress: true
@@ -65,7 +65,7 @@ async function deleteDictionary(dictionary: RemedeDictionaryOption) {
         value: JSON.stringify(dictionaries)
     })
     await Filesystem.deleteFile({
-        path: dictionary.slug,
+        path: dictionary.slug + ".db",
         directory: Directory.Data
     })
 }
