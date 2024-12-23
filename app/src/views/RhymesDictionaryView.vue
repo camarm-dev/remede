@@ -75,7 +75,8 @@ import {
   closeOutline,
   filterCircleOutline,
   radioButtonOffOutline,
-  radioButtonOnOutline
+  radioButtonOnOutline,
+  chevronDownOutline
 } from "ionicons/icons"
 import {defineComponent, onMounted, Ref, ref} from "vue"
 import {
@@ -145,7 +146,8 @@ export default defineComponent({
       closeOutline,
       filterCircleOutline,
       radioButtonOffOutline,
-      radioButtonOnOutline
+      radioButtonOnOutline,
+      chevronDownOutline
     }
   },
   methods: {
