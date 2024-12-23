@@ -157,7 +157,7 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
-import {getOfflineDictionaryStatus} from "@/functions/offline"
+import {getDownloadedDictionaries, getOfflineDictionaryStatus} from "@/functions/offline"
 import {InformationsResponse, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Keyboard} from "@capacitor/keyboard"
@@ -354,11 +354,13 @@ export default defineComponent({
       window.open(url)
     },
     async reloadUpdateStatuses() {
-      const status = await getOfflineDictionaryStatus()
-      const downloaded = status.downloaded
+      const downloadedDictionaries = await getDownloadedDictionaries()
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
-      if (downloaded) {
-        this.hasDictionaryUpdate = status.hash != specs.dictionaries[status.slug].hash
+      for (const downloadedDictionary of downloadedDictionaries) {
+        if (downloadedDictionary.hash != specs.dictionaries[downloadedDictionary.slug].hash) {
+          this.hasDictionaryUpdate = true
+          break
+        }
       }
 
       const tag = await fetch("https://api.github.com/repos/camarm-dev/remede/tags").then(resp => resp.json()).then((resp: any) => resp[0].name)
