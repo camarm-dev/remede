@@ -4,7 +4,7 @@ import {FilledRemedeWordDocument, RemedeSource, RemedeWordDocument} from "@/func
 import {InformationsResponse, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 
 function removeAccents(value: string) {
-    return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ")
+    return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").replaceAll("-", " ").replaceAll("'", " ").trim()
 }
 
 async function useApi() {
