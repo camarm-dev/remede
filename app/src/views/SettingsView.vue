@@ -62,8 +62,8 @@
         </ion-item>
       </ion-list>
 
-      <ion-list inset>
-        <ion-note class="ion-padding" v-if="loading">
+      <ion-list inset v-if="loading">
+        <ion-note class="ion-padding">
           {{ $t('settingsPage.downloadingDisclaimer') }}
         </ion-note>
       </ion-list>
@@ -76,6 +76,7 @@
         <ion-list inset>
           <ion-item color="light">
             {{ $t('dictionary') }} "{{ dictionary.name }}" {{ $t('settingsPage.downloaded') }}.
+            <ion-icon @click="setFavoriteDictionary(dictionary).then(() => reloadDictionaryStatus())" :icon="dictionary.favorite ? heart : heartOutline" slot="end"></ion-icon>
           </ion-item>
           <ion-item button color="danger" @click="deleteDictionary(dictionary).then(() => { reloadDictionaryStatus(); canDownload = true })">
             <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
@@ -133,9 +134,11 @@ import {
   closeCircle, contrastOutline,
   languageOutline,
   refreshOutline,
-  trashBinOutline
+  trashBinOutline,
+  heartOutline,
+  heart
 } from "ionicons/icons"
-import {deleteDictionary} from "@/functions/offline"
+import {deleteDictionary, setFavoriteDictionary} from "@/functions/offline"
 </script>
 
 <script lang="ts">
