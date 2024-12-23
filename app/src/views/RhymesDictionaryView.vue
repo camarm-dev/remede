@@ -83,7 +83,7 @@ import {
   defaultRemedeMainToolbarAnimation,
   defaultRemedeSearchToolbarAnimation
 } from "@/functions/animations"
-import {RemedeDictionaryOption} from "@/functions/types/apiResponses";
+import {RemedeDictionaryOption} from "@/functions/types/apiResponses"
 
 export default defineComponent({
   data() {
