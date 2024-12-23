@@ -10,6 +10,9 @@
       </ion-toolbar>
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @keydown.enter="goTo(`/rimes/${query}`)" @focusin="onFocus()" @focusout="onLeave()" :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" :placeholder="$t('rhymesPage.placeholder')"></ion-searchbar>
+        <ion-select v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name)" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
+          <ion-select-option :key="dictionary.slug" v-for="dictionary in availableDictionaries" :value="dictionary">{{ dictionary.name }}</ion-select-option>
+        </ion-select>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
       <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
@@ -42,7 +45,12 @@
 </template>
 
 <script lang="ts">
-import {getRimesAutocomplete} from "@/functions/dictionnary"
+import {
+  getAvailableDictionaries,
+  getFavoriteDictionary,
+  getRimesAutocomplete,
+  setDictionary
+} from "@/functions/dictionnary"
 import {
   type Animation, AnimationDirection,
   IonButtons,
@@ -59,7 +67,7 @@ import {
   IonToolbar,
   toastController,
   IonList,
-  useIonRouter
+  useIonRouter, IonSelectOption, IonSelect
 } from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 import {
@@ -75,6 +83,7 @@ import {
   defaultRemedeMainToolbarAnimation,
   defaultRemedeSearchToolbarAnimation
 } from "@/functions/animations"
+import {RemedeDictionaryOption} from "@/functions/types/apiResponses";
 
 export default defineComponent({
   data() {
@@ -86,7 +95,12 @@ export default defineComponent({
       // Ignoring linter error about empty function (@typescript-eslint/no-empty-function)
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       autocompleteTimeout: window.setTimeout(() => {}, 500),
+      availableDictionaries: [] as RemedeDictionaryOption[],
+      selectedDictionary: {} as RemedeDictionaryOption
     }
+  },
+  mounted() {
+    this.loadDictionaries()
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
@@ -135,6 +149,17 @@ export default defineComponent({
     }
   },
   methods: {
+    async loadDictionaries() {
+      this.availableDictionaries = (await getAvailableDictionaries()).filter(dictionary => !dictionary.slug.includes("legacy"))
+      this.selectedDictionary = await getFavoriteDictionary(this.availableDictionaries)
+    },
+    getSmallDictionaryName(name: string) {
+      return name.replaceAll("Remède", "").replaceAll("(", "").replaceAll(")", "")
+    },
+    changeDictionary(dictionary: RemedeDictionaryOption) {
+      this.selectedDictionary = dictionary
+      setDictionary(dictionary)
+    },
     async startAutocompleteSearch(query: string) {
       window.clearTimeout(this.autocompleteTimeout)
       this.autocompleteTimeout = window.setTimeout(async () => {
@@ -165,6 +190,7 @@ export default defineComponent({
     },
   },
   components: {
+    IonSelect, IonSelectOption,
     IonButtons,
     IonContent,
     IonHeader,
