@@ -150,7 +150,7 @@ def register_new_word_idea(word: str):
 
 
 def sanitize_query(q: str):
-    return unidecode.unidecode(q.lower().replace('-', ' ').replace("'", " "))
+    return unidecode.unidecode(q.lower().replace('-', ' ').replace("'", " ")).strip()
 
 
 @app.get('/')
