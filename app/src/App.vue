@@ -95,7 +95,7 @@ import RemedeLogo from "@/components/RemedeLogo.vue"
 
 <script lang="ts">
 import {useRouter} from "vue-router"
-import {getOfflineDictionaryStatus} from "@/functions/offline"
+import {getDownloadedDictionaries} from "@/functions/offline"
 import { App } from "@capacitor/app"
 import {defineComponent} from "vue"
 import {wordExists} from "@/functions/dictionnary"
@@ -107,8 +107,8 @@ export default defineComponent({
       this.path = location.pathname
     })
     document.body.classList.add(localStorage.getItem("userTheme") || "light")
-    getOfflineDictionaryStatus().then(status => {
-      this.downloaded = status.downloaded
+    getDownloadedDictionaries().then(dictionaries => {
+      this.downloaded = dictionaries.length > 0
     })
 
     App.getLaunchUrl().then(object => {
