@@ -46,9 +46,12 @@ async function downloadDictionary(dictionary: RemedeDictionaryOption) {
         ...dictionary
     }
 
+    const downloadedDictionaries = await getDownloadedDictionaries()
+    downloadedDictionaries.push(offlineDictionary)
+
     await Preferences.set({
         key: "offlineDictionaries",
-        value: JSON.stringify(offlineDictionary)
+        value: JSON.stringify(downloadedDictionaries)
     })
     return
 }
