@@ -147,7 +147,7 @@ import {alertController, toastController} from "@ionic/vue"
 import {InformationsResponse, RemedeAvailableDictionaries, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
-import {getAutocomplete, getWordDocument, setDictionary} from "@/functions/dictionnary"
+import {getAutocomplete, setDictionary} from "@/functions/dictionnary"
 import {getDeviceLocale} from "@/functions/device"
 import locales, {localeCode} from "@/functions/locales"
 
