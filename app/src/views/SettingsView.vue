@@ -104,7 +104,7 @@
           </ion-item>
           <ion-item v-if="canBeUpdatedDictionaries.includes(dictionary.slug)" button color="primary" @click="loading = true; canDownload = true; deleteDictionary(dictionary).then(() => { reloadDictionaryStatus().then(() => { download(dictionary) }) })">
             <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
-            <ion-label>{{ $t('settingsPage.updateTo') }} "{{ latestDictionary }}"</ion-label>
+            <ion-label>{{ $t('settingsPage.update') }}</ion-label>
           </ion-item>
         </ion-list>
 <!--   Adding v-if to trigger refresh     -->
