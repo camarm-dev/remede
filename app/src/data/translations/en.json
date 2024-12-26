@@ -159,7 +159,7 @@
     "downloadLongDescription": "To finish its installation, please restart the application !",
     "downloadFailed": "Failed to download",
     "downloadFailedDescription": "The offline dictionary cannot be downloaded: {error}",
-    "updateTo": "Update to",
+    "update": "Update",
     "cannotDownload": "You cannot download the dictionary...",
     "downloadingDisclaimer": "Please let this page open while the dictionary is downloading.\n\nYou must restart the application after the dictionary has been downloaded.",
     "working": "Everything looks ok !",
