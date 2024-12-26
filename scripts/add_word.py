@@ -62,14 +62,6 @@ if __name__ == '__main__':
 
     words_to_add = []
 
-    # Wordlist
-    all_words = get_words()
-    # IPA.json
-    all_ipa = get_word2ipa()
-    # custom_words.json
-    custom_words_json = get_custom_words()
-    custom_words = custom_words_json.keys()
-
     if arg1 == '-f':
         with open(arg2, 'r') as file:
             for line in file.readlines():
@@ -88,6 +80,14 @@ if __name__ == '__main__':
         print("- Génération des ressources...")
         runpy.run_module('pre_generate_ressources', run_name='__main__')
         print("Fait.")
+
+        # Wordlist
+        all_words = get_words()
+        # IPA.json
+        all_ipa = get_word2ipa()
+        # custom_words.json
+        custom_words_json = get_custom_words()
+        custom_words = custom_words_json.keys()
 
         for element in words_to_add:
             word, phoneme = element
