@@ -61,11 +61,11 @@ def get_word_document(word: str, ipa: str):
 
     synonyms, antonyms = get_synonyms_and_antonyms(word)
 
-    sources = [SOURCES['en.wik']['identifier']]
+    sources = [SOURCES['en_wik']['identifier']]
     if len(synonyms) > 0 or len(antonyms) > 0:
-        sources.append(SOURCES['thesaurus.com']['identifier'])
+        sources.append(SOURCES['thesaurus_com']['identifier'])
     if conjugations != {}:
-        sources.append("conjuguons_fr")
+        sources.append("mlconjug3")
     if type(result['natureDef']) is dict:
         data = result['natureDef']
         result['natureDef'] = [[]] * len(data)

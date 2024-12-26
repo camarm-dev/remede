@@ -71,13 +71,13 @@ def get_word_document(word: str, ipa: str):
     synonyms = get_synonyms(word)
     antonyms = get_antonyms(word)
 
-    sources = [SOURCES['fr.wik']['identifier']]
+    sources = [SOURCES['fr_wik']['identifier']]
     if len(synonyms) > 0:
-        sources.append(SOURCES['synonymo.fr']['identifier'])
+        sources.append(SOURCES['synonymo_fr']['identifier'])
     if len(antonyms) > 0:
-        sources.append(SOURCES['antonyme.org']['identifier'])
+        sources.append(SOURCES['antonyme_org']['identifier'])
     if conjugations != {}:
-        sources.append(SOURCES['conjuguons.fr']['identifier'])
+        sources.append(SOURCES['conjuguons_fr']['identifier'])
 
     return {
         "synonyms": synonyms,

@@ -147,9 +147,9 @@
       }
     ],
     "sources": [
-      "fr.wik",
-      "antonyme.org",
-      "synonymo.fr"
+      "fr_wik",
+      "antonyme_org",
+      "synonymo_fr"
     ],
     "phoneme": "/ʁəmɛd/",
     "pronunciation": {
