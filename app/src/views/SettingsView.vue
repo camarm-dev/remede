@@ -230,15 +230,16 @@ export default {
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionaries
       this.availableDictionariesName = Object.keys(this.availableDictionaries).filter(dictionary => !dictionary.includes("legacy"))
-      if (this.availableDictionariesName.length > 0) {
-        this.dictionaryToDownload = this.availableDictionaries[this.availableDictionariesName[0]]
-      }
 
       if (this.downloadedDictionaries.length == this.availableDictionariesName.length) {
         this.canDownload = false
       }
       // Excluding downloaded dicts from downloadable dicts
       this.availableDictionariesName = this.availableDictionariesName.filter(dictionary => !downloadedDictionaries.some(downloadedDictionary => downloadedDictionary.slug == dictionary))
+
+      if (this.availableDictionariesName.length > 0) {
+        this.dictionaryToDownload = this.availableDictionaries[this.availableDictionariesName[0]]
+      }
 
       this.latestDictionary = specs.dataset
       for (const downloadedDictionary of downloadedDictionaries) {
