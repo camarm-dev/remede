@@ -188,7 +188,7 @@ def get_words_by_phoneme(phoneme: str, database: str = 'remede'):
     Get th list of words with phoneme `phoneme`. It returns a list of tuples containing the word as the first element, and its document as the second element.
     """
     db = DATABASES.get(database, DATABASES['remede'])
-    return fetch_words_with_phoneme(phoneme, db)
+    return fetch_words_with_phoneme(phoneme.replace('.', ''), db)
 
 
 @app.get('/word/{word}')
