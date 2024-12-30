@@ -22,7 +22,7 @@ SOURCES = {
     "en_wik": {
         "identifier": "en_wik",
         "label": "Wiktionary",
-        "url": "https://fr.wiktionary.org/wiki/{word}"
+        "url": "https://en.wiktionary.org/wiki/{word}"
     },
     "thesaurus_com": {
         "identifier": "thesaurus_com",
