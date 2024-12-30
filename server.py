@@ -367,7 +367,7 @@ if __name__ == '__main__':
             "size": f"{int(os.path.getsize('data/remede.legacy.db') * 10e-7)}Mb"
         },
         "remede.en": {
-            "name": "Remède (EN)",
+            "name": "Remède (EN) Beta",
             "slug": "remede.en",
             "total": get_stats('data/remede.en.db'),
             "hash": md5(open('data/remede.en.db', 'rb').read()).hexdigest()[0:7],
