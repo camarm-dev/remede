@@ -7,7 +7,7 @@
             <ion-list>
               <RemedeLogo class="ion-margin-start"/>
               <ion-note>{{ $t('theDictionary') }}</ion-note>
-              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="searchbar" @keydown.enter="handleFastSearch($event.target.value)" :class="`hidden-mobile ${isPage('/dictionnaire') ? 'hidden': ''}`" :placeholder="$t('home.searchWord')"></ion-searchbar>
+              <ion-searchbar :value="query" @ionChange="query = $event.detail.value as string" ref="menuSearchbar" @keydown.enter="handleFastSearch($event.target.value)" :class="`hidden-mobile ${isPage('/dictionnaire') ? 'hidden': ''}`" :placeholder="$t('home.searchWord')"></ion-searchbar>
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">
@@ -147,7 +147,7 @@ export default defineComponent({
           this.$router.back()
           return
       }
-      const searchbar = (this.$refs.searchbar as any).$el
+      const searchbar = (this.$refs.menuSearchbar as any).$el
       if (!searchbar?.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         await searchbar.setFocus()
         if (!searchbar.focused) {
