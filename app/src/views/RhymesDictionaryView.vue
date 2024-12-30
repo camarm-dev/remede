@@ -10,7 +10,7 @@
       </ion-toolbar>
       <ion-toolbar ref="searchToolbar">
         <ion-searchbar @keydown.enter="goTo(`/rimes/${query}`)" @focusin="onFocus()" @focusout="onLeave()" :value="query" @ionInput="handleSearchBarInput($event.detail.value as string)" :placeholder="$t('rhymesPage.placeholder')"></ion-searchbar>
-        <ion-select v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name)" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
+        <ion-select :cancelText="$t('cancel')" v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name)" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
           <ion-select-option :key="dictionary.slug" v-for="dictionary in availableDictionaries" :value="dictionary">{{ dictionary.name }}</ion-select-option>
         </ion-select>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium" style="width: 95%; margin: auto"></ion-progress-bar>
