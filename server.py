@@ -201,6 +201,8 @@ def get_word_document(word: str, database: str = 'remede'):
     document = fetch_remede_doc(word.replace("'", "''"), db)
     lock.release()
     json_doc = json.loads(document)
+    if not json_doc:
+        return False
     sources = []
     for source in json_doc['sources']:
         sources.append(SOURCES[source])
