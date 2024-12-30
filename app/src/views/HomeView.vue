@@ -12,7 +12,7 @@
                        @keydown.enter="handleSubmit()"
                        :placeholder="$t('home.searchWord')" ref="searchbar" slot="start">
         </ion-searchbar>
-        <ion-select v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name)" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
+        <ion-select v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name || '')" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
           <ion-select-option :key="dictionary.slug" v-for="dictionary in availableDictionaries" :value="dictionary">{{ dictionary.name }}</ion-select-option>
         </ion-select>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
@@ -224,7 +224,7 @@ export default defineComponent({
   },
   setup() {
     const mainToolbar = ref(null) as any as Ref
-    const searchToolbar = ref(null) as any as Ref
+    const searchToolbar  = ref(null) as any as Ref
     const content = ref(null) as any as Ref
 
     let mainToolbarAnimation: Animation
