@@ -39,41 +39,19 @@
 
       <br>
 
-      <div class="list-title">
+      <div class="list-title" v-if="canDownload">
         {{ $t('settingsPage.offlineDictionary') }}
       </div>
 
-      <ion-list inset v-if="downloaded">
-        <ion-item color="light">
-          {{ $t('dictionary') }} "{{ dictionary.name }}" {{ $t('settingsPage.downloaded') }}.
-        </ion-item>
-        <ion-item button color="danger" @click="deleteDictionary().then(() => { reloadDictionaryStatus(); canDownload = true })">
-          <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
-          <ion-label>{{ $t('delete') }}</ion-label>
-        </ion-item>
-        <ion-item v-if="hasUpdate" button color="primary" @click="loading = true; canDownload = true; deleteDictionary().then(() => { reloadDictionaryStatus().then(() => { download() }) })">
-          <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
-          <ion-label>{{ $t('settingsPage.updateTo') }} "{{ latestDictionary }}"</ion-label>
-        </ion-item>
-      </ion-list>
-
-      <ion-list inset v-if="downloaded">
-        <ion-item>
-          <ion-note>
-            {{ $t('settingsPage.dictionaryRevisionDownloaded', { name: dictionary.name, rev: dictionary.hash, size: dictionary.size, words: dictionary.words }) }}
-          </ion-note>
-        </ion-item>
-      </ion-list>
-
-      <ion-list inset v-else-if="canDownload">
-        <ion-item :disabled="loading" color="light" button @click="download()">
+      <ion-list inset v-if="canDownload">
+        <ion-item :disabled="loading" color="light" button @click="download(dictionaryToDownload)">
           <ion-label>
             {{ $t('settingsPage.download') }}
           </ion-label>
         </ion-item>
         <ion-item color="light">
-          <ion-select @ionChange="dictionaryToDownload = $event.target.value" interface="alert" :label="$t('dictionary')" value="remede" :name="$t('dictionary')">
-            <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key].slug">{{ availableDictionaries[key].name }} {{ availableDictionaries[key].size }}</ion-select-option>
+          <ion-select :value="dictionaryToDownload" @ionChange="dictionaryToDownload = $event.target.value" interface="alert" :label="$t('dictionary')" :name="$t('dictionary')">
+            <ion-select-option :key="key" v-for="key in availableDictionariesName" :value="availableDictionaries[key]">{{ availableDictionaries[key].name }} {{ availableDictionaries[key].size }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item color="light" v-if="loading">
@@ -84,29 +62,60 @@
         </ion-item>
       </ion-list>
 
-      <ion-list inset v-else>
-        <ion-item>
-          {{ $t('settingsPage.cannotDownload') }}
-        </ion-item>
-      </ion-list>
-
-      <ion-list inset>
-        <ion-note class="ion-padding" v-if="loading">
+      <ion-list inset v-if="loading">
+        <ion-note class="ion-padding">
           {{ $t('settingsPage.downloadingDisclaimer') }}
         </ion-note>
       </ion-list>
 
-      <ion-list inset v-if="downloaded">
-        <ion-note v-if="working" class="ion-padding" color="success">
-          <ion-icon :icon="checkmarkCircle"/>
-          {{ $t('settingsPage.workingNormally') }}
-        </ion-note>
-        <ion-note v-else class="ion-padding" color="danger">
-          <ion-icon :icon="closeCircle"/>
-          {{ $t('settingsPage.problemDetected') }}
-        </ion-note>
-      </ion-list>
+      <div class="list-title" v-if="downloaded">
+        {{ $t('settingsPage.myDictionaries') }}
+      </div>
 
+      <div v-for="dictionary in downloadedDictionaries" :key="dictionary.slug">
+        <ion-list inset class="mb-1">
+          <ion-item color="light">
+            {{ $t('dictionary') }} "{{ dictionary.name }}" {{ $t('settingsPage.downloaded') }}.
+            <ion-icon @click="setFavoriteDictionary(dictionary).then(() => reloadDictionaryStatus())" :icon="dictionary.favorite ? heart : heartOutline" slot="end"></ion-icon>
+          </ion-item>
+          <ion-item button color="light" :id="`status-dict-${dictionary.slug}`" v-if="dictionariesWorking[dictionary.slug]">
+            <ion-icon color="success" :icon="checkmarkCircle" slot="start"/>
+            <ion-note v-if="dictionariesWorking[dictionary.slug]" color="success">
+              {{ $t('settingsPage.working') }}
+            </ion-note>
+            <ion-alert :header="dictionariesWorking[dictionary.slug] ? $t('settingsPage.working') : $t('settingsPage.problem')" :message="dictionariesWorking[dictionary.slug] ? $t('settingsPage.workingNormally') : $t('settingsPage.problemDetected')" :trigger="`status-dict-${dictionary.slug}`"></ion-alert>
+          </ion-item>
+          <ion-item color="light" v-else-if="dictionariesWorking[dictionary.slug] === undefined">
+            <ion-spinner slot="start" color="medium" name="crescent"></ion-spinner>
+            <ion-note color="medium">
+              {{ $t('settingsPage.loading') }}
+            </ion-note>
+          </ion-item>
+          <ion-item button color="light" :id="`status-dict-${dictionary.slug}`" v-else>
+            <ion-icon color="danger" :icon="closeCircle" slot="start"/>
+            <ion-note color="danger">
+              {{ $t('settingsPage.problem') }}
+            </ion-note>
+            <ion-alert :header="dictionariesWorking[dictionary.slug] ? $t('settingsPage.working') : $t('settingsPage.problem')" :message="dictionariesWorking[dictionary.slug] ? $t('settingsPage.workingNormally') : $t('settingsPage.problemDetected')" :trigger="`status-dict-${dictionary.slug}`"></ion-alert>
+          </ion-item>
+          <ion-item button color="danger" @click="deleteDictionary(dictionary).then(() => { reloadDictionaryStatus(); canDownload = true })">
+            <ion-icon :icon="trashBinOutline" slot="start"></ion-icon>
+            <ion-label>{{ $t('delete') }}</ion-label>
+          </ion-item>
+          <ion-item v-if="canBeUpdatedDictionaries.includes(dictionary.slug)" button color="primary" @click="loading = true; canDownload = true; deleteDictionary(dictionary).then(() => { reloadDictionaryStatus().then(() => { download(dictionary) }) })">
+            <ion-icon :icon="refreshOutline" slot="start"></ion-icon>
+            <ion-label>{{ $t('settingsPage.update') }}</ion-label>
+          </ion-item>
+        </ion-list>
+<!--   Adding v-if to trigger refresh     -->
+        <ion-list inset>
+          <ion-item lines="none">
+            <ion-note>
+              {{ $t('settingsPage.dictionaryRevisionDownloaded', { name: dictionary.name, rev: dictionary.hash, size: dictionary.size, words: dictionary.total }) }}
+            </ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -127,26 +136,30 @@ import {
   IonItem,
   IonLabel,
   IonNote,
-  IonList
+  IonList,
+  IonAlert,
+  IonSpinner
 } from "@ionic/vue"
 import {
   checkmarkCircle,
   closeCircle, contrastOutline,
   languageOutline,
   refreshOutline,
-  trashBinOutline
+  trashBinOutline,
+  heartOutline,
+  heart
 } from "ionicons/icons"
-import {deleteDictionary} from "@/functions/offline"
+import {deleteDictionary, setFavoriteDictionary} from "@/functions/offline"
 </script>
 
 <script lang="ts">
 
-import {downloadDictionary, getOfflineDictionaryStatus} from "@/functions/offline"
+import {downloadDictionary, getDownloadedDictionaries, DownloadedDictionaryStatus} from "@/functions/offline"
 import {alertController, toastController} from "@ionic/vue"
-import {InformationsResponse, RemedeAvailableDictionaries} from "@/functions/types/apiResponses"
+import {InformationsResponse, RemedeAvailableDictionaries, RemedeDictionaryOption} from "@/functions/types/apiResponses"
 import {App} from "@capacitor/app"
 import {Capacitor} from "@capacitor/core"
-import {getWordDocument} from "@/functions/dictionnary"
+import {getAutocomplete, setDictionary} from "@/functions/dictionnary"
 import {getDeviceLocale} from "@/functions/device"
 import locales, {localeCode} from "@/functions/locales"
 
@@ -157,32 +170,29 @@ export default {
       downloaded: false,
       loading: false,
       latestDictionary: "",
-      hasUpdate: false,
-      dictionaryToDownload: "remede",
-      dictionary: {
-        hash: "",
-        slug: "",
-        name: "",
-        words: "",
-        size: ""
-      },
+      canBeUpdatedDictionaries: [] as string[],
+      dictionaryToDownload: {} as RemedeDictionaryOption,
+      downloadedDictionaries: [] as DownloadedDictionaryStatus[],
       availableDictionaries: {} as RemedeAvailableDictionaries,
       availableDictionariesName: [] as string[],
-      working: true,
+      dictionariesWorking: {} as { [key: string]: boolean },
       availableLocales: this.$i18n.availableLocales as any[] as localeCode[]
     }
   },
   mounted() {
     this.reloadDictionaryStatus().then(async () => {
       if (this.downloaded) {
-        try {
-          const word = await getWordDocument("remède")
-          if (word.phoneme != "/ʁəmɛd/") {
-            throw "Database is wrong"
+        for (const downloadedDictionary of this.downloadedDictionaries) {
+          try {
+            await setDictionary(downloadedDictionary)
+            const results = await getAutocomplete("a")
+            if (results.length != 5) {
+              throw "Database is wrong"
+            }
+            this.dictionariesWorking[downloadedDictionary.slug] = true
+          } catch {
+            this.dictionariesWorking[downloadedDictionary.slug] = false
           }
-          this.working = true
-        } catch {
-          this.working = false
         }
       }
     })
@@ -213,23 +223,29 @@ export default {
       return localStorage.getItem("interfaceLanguage") || "system"
     },
     async reloadDictionaryStatus() {
-      const status = await getOfflineDictionaryStatus()
-      this.dictionary = status
-      this.downloaded = status.downloaded
-
-      if (this.downloaded) {
-        this.canDownload = false
-      }
+      const downloadedDictionaries = await getDownloadedDictionaries()
+      this.downloadedDictionaries = downloadedDictionaries
+      this.downloaded = downloadedDictionaries.length > 0
 
       const specs = await fetch("https://api-remede.camarm.fr").then(resp => resp.json()) as InformationsResponse
       this.availableDictionaries = specs.dictionaries
-      this.availableDictionariesName = Object.keys(specs.dictionaries)
+      this.availableDictionariesName = Object.keys(this.availableDictionaries).filter(dictionary => !dictionary.includes("legacy"))
+
+      if (this.downloadedDictionaries.length == this.availableDictionariesName.length) {
+        this.canDownload = false
+      }
+      // Excluding downloaded dicts from downloadable dicts
+      this.availableDictionariesName = this.availableDictionariesName.filter(dictionary => !downloadedDictionaries.some(downloadedDictionary => downloadedDictionary.slug == dictionary))
+
+      if (this.availableDictionariesName.length > 0) {
+        this.dictionaryToDownload = this.availableDictionaries[this.availableDictionariesName[0]]
+      }
 
       this.latestDictionary = specs.dataset
-      if (this.downloaded) {
-        this.hasUpdate = this.dictionary.hash != specs.dictionaries[this.dictionary.slug].hash
-      } else {
-        this.hasUpdate = false
+      for (const downloadedDictionary of downloadedDictionaries) {
+        if (downloadedDictionary.hash != specs.dictionaries[downloadedDictionary.slug].hash) {
+          this.canBeUpdatedDictionaries.push(downloadedDictionary.slug)
+        }
       }
     },
     async closeApp() {
@@ -239,10 +255,10 @@ export default {
       }
       await App.exitApp()
     },
-    async download() {
+    async download(dictionary: RemedeDictionaryOption) {
       this.loading = true
       try {
-        await downloadDictionary(this.availableDictionaries[this.dictionaryToDownload])
+        await downloadDictionary(dictionary)
         const successMessage = await alertController.create({
           header: this.$t("settingsPage.downloadSuccess"),
           subHeader: this.$t("settingsPage.downloadDescription"),
@@ -283,6 +299,10 @@ ion-label ion-progress-bar {
 
 ion-note.ion-padding {
   display: block;
+}
+
+.mb-1 {
+  margin-bottom: 5x;
 }
 </style>
 

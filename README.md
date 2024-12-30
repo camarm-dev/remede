@@ -10,6 +10,8 @@ Open Source and free alternative to Antidote dictionary.
 
 [Data credits](https://docs.remede.camarm.fr/docs/database/credits) • [License](https://github.com/camarm-dev/remede/blob/main/LICENSE) • [Website](https://remede.camarm.fr) • **[Download](https://remede.camarm.fr/download)** • **[API](https://api-remede.camarm.fr/docs)**
 
+[//]: # ([<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="70">]&#40;https://f-droid.org/packages/dev.camarm.remede&#41;)
+
 </div>
 
 ## Breaking changes with Remède 1.4.0
@@ -66,9 +68,11 @@ La documentation est disponible sur [docs.remede.camarm.fr](https://docs.remede.
 
 ## Screenshots
 
-| Home page                           | Word page                               |
-|-------------------------------------|-----------------------------------------|
-| ![homepage](.github/home.jpeg)      | ![word page](.github/word.jpeg)         |
-| Sheets page                         | Settings page                           |
-| ![sheets page](.github/sheets.jpeg) | ![settings page](.github/settings.jpeg) |
+| Home page                                                | Word page                                                   |
+|----------------------------------------------------------|-------------------------------------------------------------|
+| ![homepage](.github/home.jpeg)                           | ![word page](metadata/fr/images/phoneScreenshots/3.jpg)     |
+| Rimes                                                    | Settings page                                               |
+| ![rimes page](metadata/fr/images/phoneScreenshots/6.jpg) | ![settings page](metadata/fr/images/phoneScreenshots/7.jpg) |
+| Examples                                                 | Corrector                                                   |
+| ![examples](metadata/fr/images/phoneScreenshots/4.jpg)   | ![corrector](metadata/fr/images/phoneScreenshots/5.jpg)     |
   

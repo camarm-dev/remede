@@ -1,13 +1,14 @@
-import {getRawDictionary} from "@/functions/offline"
+import {getDownloadedDictionaries, getRawDictionary} from "@/functions/offline"
 import initSqlJS, {Database} from "sql.js"
 import {toastController} from "@ionic/vue"
+import {RemedeDictionaryOption} from "@/functions/types/apiResponses"
 
-async function openDatabase() {
+async function openDatabase(dictionary: RemedeDictionaryOption) {
     try {
         const SQL = await initSqlJS({
             locateFile: () => "/sql-wasm.wasm"
         })
-        const raw = await getRawDictionary()
+        const raw = await getRawDictionary(dictionary)
         return new SQL.Database(raw)
     } catch (e) {
         const message = await toastController.create({
@@ -25,14 +26,23 @@ class RemedeDatabase {
 
     private db?: Database
 
-    constructor() {
-        this.getDatabase().then(() => {
-            console.log("Database loaded !")
-        })
+    constructor(dictionary?: RemedeDictionaryOption) {
+        if (dictionary) {
+            this.getDatabase(dictionary).then(() => {
+                console.log(`[Dictionary] Database ${dictionary?.slug}.db loaded !`)
+            })
+        } else {
+            getDownloadedDictionaries().then(downloadedDictionaries => {
+                dictionary = downloadedDictionaries.find(downloadedDictionary => downloadedDictionary.favorite) || downloadedDictionaries[0]
+                this.getDatabase(dictionary).then(() => {
+                    console.log(`[Dictionary] Database ${dictionary?.slug}.db loaded !`)
+                })
+            })
+        }
     }
 
-    private async getDatabase() {
-        this.db = await openDatabase()
+    private async getDatabase(dictionary: RemedeDictionaryOption) {
+        this.db = await openDatabase(dictionary)
     }
 
     async getWord(word: string) {
@@ -67,7 +77,7 @@ class RemedeDatabase {
     }
 
     async getRimesAutocomplete(query: string) {
-        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY word ASC LIMIT 5`
+        const statement = `SELECT word FROM dictionary WHERE word LIKE '${query}%' OR word = '${query}' ORDER BY lower(word) ASC LIMIT 5`
         return await this.query(statement) as any as Promise<string[]>
     }
 
@@ -91,7 +101,7 @@ class RemedeDatabase {
 
         let natureFilter = `(${nature.length === 0}`
         for (const string of nature) {
-            natureFilter += ` OR nature LIKE '%${string}:%' OR nature LIKE '%${string},%'`
+            natureFilter += ` OR nature LIKE '%${string}%' OR nature LIKE '%${string},%'`
         }
         natureFilter += ")"
 
@@ -101,7 +111,7 @@ class RemedeDatabase {
              AND (feminine OR ${!feminine})
              AND ${qualityFilter}
              AND ${natureFilter})
-             ORDER BY word ASC LIMIT 50 OFFSET ${page * 50}`
+             ORDER BY lower(word) ASC LIMIT 50 OFFSET ${page * 50}`
         return await this.rawQuery(query)
     }
 

@@ -40,6 +40,10 @@ body {
     font-family: "Amiko", sans-serif;
 }
 
+a img {
+    height: 4em;
+}
+
 progress::-moz-progress-bar, progress::-webkit-progress-bar {
     transition: .2s ease-in-out;
 }
@@ -372,7 +376,20 @@ a:not(.button):hover {
     border-bottom-right-radius: 0;
 }
 
-.box .image.stacked video {
+.box .image.hidden img {
+    filter: grayscale(0) !important;
+    transform: translateY(30%) !important;
+}
+
+.box .image.hidden img + img {
+    transform: translateY(10%) !important;
+}
+
+.box .image.hidden:hover img {
+    transform: translateY(0) !important;
+}
+
+.box .image.stacked video, .box .image.hidden img {
     transition: .2s ease-in-out;
     transform: translateY(40%);
     filter: grayscale(.8);
@@ -380,7 +397,7 @@ a:not(.button):hover {
     border-top-right-radius: 12px;
 }
 
-.box .image.stacked video + video {
+.box .image.stacked video + video, .box .image.hidden img + img {
     transform: translateY(75%);
 }
 

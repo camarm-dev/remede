@@ -18,6 +18,16 @@ http://ionicframework.com/docs/theming/ */
   display: none;
 }
 
+.dictionarySelector {
+  color: var(--ion-color-primary);
+  bottom: 3px;
+  padding-right: 5px;
+}
+
+.dictionarySelector::part(icon) {
+  color: var(--ion-color-primary)
+}
+
 @media (max-width: 1000px) {
   .hidden-mobile {
     display: none;

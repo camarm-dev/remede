@@ -3,7 +3,7 @@ import runpy
 import sqlite3
 import sys
 
-from generate import get_ipa, safe_get_word_document, get_word_natures
+from generate import safe_get_word_document, get_word_natures
 from utils.scrap import get_word_metadata
 from utils.dataset import get_words, get_custom_words, get_word2ipa
 from utils.dictionary_database import RemedeDatabase
@@ -34,6 +34,10 @@ def getTimeDetails(time_object):
     minutes = (seconds % 3600) // 60
     seconds = seconds % 60
     return hours, minutes, seconds
+
+
+def get_ipa(word: str):
+    return all_ipa.get(word, '')
 
 
 def add_to_database(word: str):
@@ -99,7 +103,8 @@ if __name__ == '__main__':
         print("Fait.")
 
     except Exception as e:
-        print(f"Échec. Assurez vous d'avoir bien fourni les arguments nécessaires. \"{e}\"")
+        raise e
+        # print(f"Échec. Assurez vous d'avoir bien fourni les arguments nécessaires. \"{e}\"")
 
     after = datetime.datetime.now()
     time = after - before

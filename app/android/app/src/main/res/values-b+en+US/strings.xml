@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="active_remede_label">Open Remède</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">"Open Remède from your homescreen."</string>
+    <string name="searchbar">Searchbar</string>
+    <string name="wodwidget_label">"Word of day"</string>
+    <string name="wodwidget_description">"The word of day on your homescreen."</string>
+    <string name="wodwidget_word">Remède</string>
+    <string name="wodwidget_phoneme">/ʁəmɛd/</string>
+    <string name="wodwidget_desc">"Open free dictionary cross-platform software which goal is to replace the Antidote dictionary."</string>
+    <string name="wodwidget_nature">Proper name</string>
+    <string name="wodwidget_serif">""IBM Plex Serif", sans"</string>
+</resources>

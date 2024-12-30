@@ -1,0 +1,1 @@
+La base de données a été réorganisée et typée avec un JSON schema. Profitez de +840 000 mots, avec de nouvelles fonctionnalités comme les pluriels ou les rimes !
