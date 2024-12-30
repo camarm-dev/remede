@@ -73,6 +73,7 @@ def fetch_random_word(database: Cursor = DATABASES['remede']):
 def fetch_words_with_phoneme(phoneme: str, database: Cursor = DATABASES['remede']):
     lock.acquire(True)
     results = database.execute("SELECT word, document FROM dictionary WHERE phoneme = ?", (phoneme,)).fetchall()
+    lock.release()
     return list(map(lambda x: (x[0], json.loads(x[1])), results))  # [('word' {..doc})]
 
 
