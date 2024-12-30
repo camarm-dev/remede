@@ -197,7 +197,6 @@ def get_word_document(word: str, database: str = 'remede'):
     Returns the Remède document of `word`.
     """
     db = DATABASES.get(database, DATABASES['remede'])
-    print(word, database)
     document = fetch_remede_doc(word.replace("'", "''"), db)
     lock.release()
     json_doc = json.loads(document)
