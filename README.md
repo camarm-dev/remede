@@ -68,6 +68,15 @@ La documentation est disponible sur [docs.remede.camarm.fr](https://docs.remede.
 
 ## Screenshots
 
+<div style="display: flex;">
+  <img src=".github/screenshots/home.png" width=25%>
+  <img src="metadata/android/fr/images/phoneScreenshots/2.png" width=25%>
+  <img src="metadata/android/fr/images/phoneScreenshots/3.png" width=25%>
+  <img src="metadata/android/fr/images/phoneScreenshots/3.png" width=25%>
+  <img src="metadata/android/fr/images/phoneScreenshots/3.png" width=25%>
+  <img src="metadata/android/fr/images/phoneScreenshots/3.png" width=25%>
+  <img src="metadata/android/fr/images/phoneScreenshots/3.png" width=25%>
+</div> <!-- ----------  
 | Home page                                                | Word page                                                   |
 |----------------------------------------------------------|-------------------------------------------------------------|
 | ![homepage](.github/home.jpeg)                           | ![word page](metadata/fr/images/phoneScreenshots/3.jpg)     |
@@ -75,4 +84,5 @@ La documentation est disponible sur [docs.remede.camarm.fr](https://docs.remede.
 | ![rimes page](metadata/fr/images/phoneScreenshots/6.jpg) | ![settings page](metadata/fr/images/phoneScreenshots/7.jpg) |
 | Examples                                                 | Corrector                                                   |
 | ![examples](metadata/fr/images/phoneScreenshots/4.jpg)   | ![corrector](metadata/fr/images/phoneScreenshots/5.jpg)     |
+---------- -->
   
