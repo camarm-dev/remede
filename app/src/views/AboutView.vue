@@ -73,6 +73,15 @@
                   <p>{{ $t('aboutPage.contributors') }}</p>
                 </ion-label>
               </ion-item>
+              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/Ilithy" target="_blank" color="light">
+                <ion-avatar aria-hidden="true" slot="start">
+                  <img alt="Photo de profil de Ilithy" src="https://avatars.githubusercontent.com/u/36798218?v=4" />
+                </ion-avatar>
+                <ion-label>
+                  <h2>Ilithy</h2>
+                  <p>{{ $t('aboutPage.contributors') }}</p>
+                </ion-label>
+              </ion-item>
             </ion-list>
 <!--            <div class="list-title no-margin ion-padding-bottom">-->
 <!--              Donateurs-->
