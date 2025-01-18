@@ -73,11 +73,13 @@ La documentation est disponible sur [docs.remede.camarm.fr](https://docs.remede.
 
 ## Screenshots
 
-| Home page                                                | Word page                                                   |
-|----------------------------------------------------------|-------------------------------------------------------------|
-| ![homepage](.github/home.jpeg)                           | ![word page](metadata/fr/images/phoneScreenshots/3.jpg)     |
-| Rimes                                                    | Settings page                                               |
-| ![rimes page](metadata/fr/images/phoneScreenshots/6.jpg) | ![settings page](metadata/fr/images/phoneScreenshots/7.jpg) |
-| Examples                                                 | Corrector                                                   |
-| ![examples](metadata/fr/images/phoneScreenshots/4.jpg)   | ![corrector](metadata/fr/images/phoneScreenshots/5.jpg)     |
-  
+| Welcome page                                           | Word page                                               | Correction                                                  |
+|--------------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|
+| ![welcome page](.github/screenshots/phone/welcome.png) | ![word page](.github/screenshots/phone/definition.png)  | ![corrector page](.github/screenshots/phone/correction.png) |
+| Rimes                                                  | Settings page                                           | Example                                                     |
+| ![rimes page](.github/screenshots/phone/rimes.png)     | ![word page](.github/screenshots/phone/settings.png)    | ![Example feature](.github/screenshots/phone/example.png)   |
+
+
+## Contributors
+
+@Ilithy
