@@ -1,0 +1,2 @@
+¶ Remède DICT Server. Data comes from The Remède Project, © CECILL-2.1. Remède and its contributors <https://remede.camarm.fr>.
+For more information, please contact <software@camarm.dev>.
