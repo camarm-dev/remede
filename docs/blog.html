@@ -114,37 +114,26 @@
   <div class="columns is-multiline">
     {% for post in site.posts %}
     <div class="column is-one-third">
-      <div class="card-image">
-        <figure class="image">
-          <img
-              src="{{ post.cover }}"
-              alt="Cover de l'article"
-          />
-        </figure>
-      </div>
-      <div class="card">
-        <div class="card-content">
-          <p class="title">
-            {{ post.title }}
-          </p>
-          <p class="subtitle">
+      <a href="{{ post.url }}" class="article">
+        <img
+            src="{{ post.cover }}"
+            alt="Cover de l'article"
+        />
+        <div class="desc">
+          <h3>{{ post.title }}</h3>
+          <p>
             {{ post.author }}, {{ post.readable_date }}
           </p>
-          {% for tag in post.tags %}
-          <span class="tag is-rounded">{{ tag }}</span>
-          {% endfor %}
-          {% for category in post.categories %}
-          <span class="tag mt-2">{{ category }}</span>
-          {% endfor %}
+          <div class="meta">
+            {% for tag in post.tags %}
+              <span class="tag is-rounded">{{ tag }}</span>
+            {% endfor %}
+            {% for category in post.categories %}
+              <span class="tag mt-2">{{ category }}</span>
+            {% endfor %}
+          </div>
         </div>
-        <footer class="card-footer">
-          <p class="card-footer-item">
-            <span>
-              <a href="{{ post.url }}">Lire</a>
-            </span>
-          </p>
-        </footer>
-      </div>
+      </a>
     </div>
     {% endfor %}
   </div>
@@ -171,6 +160,62 @@
   </div>
 </footer>
 <style>
+.article {
+    border-radius: 12px;
+    background: #fff;
+    width: 100%;
+    border: 1px solid var(--border);
+    display: block;
+    transition: .2s ease-in-out;
+}
+
+.article:hover {
+    scale: 1.01;
+    box-shadow: 0px 0px 1px var(--border);
+}
+
+.article img {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    width: 100%;
+    height: max-content !important;
+    aspect-ratio: 16/6;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+}
+
+.article .desc {
+    width: 100%;
+    padding: 10px 16px 16px;
+}
+
+.article .desc h3 {
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    max-width: 100%;
+}
+
+.article .desc p {
+    overflow: hidden;
+    font-weight: lighter;
+    height: 3.1em;
+}
+
+.article .desc p {
+    font-weight: normal;
+    color: var(--grey)
+}
+
+.article .desc .meta {
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .box {
     background-color: transparent;
     border: none;
