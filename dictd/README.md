@@ -25,7 +25,8 @@ then you can build `.index` and `.dict` ressources with `dictfmt`. Ressources ar
 Then, just run the docker commend below to start the Remède dictd instance.
 
 > [!NOTE]
-> You may need to install `dictfmt` using `apt install dictfmt`
+> You may need to install `dictfmt` using `apt install dictfmt`.
+> You may also need to create the `dictd/dictionaries` directory.
 
 1. Prepare databases
 ```shell
