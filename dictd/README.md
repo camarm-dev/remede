@@ -32,7 +32,7 @@ Then, just run the docker commend below to start the Remède dictd instance.
 ```shell
 python3 dictd/prepare.py
 ```
-2. Build ressources with `dictfmt` (change to the `dictd/dictionaries` directory)
+2. Build ressources with `dictfmt` (move to the `dictd/dictionaries` directory)
 ```shell
 dictfmt -e --utf8 --allchars -s "Remède Français" remede < remede.txt
 dictfmt -e --utf8 --allchars -s "Remède English" remede.en < remede.en.txt
@@ -43,3 +43,8 @@ dictfmt -e --utf8 --allchars -s "Remède English" remede.en < remede.en.txt
 ```shell
 docker run -d --restart unless-stopped --name remede-dictd -v ./dictd/site.txt:/etc/dictd_site.txt -v ./dictd/dictd.conf:/etc/dictd.conf -v ./dictd/dictionaries:/usr/lib/dict -p 2628:2628 amaccis/dict
 ```
+
+### More formats
+
+We also release our dictionaries as XML Dictionary eXchange Format. We juste generate the DICT dictionaries and convert
+them using [pyglossary](https://github.com/ilius/pyglossary).
