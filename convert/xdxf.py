@@ -131,7 +131,7 @@ def build_def(doc: dict):
         for example in def_doc['examples']:
             ex = ET.Element('ex')
             ex_orig = ET.Element('ex_orgi')
-            ex_orig.text = example['content'] + "   " + example['sources']
+            ex_orig.text = example['content'].replace('<b', '<mrkd').replace('b/>', 'mrkd/>') + "   " + example['sources']
             ex.append(ex_orig)
             definition.append(ex)
 
@@ -139,11 +139,10 @@ def build_def(doc: dict):
 
     for etymology in doc['etymologies']:
         etm = ET.Element('etm')
-        etm.text = etymology
+        etm.text = etymology.replace('<b', '<mrkd').replace('b/>', 'mrkd/>')
         main_definition.append(etm)
 
     return main_definition
-
 
 
 if __name__ == '__main__':
