@@ -109,7 +109,7 @@
             <a id="open-blog">Ouvrir le blog</a>
           </p>
           <p v-else>
-            <a href="https://github.com/camarm-dev/remede/releases" target="_blank">English changelog on Github</a>
+            <a href="https://github.com/camarm-dev/remede/releases" target="_blank">English changelog on Github</a><br>
             <a id="open-blog">Open blog</a>
           </p>
           <ion-modal trigger="open-blog" :initial-breakpoint="1" :breakpoints="[0, 1]">
