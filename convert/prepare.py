@@ -1,7 +1,6 @@
 import json
 import os
 import sqlite3
-import re
 
 LICENSE = ""
 
@@ -27,7 +26,7 @@ if __name__ == '__main__':
     for file in databases:
         print(f"\033[A\033[KGenerating dictd dictionary for {file} [{databases.index(file) + 1}/{len(databases)}]... Word [0/0]")
         db_name = ".".join(file.split(".")[:-1])
-        dict_file = open(f"dictd/dictionaries/{db_name}.txt", "w+")
+        dict_file = open(f"convert/dictionaries/{db_name}.txt", "w+")
         dict_file.writelines(LICENSE)
 
         db = sqlite3.connect(f"data/{file}", check_same_thread=False)
