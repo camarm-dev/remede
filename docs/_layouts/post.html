@@ -52,64 +52,62 @@
 <!-- END NAV -->
 
 <!-- Image -->
-<section class="hero ">
-  <div class="hero-body">
-    <div class="container">
-      <section class="section">
-        <div class="columns">
-          <div class="column is-8 is-offset-2">
-            <figure class="image">
-              <img src="{{ page.cover }}" alt="blog image">
-            </figure>
-          </div>
+<section class="mt-6 mb-6">
+  <div class="container">
+    <section class="section">
+      <div class="columns">
+        <div class="column is-8 is-offset-2">
+          <figure class="image">
+            <img src="{{ page.cover }}" alt="blog image">
+          </figure>
         </div>
-        <div class="columns">
-          <div class="column is-8 is-offset-2">
-            <div class="content is-medium">
-              <h2 class="subtitle is-4">{{ page.readable_date }}</h2>
-              <div class="control">
-                {% for tag in page.tags %}
-                <span class="tag is-info is-uppercase ">{{ tag }}</span>
-                {% endfor %}
-              </div>
+      </div>
+      <div class="columns">
+        <div class="column is-8 is-offset-2">
+          <div class="content is-medium">
+            <h2 class="subtitle is-4">{{ page.readable_date }}</h2>
+            <div class="control">
+              {% for tag in page.tags %}
+              <span class="tag is-info is-uppercase ">{{ tag }}</span>
+              {% endfor %}
+            </div>
 
-              <h1 class="title">{{ page.title }}</h1>
-              <div class="has-text-grey">
-                {{ page.content }}
-              </div>
+            <h1 class="title">{{ page.title }}</h1>
+            <div class="has-text-grey">
+              {{ page.content }}
             </div>
           </div>
         </div>
-      </section>
-
-      <div class="is-divider"></div>
-
-      <div class="container">
-        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-          {% if page.previous.url %}
-          <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" title="previous article">
-            <span class="icon is-left">
-              <i class="fas fa-arrow-left"></i>
-            </span>
-            <span>
-              <strong>Previous Article</strong>
-            </span>
-          </a>
-          {% endif %}
-          {% if page.next.url %}
-          <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" title="next article">
-            <strong>Next Article</strong>
-            <span class="icon is-left">
-              <i class="fas fa-arrow-right"></i>
-            </span>
-            <span>
-            </span>
-          </a>
-          {% endif %}
-        </nav>
       </div>
+    </section>
 
+    <div class="is-divider"></div>
+
+    <div class="container">
+      <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if page.previous.url %}
+        <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" title="previous article">
+          <span class="icon is-left">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>
+            <strong>Previous Article</strong>
+          </span>
+        </a>
+        {% endif %}
+        {% if page.next.url %}
+        <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" title="next article">
+          <strong>Next Article</strong>
+          <span class="icon is-left">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+          <span>
+          </span>
+        </a>
+        {% endif %}
+      </nav>
     </div>
+
   </div>
 </section>
 
@@ -117,7 +115,7 @@
   <div class="content has-text-centered">
     <p>
       <span class="is-family-secondary"><strong>Remède</strong> Blog</span>
-       &copy; 2023 - 2024.
+       &copy; 2023 - 2025.
     </p>
   </div>
 </footer>
