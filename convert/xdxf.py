@@ -88,6 +88,64 @@ def get_xdxf_default(variant: str) -> ET.Element:
     return xdxf_root
 
 
+def get_article_default(w, i) -> ET.Element:
+    ar = ET.Element('ar')
+
+    k = ET.Element('k')
+    k.text = w
+    ar.append(k)
+
+    k = ET.Element('k')
+    k.text = i
+    ar.append(k)
+
+    return ar
+
+
+def build_def(doc: dict):
+    main_definition = ET.Element('def')
+
+    tr = ET.Element('tr')
+    tr.text = doc['phoneme']
+    main_definition.append(tr)
+
+    if doc['pronunciation']:
+        iref = ET.Element('iref', {'href': doc['pronunciation']['audio']})
+        iref.text = "Pronunciation"
+        main_definition.append(iref)
+
+    for def_doc in doc['definitions']:
+        definition = ET.Element('def')
+
+        gr = ET.Element('gr')
+        gr.text = def_doc['nature']
+        definition.append(gr)
+
+        deftext = ET.Element('deftext')
+        explanation_text = ""
+        for index, expl in enumerate(def_doc['explanations']):
+            explanation_text += f"{index + 1}. {expl}<br/>"
+        deftext.text = explanation_text
+        definition.append(deftext)
+
+        for example in def_doc['examples']:
+            ex = ET.Element('ex')
+            ex_orig = ET.Element('ex_orgi')
+            ex_orig.text = example['content'] + "   " + example['sources']
+            ex.append(ex_orig)
+            definition.append(ex)
+
+        main_definition.append(definition)
+
+    for etymology in doc['etymologies']:
+        etm = ET.Element('etm')
+        etm.text = etymology
+        main_definition.append(etm)
+
+    return main_definition
+
+
+
 if __name__ == '__main__':
     databases = list(filter(lambda x: x.endswith('.db') and "remede" in x and "legacy" not in x, os.listdir('data')))
     print("\n")
@@ -97,17 +155,20 @@ if __name__ == '__main__':
         dict_file = open(f"convert/dictionaries/{db_name}.xdxf", "wb+")
 
         xdxf = get_xdxf_default(db_name)
+        lexicon = ET.Element("lexicon")
 
-        # db = sqlite3.connect(f"data/{file}", check_same_thread=False)
-        # rows = db.execute("SELECT word, document FROM dictionary").fetchall()
-        # total = len(rows)
-        # for index, [word, raw_document] in enumerate(rows):
-        #     document = json.loads(raw_document)
-        #     if document:
-        #         for obj in document['definitions']:
-        #             pass
-        #     print(f"\033[A\033[KGenerating XDXF dictionary for {file} [{databases.index(file) + 1}/{len(databases)}]... Word [{index + 1}/{total}]")
+        db = sqlite3.connect(f"data/{file}", check_same_thread=False)
+        rows = db.execute("SELECT word, indexed, document FROM dictionary").fetchall()
+        total = len(rows)
+        for index, [word, indexed, raw_document] in enumerate(rows):
+            document = json.loads(raw_document)
+            article = get_article_default(word, indexed)
+            if document:
+                article.append(build_def(document))
+                lexicon.append(article)
+            print(f"\033[A\033[KGenerating XDXF dictionary for {file} [{databases.index(file) + 1}/{len(databases)}]... Word [{index + 1}/{total}]")
+
+        xdxf.append(lexicon)
         ET.ElementTree(xdxf).write(dict_file, 'utf-8', xml_declaration=True)
         dict_file.close()
-
-        # db.close()
+        db.close()
