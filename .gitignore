@@ -13,4 +13,4 @@
 /data/missing-wordlist.txt
 /builds/*.exe
 /builds/*.msi
-/dictd/dictionaries/
+/convert/dictionaries/
