@@ -91,7 +91,7 @@
           </swiper-slide>
         </swiper>
       </ion-list>
-      <ion-modal trigger="open-changelog" :initial-breakpoint="0.5" :breakpoints="[0, 0.5, 0.75]">
+      <ion-modal trigger="open-changelog" :initial-breakpoint="0.75" :breakpoints="[0, 0.75]">
         <ion-content class="ion-padding">
           <h1 class="remede-font">{{ $t('home.changelog') }}</h1>
           <p v-if="$i18n.locale == 'fr'">
@@ -106,10 +106,17 @@
               <li>Pluriels des mots.</li>
               <li>844 253 mots !</li>
             </ul>
+            <a id="open-blog">Ouvrir le blog</a>
           </p>
           <p v-else>
             <a href="https://github.com/camarm-dev/remede/releases" target="_blank">English changelog on Github</a>
+            <a id="open-blog">Open blog</a>
           </p>
+          <ion-modal trigger="open-blog" :initial-breakpoint="1" :breakpoints="[0, 1]">
+            <ion-content>
+              <iframe class="news-frame" src="http://192.168.1.14:4000/blog#articles"></iframe>
+            </ion-content>
+          </ion-modal>
         </ion-content>
       </ion-modal>
 
@@ -402,3 +409,14 @@ export default defineComponent({
   }
 })
 </script>
+<style>
+.news-frame {
+  border: .55px solid var(--ion-color-medium);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+</style>
