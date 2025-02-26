@@ -24,6 +24,7 @@ import {
   IonProgressBar
 } from "@ionic/vue"
 import dictServers from "@/data/dictServers.json"
+import DictServersGuide from "@/components/DictServersGuide.vue";
 </script>
 
 <template>
@@ -165,33 +166,7 @@ import dictServers from "@/data/dictServers.json"
       </ion-modal>
 
       <ion-modal trigger="open-info" :initial-breakpoint="0.75" :breakpoints="[0, .75, 1]">
-        <ion-content class="ion-padding">
-          <h1>Serveurs de dictionnaire</h1>
-          <div class="section">
-            <div class="icon">
-              <ion-icon color="primary" :icon="informationCircleOutline"></ion-icon>
-            </div>
-            <p>Cette interface te permet d'explorer des serveurs de dictionnaire utilisant le protocole DICT.</p>
-          </div>
-          <div class="section">
-            <div class="icon">
-              <ion-icon color="primary" :icon="compassOutline"></ion-icon>
-            </div>
-            <p>Trouve et explore une grand variété de serveurs de dictionnaires.</p>
-          </div>
-          <div class="section">
-            <div class="icon">
-              <ion-icon color="primary" :icon="saveOutline"></ion-icon>
-            </div>
-            <p>Enregistre de nouveaux serveurs personnalisés. Rends-toi dans les paramètres activer la recherche par serveurs de dictionnaire.</p>
-          </div>
-          <div class="section">
-            <div class="icon">
-              <ion-icon color="primary" :icon="searchOutline"></ion-icon>
-            </div>
-            <p>Sélectionne "Serveurs de dictionnaire" comme source de recherche et parcourt les dictionnaires distants directement dans Remède !</p>
-          </div>
-        </ion-content>
+        <DictServersGuide/>
       </ion-modal>
     </ion-content>
   </ion-page>
@@ -360,26 +335,5 @@ export default {
 
 .formatted p {
   margin-top: 2px;
-}
-
-.section {
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  gap: 1em;
-  margin-top: 2em;
-}
-
-.section p {
-  margin: 0;
-}
-
-.section .icon ion-icon {
-  background: rgba(var(--ion-color-primary-rgb), .1);
-  margin: 0;
-  padding: .4em;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
 }
 </style>
