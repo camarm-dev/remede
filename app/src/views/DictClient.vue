@@ -6,7 +6,8 @@ import {
   compassOutline,
   saveOutline,
   filterOutline,
-  searchOutline, arrowBackOutline, arrowForwardOutline
+  arrowBackOutline,
+  arrowForwardOutline
 } from "ionicons/icons"
 import {
   IonPage,
@@ -24,7 +25,7 @@ import {
   IonProgressBar
 } from "@ionic/vue"
 import dictServers from "@/data/dictServers.json"
-import DictServersGuide from "@/components/DictServersGuide.vue";
+import DictServersGuide from "@/components/DictServersGuide.vue"
 </script>
 
 <template>
@@ -251,49 +252,6 @@ export default {
 </script>
 
 <style scoped>
-.field {
-  display: flex;
-  width: 100%;
-  padding-inline-start: 7px;
-}
-
-.field ion-input {
-  background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.07);
-  border-radius: 10px;
-  padding: 0 12px !important;
-  min-height: 36px !important;
-}
-
-.field ion-input.large {
-  width: 80%;
-}
-
-.field ion-input.large + .block + ion-input {
-  width: 20%;
-}
-
-.field ion-select {
-  max-width: 50%;
-}
-
-.field.join ion-input:nth-child(1) {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.field .block {
-  background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.07);
-  min-height: 36px !important;
-  display: flex;
-  align-items: center;
-  padding-bottom: 4px;
-}
-
-.field.join ion-input:last-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
 .result h3 span {
   color: var(--ion-color-medium);
   font-size: 15px;
