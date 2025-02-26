@@ -187,5 +187,20 @@
     "readyToStart": "Ready to enter the ",
     "adventure": "adventure",
     "tagline": "Cure your French ills now with Remède !"
+  },
+  "dictClient": {
+    "dictClient": "DICT Client",
+    "options": "Options",
+    "transmissionLogs": "Transmission logs",
+    "saveServer": "Save server",
+    "default": "Default",
+    "method": "Method",
+    "strategy": "Strategy",
+    "all": "All",
+    "stopsAtFirstMatch": "stops at first match",
+    "actions":  "Actions",
+    "myServers": "My servers",
+    "noServerSaved": "No server saved.",
+    "exploreServers": "Explore servers"
   }
 }
