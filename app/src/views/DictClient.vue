@@ -26,6 +26,7 @@ import {
 } from "@ionic/vue"
 import dictServers from "@/data/dictServers.json"
 import DictServersGuide from "@/components/DictServersGuide.vue"
+import AddDictServer from "@/components/AddDictServer.vue"
 </script>
 
 <template>
@@ -88,7 +89,7 @@ import DictServersGuide from "@/components/DictServersGuide.vue"
           <ion-icon :icon="readerOutline" slot="start"></ion-icon>
           <ion-label>{{ $t('dictClient.transmissionLogs') }}</ion-label>
         </ion-item>
-        <ion-item button color="light">
+        <ion-item button color="light" id="add-server">
           <ion-icon :icon="saveOutline" slot="start"></ion-icon>
           <ion-label>{{ $t('dictClient.saveServer') }}</ion-label>
         </ion-item>
@@ -170,6 +171,10 @@ import DictServersGuide from "@/components/DictServersGuide.vue"
       <ion-modal trigger="open-info" :initial-breakpoint="0.75" :breakpoints="[0, .75, 1]">
         <DictServersGuide/>
       </ion-modal>
+
+      <ion-modal trigger="add-server" ref="addServerModal" :initial-breakpoint="0.75" :breakpoints="[0, .75, 1]" @didDismiss="refreshSavedServers()">
+        <AddDictServer :close="closeAddServerModal" :host="request.server" :port="request.port"/>
+      </ion-modal>
     </ion-content>
   </ion-page>
 </template>
@@ -184,6 +189,7 @@ import {
   getStrategies,
   makeRequest, DictDefinition
 } from "@/functions/dictProtocol"
+import {getSavedDictServers} from "@/functions/dictPreferences"
 
 export default {
   data() {
@@ -206,8 +212,12 @@ export default {
       this.refreshServer()
       this.refreshResponse()
     }
+    this.refreshSavedServers()
   },
   methods: {
+    async refreshSavedServers() {
+      this.savedServers = await getSavedDictServers()
+    },
     async refreshServer() {
       this.loading = true
       this.availableDictionaries = await getDictionaries(this.request.server, this.request.port)
@@ -246,6 +256,9 @@ export default {
       return log.success && log.type == "STATUS" ? "success"
           : !log.success ? "danger"
               : "light"
+    },
+    closeAddServerModal() {
+      this.$refs.addServerModal.$el.dismiss()
     }
   }
 }
