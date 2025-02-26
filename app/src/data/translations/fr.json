@@ -178,7 +178,8 @@
     "information4HowToUse": "Sélectionne \"Serveurs de dictionnaire\" comme source de recherche et parcours les dictionnaires distants directement dans Remède !",
     "addServer": "Ajouter un serveur",
     "DICTSearch": "Recherche depuis serveurs de dictionnaires",
-    "DICTDisclaimer": "Les serveurs de dictionnaire ne fournisse que les définitions brutes des mots. Pour cette raison, seulement la recherche classique (depuis la page d'accueil) est disponible avec les serveurs de dictionnaire. De plus, la page de définition est simplifiée."
+    "DICTDisclaimer": "Les serveurs de dictionnaire ne fournisse que les définitions brutes des mots. Pour cette raison, seulement la recherche classique (depuis la page d'accueil) est disponible avec les serveurs de dictionnaire. De plus, la page de définition est simplifiée.",
+    "serversRepertory": "Répertoire de serveurs"
   },
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",

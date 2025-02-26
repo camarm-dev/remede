@@ -178,7 +178,8 @@
     "information4HowToUse": "Select \"DICT servers\" as  search source and browse dictionaries servers directly from Remède !",
     "addServer": "Add server",
     "DICTSearch": "Searching from DICT servers.",
-    "DICTDisclaimer":  "Because DICT servers only provide raw textual informations about a word, only the search functionality will work with DICT servers. Also, the definition page will be simplified."
+    "DICTDisclaimer":  "Because DICT servers only provide raw textual informations about a word, only the search functionality will work with DICT servers. Also, the definition page will be simplified.",
+    "serversRepertory": "Server directory"
   },
   "sheetsPage": {
     "placeholder": "Search a sheet",
