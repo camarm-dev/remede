@@ -211,6 +211,9 @@
     "actions":  "Actions",
     "myServers": "Mes serveurs",
     "noServerSaved": "Aucun serveur enregistré.",
-    "exploreServers": "Explorer les serveurs"
+    "exploreServers": "Explorer les serveurs",
+    "noResults":  "Pas de résultats.",
+    "logs": "Journaux",
+    "search":  "Rechercher"
   }
 }

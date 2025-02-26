@@ -211,6 +211,9 @@
     "actions":  "Actions",
     "myServers": "My servers",
     "noServerSaved": "No server saved.",
-    "exploreServers": "Explore servers"
+    "exploreServers": "Explore servers",
+    "noResults": "No results",
+    "logs": "Logs",
+    "search":  "Search"
   }
 }

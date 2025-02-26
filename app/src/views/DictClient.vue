@@ -76,7 +76,7 @@ import DictServersGuide from "@/components/DictServersGuide.vue";
         </div>
         <div v-if="definitions.length == 0" class="no-result">
           <p>
-            Pas de résultats
+            {{ $t('dictClient.noResults') }}
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@ import DictServersGuide from "@/components/DictServersGuide.vue";
         </ion-item>
       </ion-list>
 
-      <ion-button expand="block" class="ion-margin" @click="refreshResponse()">Rechercher</ion-button>
+      <ion-button expand="block" class="ion-margin" @click="refreshResponse()">{{ $t('dictClient.search') }}</ion-button>
 
       <ion-modal trigger="open-servers" :initial-breakpoint="0.75" :breakpoints="[0, .5, 1]">
         <ion-content class="ion-padding-top">
@@ -152,7 +152,7 @@ import DictServersGuide from "@/components/DictServersGuide.vue";
 
       <ion-modal trigger="open-logs" :initial-breakpoint="0.75" :breakpoints="[0, .5, 1]">
         <ion-content class="ion-padding">
-          <h1>Journaux</h1>
+          <h1>{{ $t('dictClient.logs') }}</h1>
           <ion-list>
             <ion-item
               v-for="log in logs"
