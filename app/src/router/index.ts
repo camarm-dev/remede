@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
         redirect: "/dictionnaire",
       },
       {
+        path: "dict",
+        name: "dict",
+        component: () => import ("../views/DictClient.vue"),
+      },
+      {
         path: "dictionnaire",
         name: "dictionnaire",
         component: () => import ("../views/HomeView.vue"),
