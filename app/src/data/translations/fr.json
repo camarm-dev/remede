@@ -187,5 +187,20 @@
     "readyToStart": "Prêts à entrer dans l'",
     "adventure": "aventure",
     "tagline": "Guérir vos maux face au français, c'est possible dès maintenant avec Remède !"
+  },
+  "dictClient": {
+    "dictClient": "Client DICT",
+    "options": "Options",
+    "transmissionLogs": "Journaux de la transmission",
+    "saveServer": "Enregistrer le serveur",
+    "default": "Par défaut",
+    "method": "Méthode",
+    "strategy": "Stratégie",
+    "all": "Tous",
+    "stopsAtFirstMatch": "s'arrête à la première correspondance",
+    "actions":  "Actions",
+    "myServers": "Mes serveurs",
+    "noServerSaved": "Aucun serveur enregistré.",
+    "exploreServers": "Explorer les serveurs"
   }
 }
