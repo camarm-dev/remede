@@ -135,7 +135,7 @@ import DictServersGuide from "@/components/DictServersGuide.vue";
               </ion-select>
             </ion-item>
             <ion-item color="light">
-              <ion-select :value="request.method || 'DEFINE'" @ionChange="request.method = $event.detail.value" :label="$t('dictClient.strategy')" placeholder="Define" interface="action-sheet" :cancelText="$t('cancel')">
+              <ion-select :value="request.method || 'DEFINE'" @ionChange="request.method = $event.detail.value" :label="$t('dictClient.method')" placeholder="Define" interface="action-sheet" :cancelText="$t('cancel')">
                 <ion-select-option value="DEFINE">Define</ion-select-option>
                 <ion-select-option value="MATCH">Match</ion-select-option>
               </ion-select>
