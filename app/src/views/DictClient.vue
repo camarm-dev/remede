@@ -1,6 +1,13 @@
 <script setup lang="ts">
 
-import {readerOutline, informationCircleOutline, compassOutline, saveOutline, filterOutline} from "ionicons/icons"
+import {
+  readerOutline,
+  informationCircleOutline,
+  compassOutline,
+  saveOutline,
+  filterOutline,
+  searchOutline
+} from "ionicons/icons"
 import {
   IonPage,
   IonIcon,
@@ -87,8 +94,8 @@ import dictServers from "@/data/dictServers.json"
 
       <ion-button expand="block" class="ion-margin" @click="refreshResponse()">Rechercher</ion-button>
 
-      <ion-modal trigger="open-servers" :initial-breakpoint="0.75" :breakpoints="[0, .5]">
-        <ion-content>
+      <ion-modal trigger="open-servers" :initial-breakpoint="0.75" :breakpoints="[0, .5, 1]">
+        <ion-content class="ion-padding-top">
           <div class="list-title">{{ $t('dictClient.myServers') }}</div>
           <ion-list inset>
             <ion-item v-if="savedServers.length == 0" color="light">
@@ -157,15 +164,33 @@ import dictServers from "@/data/dictServers.json"
         </ion-content>
       </ion-modal>
 
-      <ion-modal trigger="open-info" :initial-breakpoint="0.75" :breakpoints="[0, .5]">
+      <ion-modal trigger="open-info" :initial-breakpoint="0.75" :breakpoints="[0, .75, 1]">
         <ion-content class="ion-padding">
-          <h1>Explorateur de serveurs de dictionnaire</h1>
-          <p>
-            Cette interface vous permet d'explorer des serveurs de dictionnaire utilisant le protocole DICT.<br>
-            Vous pourrez trouver une grande variété de serveurs de dictionnaires.<br>
-            Vous pouvez enregistrer de nouveaux dictionnaires.
-            Vous pouvez utiliser des serveurs de dictionnaire dans Remède en les activant dans les paramètres.
-          </p>
+          <h1>Serveurs de dictionnaire</h1>
+          <div class="section">
+            <div class="icon">
+              <ion-icon color="primary" :icon="informationCircleOutline"></ion-icon>
+            </div>
+            <p>Cette interface te permet d'explorer des serveurs de dictionnaire utilisant le protocole DICT.</p>
+          </div>
+          <div class="section">
+            <div class="icon">
+              <ion-icon color="primary" :icon="compassOutline"></ion-icon>
+            </div>
+            <p>Trouve et explore une grand variété de serveurs de dictionnaires.</p>
+          </div>
+          <div class="section">
+            <div class="icon">
+              <ion-icon color="primary" :icon="saveOutline"></ion-icon>
+            </div>
+            <p>Enregistre de nouveaux serveurs personnalisés. Rends-toi dans les paramètres activer la recherche par serveurs de dictionnaire.</p>
+          </div>
+          <div class="section">
+            <div class="icon">
+              <ion-icon color="primary" :icon="searchOutline"></ion-icon>
+            </div>
+            <p>Sélectionne "Serveurs de dictionnaire" comme source de recherche et parcourt les dictionnaires distants directement dans Remède !</p>
+          </div>
         </ion-content>
       </ion-modal>
     </ion-content>
@@ -324,11 +349,37 @@ export default {
 .formatted h3 {
   font-size: 1.15em;
   margin: 0;
+  line-height: .9em;
 }
 
 .formatted span {
   font-size: .9em;
   color: var(--ion-color-medium);
-  margin-bottom: 7px;
+  margin: 0;
+}
+
+.formatted p {
+  margin-top: 2px;
+}
+
+.section {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  gap: 1em;
+  margin-top: 2em;
+}
+
+.section p {
+  margin: 0;
+}
+
+.section .icon ion-icon {
+  background: rgba(var(--ion-color-primary-rgb), .1);
+  margin: 0;
+  padding: .4em;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 </style>
