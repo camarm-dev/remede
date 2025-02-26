@@ -58,7 +58,7 @@
             <h2>{{ $t('home.wordOfDay') }}</h2>
           </ion-label>
         </ion-item>
-        <ion-item @click="goTo(`/dictionnaire/${randomWord}`)" :disabled="randomWordDisabled" color="light" button>
+        <ion-item @click="goTo(`/dictionnaire/${randomWord}`); loadRandomWord()" :disabled="randomWordDisabled" color="light" button>
           <ion-icon :icon="shuffle" slot="start"/>
           <ion-label>
             <h2>{{ $t('home.randomWord') }}</h2>
