@@ -13,7 +13,7 @@ import {addServer} from "@/functions/dictPreferences"
   <ion-content>
     <h1 class="ion-padding-start ion-padding-top">{{ $t('settingsPage.addServer') }}</h1>
 
-    <div class="list-title">Connexion</div>
+    <div class="list-title">{{ $t('dictClient.connexion') }}</div>
     <ion-list inset>
       <div class="field join">
         <ion-input class="large" :value="newServer.host" @ionInput="newServer.host = ($event.target.value || '').toString(); testServer()" type="text" placeholder="dict.org"></ion-input>
@@ -25,7 +25,7 @@ import {addServer} from "@/functions/dictPreferences"
       <ion-note v-else color="success" class="ion-padding-horizontal">{{ $t('dictClient.validServer') }}</ion-note>
     </ion-list>
 
-    <div class="list-title">Métadonnées</div>
+    <div class="list-title">{{ $t('dictClient.metadata') }}</div>
     <ion-list inset>
       <ion-item color="light">
         <ion-input label-placement="stacked" @ionInput="newServer.name = ($event.target.value || '').toString()" label="Nom" placeholder="My DICT server"></ion-input>
@@ -35,7 +35,7 @@ import {addServer} from "@/functions/dictPreferences"
       </ion-item>
     </ion-list>
 
-    <ion-button expand="block" class="ion-padding-horizontal" :disabled="!validServer || newServer.name == '' || newServer.description == ''" @click="addServer(newServer).then(() => close())">Enregistrer</ion-button>
+    <ion-button expand="block" class="ion-padding-horizontal" :disabled="!validServer || newServer.name == '' || newServer.description == ''" @click="addServer(newServer).then(() => close())">{{ $t('dictClient.save') }}</ion-button>
   </ion-content>
 </template>
 
