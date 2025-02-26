@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Remède",
+    "host": "dict.remede.camarm.fr",
+    "port": 2628,
+    "description": "Official Remède DICT server. Contains simplified versions of Remède dictionaries."
+  },
+  {
+    "name": "Dict.org",
+    "host": "dict.org",
+    "port": 2628,
+    "description": "The DICT Development Group DICT server."
+  }
+]
