@@ -171,7 +171,11 @@
     "downloadedDictionaries": "Dictionnaires téléchargés",
     "loading": "Chargement...",
     "dictionaries":  "Dictionnaires",
-    "dictServers": "Serveurs de dictionnaire"
+    "dictServers": "Serveurs de dictionnaire",
+    "information1RemedeDictClient": "Remède te permet d'explorer des serveurs de dictionnaire utilisant le protocole DICT.",
+    "information2ExploreServers": "Trouve et explore une grand variété de serveurs de dictionnaires.",
+    "information3SaveCustomServers": "Enregistre de nouveaux serveurs personnalisés. Rends-toi dans les paramètres activer la recherche par serveurs de dictionnaire.",
+    "information4HowToUse": "Sélectionne \"Serveurs de dictionnaire\" comme source de recherche et parcours les dictionnaires distants directement dans Remède !"
   },
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",

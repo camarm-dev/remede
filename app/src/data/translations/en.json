@@ -171,7 +171,11 @@
     "downloadedDictionaries": "Downloaded dictionaries",
     "loading": "Loading...",
     "dictionaries":  "Dictionaries",
-    "dictServers": "DICT servers"
+    "dictServers": "DICT servers",
+    "information1RemedeDictClient": "Remède allows you to explore dictionaries servers using the DICT protocol.",
+    "information2ExploreServers": "Find and explore a large amount of dictionaries servers.",
+    "information3SaveCustomServers": "Add custom servers. Go to the settings page to enable searching from DICT servers.",
+    "information4HowToUse": "Select \"DICT servers\" as  search source and browse dictionaries servers directly from Remède !"
   },
   "sheetsPage": {
     "placeholder": "Search a sheet",
