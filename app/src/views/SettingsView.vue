@@ -36,17 +36,17 @@
       </ion-list>
 
       <div class="list-title">
-        Dictionnaires
+        {{ $t('settingsPage.dictionaries') }}
       </div>
 
       <ion-list inset>
         <ion-item color="light" button @click="goTo('/settings/offline')">
           <ion-icon slot="start" :icon="fileTrayFullOutline"/>
-          <ion-label>Dictionnaires téléchargés</ion-label>
+          <ion-label>{{ $t('settingsPage.downloadedDictionaries') }}</ion-label>
         </ion-item>
         <ion-item v-if="supportsDICT" color="light" button @click="goTo('/settings/servers')">
           <ion-icon slot="start" :icon="radioOutline"/>
-          <ion-label>Serveurs de dictionnaire</ion-label>
+          <ion-label>{{ $t('settingsPage.dictServers') }}</ion-label>
         </ion-item>
       </ion-list>
 

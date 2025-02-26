@@ -69,8 +69,8 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import ("../views/SettingsOfflineDictionariesView.vue")
       },
       {
-        path: "settings/servers", // TODO
-        component: () => import ("../views/SettingsOfflineDictionariesView.vue")
+        path: "settings/servers",
+        component: () => import ("../views/SettingsDictServersView.vue")
       },
       {
         path: "marques-page",
