@@ -160,15 +160,15 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
             success: true
         })
     }
-    rawDecoded.push({
-        raw: responses[0],
-        type: ResponseLineType.Header,
-        success: true
-    })
-    responses = responses.slice(0)
     for (const line of responses) {
         const code = line.substring(0, 3)
-        if (/^\d+$/.test(code)) { // The line is a status info : it starts with a xxx status code
+        if (code == "220") {
+            rawDecoded.push({
+                raw: responses[0],
+                type: ResponseLineType.Header,
+                success: true
+            })
+        } else if (/^\d+$/.test(code)) { // The line is a status info : it starts with a xxx status code
             rawDecoded.push({
                 raw: line,
                 code,
