@@ -69,8 +69,8 @@ export default {
     this.refresh()
   },
   methods: {
-    refresh() {
-      this.starredWords = getStarredWords()
+    async refresh() {
+      this.starredWords = await getStarredWords()
     }
   }
 }

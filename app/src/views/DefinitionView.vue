@@ -60,7 +60,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         </ion-buttons>
         <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="starWord(mot); stared = isWordStarred(mot)">
+          <ion-button @click="starWord(mot).then(() => { stared = !stared });">
             <ion-icon slot="icon-only" :icon="stared ? bookmark: bookmarkOutline"></ion-icon>
           </ion-button>
           <ion-button @click="shareDefinition()">
@@ -349,7 +349,7 @@ export default defineComponent({
         this.notFound = true
       }
 
-      this.stared = isWordStarred(this.mot)
+      this.stared = await isWordStarred(this.mot)
     },
     async shareDefinition() {
       try {

@@ -1,20 +1,29 @@
-function starWord(word: string) {
-    const starredWords = JSON.parse(localStorage.getItem("userStars") || "[]") as Array<string>
+import {Preferences} from "@capacitor/preferences"
+
+
+async function starWord(word: string) {
+    const starredWords = await getStarredWords()
     if (!starredWords.includes(word)) {
         starredWords.push(word)
     } else {
         starredWords.splice(starredWords.indexOf(word), 1)
     }
-    localStorage.setItem("userStars", JSON.stringify(starredWords))
+    await Preferences.set({
+        key: "bookmarks",
+        value: JSON.stringify(starredWords)
+    })
 }
 
-function isWordStarred(word: string) {
-    const starredWords = JSON.parse(localStorage.getItem("userStars") || "[]") as Array<string>
+async function isWordStarred(word: string) {
+    const starredWords = await getStarredWords()
     return starredWords.includes(word)
 }
 
-function getStarredWords() {
-    return JSON.parse(localStorage.getItem("userStars") || "[]")
+async function getStarredWords() {
+    const response = await Preferences.get({
+        key: "bookmarks"
+    })
+    return JSON.parse(response.value || "[]")
 }
 
 export {
