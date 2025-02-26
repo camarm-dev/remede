@@ -169,7 +169,9 @@
     "understood": "That's ok !",
     "dictionaryRevisionDownloaded": "Revision \"{rev}\". {size} storage. {words} words.",
     "downloadedDictionaries": "Downloaded dictionaries",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "dictionaries":  "Dictionaries",
+    "dictServers": "DICT servers"
   },
   "sheetsPage": {
     "placeholder": "Search a sheet",

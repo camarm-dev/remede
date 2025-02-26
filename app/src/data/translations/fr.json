@@ -169,7 +169,9 @@
     "understood": "C'est compris !",
     "dictionaryRevisionDownloaded": "Révision \"{rev}\". {size} de stockage. {words} mots.",
     "downloadedDictionaries": "Dictionnaires téléchargés",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "dictionaries":  "Dictionnaires",
+    "dictServers": "Serveurs de dictionnaire"
   },
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",
