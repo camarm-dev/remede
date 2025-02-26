@@ -20,7 +20,7 @@ export async function addServer(server: DictServer) {
 
 export async function deleteServer(server: DictServer) {
     const savedServers = await getSavedDictServers()
-    const toDelete = savedServers.find(el => el === server)
+    const toDelete = savedServers.find(el => el.name === server.name && el.host === server.host && el.port === server.port)
     if (toDelete) {
         savedServers.splice(savedServers.indexOf(toDelete), 1)
         await Preferences.set({
