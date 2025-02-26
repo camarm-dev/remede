@@ -6,7 +6,7 @@ import {
   compassOutline,
   saveOutline,
   filterOutline,
-  searchOutline
+  searchOutline, arrowBackOutline, arrowForwardOutline
 } from "ionicons/icons"
 import {
   IonPage,
@@ -159,7 +159,8 @@ import DictServersGuide from "@/components/DictServersGuide.vue";
               :key="log.raw"
               :color="getLogColor(log)"
             >
-              {{ log.raw }}
+              <ion-icon slot="start" :icon=" log.type == 'COMMAND' ? arrowBackOutline : arrowForwardOutline"></ion-icon>
+              <ion-label>{{ log.raw }}</ion-label>
             </ion-item>
           </ion-list>
         </ion-content>
