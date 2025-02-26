@@ -49,7 +49,7 @@
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/parametres')" lines="none" :detail="false" class="hydrated" :class="isPage('/parametres') ? 'selected': ''">
+                    <ion-item @click="goTo('/settings')" lines="none" :detail="false" class="hydrated" :class="isPage('/settings') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="cogOutline"></ion-icon>
                       <ion-label>{{ $t('settings') }}</ion-label>
                     </ion-item>

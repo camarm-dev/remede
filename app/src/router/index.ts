@@ -58,7 +58,19 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "parametres",
+        redirect: "/settings"
+      },
+      {
+        path: "settings",
         component: () => import ("../views/SettingsView.vue")
+      },
+      {
+        path: "settings/offline",
+        component: () => import ("../views/SettingsOfflineDictionariesView.vue")
+      },
+      {
+        path: "settings/servers", // TODO
+        component: () => import ("../views/SettingsOfflineDictionariesView.vue")
       },
       {
         path: "marques-page",

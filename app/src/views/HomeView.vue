@@ -80,7 +80,7 @@
       </div>
       <ion-list class="radius-0 fullwidth" inset>
         <swiper class="no-desktop-swiper" :modules="[Pagination]" :pagination="{ enabled: true, clickable: true }">
-          <swiper-slide v-if="hasDictionaryUpdate" @click="goTo('/parametres')">
+          <swiper-slide v-if="hasDictionaryUpdate" @click="goTo('/settings')">
             <img class="new-base" :src="newBaseIllustration" alt="Mettez à jour votre dictionnaire !"/>
           </swiper-slide>
           <swiper-slide v-if="hasAppUpdate" @click="open('https://remede.camarm.fr/download')">
