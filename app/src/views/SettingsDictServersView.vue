@@ -30,7 +30,7 @@
             {{ $t('settingsPage.DICTSearch') }}
           </ion-toggle>
         </ion-item>
-        <ion-item color="light" button>
+        <ion-item color="light" button id="add-dict-server">
           <ion-icon :icon="addOutline" slot="start"></ion-icon>
           <ion-label>{{ $t('settingsPage.addServer') }}</ion-label>
         </ion-item>
@@ -44,14 +44,21 @@
         <ion-item v-if="savedServers.length == 0" color="light">
           <ion-note color="dark">{{ $t('dictClient.noServerSaved') }}</ion-note>
         </ion-item>
-        <ion-item v-else v-for="server in savedServers" :key="server.host" color="light">
-          <ion-toggle>
-            <ion-label>
-              <h3>{{ server.name }}</h3>
-              <p>{{ server.description }}</p>
-            </ion-label>
-          </ion-toggle>
-        </ion-item>
+        <ion-item-sliding v-else v-for="server in savedServers" :key="server.host">
+          <ion-item color="light">
+            <ion-toggle>
+              <ion-label class="formatted">
+                <h3>{{ server.name }}</h3>
+                <span>{{ server.host }}</span>
+                <p>{{ server.description }}</p>
+              </ion-label>
+            </ion-toggle>
+          </ion-item>
+          <ion-item-options>
+            <ion-item-option color="danger" @click="deleteServer(server).then(refreshSavedServers)"><ion-icon slot="icon-only" :icon="trashOutline"/></ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
       </ion-list>
 
       <div class="list-title">
@@ -72,6 +79,10 @@
       <ion-modal trigger="open-dict-info" :initial-breakpoint="0.75" :breakpoints="[0, .75, 1]">
         <DictServersGuide/>
       </ion-modal>
+
+      <ion-modal trigger="add-dict-server" ref="addServerModal" :initial-breakpoint="0.75" :breakpoints="[0, .75, 1]" @didDismiss="refreshSavedServers()">
+        <AddDictServer :close="closeAddServerModal"/>
+      </ion-modal>
     </ion-content>
   </ion-page>
 </template>
@@ -88,18 +99,24 @@ import {
   IonItem,
   IonLabel,
   IonList, IonModal, IonBackButton,
-    IonToggle
+    IonToggle,
+    IonItemSliding,
+  IonItemOptions,
+  IonItemOption
 } from "@ionic/vue"
 import {
   addOutline,
-  informationCircleOutline
+  informationCircleOutline, trashOutline
 } from "ionicons/icons"
 import DictServersGuide from "@/components/DictServersGuide.vue"
 import dictServers from "@/data/dictServers.json"
+import AddDictServer from "@/components/AddDictServer.vue";
+import {deleteServer} from "@/functions/dictPreferences";
 </script>
 
 <script lang="ts">
 import {DictServer} from "@/functions/dictProtocol"
+import {getSavedDictServers} from "@/functions/dictPreferences";
 
 export default {
   data() {
@@ -107,7 +124,16 @@ export default {
       savedServers: [] as DictServer[]
     }
   },
+  mounted() {
+    this.refreshSavedServers()
+  },
   methods: {
+    async refreshSavedServers() {
+      this.savedServers = await getSavedDictServers()
+    },
+    closeAddServerModal() {
+      this.$refs.addServerModal.$el.dismiss()
+    }
   }
 }
 </script>
