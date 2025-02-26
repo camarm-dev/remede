@@ -105,6 +105,8 @@
 <!--              <li>Dictionnaire anglais.</li>-->
               <li>Pluriels des mots.</li>
               <li>844 253 mots !</li>
+              <li>Serveurs de dictionnaire</li>
+              <li>Fonctionnalité "découvrir du vocabulaire"</li>
             </ul>
             <a id="open-blog">Ouvrir le blog</a>
           </p>
