@@ -30,8 +30,14 @@
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
                     <ion-item :disabled="!downloaded" @click="goTo('/rimes')" lines="none" :detail="false" class="hydrated" :class="isPage('/rimes') ? 'selected': ''">
-                      <ion-icon aria-hidden="true" slot="start" :icon="swapHorizontalOutline"></ion-icon>
+                      <ion-icon aria-hidden="true" slot="start" :icon="musicalNoteOutline"></ion-icon>
                       <ion-label>{{ $t('rhymes') }}</ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                  <ion-menu-toggle v-if="isAndroid" :auto-hide="false">
+                    <ion-item @click="goTo('/dict')" lines="none" :detail="false" class="hydrated" :class="isPage('/dict') ? 'selected': ''">
+                      <ion-icon aria-hidden="true" slot="start" :icon="swapVerticalOutline"></ion-icon>
+                      <ion-label>{{ $t('dictClient.dictClient') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                 </div>
@@ -88,7 +94,8 @@ import {
   documentOutline,
   informationCircleOutline,
   medicalOutline,
-  swapHorizontalOutline
+  musicalNoteOutline,
+  swapVerticalOutline
 } from "ionicons/icons"
 import RemedeLogo from "@/components/RemedeLogo.vue"
 </script>
@@ -97,6 +104,7 @@ import RemedeLogo from "@/components/RemedeLogo.vue"
 import {useRouter} from "vue-router"
 import {getDownloadedDictionaries} from "@/functions/offline"
 import { App } from "@capacitor/app"
+import {Capacitor} from "@capacitor/core"
 import {defineComponent} from "vue"
 import {wordExists} from "@/functions/dictionnary"
 import {getDeviceLocale} from "@/functions/device"
@@ -115,9 +123,13 @@ export default defineComponent({
       const url = object ? object.url: ""
       if (url.startsWith("remede://")) {
         this.router.push(url.replaceAll("remede:/", ""))
+      } else if (url.startsWith("dict://")) {
+        const request = url.replace("dict://", "")
+        this.router.push(`/dict?request=${encodeURIComponent(request)}`)
       }
     })
     window.addEventListener("keydown", this.handleKeyDown)
+    this.isAndroid = Capacitor?.getPlatform() == "android"
   },
   beforeMount() {
     this.setLocale()
@@ -127,7 +139,8 @@ export default defineComponent({
       router: useRouter(),
       path: location.pathname,
       downloaded: false,
-      query: ""
+      query: "",
+      isAndroid: false
     }
   },
   methods: {
