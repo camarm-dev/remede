@@ -175,7 +175,10 @@
     "information1RemedeDictClient": "Remède te permet d'explorer des serveurs de dictionnaire utilisant le protocole DICT.",
     "information2ExploreServers": "Trouve et explore une grand variété de serveurs de dictionnaires.",
     "information3SaveCustomServers": "Enregistre de nouveaux serveurs personnalisés. Rends-toi dans les paramètres activer la recherche par serveurs de dictionnaire.",
-    "information4HowToUse": "Sélectionne \"Serveurs de dictionnaire\" comme source de recherche et parcours les dictionnaires distants directement dans Remède !"
+    "information4HowToUse": "Sélectionne \"Serveurs de dictionnaire\" comme source de recherche et parcours les dictionnaires distants directement dans Remède !",
+    "addServer": "Ajouter un serveur",
+    "DICTSearch": "Recherche depuis serveurs de dictionnaires",
+    "DICTDisclaimer": "Les serveurs de dictionnaire ne fournisse que les définitions brutes des mots. Pour cette raison, seulement la recherche classique (depuis la page d'accueil) est disponible avec les serveurs de dictionnaire. De plus, la page de définition est simplifiée."
   },
   "sheetsPage": {
     "placeholder": "Rechercher une fiche",

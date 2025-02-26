@@ -175,7 +175,10 @@
     "information1RemedeDictClient": "Remède allows you to explore dictionaries servers using the DICT protocol.",
     "information2ExploreServers": "Find and explore a large amount of dictionaries servers.",
     "information3SaveCustomServers": "Add custom servers. Go to the settings page to enable searching from DICT servers.",
-    "information4HowToUse": "Select \"DICT servers\" as  search source and browse dictionaries servers directly from Remède !"
+    "information4HowToUse": "Select \"DICT servers\" as  search source and browse dictionaries servers directly from Remède !",
+    "addServer": "Add server",
+    "DICTSearch": "Searching from DICT servers.",
+    "DICTDisclaimer":  "Because DICT servers only provide raw textual informations about a word, only the search functionality will work with DICT servers. Also, the definition page will be simplified."
   },
   "sheetsPage": {
     "placeholder": "Search a sheet",

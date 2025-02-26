@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {
   IonContent,
-  IonIcon
+  IonIcon,
+  IonNote
 } from "@ionic/vue"
 import {compassOutline, informationCircleOutline, saveOutline, searchOutline} from "ionicons/icons"
 </script>
@@ -33,6 +34,11 @@ import {compassOutline, informationCircleOutline, saveOutline, searchOutline} fr
       </div>
       <p>{{ $t('settingsPage.information4HowToUse') }}</p>
     </div>
+    <div class="section">
+      <ion-note>
+        {{ $t('settingsPage.DICTDisclaimer') }}
+      </ion-note>
+    </div>
   </ion-content>
 </template>
 
@@ -56,5 +62,9 @@ import {compassOutline, informationCircleOutline, saveOutline, searchOutline} fr
   width: 25px;
   height: 25px;
   border-radius: 50%;
+}
+
+.section:last-child {
+  margin-top: 40%;
 }
 </style>
