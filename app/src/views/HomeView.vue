@@ -95,7 +95,7 @@
         <ion-content class="ion-padding">
           <h1 class="remede-font">{{ $t('home.changelog') }}</h1>
           <p v-if="$i18n.locale == 'fr'">
-            La version sur laquelle vous naviguez est la version <code>1.4.0</code>, nom de code <i>Phenomenal Feather</i>.<br><br>
+            La version sur laquelle vous naviguez est la version <code>1.4.1</code>, nom de code <i>Phenomenal Feather</i>.<br><br>
             Elle apporte les nouveautés et patch suivants:
             <ul>
               <li>Application de bureau.</li>
