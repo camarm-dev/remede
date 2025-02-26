@@ -168,7 +168,7 @@
     "problemDetected": "A problem has been detected, please reinstall the dictionary or contact the support.",
     "understood": "That's ok !",
     "dictionaryRevisionDownloaded": "Revision \"{rev}\". {size} storage. {words} words.",
-    "myDictionaries": "My downloaded dictionaries",
+    "downloadedDictionaries": "Downloaded dictionaries",
     "loading": "Loading..."
   },
   "sheetsPage": {

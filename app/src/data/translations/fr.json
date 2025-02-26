@@ -168,7 +168,7 @@
     "problemDetected": "Un problème a été détecté, veuillez réinstaller le dictionnaire ou contacter le support.",
     "understood": "C'est compris !",
     "dictionaryRevisionDownloaded": "Révision \"{rev}\". {size} de stockage. {words} mots.",
-    "myDictionaries": "Mes dictionnaires téléchargés",
+    "downloadedDictionaries": "Dictionnaires téléchargés",
     "loading": "Chargement..."
   },
   "sheetsPage": {
