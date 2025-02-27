@@ -27,6 +27,7 @@ import {
 import dictServers from "@/data/dictServers.json"
 import DictServersGuide from "@/components/DictServersGuide.vue"
 import AddDictServer from "@/components/AddDictServer.vue"
+import DictLogs from "@/components/DictLogs.vue";
 </script>
 
 <template>
@@ -155,16 +156,7 @@ import AddDictServer from "@/components/AddDictServer.vue"
       <ion-modal trigger="open-logs" :initial-breakpoint="0.75" :breakpoints="[0, .5, 1]">
         <ion-content class="ion-padding">
           <h1>{{ $t('dictClient.logs') }}</h1>
-          <ion-list>
-            <ion-item
-              v-for="log in logs"
-              :key="log.raw"
-              :color="getLogColor(log)"
-            >
-              <ion-icon slot="start" :icon=" log.type != 'COMMAND' ? arrowBackOutline : arrowForwardOutline"></ion-icon>
-              <ion-label>{{ log.raw }}</ion-label>
-            </ion-item>
-          </ion-list>
+          <DictLogs :logs="logs"/>
         </ion-content>
       </ion-modal>
 
@@ -247,15 +239,6 @@ export default {
         window.clearTimeout(this.searchTimeout)
         this.definitions = []
       }
-    },
-    getLogColor(log: DictResponseLine) {
-      if (log.type == "HEADER")
-        return "medium"
-      if (log.type == "COMMAND")
-        return "primary"
-      return log.success && log.type == "STATUS" ? "success"
-          : !log.success ? "danger"
-              : "light"
     },
     closeAddServerModal() {
       this.$refs.addServerModal.$el.dismiss()
