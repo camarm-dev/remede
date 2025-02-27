@@ -30,6 +30,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import ("../views/SearchResultsView.vue")
       },
       {
+        path: "dictServersResults/:word/:results",
+        name: "dictServersResults",
+        component: () => import ("../views/SearchDictResultsView.vue")
+      },
+      {
+        path: "dictServersDefinition/:definition",
+        name: "dictServersDefinition",
+        component: () => import ("../views/DictServerDefinitionView.vue")
+      },
+      {
         path: "a-propos",
         component: () => import ("../views/AboutView.vue")
       },
