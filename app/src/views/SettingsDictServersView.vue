@@ -26,7 +26,7 @@
 
       <ion-list inset>
         <ion-item color="light">
-          <ion-toggle>
+          <ion-toggle :checked="preferences.enabled" @ionChange="toggleDictServerSearch().then(refreshPreferences)">
             {{ $t('settingsPage.DICTSearch') }}
           </ion-toggle>
         </ion-item>
@@ -46,7 +46,7 @@
         </ion-item>
         <ion-item-sliding v-else v-for="server in savedServers" :key="server.host">
           <ion-item color="light">
-            <ion-toggle>
+            <ion-toggle :checked="preferences.enabledDicts.includes(getDictServerId(server))" @ionChange="toggleDictServer(server).then(refreshPreferences)">
               <ion-label class="formatted">
                 <h3>{{ server.name }}</h3>
                 <span>{{ server.host }}</span>
@@ -55,7 +55,9 @@
             </ion-toggle>
           </ion-item>
           <ion-item-options>
-            <ion-item-option color="danger" @click="deleteServer(server).then(refreshSavedServers)"><ion-icon slot="icon-only" :icon="trashOutline"/></ion-item-option>
+            <ion-item-option color="danger" @click="deleteServer(server).then(refreshSavedServers)">
+              <ion-icon slot="icon-only" :icon="trashOutline"/>
+            </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
 
@@ -66,7 +68,7 @@
       </div>
       <ion-list inset>
         <ion-item v-for="server in dictServers" :key="server.host" color="light">
-          <ion-toggle>
+          <ion-toggle :checked="preferences.enabledDicts.includes(getDictServerId(server))" @ionChange="toggleDictServer(server).then(refreshPreferences)">
             <ion-label class="formatted">
               <h3>{{ server.name }}</h3>
               <span>{{ server.host }}</span>
@@ -98,9 +100,11 @@ import {
   IonToolbar,
   IonItem,
   IonLabel,
-  IonList, IonModal, IonBackButton,
-    IonToggle,
-    IonItemSliding,
+  IonList,
+  IonModal,
+  IonBackButton,
+  IonToggle,
+  IonItemSliding,
   IonItemOptions,
   IonItemOption
 } from "@ionic/vue"
@@ -111,25 +115,33 @@ import {
 import DictServersGuide from "@/components/DictServersGuide.vue"
 import dictServers from "@/data/dictServers.json"
 import AddDictServer from "@/components/AddDictServer.vue"
-import {deleteServer} from "@/functions/dictPreferences"
+import {deleteServer, getDictServerId, toggleDictServer, toggleDictServerSearch} from "@/functions/dictPreferences"
 </script>
 
 <script lang="ts">
 import {DictServer} from "@/functions/dictProtocol"
-import {getSavedDictServers} from "@/functions/dictPreferences"
+import {DictServerPreferences, getDictServerPreferences, getSavedDictServers} from "@/functions/dictPreferences"
 
 export default {
   data() {
     return {
-      savedServers: [] as DictServer[]
+      savedServers: [] as DictServer[],
+      preferences: {
+        enabled: false,
+        enabledDicts: []
+      } as DictServerPreferences
     }
   },
   mounted() {
     this.refreshSavedServers()
+    this.refreshPreferences()
   },
   methods: {
     async refreshSavedServers() {
       this.savedServers = await getSavedDictServers()
+    },
+    async refreshPreferences() {
+      this.preferences = await getDictServerPreferences()
     },
     closeAddServerModal() {
       this.$refs.addServerModal.$el.dismiss()
