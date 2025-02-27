@@ -11,7 +11,9 @@ export type DictDefinition = {
     word: string
     databaseId: string
     database: string
-    definition: string
+    definition: string,
+    server?: string,
+    port?: number
 }
 
 export enum DictRequestType {
@@ -286,4 +288,40 @@ export async function makeRequest(dictRequest: DictRequest): Promise<{ data: str
         messages: commands
     })
     return decodeRawResponse(request.responses, commands)
+}
+
+export async function getDictServersAutocomplete(query: string, servers: DictServer[]) {
+    const results: DictDefinition[] = []
+    for (const server of servers) {
+        const request: DictRequest = {
+            word: query,
+            method: DictRequestType.Match,
+            strat: "prefix",
+            server: server.host,
+            port: server.port,
+            database: "*",
+            auth: false
+        }
+        const { definitions } = await makeRequest(request)
+        results.push(...definitions.map(def => {
+            return {
+                ...def,
+                server: server.host,
+                port: server.port
+            }
+        }))
+    }
+    return results
+}
+
+export async function getDictServerDefinition(server: DictServer, word: string, database: string) {
+    const request: DictRequest = {
+        word,
+        database,
+        method: DictRequestType.Define,
+        server: server.host,
+        port: server.port,
+        auth: false
+    }
+    return await makeRequest(request)
 }
