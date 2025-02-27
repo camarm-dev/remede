@@ -208,7 +208,7 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
                 if (definitionLine == ".") {
                     break
                 }
-                definition += `${definitionLine}\n\n`
+                definition += `${definitionLine}\n`
             }
             definitions.push({
                 database,
