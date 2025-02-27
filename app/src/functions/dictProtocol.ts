@@ -65,14 +65,13 @@ function getValueAt<T, D>(list: T[], index: number, _default: D): T | D {
 
 
 const successCodes = [110, 111, 112, 113, 114, 130, 150, 151, 152, 210, 220, 221, 230, 250, 330]
-const errorCodes = [420, 421, 500, 501, 502, 503, 530, 531, 532, 550, 552, 554, 555]
+// const errorCodes = [420, 421, 500, 501, 502, 503, 530, 531, 532, 550, 552, 554, 555]
 
 
 /*
   @param request "Request looks like dict:// "<user>;<auth>@<host>:<port>/<c>:<word>:<database>:<strategy>:<n>""
  */
 export function decodeRequest(request: string) {
-    console.log(request)
     const decodedRequest: DictRequest = {
         server: "",
         port: 2628,
@@ -82,6 +81,9 @@ export function decodeRequest(request: string) {
         method: DictRequestType.Define
     }
 
+    // Clear protocol
+    request = request.replace("dict://", "")
+
     // Contains auth
     if (request.includes("@")) {
         // TODO support correctly auth
@@ -90,6 +92,13 @@ export function decodeRequest(request: string) {
         decodedRequest.username = user
         decodedRequest.password = auth // This is auth type (AUTH or SASLAUTH)
         request = request.split("@")[1]
+    }
+
+    if (!request.includes("/")) { // Just specify a dict server URL
+        const [server, port] = request.split(":")
+        decodedRequest.server = server
+        decodedRequest.port = Number(port || 2628)
+        return decodedRequest
     }
 
     const [host, req] = request.split("/")
