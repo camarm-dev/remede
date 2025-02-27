@@ -42,7 +42,7 @@
       <ion-list inset>
         <ion-item color="light" button @click="goTo('/settings/offline')">
           <ion-icon slot="start" :icon="fileTrayFullOutline"/>
-          <ion-label>{{ $t('settingsPage.downloadedDictionaries') }}</ion-label>
+          <ion-label>{{ $t('settingsPage.offlineDictionaries') }}</ion-label>
         </ion-item>
         <ion-item v-if="supportsDICT" color="light" button @click="goTo('/settings/servers')">
           <ion-icon slot="start" :icon="radioOutline"/>

@@ -169,6 +169,7 @@
     "understood": "That's ok !",
     "dictionaryRevisionDownloaded": "Revision \"{rev}\". {size} storage. {words} words.",
     "downloadedDictionaries": "Downloaded dictionaries",
+    "offlineDictionaries": "Offline dictionaries",
     "loading": "Loading...",
     "dictionaries":  "Dictionaries",
     "dictServers": "DICT servers",

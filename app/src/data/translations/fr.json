@@ -169,6 +169,7 @@
     "understood": "C'est compris !",
     "dictionaryRevisionDownloaded": "Révision \"{rev}\". {size} de stockage. {words} mots.",
     "downloadedDictionaries": "Dictionnaires téléchargés",
+    "offlineDictionaries": "Dictionnaires hors-ligne",
     "loading": "Chargement...",
     "dictionaries":  "Dictionnaires",
     "dictServers": "Serveurs de dictionnaire",
