@@ -110,13 +110,13 @@ import {
 } from "ionicons/icons"
 import DictServersGuide from "@/components/DictServersGuide.vue"
 import dictServers from "@/data/dictServers.json"
-import AddDictServer from "@/components/AddDictServer.vue";
-import {deleteServer} from "@/functions/dictPreferences";
+import AddDictServer from "@/components/AddDictServer.vue"
+import {deleteServer} from "@/functions/dictPreferences"
 </script>
 
 <script lang="ts">
 import {DictServer} from "@/functions/dictProtocol"
-import {getSavedDictServers} from "@/functions/dictPreferences";
+import {getSavedDictServers} from "@/functions/dictPreferences"
 
 export default {
   data() {
