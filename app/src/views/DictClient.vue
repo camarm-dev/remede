@@ -161,7 +161,7 @@ import AddDictServer from "@/components/AddDictServer.vue"
               :key="log.raw"
               :color="getLogColor(log)"
             >
-              <ion-icon slot="start" :icon=" log.type == 'COMMAND' ? arrowBackOutline : arrowForwardOutline"></ion-icon>
+              <ion-icon slot="start" :icon=" log.type != 'COMMAND' ? arrowBackOutline : arrowForwardOutline"></ion-icon>
               <ion-label>{{ log.raw }}</ion-label>
             </ion-item>
           </ion-list>
