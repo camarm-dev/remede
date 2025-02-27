@@ -11,7 +11,7 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">{{ $t('settingsPage.downloadedDictionaries') }}</ion-title>
+          <ion-title size="large">{{ $t('settingsPage.offlineDictionaries') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 
