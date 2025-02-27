@@ -1,5 +1,6 @@
 import {Preferences} from "@capacitor/preferences"
 import {DictServer} from "@/functions/dictProtocol"
+import dictServers from "@/data/dictServers.json"
 
 export type DictServerPreferences = {
     enabled: boolean
@@ -78,4 +79,15 @@ export async function toggleDictServerSearch() {
         key: "dictServerPreferences",
         value: JSON.stringify(preferences)
     })
+}
+
+export async function getEnabledDictServers(): Promise<DictServer[] | undefined> {
+    const preferences = await getDictServerPreferences()
+    if (!preferences.enabled)
+        return undefined
+    const allDictServers: DictServer[] = [
+        ...await getSavedDictServers(),
+        ...dictServers
+    ]
+    return allDictServers.filter(server => preferences.enabledDicts.includes(getDictServerId(server)))
 }
