@@ -88,7 +88,6 @@ export function decodeRequest(request: string) {
 
     // Contains auth
     if (request.includes("@")) {
-        // TODO support correctly auth
         decodedRequest.auth = true
         const [user, auth] = request.split("@")[0].split(";")
         decodedRequest.username = user
@@ -141,7 +140,6 @@ export function decodeRequest(request: string) {
         decodedRequest.strat = undefined
     }
 
-    console.log(decodedRequest)
     return decodedRequest
 }
 
@@ -152,10 +150,10 @@ function buildDICTRequests(request: DictRequest): string[] {
     }
     switch (request.method) {
         case "DEFINE":
-            requests.push(`${request.method} ${request.database} ${request.word}`)
+            requests.push(`${request.method} ${request.database} "${request.word}"`)
             break
         case "MATCH":
-            requests.push(`${request.method} ${request.database} ${request.strat} ${request.word}`)
+            requests.push(`${request.method} ${request.database} ${request.strat} "${request.word}"`)
     }
     return requests
 }
@@ -243,7 +241,6 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
     }
 }
 
-// TODO support auhh
 export async function getDictionaries(server: string, port: number): Promise<DictDatabase[]> {
     const databases: DictDatabase[] = []
     const request = await TCPClient.request({
