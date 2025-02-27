@@ -1,6 +1,15 @@
 import {Preferences} from "@capacitor/preferences"
 import {DictServer} from "@/functions/dictProtocol"
 
+export type DictServerPreferences = {
+    enabled: boolean
+    enabledDicts: string[]
+}
+
+export function getDictServerId(server: DictServer) {
+    return server.host + server.port.toString() + "-" + server.name.replaceAll(" ", "").trim().toLowerCase()
+}
+
 export async function getSavedDictServers(): Promise<DictServer[]> {
     const response = await Preferences.get({
         key: "savedDictServers"
@@ -17,10 +26,9 @@ export async function addServer(server: DictServer) {
     })
 }
 
-
 export async function deleteServer(server: DictServer) {
     const savedServers = await getSavedDictServers()
-    const toDelete = savedServers.find(el => el.name === server.name && el.host === server.host && el.port === server.port)
+    const toDelete = savedServers.find(el => getDictServerId(el) === getDictServerId(server))
     if (toDelete) {
         savedServers.splice(savedServers.indexOf(toDelete), 1)
         await Preferences.set({
@@ -28,4 +36,46 @@ export async function deleteServer(server: DictServer) {
             value: JSON.stringify(savedServers)
         })
     }
+}
+
+export async function getDictServerPreferences(): Promise<DictServerPreferences> {
+    const response = await Preferences.get({
+        key: "dictServerPreferences"
+    })
+    const preferences = JSON.parse(response.value || "false")
+    if (!preferences) {
+        const defaultPreferences: DictServerPreferences = {
+            enabled: false,
+            enabledDicts: []
+        }
+        await Preferences.set({
+            key: "dictServerPreferences",
+            value: JSON.stringify(defaultPreferences)
+        })
+        return await getDictServerPreferences()
+    }
+    return preferences
+}
+
+export async function toggleDictServer(server: DictServer) {
+    const preferences = await getDictServerPreferences()
+    const serverId = getDictServerId(server)
+    if (preferences.enabledDicts.includes(serverId)) {
+        preferences.enabledDicts.splice(preferences.enabledDicts.indexOf(serverId), 1)
+    } else {
+        preferences.enabledDicts.push(serverId)
+    }
+    await Preferences.set({
+        key: "dictServerPreferences",
+        value: JSON.stringify(preferences)
+    })
+}
+
+export async function toggleDictServerSearch() {
+    const preferences = await getDictServerPreferences()
+    preferences.enabled = !preferences.enabled
+    await Preferences.set({
+        key: "dictServerPreferences",
+        value: JSON.stringify(preferences)
+    })
 }
