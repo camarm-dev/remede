@@ -201,7 +201,7 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
 
         // Special case to retrieve definitions
         if (code == "151") {
-            const groups = line.replace("151 ", "").match(/[\w\-\.]+|"(?:\\"|[^"])+"/g) as any as string[]
+            const groups = line.replace("151 ", "").match(/[\w\-.]+|"(?:\\"|[^"])+"/g) as any as string[]
             const [word, databaseId, database] = [groups[0].replaceAll("\"", ""), groups[1], groups[2].replaceAll("\"", "")]
             let definition = ""
             for (const definitionLine of responses.slice(responses.indexOf(line) + 1)) {
@@ -224,7 +224,7 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
                 if (matchLine == ".") {
                     break
                 }
-                const [db, match] = matchLine.match(/[\w\-\.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
+                const [db, match] = matchLine.match(/[\w\-.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
                 definitions.push({
                     database: db,
                     databaseId: db,
@@ -251,7 +251,7 @@ export async function getDictionaries(server: string, port: number): Promise<Dic
     })
     const { data } = decodeRawResponse(request.responses)
     for (const line of data) {
-        const [id, name] = line.match(/[\w\-\.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
+        const [id, name] = line.match(/[\w\-.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
         databases.push({
             id,
             name: name.replaceAll("\"", "")
@@ -269,7 +269,7 @@ export async function getStrategies(server: string, port: number): Promise<DictS
     })
     const { data } = decodeRawResponse(request.responses)
     for (const line of data) {
-        const [id, name] = line.match(/[\w\-\.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
+        const [id, name] = line.match(/[\w\-.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
         strategies.push({
             id,
             name: name.replaceAll("\"", "")
