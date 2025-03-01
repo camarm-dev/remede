@@ -53,7 +53,7 @@ public class RemedeSearchbarWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
         if (CLICK_ACTION.equals(intent.getAction())) {
             Intent searchbarIntent = new Intent(context, MainActivity.class)
-                    .setData(Uri.parse(context.getResources().getString(R.string.custom_url_scheme) + "://dictionnaire#searchbar"))
+                    .setData(Uri.parse(context.getResources().getString(R.string.custom_url_scheme) + "://dictionary#searchbar"))
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(searchbarIntent);
         }

@@ -105,7 +105,7 @@ public class RemedeWordOfDayWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.wodwidget_definition, definition);
 
         // Handle clicks
-        Intent intent = new Intent(context, RemedeWordOfDayWidget.class).setAction(CLICK_ACTION).setData(Uri.parse(context.getResources().getString(R.string.custom_url_scheme) + "://dictionnaire/" + word));
+        Intent intent = new Intent(context, RemedeWordOfDayWidget.class).setAction(CLICK_ACTION).setData(Uri.parse(context.getResources().getString(R.string.custom_url_scheme) + "://dictionary/" + word));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.container, pendingIntent);
 
