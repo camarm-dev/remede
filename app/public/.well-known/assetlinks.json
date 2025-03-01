@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "dev.camarm.remede",
+    "sha256_cert_fingerprints":
+    ["81:69:1D:D3:AA:85:93:6D:13:C0:54:69:FD:1C:E1:F6:0E:4F:4A:96:69:33:B2:87:38:15:2C:85:CE:BB:CB:C4"]
+  }
+}]
