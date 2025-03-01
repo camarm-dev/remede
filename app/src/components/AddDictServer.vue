@@ -86,8 +86,8 @@ export default {
             .catch(() => {
               this.validServer = false
             })
-            .then(() => {
-              this.validServer = true
+            .then((responses) => {
+              this.validServer = !!responses
             })
       }, 500)
     }
