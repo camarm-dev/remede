@@ -23,7 +23,7 @@ import {
   ellipsisVertical, radioOutline, serverOutline,
 } from "ionicons/icons"
 import TabSection from "@/components/TabSection.vue"
-import DictLogs from "@/components/DictLogs.vue";
+import DictLogs from "@/components/DictLogs.vue"
 </script>
 
 <template>
@@ -47,7 +47,7 @@ import DictLogs from "@/components/DictLogs.vue";
           <ion-label>
             <ion-title class="remede-font" size="large">{{ word }}</ion-title>
             <ion-skeleton-text class="ion-margin-start" style="width: 65px; border-radius: 2px" v-if="loading"/>
-            <p class="ion-padding-start" v-else>From {{ server }}, {{ database }}</p>
+            <p class="ion-padding-start" v-else>{{ $t('from') }} {{ server }}</p>
           </ion-label>
         </ion-toolbar>
         <ion-toolbar>
@@ -75,7 +75,7 @@ import DictLogs from "@/components/DictLogs.vue";
             <hr>
           </header>
           <div class="content">
-            <span v-html="parseMeaning(def.definition)"></span>
+            <pre v-html="parseMeaning(def.definition)"></pre>
           </div>
           <br>
         </div>
@@ -99,8 +99,11 @@ import DictLogs from "@/components/DictLogs.vue";
               <ion-icon slot="start" :icon="serverOutline"/>
               <ion-label>{{ database }} ({{ databaseId }})</ion-label>
             </ion-item>
-            <ion-item v-if="header"  color="light">
-              <ion-note class="ion-padding">{{ header?.raw }}</ion-note>
+            <ion-item v-if="header" color="light" lines="none">
+              <ion-label>{{ $t('dictClient.serverHeader') }}</ion-label>
+            </ion-item>
+            <ion-item v-if="header" color="light">
+              <ion-note class="ion-padding-bottom">{{ header?.raw }}</ion-note>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -120,7 +123,7 @@ import "swiper/css/pagination"
 import "@ionic/vue/css/ionic-swiper.css"
 import {generateId} from "@/functions/id"
 import {DictDefinition, DictResponseLine, getDictServerDefinition} from "@/functions/dictProtocol"
-
+import { Browser } from "@capacitor/browser"
 
 export default defineComponent({
   props: ["motRemede"],
@@ -153,7 +156,7 @@ export default defineComponent({
     this.database = definitionRequest.database
     this.databaseId = definitionRequest.databaseId
 
-    this.fetchDefinition()
+    this.fetchDefinition().then(this.listenSpecialTags)
 
     const ionRouter = useIonRouter()
     function goTo(path: string) {
@@ -183,10 +186,12 @@ export default defineComponent({
       document.querySelectorAll("reference").forEach(el => {
         const referenceListener = async () => {
           const href = el.getAttribute("href") || ""
-          if (await wordExists(href)) {
+          if (await wordExists(href)) { // TODO check if words exists in dict server !
             this.goTo(`/dictionnaire/${href}`)
+          } else if (href.includes("://")) {
+            await Browser.open({ url: href })
           } else {
-            window.open(href)
+            await Browser.open({ url: href })
           }
         }
         el.addEventListener("click", referenceListener)
@@ -196,9 +201,25 @@ export default defineComponent({
       })
     },
     parseMeaning(meaning: string) {
+      const lines = meaning.split("\n")
+      if (lines[0].trim() == this.word) { // Remove first line if it just contains the word
+        meaning = lines.slice(1).join("\n")
+      }
       try {
         // TODO {link(http://url)} should become <reference href="url"></...>
-        return meaning.replaceAll("{", "<reference").replaceAll("}", "</reference>").replaceAll("\n", "<br>")
+        const parsingEl = document.createElement("div")
+        parsingEl.innerHTML = meaning
+            .replaceAll("{", "<reference>")
+            .replaceAll("}", "</reference>")
+            .replaceAll("\t", "")
+            .trim()
+        for (const referenceTag of Array.from(parsingEl.querySelectorAll("reference"))) {
+          const innerText = referenceTag.innerHTML
+          const href = (/\(([^)]+)\)/.exec(innerText) || [innerText])[0]
+          referenceTag.setAttribute("href", href)
+          referenceTag.innerHTML = innerText.replaceAll("\n", "").replaceAll("  ", "").trim()
+        }
+        return parsingEl.innerHTML
       } catch (e) {
         return meaning
       }
@@ -246,5 +267,13 @@ export default defineComponent({
 
 .border-radius {
   border-radius: 12px;
+}
+
+pre {
+  font-family: var(--ion-font-family);
+  max-width: 100%;
+  overflow: hidden;
+  text-wrap: stable;
+  word-break: break-word;
 }
 </style>
