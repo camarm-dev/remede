@@ -53,9 +53,9 @@ import DictLogs from "@/components/DictLogs.vue";
             </ion-button>
           </ion-buttons>
           <div class="field join" slot="start">
-            <ion-input class="large" :value="request.server" @ionInput="request.server = ($event.target.value || '').toString(); refreshServer()" type="text" placeholder="dict.org"></ion-input>
+            <ion-input class="large" :value="request.server" @ionInput="request.server = ($event.target.value || '').toString(); handleServerRefresh()" type="text" placeholder="dict.org"></ion-input>
             <div class="block">:</div>
-            <ion-input :value="request.port" @ionInput="request.port = Number($event.target.value) || 0; refreshServer()" type="number" placeholder="2628"></ion-input>
+            <ion-input :value="request.port" @ionInput="request.port = Number($event.target.value) || 0; handleServerRefresh()" type="number" placeholder="2628"></ion-input>
           </div>
         </ion-toolbar>
         <ion-toolbar class="ion-padding-bottom">
@@ -193,6 +193,7 @@ export default {
       logs: [] as DictResponseLine[],
       savedServers: [] as DictServer[],
       searchTimeout: window.setTimeout(() => undefined, 500),
+      refreshTimeout: window.setTimeout(() => undefined, 500),
       loading: false,
       errors: []
     }
@@ -233,10 +234,18 @@ export default {
     },
     handleSearchbarInput(input: string) {
       this.request.word = input
+      window.clearTimeout(this.searchTimeout)
       if (input != "") {
         this.searchTimeout = window.setTimeout(this.refreshResponse, 500)
       } else {
-        window.clearTimeout(this.searchTimeout)
+        this.definitions = []
+      }
+    },
+    handleServerRefresh() {
+      window.clearTimeout(this.refreshTimeout)
+      if (this.request.server != "") {
+        this.refreshTimeout = window.setTimeout(this.refreshServer, 500)
+      } else {
         this.definitions = []
       }
     },
