@@ -16,5 +16,11 @@
     "host": "dict.lojban.org",
     "port": 2628,
     "description": "Contains Lojban dictionaries translations."
+  },
+  {
+    "name": "DICT.TW",
+    "host": "dict.tw",
+    "port": 2628,
+    "description": "Contains several databases related to Chinese language. "
   }
 ]
