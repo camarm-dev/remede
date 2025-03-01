@@ -161,7 +161,7 @@ export default defineComponent({
           return
       }
       const searchbar = (this.$refs.menuSearchbar as any).$el
-      if (!searchbar?.focused && !["dictionnaire", "dictionary", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
+      if (!searchbar?.focused && !["dictionary", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         await searchbar.setFocus()
         if (!searchbar.focused) {
           if (event.key == "backspace") {
