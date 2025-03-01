@@ -20,7 +20,7 @@ import {
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button :text="$t('back')" default-href="/dictionnaire"></ion-back-button>
+          <ion-back-button :text="$t('back')" default-href="/dictionary"></ion-back-button>
         </ion-buttons>
       </ion-toolbar>
       <ion-toolbar>
@@ -29,7 +29,7 @@ import {
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-list class="search-results">
-        <ion-item button :key="result" v-for="result in results" @click="goTo(`/dictionnaire/${result}`)">
+        <ion-item button :key="result" v-for="result in results" @click="goTo(`/dictionary/${result}`)">
           <ion-label>
             {{ result }}
           </ion-label>

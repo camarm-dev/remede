@@ -107,7 +107,7 @@
           <div class="ion-padding" v-if="failed">
             <ion-note>{{ $t('rhymesPage.searchErrored') }}</ion-note>
           </div>
-          <ion-item @click="goTo(`/dictionnaire/${word[0]}`)" v-for="word in rhymes" :key="word.toString()" button v-else>
+          <ion-item @click="goTo(`/dictionary/${word[0]}`)" v-for="word in rhymes" :key="word.toString()" button v-else>
             <ion-label>
               {{ word[0].replaceAll('\\', '') }}
               <p>\{{ word[1] }}\</p>
