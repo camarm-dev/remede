@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "",
-        redirect: "/dictionnaire",
+        redirect: "/dictionary",
       },
       {
         path: "dict",
@@ -18,11 +18,19 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "dictionnaire",
-        name: "dictionnaire",
+        redirect: "/dictionary"
+      },
+      {
+        path: "dictionary",
+        name: "dictionary",
         component: () => import ("../views/HomeView.vue"),
       },
       {
         path: "dictionnaire/:mot",
+        component: () => import ("../views/DefinitionView.vue")
+      },
+      {
+        path: "dictionary/:mot",
         component: () => import ("../views/DefinitionView.vue")
       },
       {
@@ -41,6 +49,10 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "a-propos",
+        redirect: "/about"
+      },
+      {
+        path: "about",
         component: () => import ("../views/AboutView.vue")
       },
       {
@@ -84,6 +96,10 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "marques-page",
+        redirect: "/bookmarks"
+      },
+      {
+        path: "bookmarks",
         component: () => import ("../views/BookmarksView.vue")
       }
     ]
