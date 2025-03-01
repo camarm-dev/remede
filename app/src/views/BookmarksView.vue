@@ -16,7 +16,7 @@
       </ion-header>
 
       <ion-list inset>
-        <ion-item :key="word" color="light" v-for="word in starredWords" @click="goTo(`/dictionnaire/${word}`)">
+        <ion-item :key="word" color="light" v-for="word in starredWords" @click="goTo(`/dictionary/${word}`)">
           <ion-icon color="primary" :icon="bookmark" @click="starWord(word); refresh()" slot="start"/>
           <ion-label>
             <h2 class="ion-text-capitalize">{{ word }}</h2>

@@ -68,7 +68,7 @@
           </ion-item>
         </ion-list>
         <ion-list v-else class="search-results">
-          <ion-item :key="result" v-for="result in results" @click="goTo(`/dictionnaire/${result}`)" class="ion-no-padding" button>
+          <ion-item :key="result" v-for="result in results" @click="goTo(`/dictionary/${result}`)" class="ion-no-padding" button>
             <ion-label>
               {{ result }}
             </ion-label>
@@ -100,13 +100,13 @@
       </ion-header>
 
       <ion-list inset>
-        <ion-item @click="goTo(`/dictionnaire/${todayWord}`)" :disabled="todayWordDisabled" color="light" button>
+        <ion-item @click="goTo(`/dictionary/${todayWord}`)" :disabled="todayWordDisabled" color="light" button>
           <ion-icon slot="start" :icon="calendarOutline"/>
           <ion-label>
             <h2>{{ $t('home.wordOfDay') }}</h2>
           </ion-label>
         </ion-item>
-        <ion-item @click="goTo(`/dictionnaire/${randomWord}`); loadRandomWord()" :disabled="randomWordDisabled" color="light" button>
+        <ion-item @click="goTo(`/dictionary/${randomWord}`); loadRandomWord()" :disabled="randomWordDisabled" color="light" button>
           <ion-icon :icon="shuffle" slot="start"/>
           <ion-label>
             <h2>{{ $t('home.randomWord') }}</h2>
@@ -411,7 +411,7 @@ export default defineComponent({
     },
     handleSubmit() {
       if(this.results[0]) {
-        this.goTo(`/dictionnaire/${this.results[0]}`)
+        this.goTo(`/dictionary/${this.results[0]}`)
       }
     },
     startAutocompleteSearch(input: string) {
