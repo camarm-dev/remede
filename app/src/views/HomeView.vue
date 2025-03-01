@@ -164,7 +164,7 @@
           </p>
           <ion-modal trigger="open-blog" :initial-breakpoint="1" :breakpoints="[0, 1]">
             <ion-content>
-              <iframe class="news-frame" src="http://192.168.1.14:4000/blog#articles"></iframe>
+              <iframe class="news-frame" src="https://remede.camarm.fr/blog#articles"></iframe>
             </ion-content>
           </ion-modal>
         </ion-content>
