@@ -126,7 +126,6 @@ import {DictDefinition, DictResponseLine, getDictServerDefinition} from "@/funct
 import { Browser } from "@capacitor/browser"
 
 export default defineComponent({
-  props: ["motRemede"],
   data() {
     return {
       word: "",
