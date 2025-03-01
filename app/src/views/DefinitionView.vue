@@ -20,17 +20,21 @@ import {
   IonPage,
   IonSpinner,
   IonBackButton,
-  IonSkeletonText
+  IonSkeletonText,
+  IonSelect,
+  IonSelectOption
 } from "@ionic/vue"
 import {
   bookmark,
-  bookmarkOutline, chevronBackOutline,
+  bookmarkOutline,
+  chevronBackOutline,
   chevronDownOutline,
   documentAttachOutline,
   ellipsisVertical,
   fingerPrintOutline,
   link,
   play,
+  refreshOutline,
   shareOutline
 } from "ionicons/icons"
 import { Swiper, SwiperSlide } from "swiper/vue"
@@ -100,9 +104,37 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
         <ion-spinner name="crescent"></ion-spinner>
       </div>
       <div v-if="notFound" class="ion-padding">
-        <ion-note>
+        <ion-note class="ion-padding-bottom">
           {{ $t('definition.wordNotFound') }}
         </ion-note>
+        <ion-list class="border-radius ion-margin-top">
+          <ion-item color="light">
+            <ion-select
+                :label="$t('dictionary')"
+                :value="selectedDictionary"
+                :cancelText="$t('cancel')"
+                @ionChange="changeDictionary($event.target.value)"
+                interface="action-sheet"
+                placeholder="..."
+            >
+              <ion-select-option
+                  v-for="dictionary in availableDictionaries"
+                  :key="dictionary.slug"
+                  :value="dictionary"
+              >
+                {{ dictionary.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item
+              color="primary"
+              button
+          >
+            <ion-spinner v-if="retryLoading" name="crescent" color="light" slot="start"/>
+            <ion-icon v-else :icon="refreshOutline" slot="start"/>
+            {{ $t('definition.retryWith', { database: selectedDictionary.name }) }}
+          </ion-item>
+        </ion-list>
       </div>
       <div v-if="isTab('def')" class="tab-content">
         <div class="definition" :key="`def-genre-${wordObject.definitions.indexOf(def).toString()}`" v-for="def in wordObject.definitions">
@@ -260,7 +292,13 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
 
 <script lang="ts">
 
-import {getWordDocument, wordExists} from "@/functions/dictionnary"
+import {
+  getAvailableDictionaries,
+  getFavoriteDictionary,
+  getWordDocument,
+  setDictionary,
+  wordExists
+} from "@/functions/dictionnary"
 import {isWordStarred, starWord} from "@/functions/favorites"
 import {Share} from "@capacitor/share"
 import { FilledRemedeWordDocument } from "@/functions/types/remede"
@@ -272,6 +310,7 @@ import "@ionic/vue/css/ionic-swiper.css"
 import {generateId} from "@/functions/id"
 import {App} from "@capacitor/app"
 import PhonemeDetailsSheet from "@/components/PhonemeDetailsSheet.vue"
+import {RemedeDictionaryOption} from "@/functions/types/apiResponses"
 
 
 export default defineComponent({
@@ -303,7 +342,10 @@ export default defineComponent({
       } as (path: string) => void,
       el: null as any,
       loading: false,
-      closeApp: false
+      closeApp: false,
+      availableDictionaries: [] as RemedeDictionaryOption[],
+      selectedDictionary: {} as RemedeDictionaryOption,
+      retryLoading: false
     }
   },
   mounted() {
@@ -321,18 +363,27 @@ export default defineComponent({
     this.closeApp = data ? data == "true": false
   },
   created() {
-    this.loading = true
-    this.loadData(null).then(() => {
-      this.listenSpecialTags()
-      this.loading = false
-    }).catch(() => {
-      this.notFound = true
-      this.loading = false
-    })
+    this.refreshPage()
   },
   methods: {
     quitApp() {
       App.exitApp()
+    },
+    refreshPage() {
+      this.notFound = false
+      this.loading = true
+      this.loadData(null).then(() => {
+        this.listenSpecialTags()
+        this.loading = false
+      }).catch(() => {
+        this.notFound = true
+        this.loading = false
+        this.loadDictionaries()
+      })
+    },
+    async loadDictionaries() {
+      this.availableDictionaries = (await getAvailableDictionaries()).filter(dictionary => !dictionary.slug.includes("legacy"))
+      this.selectedDictionary = await getFavoriteDictionary(this.availableDictionaries)
     },
     async loadData(mot: null | string) {
       this.mot = mot || this.motRemede
@@ -350,6 +401,13 @@ export default defineComponent({
       }
 
       this.stared = await isWordStarred(this.mot)
+    },
+    async changeDictionary(dictionary: RemedeDictionaryOption) {
+      this.retryLoading = true
+      this.selectedDictionary = dictionary
+      await setDictionary(dictionary)
+      this.retryLoading = false
+      this.refreshPage()
     },
     async shareDefinition() {
       try {
