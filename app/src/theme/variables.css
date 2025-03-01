@@ -46,6 +46,12 @@ http://ionicframework.com/docs/theming/ */
   border-bottom-left-radius: 0;
 }
 
+ion-label span.small {
+  color: var(--ion-color-medium);
+  font-size: .8em;
+  display: block;
+}
+
 @keyframes spawn {
   from {
     opacity: 0;
@@ -189,6 +195,10 @@ phoneme:hover {
 .results-wrapper {
   transition: .5s ease-in-out;
   height: 270px;
+}
+
+.results-wrapper.large {
+  height: 330px;
 }
 
 .results-wrapper.empty {
