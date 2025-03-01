@@ -26,6 +26,7 @@
   "repository": "Github repository",
   "filters": "Filters",
   "feminineAll": "All",
+  "from": "From",
   "errors": {
     "cannotReadWord": "Cannot read word: {error}",
     "rhymesSearchFailed": "Failed to search in the rhymes dictionary: {error}"
@@ -221,6 +222,7 @@
     "loading":  "Checking server...",
     "connexion":  "Connexion",
     "metadata":  "Metadata",
-    "save": "Save"
+    "save": "Save",
+    "serverHeader": "Server header"
   }
 }

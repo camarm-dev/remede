@@ -26,6 +26,7 @@
   "repository": "dépôt Github",
   "filters": "Filtres",
   "feminineAll": "Toutes",
+  "from": "Depuis",
   "errors": {
     "cannotReadWord": "Impossible de lire le mot: {error}",
     "rhymesSearchFailed": "La recherche dans le dictionnaire des rimes a échouée: {error}"
@@ -221,6 +222,7 @@
     "loading":  "Vérification de la connexion...",
     "connexion":  "Connexion",
     "metadata":  "Métadonnées",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "serverHeader": "Entête du serveur"
   }
 }
