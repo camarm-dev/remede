@@ -11,7 +11,8 @@ import {
   IonBackButton,
   IonList,
   IonInfiniteScroll,
-  IonInfiniteScrollContent
+  IonInfiniteScrollContent,
+  IonNote
 } from "@ionic/vue"
 </script>
 
@@ -33,6 +34,9 @@ import {
           <ion-label>
             {{ result }}
           </ion-label>
+        </ion-item>
+        <ion-item v-if="results.length === 0">
+          <ion-note>{{ $t('definition.wordNotFound') }}</ion-note>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll v-if="results.length > 0" @ionInfinite="loadMore">
