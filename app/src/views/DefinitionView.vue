@@ -128,6 +128,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
           </ion-item>
           <ion-item
               color="primary"
+              @click="refreshPage();"
               button
           >
             <ion-spinner v-if="retryLoading" name="crescent" color="light" slot="start"/>
@@ -407,7 +408,6 @@ export default defineComponent({
       this.selectedDictionary = dictionary
       await setDictionary(dictionary)
       this.retryLoading = false
-      this.refreshPage()
     },
     async shareDefinition() {
       try {
