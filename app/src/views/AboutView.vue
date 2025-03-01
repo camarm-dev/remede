@@ -118,7 +118,7 @@
                   {{ $t('license') }}
                 </ion-label>
               </ion-item>
-              <ion-item lines="none" color="light" button href="https://docs.remede.camarm.fr/docs/database/credits" target="_blank">
+              <ion-item lines="none" color="light" button href="https://docs.remede.camarm.fr/database/credits" target="_blank">
                 <ion-icon :icon="fingerPrintOutline" slot="start" color="medium"/>
                 <ion-label>
                   {{ $t('remedeData') }}
