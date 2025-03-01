@@ -55,7 +55,13 @@
               {{ $t('aboutPage.contributors') }}
             </div>
             <ion-list class="border-radius">
-              <ion-item button :detail-icon="atOutline" href="https://github.com/camarm-dev" target="_blank" color="light">
+              <ion-item
+                  button
+                  :detail-icon="atOutline"
+                  href="https://github.com/camarm-dev"
+                  target="_blank"
+                  color="light"
+              >
                 <ion-avatar aria-hidden="true" slot="start">
                   <img alt="Photo de profil de camarm" src="https://avatars.githubusercontent.com/u/77529508?s=88&v=4" />
                 </ion-avatar>
@@ -64,12 +70,36 @@
                   <p>{{ $t('aboutPage.maintainer') }}</p>
                 </ion-label>
               </ion-item>
-              <ion-item lines="none" button :detail-icon="atOutline" href="https://github.com/LabseStudio" target="_blank" color="light">
+              <ion-item
+                  button
+                  :detail-icon="atOutline"
+                  href="https://github.com/LabseStudio"
+                  target="_blank"
+                  color="light"
+              >
                 <ion-avatar aria-hidden="true" slot="start">
                   <img alt="Photo de profil de Labse Studio" src="@/assets/labse.png" />
                 </ion-avatar>
                 <ion-label>
                   <h2>Labse Studio</h2>
+                  <p>{{ $t('aboutPage.contributors') }}</p>
+                </ion-label>
+              </ion-item>
+              <ion-item
+                  v-for="[index, person] in contributors.entries()"
+                  :key="person.login"
+                  :lines="index + 1 === contributors.length ? 'none' : 'inset'"
+                  button
+                  :detail-icon="atOutline"
+                  :href="person.html_url"
+                  target="_blank"
+                  color="light"
+              >
+                <ion-avatar aria-hidden="true" slot="start">
+                  <img :alt="`Photo de profil de ${person.login}`" :src="person.avatar_url" />
+                </ion-avatar>
+                <ion-label>
+                  <h2>{{ person.login }}</h2>
                   <p>{{ $t('aboutPage.contributors') }}</p>
                 </ion-label>
               </ion-item>
@@ -113,21 +143,42 @@ import {atOutline, documentAttachOutline, fingerPrintOutline, heartOutline, logo
 <script lang="ts">
 import { App } from "@capacitor/app"
 
+type Contributor = {
+  login: string
+  avatar_url: string
+  html_url: string
+}
+
 export default {
   data() {
     return {
       version: "1.4.0",
-      build: "tauri-2"
+      build: "tauri-2",
+      contributors: [
+        {
+          login: "Ilithy",
+          avatar_url: "https://avatars.githubusercontent.com/u/36798218?v=4",
+          html_url: "https://github.com/Ilithy"
+        }
+      ] as Contributor[],
+      maskedContributors: ["dependabot[bot]", "actions-user", "camarm-dev"]
     }
   },
   mounted() {
     this.fetchAppInformations()
+    this.fetchContributors()
   },
   methods: {
     async fetchAppInformations() {
       const app = await App.getInfo()
       this.version = app.version
       this.build = app.build
+    },
+    async fetchContributors() {
+      const contributors = await fetch("https://api.github.com/repos/camarm-dev/remede/contributors")
+          .then(response => response.json()) as Contributor[]
+      contributors.filter(contributor => !this.maskedContributores.includes(contributor.login))
+      this.contributors = contributors
     }
   }
 }
