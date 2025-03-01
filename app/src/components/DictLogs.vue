@@ -9,6 +9,7 @@ import {IonIcon, IonLabel} from "@ionic/vue"
         v-for="log in logs"
         :key="log.raw"
         :color="getLogColor(log)"
+        lines="none"
     >
       <ion-icon slot="start" :icon=" log.type != 'COMMAND' ? arrowBackOutline : arrowForwardOutline"></ion-icon>
       <ion-label>{{ log.raw }}</ion-label>
@@ -39,3 +40,17 @@ export default {
   }
 }
 </script>
+<style scoped>
+ion-list {
+  border-radius: 12px;
+}
+
+ion-item::part(native) {
+  background: rgba(var(--ion-color-base-rgb), .1);
+  color: var(--ion-color-base);
+}
+
+ion-item.ion-color-light::part(native) {
+  color: var(--ion-text-color);
+}
+</style>
