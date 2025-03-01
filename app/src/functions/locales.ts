@@ -1,7 +1,9 @@
 const locales = {
     en: "English",
     fr: "Français",
+    eo: "Esperanto",
     dialects: {
+        fr: undefined,
         en: [
             "en-GB",
             "en-US",
@@ -9,11 +11,11 @@ const locales = {
             "en-AU",
             "en-NZ"
         ],
-        fr: undefined
+        eo: undefined
     }
 }
 
-export type localeCode = "en" | "fr"
+export type localeCode = "en" | "fr" | "eo"
 
 export function hasDialect(locale: keyof typeof locales["dialects"]) {
     return locales.dialects[locale]
