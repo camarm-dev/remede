@@ -11,7 +11,7 @@
               <div class="menu-links">
                 <div class="start">
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/dictionnaire')" lines="none" :detail="false" class="hydrated" :class="isPage('/dictionnaire') ? 'selected': ''">
+                    <ion-item @click="goTo('/dictionary')" lines="none" :detail="false" class="hydrated" :class="isPage('/dictionary') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="bookOutline"></ion-icon>
                       <ion-label>{{ $t('dictionary') }}</ion-label>
                     </ion-item>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="end">
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/marques-page')" lines="none" :detail="false" class="hydrated" :class="isPage('/marques-page') ? 'selected': ''">
+                    <ion-item @click="goTo('/bookmarks')" lines="none" :detail="false" class="hydrated" :class="isPage('/bookmarks') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="bookmarkOutline"></ion-icon>
                       <ion-label>{{ $t('bookmarks') }}</ion-label>
                     </ion-item>
@@ -55,7 +55,7 @@
                     </ion-item>
                   </ion-menu-toggle>
                   <ion-menu-toggle :auto-hide="false">
-                    <ion-item @click="goTo('/a-propos')" lines="none" :detail="false" class="hydrated" :class="isPage('/a-propos') ? 'selected': ''">
+                    <ion-item @click="goTo('/about')" lines="none" :detail="false" class="hydrated" :class="isPage('/about') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="informationCircleOutline"></ion-icon>
                       <ion-label>{{ $t('about') }}</ion-label>
                     </ion-item>
@@ -149,7 +149,7 @@ export default defineComponent({
     },
     async handleFastSearch(query: string) {
       if (await wordExists(query)) {
-        this.goTo(`/dictionnaire/${query}`)
+        this.goTo(`/dictionary/${query}`)
       } else {
         this.goTo(`/search/${query}`)
       }
@@ -161,7 +161,7 @@ export default defineComponent({
           return
       }
       const searchbar = (this.$refs.menuSearchbar as any).$el
-      if (!searchbar?.focused && !["dictionnaire", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
+      if (!searchbar?.focused && !["dictionnaire", "dictionary", "fiches", "correction", "rimes"].includes(this.$route.name as string)) {
         await searchbar.setFocus()
         if (!searchbar.focused) {
           if (event.key == "backspace") {
