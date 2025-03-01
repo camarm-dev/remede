@@ -63,13 +63,14 @@
     "conjugation": "Conjugaison",
     "conjugationMode": "Mode",
     "conjugationTense": "Temps",
-    "wordNotFound": "Ce mot n'a pas été trouvé dans le dictionnaire Remède...",
+    "wordNotFound": "Ce mot n'a pas été trouvé dans le dictionnaire Remède... Essaie avec un autre dictionnaire ci-dessous.",
     "examples": "Exemples",
     "openConjugation": "Ouvrir la conjugaison",
     "openRhymesDictionary": "Ouvrir le dictionnaire des rimes",
     "noSubject": "(Pas de sujet)",
     "wordWithThisPhoneme": "Mots avec la même prononciation",
-    "noWordWithThisPhoneme": "Aucun mot trouvé avec la même prononciation"
+    "noWordWithThisPhoneme": "Aucun mot trouvé avec la même prononciation",
+    "retryWith": "Réessayer avec \"{database}\""
   },
   "share": {
     "definitionTitle": "Définition \"{word}\" sur Remède",

@@ -69,7 +69,8 @@
     "openRhymesDictionary": "Malfermi la rimvortaron",
     "noSubject": "(Neniu subjekto)",
     "wordWithThisPhoneme": "Vortoj kun sama prononco",
-    "noWordWithThisPhoneme": "Neniuj vortoj trovitaj kun sama prononco"
+    "noWordWithThisPhoneme": "Neniuj vortoj trovitaj kun sama prononco",
+    "retryWith": "Reprovi kun \"{database}\""
   },
   "share": {
     "definitionTitle": "Difino \"{word}\" ĉe Remède",

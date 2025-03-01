@@ -63,13 +63,14 @@
     "conjugation": "Conjugation",
     "conjugationMode": "Mode",
     "conjugationTense": "Tense",
-    "wordNotFound": "This word cannot be found in the Remède dictionary...",
+    "wordNotFound": "This word cannot be found in the Remède dictionary... You can try with an other dictionary below.",
     "examples": "Examples",
     "openConjugation": "Open conjugation",
     "openRhymesDictionary": "Open rhymes dictionary",
     "noSubject": "(No subject)",
     "wordWithThisPhoneme": "Words with this pronunciation",
-    "noWordWithThisPhoneme": "No words found with this pronunciation."
+    "noWordWithThisPhoneme": "No words found with this pronunciation.",
+    "retryWith": "Retry with \"{database}\""
   },
   "share": {
     "definitionTitle": "Definition of \"{word}\" on Remède",
