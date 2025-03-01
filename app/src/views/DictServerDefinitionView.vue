@@ -31,7 +31,7 @@ import DictLogs from "@/components/DictLogs.vue"
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button :text="$t('back')" default-href="/dictionnaire"></ion-back-button>
+          <ion-back-button :text="$t('back')" default-href="/dictionary"></ion-back-button>
         </ion-buttons>
         <ion-title class="remede-font">{{ word }}</ion-title>
         <ion-buttons slot="end">
@@ -187,11 +187,11 @@ export default defineComponent({
         const referenceListener = async () => {
           const href = el.getAttribute("href") || ""
           if (await wordExists(href)) { // TODO check if words exists in dict server !
-            this.goTo(`/dictionnaire/${href}`)
+            this.goTo(`/dictionary/${href}`) // TODO
           } else if (href.includes("://")) {
             await Browser.open({ url: href })
           } else {
-            await Browser.open({ url: href })
+            this.$router.push(`/search/${href}`)
           }
         }
         el.addEventListener("click", referenceListener)
