@@ -169,7 +169,7 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
             success: true
         })
     }
-    for (const line of responses) {
+    for (const [index, line] of responses.entries()) {
         const code = line.substring(0, 3)
         if (code == "220") {
             rawDecoded.push({
@@ -204,7 +204,7 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
             const groups = line.replace("151 ", "").match(/[\w\-.]+|"(?:\\"|[^"])+"/g) as any as string[]
             const [word, databaseId, database] = [groups[0].replaceAll("\"", ""), groups[1], groups[2].replaceAll("\"", "")]
             let definition = ""
-            for (const definitionLine of responses.slice(responses.indexOf(line) + 1)) {
+            for (const definitionLine of responses.slice(index + 1)) {
                 if (definitionLine == ".") {
                     break
                 }
