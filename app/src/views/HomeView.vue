@@ -12,14 +12,62 @@
                        @keydown.enter="handleSubmit()"
                        :placeholder="$t('home.searchWord')" ref="searchbar" slot="start">
         </ion-searchbar>
-        <ion-select :cancelText="$t('cancel')" v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name || '')" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
-          <ion-select-option :key="dictionary.slug" v-for="dictionary in availableDictionaries" :value="dictionary">{{ dictionary.name }}</ion-select-option>
+        <ion-select :value="selectedDictionary" :cancelText="$t('cancel')" v-if="availableDictionaries.length > 1" :selected-text="getSmallDictionaryName(selectedDictionary.name || '')" @ionChange="changeDictionary($event.target.value)" class="dictionarySelector" color="primary" interface="action-sheet" :toggle-icon="chevronDownOutline" slot="end">
+          <ion-select-option
+              v-for="dictionary in availableDictionaries"
+              :key="dictionary.slug"
+              :value="dictionary"
+          >
+            {{ dictionary.name }}
+          </ion-select-option>
+          <ion-select-option
+              v-if="dictServers.length > 0"
+              :value="virtualDictServersDictionary"
+          >
+            {{ $t('settingsPage.dictServers') }}
+          </ion-select-option>
         </ion-select>
         <ion-progress-bar v-if="loading" type="indeterminate" color="medium"
                           style="width: 95%; margin: auto"></ion-progress-bar>
       </ion-toolbar>
-      <ion-toolbar :class="`results-wrapper ${results.length > 0 ? '': 'empty'}`" ref="content">
-        <ion-list class="search-results">
+      <ion-toolbar :class="`results-wrapper ${results.length > 0 || dictServersResults.length > 0 ? '': 'empty'} ${dictServerSearch ? 'large': ''}`" ref="content">
+        <ion-list class="search-results" v-if="dictServerSearch">
+          <ion-item
+              v-for="result in dictServersResults.slice(0, 5)"
+              :key="result.toString()"
+              @click="$router.push({
+                name: 'dictServersDefinition',
+                params: {
+                  definition: JSON.stringify(result)
+                }
+              })"
+              class="ion-no-padding"
+              button
+          >
+            <ion-label>
+              <h2>{{ result.word }}</h2>
+              <span class="small">{{ result.server }}</span>
+            </ion-label>
+          </ion-item>
+          <ion-item
+              v-if="!loading && query != ''"
+              @click="$router.push({
+                name: 'dictServersResults',
+                params: {
+                  word: query,
+                  results: JSON.stringify(dictServersResults)
+                }
+              })"
+              :detail-icon="arrowForward"
+              class="ion-no-padding"
+              button
+          >
+            <ion-label>
+              {{ $t('home.seeAll') }}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-list v-else class="search-results">
           <ion-item :key="result" v-for="result in results" @click="goTo(`/dictionnaire/${result}`)" class="ion-no-padding" button>
             <ion-label>
               {{ result }}
@@ -32,7 +80,7 @@
           </ion-item>
         </ion-list>
       </ion-toolbar>
-      <ion-toolbar v-if="results.length == 0 && query !== '' && !loading">
+      <ion-toolbar v-if="results.length == 0 && query !== '' && !loading && !dictServerSearch">
         <ion-list inset>
           <ion-item color="light" class="border-radius" lines="none" button @click="report()">
             <ion-label>
@@ -127,41 +175,48 @@
 </template>
 
 <script lang="ts">
-import {bookmark, calendarOutline, shuffle, arrowForward, chevronDownOutline} from "ionicons/icons"
-import {getAutocomplete, getAvailableDictionaries, getRandomWord, getTodayWord, getFavoriteDictionary, setDictionary} from "@/functions/dictionnary"
-import {useRouter} from "vue-router"
+import {arrowForward, bookmark, calendarOutline, chevronDownOutline, shuffle} from "ionicons/icons"
 import {
+  getAutocomplete,
+  getAvailableDictionaries,
+  getFavoriteDictionary,
+  getRandomWord,
+  getTodayWord,
+  setDictionary
+} from "@/functions/dictionnary"
+import {useRouter} from "vue-router"
+import type {Animation} from "@ionic/vue"
+import {
+  AnimationDirection,
   IonButtons,
-  IonSelect,
-  IonSelectOption,
   IonContent,
   IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
   IonMenuButton,
+  IonModal,
   IonPage,
+  IonProgressBar,
+  IonSearchbar,
+  IonSelect,
+  IonSelectOption,
   IonTitle,
   IonToolbar,
-  IonSearchbar,
-  IonIcon,
-  IonLabel,
-  IonItem,
-  IonList,
-  IonProgressBar,
   loadingController,
-  toastController,
-  AnimationDirection,
-  useIonRouter,
   modalController,
-  IonModal
+  toastController,
+  useIonRouter
 } from "@ionic/vue"
 import {defineComponent, onMounted, Ref, ref} from "vue"
-import type {Animation} from "@ionic/vue"
 import {iosTransitionAnimation} from "@ionic/core"
 import LandingScreen from "@/components/LandingScreen.vue"
 import {Swiper, SwiperSlide} from "swiper/vue"
 import {Navigation, Pagination} from "swiper/modules"
-import changelogIllustration from  "@/assets/changelog.png"
-import newBaseIllustration from  "@/assets/newBase.png"
-import newVersionIllustration from  "@/assets/newVersion.png"
+import changelogIllustration from "@/assets/changelog.png"
+import newBaseIllustration from "@/assets/newBase.png"
+import newVersionIllustration from "@/assets/newVersion.png"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
@@ -175,6 +230,8 @@ import {
   defaultRemedeMainToolbarAnimation,
   defaultRemedeSearchToolbarAnimation
 } from "@/functions/animations"
+import {getEnabledDictServers} from "@/functions/dictPreferences"
+import {DictDefinition, DictServer, getDictServersAutocomplete} from "@/functions/dictProtocol"
 
 export default defineComponent({
   components: {
@@ -215,13 +272,17 @@ export default defineComponent({
       hasDictionaryUpdate: false,
       hasAppUpdate: false,
       availableDictionaries: [] as RemedeDictionaryOption[],
-      selectedDictionary: {} as RemedeDictionaryOption
+      selectedDictionary: {} as RemedeDictionaryOption,
+      dictServers: [] as DictServer[],
+      dictServerSearch: false,
+      dictServersResults: [] as DictDefinition[]
     }
   },
   mounted() {
     this.loadRandomWord()
     this.loadTodayWord()
     this.loadDictionaries()
+    this.loadDictServers()
     this.el = ref(this.$el)
     this.openLandingScreen()
     this.reloadUpdateStatuses()
@@ -269,6 +330,15 @@ export default defineComponent({
     }
 
     const searchbar = ref()
+    const virtualDictServersDictionary = {
+      hash: "",
+      schema: "",
+      size: "",
+      total: 0,
+      valid: false,
+      name: "DICT",
+      slug: "DICT"
+    }
 
     return {
       bookmark,
@@ -288,20 +358,32 @@ export default defineComponent({
       changelogIllustration,
       newBaseIllustration,
       newVersionIllustration,
-      searchbar
+      searchbar,
+      virtualDictServersDictionary
     }
   },
   methods: {
+    async loadDictServers() {
+      this.dictServers = await getEnabledDictServers() || []
+    },
     async loadDictionaries() {
       this.availableDictionaries = (await getAvailableDictionaries()).filter(dictionary => !dictionary.slug.includes("legacy"))
       this.selectedDictionary = await getFavoriteDictionary(this.availableDictionaries)
     },
     getSmallDictionaryName(name: string) {
+      if (this.dictServerSearch)
+        return "DICT"
       return name.replaceAll("Remède", "").replaceAll("(", "").replaceAll(")", "")
     },
     changeDictionary(dictionary: RemedeDictionaryOption) {
-      this.selectedDictionary = dictionary
-      setDictionary(dictionary)
+      if (dictionary.slug === "DICT") { // Dict servers search selected
+        this.dictServerSearch = true
+        this.selectedDictionary = this.virtualDictServersDictionary
+      } else { // Dictionary is a RemedeDictionaryOption
+        this.dictServerSearch = false
+        this.selectedDictionary = dictionary
+        setDictionary(dictionary)
+      }
     },
     handleKeyDown(event: KeyboardEvent) {
       if (!this.searchbar.$el.focused) {
@@ -334,10 +416,21 @@ export default defineComponent({
     },
     startAutocompleteSearch(input: string) {
       window.clearTimeout(this.autocompleteTimeout)
+      if (input === "") {
+        this.results = []
+        this.dictServersResults = []
+        return
+      }
       this.autocompleteTimeout = window.setTimeout(async () => {
         this.loading = true
         try {
-          this.results = await getAutocomplete(input)
+          if (this.dictServerSearch) {
+            this.dictServersResults = await getDictServersAutocomplete(input, this.dictServers)
+            this.results = []
+          } else {
+            this.results = await getAutocomplete(input)
+            this.dictServersResults = []
+          }
         } catch (e) {
           const message = await toastController.create({
             header: "Erreur",
