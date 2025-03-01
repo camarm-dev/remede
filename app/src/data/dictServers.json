@@ -10,5 +10,11 @@
     "host": "dict.org",
     "port": 2628,
     "description": "The DICT Development Group DICT server."
+  },
+  {
+    "name": "Lojban",
+    "host": "dict.lojban.org",
+    "port": 2628,
+    "description": "Contains Lojban dictionaries translations."
   }
 ]
