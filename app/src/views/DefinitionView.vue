@@ -56,7 +56,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
             <ion-icon :icon="chevronBackOutline"/>
             {{ $t('definition.backToApp') }}
           </ion-button>
-          <ion-back-button v-else :text="$t('back')" default-href="/dictionnaire"></ion-back-button>
+          <ion-back-button v-else :text="$t('back')" default-href="/dictionary"></ion-back-button>
         </ion-buttons>
         <ion-title class="remede-font">{{ mot }}</ion-title>
         <ion-buttons slot="end">
@@ -182,7 +182,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       <TabSection v-if="isTab('syn')" :title="$t('definition.synonyms')">
         <ul>
           <li :key="syn" v-for="syn in wordObject.synonyms">
-            <a @click="goTo(`/dictionnaire/${syn}`)">
+            <a @click="goTo(`/dictionary/${syn}`)">
               {{ syn }}
             </a>
           </li>
@@ -192,7 +192,7 @@ const closeModal = () => detailsModal.value.$el.dismiss(null, "cancel")
       <TabSection v-if="isTab('ant')" :title="$t('definition.antonyms')">
         <ul>
           <li :key="ant" v-for="ant in wordObject.antonyms">
-            <a @click="goTo(`/dictionnaire/${ant}`)">
+            <a @click="goTo(`/dictionary/${ant}`)">
               {{ ant }}
             </a>
           </li>
@@ -356,7 +356,7 @@ export default defineComponent({
         await Share.share({
           title: this.$t("share.definitionTitle", { word: this.mot }),
           text: this.$t("share.definitionDescription", { word: this.mot }),
-          url: `https://remede-app.camarm.fr/dictionnaire/${this.mot}`,
+          url: `https://remede-app.camarm.fr/dictionary/${this.mot}`,
           dialogTitle: this.$t("share.definitionDialogTitle"),
         })
       } catch {
@@ -415,7 +415,7 @@ export default defineComponent({
           const href = el.getAttribute("href") || ""
           const word = href.replaceAll("https://fr.wiktionary.org/wiki/", "").replaceAll("/wiki/", "")
           if (await wordExists(word)) {
-            this.goTo(`/dictionnaire/${word}`)
+            this.goTo(`/dictionary/${word}`)
           } else {
             window.open(`https://fr.wiktionary.com/wiki/${word}`)
           }
