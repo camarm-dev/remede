@@ -5,6 +5,7 @@ import sqlite3
 import threading
 from enum import Enum
 from hashlib import md5
+from typing import List
 
 import frontmatter
 import markdown
@@ -16,6 +17,8 @@ from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 from scripts.utils.sources import SOURCES
 from sqlite3 import Cursor
+from dict_proxy import make_dict_request
+from pydantic import BaseModel
 
 lock = threading.Lock()
 version = "1.4.0"
@@ -327,6 +330,18 @@ def download_binary(variant: BinariesVariant):
     """
     return FileResponse(f'builds/remede.{variant}', filename=f"remede.{variant}", media_type="multipart/form-data")
 
+
+class DictRequest(BaseModel):
+    commands: List[str]
+    server: str
+    port: int
+
+@app.post("/proxy/dict")
+async def dict_proxy(request: DictRequest):
+    """
+    Send DICT commands to the specified DICT server.
+    """
+    return make_dict_request(request.commands, request.server, request.port)
 
 if __name__ == '__main__':
     print("Starting API | Opening databases... [1/3]")
