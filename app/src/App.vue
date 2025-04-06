@@ -34,7 +34,7 @@
                       <ion-label>{{ $t('rhymes') }}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
-                  <ion-menu-toggle v-if="isAndroid" :auto-hide="false">
+                  <ion-menu-toggle :auto-hide="false">
                     <ion-item @click="goTo('/dict')" lines="none" :detail="false" class="hydrated" :class="isPage('/dict') ? 'selected': ''">
                       <ion-icon aria-hidden="true" slot="start" :icon="swapVerticalOutline"></ion-icon>
                       <ion-label>{{ $t('dictClient.dictClient') }}</ion-label>
@@ -129,7 +129,6 @@ export default defineComponent({
       }
     })
     window.addEventListener("keydown", this.handleKeyDown)
-    this.isAndroid = Capacitor?.getPlatform() == "android"
   },
   beforeMount() {
     this.setLocale()
@@ -139,8 +138,7 @@ export default defineComponent({
       router: useRouter(),
       path: location.pathname,
       downloaded: false,
-      query: "",
-      isAndroid: false
+      query: ""
     }
   },
   methods: {
