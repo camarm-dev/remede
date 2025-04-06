@@ -24,7 +24,6 @@ def add_to_wordlist(wordlist: list):
             words.append(insert)
         words.sort(key=lambda val: sanitize_word(val))
         new_content = "\n".join(words)
-        new_content = new_content.replace("\n", "", 1)
         file.write(new_content)
 
 
