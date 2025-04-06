@@ -1,13 +1,10 @@
 <script setup lang="ts">
-
 import {
   readerOutline,
   informationCircleOutline,
   compassOutline,
   saveOutline,
   filterOutline,
-  arrowBackOutline,
-  arrowForwardOutline
 } from "ionicons/icons"
 import {
   IonPage,
@@ -27,13 +24,13 @@ import {
 import dictServers from "@/data/dictServers.json"
 import DictServersGuide from "@/components/DictServersGuide.vue"
 import AddDictServer from "@/components/AddDictServer.vue"
-import DictLogs from "@/components/DictLogs.vue";
+import DictLogs from "@/components/DictLogs.vue"
 </script>
 
 <template>
   <ion-page>
     <ion-header :translucent="true">
-      <ion-toolbar class="hidden-desktop">
+      <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
