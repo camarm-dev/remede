@@ -62,5 +62,7 @@ Remède is brought to you with love by the contributors. Thanks to
 <sub>Do not hesitate to let a ⭐ on this repository if you like my work.</sub>
 
 ---
-
-Remède, a free software by Armand CAMPONOVO <software@camarm.dev>. &copy; 2023-now CECILL-2.1
+```
+Remède, a free software by Armand CAMPONOVO <software@camarm.dev> & The Remède Project <software@camarm.dev>. &copy; 2023-now CECILL-2.1.
+Distributed dictionaries includes data from third-parties services governed by other free licenses. See https://docs.remede.camarm.fr/database/credits for further information.
+```
