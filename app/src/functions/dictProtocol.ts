@@ -190,6 +190,8 @@ function decodeRawResponse(responses: string[], commands: string[] = []) {
                 success: true,
                 type: ResponseLineType.Data
             })
+        } else if (line === "") { // Empty line
+            continue
         } else {
             data.push(line)
             rawDecoded.push({
@@ -249,7 +251,7 @@ export async function getDictionaries(server: string, port: number): Promise<Dic
         messages: ["SHOW DB"]
     })
     const { data } = decodeRawResponse(request.responses)
-    for (const line of data) {
+    for (const line of data.filter(line => line !== "")) {
         const [id, name] = line.match(/[\w\-.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
         databases.push({
             id,
@@ -267,7 +269,7 @@ export async function getStrategies(server: string, port: number): Promise<DictS
         messages: ["SHOW STRAT"]
     })
     const { data } = decodeRawResponse(request.responses)
-    for (const line of data) {
+    for (const line of data.filter(line => line !== "")) {
         const [id, name] = line.match(/[\w\-.]+|"(?:\\"|[^"])+"/g) || ["null", "null"]
         strategies.push({
             id,
