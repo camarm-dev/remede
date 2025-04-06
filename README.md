@@ -18,6 +18,12 @@ Open Source and free alternative to Antidote dictionary.
 
 </div>
 
+## What is Remède ?
+
+The Remède Project aims to give everyone access to free dictionaries ressources.
+Remède is a cross-platform **dictionary software**, which has its **own dictionaries databases** (published in an open format, so our dictionaries are reusable everywhere).
+Our dictionary software let you browse many dictionaries formats.
+
 ## Why Remède ?
 
 Remède is a free and open source dictionary software, which can replace any proprietary dictionary, with these advantages:
