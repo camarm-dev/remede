@@ -51,8 +51,8 @@
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "5.5.1",
     "@tauri-apps/cli": "^2.1.0",
-    "@vitejs/plugin-legacy": "^4.1.1",
-    "@vitejs/plugin-vue": "^4.6.2",
+    "@vitejs/plugin-legacy": "^6.1.1",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/test-utils": "^2.4.6",
     "cypress": "^13.17.0",
@@ -60,7 +60,7 @@
     "eslint-plugin-vue": "^9.32.0",
     "jsdom": "^22.1.0",
     "typescript": "^5.7.2",
-    "vite": "^4.5.14",
+    "vite": "^6.3.5",
     "vue-tsc": "^2.1.10"
   },
   "description": "A french mobile and offline dictionary."
