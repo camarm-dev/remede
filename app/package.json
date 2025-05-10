@@ -60,7 +60,7 @@
     "eslint-plugin-vue": "^9.32.0",
     "jsdom": "^22.1.0",
     "typescript": "^5.7.2",
-    "vite": "^4.5.5",
+    "vite": "^4.5.14",
     "vue-tsc": "^2.1.10"
   },
   "description": "A french mobile and offline dictionary."
